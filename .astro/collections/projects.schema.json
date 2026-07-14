@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "slug": {
+      "type": "string",
+      "minLength": 3
+    },
+    "locationGeneral": {
+      "type": "string",
+      "minLength": 3
+    },
+    "interventionType": {
+      "type": "string",
+      "minLength": 3
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 10
+    },
+    "servicesInvolved": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 2
+      }
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "src": {
+            "type": "string",
+            "minLength": 1
+          },
+          "alt": {
+            "type": "string",
+            "minLength": 3
+          },
+          "width": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "height": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "assetType": {
+            "type": "string",
+            "enum": [
+              "real-project-photo",
+              "company-photo",
+              "stock-photo",
+              "generated-image",
+              "illustrative-image",
+              "placeholder"
+            ]
+          },
+          "authorizedForPublication": {
+            "type": "boolean"
+          },
+          "usageNotes": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "src",
+          "alt",
+          "width",
+          "height",
+          "assetType",
+          "authorizedForPublication"
+        ]
+      }
+    },
+    "published": {
+      "type": "boolean"
+    },
+    "authorizedForPublication": {
+      "type": "boolean"
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "slug",
+    "locationGeneral",
+    "interventionType",
+    "summary",
+    "servicesInvolved",
+    "images",
+    "published",
+    "authorizedForPublication"
+  ]
+}

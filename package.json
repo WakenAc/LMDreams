@@ -1,40 +1,28 @@
 {
   "name": "lmdreams-website",
-  "version": "0.1.0",
   "private": true,
+  "version": "0.0.0",
   "type": "module",
-  "engines": {
-    "node": ">=20 <25",
-    "npm": ">=10"
-  },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "lint": "node tests/lint-content.mjs",
-    "check": "astro check",
-    "test": "npm run test:unit && npm run build && npm run test:e2e && npm run test:a11y && npm run test:links",
-    "test:unit": "vitest run",
-    "test:e2e": "npm run build && node tests/run-playwright.mjs 4325 --project=chromium --grep-invert @a11y",
-    "test:a11y": "npm run build && node tests/run-playwright.mjs 4324 --project=chromium --grep @a11y",
-    "test:links": "node tests/link-validator.mjs",
-    "test:lighthouse": "npm run build && node tests/run-lhci.mjs",
-    "audit": "npm audit --audit-level=high"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.6.0",
-    "astro": "7.0.8"
+    "@tailwindcss/vite": "^4.3.2",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-icons": "^5.7.0",
+    "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.4",
-    "@axe-core/playwright": "^4.11.0",
-    "@playwright/test": "^1.54.1",
-    "@types/node": "^24.0.15",
-    "@lhci/cli": "^0.15.1",
-    "typescript": "^5.8.3",
-    "vitest": "^3.2.4"
-  },
-  "overrides": {
-    "tmp": "0.2.7"
+    "@types/node": "^24.13.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.3",
+    "oxlint": "^1.71.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.1.1"
   }
 }

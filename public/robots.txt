@@ -1,4 +1,5 @@
+# LMDreams — Robots
 User-agent: *
 Allow: /
 
-Sitemap: https://wakenac.github.io/LMDreams/sitemap-index.xml
+Sitemap: https://lmdreams.pt/sitemap.xml

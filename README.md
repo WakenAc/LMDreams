@@ -1,217 +1,244 @@
-# LMDreams Construções Lda — Website institucional
+# LMDreams — Website Institucional
 
-Website institucional multi-página em **Astro (static output)** para apresentação da empresa, serviços, processo de trabalho, projetos e contactos.
+Website institucional moderno, premium e totalmente responsivo para a **LMDreams**, empresa portuguesa de construção civil com mais de 20 anos de experiência.
 
-## Objetivo do projeto
+> **Construído com:** React 19 • TypeScript • Vite • Tailwind CSS v4
 
-- apresentar a LMDreams com comunicação clara e credível
-- explicar o modelo de especialização por área
-- permitir pedido de contacto/orçamento
-- manter política editorial honesta (sem projetos/testemunhos/factos inventados)
+---
 
-## Stack técnico
+## Visão geral
 
-- Astro (estático)
-- TypeScript (strict)
-- CSS nativo com design tokens
-- Playwright (E2E + a11y com axe)
-- GitHub Actions (validação e deploy Pages)
+Landing page completa que comunica os valores da LMDreams: **experiência, especialização, qualidade e transparência**. O design foi cuidadosamente desenvolvido para posicionar a empresa como uma referência séria e competente no setor da construção civil em Portugal.
 
-## Pré-requisitos
+### Secções
 
-- Node.js `>=20 <25`
-- npm `>=10`
+1. **Hero** — Apresentação impactante com mensagem central e CTAs
+2. **Sobre nós** — História, valores e diferenciação
+3. **Diferenciação** — Cartões visuais com o conceito "especialistas, não faz-tudo"
+4. **Serviços** — Grelha completa de 16 especialidades com pesquisa
+5. **Método de trabalho** — Timeline transparente de 8 etapas
+6. **Projetos** — Portfólio filtrável por categoria
+7. **Transparência** — Secção dedicada à honestidade e comunicação
+8. **Testemunhos** — Placeholders para opiniões reais de clientes
+9. **CTA** — Chamada para ação final
+10. **Contactos** — Formulário completo + dados de contacto
+11. **Rodapé** — Links, contactos e informações legais
 
-## Instalação
+---
 
-```bash
-npm ci
-```
-
-## Desenvolvimento local
+## Instalação e execução local
 
 ```bash
+# 1. Clonar o repositório
+git clone https://github.com/[seu-utilizador]/lmdreams-website.git
+cd lmdreams-website
+
+# 2. Instalar dependências
+npm install
+
+# 3. Iniciar servidor de desenvolvimento
 npm run dev
+
+# 4. Abrir no navegador
+# http://localhost:5173
 ```
 
-## Type checking
+### Comandos disponíveis
 
-```bash
-npm run check
-```
+| Comando | Descrição |
+|---|---|
+| `npm run dev` | Inicia servidor de desenvolvimento (Vite) |
+| `npm run build` | Gera build de produção em `dist/` |
+| `npm run preview` | Pré-visualiza a build de produção localmente |
+| `npm run typecheck` | Verifica tipos TypeScript |
 
-## Testes
+---
 
-```bash
-npm run test:unit
-npm run test:e2e
-npm run test:a11y
-npm run test:links
-```
+## Publicação no GitHub Pages
 
-> Instalar browsers Playwright antes dos testes E2E/a11y:
->
-> ```bash
-> npx playwright install
-> ```
+### Opção 1 — Automática (GitHub Actions recomendada)
 
-## Build de produção
+1. Crie um repositório no GitHub e faça push do código para a branch `main`
+2. O workflow em `.github/workflows/deploy.yml` faz o deploy automático
+3. No repositório GitHub, vá a **Settings > Pages** e selecione:
+   - **Source:** GitHub Actions
+4. O site fica disponível em `https://[seu-utilizador].github.io/lmdreams-website/`
+
+### Opção 2 — Manual
 
 ```bash
 npm run build
+# Envie o conteúdo da pasta dist/ para a branch gh-pages
+npx gh-pages -d dist
 ```
 
-## Preview local do build
+### Domínio personalizado
 
-```bash
-npm run preview
+1. Crie um ficheiro `CNAME` na raiz do projeto com o seu domínio (ex: `lmdreams.pt`)
+2. Configure os registos DNS do seu domínio para apontar para GitHub Pages
+3. Em **Settings > Pages** do repositório, insira o domínio personalizado
+
+### Configuração do base path
+
+Se publicar num subdiretório (ex: `https://user.github.io/lmdreams-website/`), o GitHub Action em `.github/workflows/deploy.yml` define automaticamente a variável `VITE_BASE_PATH` com o nome do repositório.
+
+Se usar um domínio personalizado, a variável `VITE_BASE_PATH` deve ser `/` (valor padrão).
+
+---
+
+## Estrutura do projeto
+
+```
+lmdreams-website/
+├── public/
+│   ├── 404.html              # Página 404 personalizada
+│   ├── favicon.svg            # Favicon
+│   ├── robots.txt             # Instruções para motores de busca
+│   └── sitemap.xml            # Sitemap XML
+├── src/
+│   ├── components/
+│   │   ├── Header.tsx         # Cabeçalho fixo com navegação
+│   │   ├── Hero.tsx           # Secção inicial
+│   │   ├── About.tsx          # Sobre a empresa
+│   │   ├── Differentiation.tsx # Cartões de diferenciação
+│   │   ├── Services.tsx       # Grelha de serviços
+│   │   ├── WorkMethod.tsx     # Método de trabalho (timeline)
+│   │   ├── Portfolio.tsx      # Portfólio filtrável
+│   │   ├── Transparency.tsx   # Secção transparência
+│   │   ├── Testimonials.tsx   # Testemunhos (placeholders)
+│   │   ├── CtaSection.tsx     # Chamada para ação
+│   │   ├── Contact.tsx        # Formulário de contacto
+│   │   └── Footer.tsx         # Rodapé
+│   ├── data/
+│   │   └── services.ts        # Dados dos serviços e portfólio
+│   ├── hooks/
+│   │   └── useInView.ts       # Hook de animação por scroll
+│   ├── App.tsx                # Componente principal
+│   ├── index.css              # Estilos globais + design tokens
+│   └── main.tsx               # Ponto de entrada
+├── .github/workflows/
+│   └── deploy.yml             # GitHub Actions para deploy
+├── index.html                 # HTML principal com meta tags e SEO
+├── vite.config.ts             # Configuração Vite
+├── tsconfig.json              # Configuração TypeScript
+└── package.json               # Dependências e scripts
 ```
 
-## Rotas públicas
+---
 
-- `/`
-- `/empresa/`
-- `/servicos/`
-- `/projetos/`
-- `/contactos/`
-- `/privacidade/`
-- `/404.html`
+## Personalização
 
-Arquitetura preparada para:
+### Conteúdo a substituir antes da publicação
 
-- `/servicos/[slug]/`
-- `/projetos/[slug]/`
+O website está preparado com placeholders claramente identificados para os seguintes conteúdos:
 
-## Configuração central (GitHub Pages e URLs)
+| Localização | Placeholder | Descrição |
+|---|---|---|
+| `index.html` | `[___NÚMERO DE TELEFONE___]` | Telefone da empresa (várias ocorrências) |
+| `index.html` | `[___EMAIL___]` | E-mail da empresa |
+| `src/components/Contact.tsx` | `[___NÚMERO DE TELEFONE___]` | Telefone nos contactos |
+| `src/components/Contact.tsx` | `[___NÚMERO DE WHATSAPP___]` | Número WhatsApp |
+| `src/components/Contact.tsx` | `[___EMAIL___]` | E-mail nos contactos |
+| `src/components/Contact.tsx` | `[___ÁREA DE ATUAÇÃO___]` | Área geográfica de atuação |
+| `src/components/CtaSection.tsx` | `[tel:___NÚMERO___]` | Link telefónico |
+| `src/components/CtaSection.tsx` | `[whatsapp:___NÚMERO___]` | Link WhatsApp |
+| `src/components/Footer.tsx` | `[___NÚMERO DE TELEFONE___]` | Telefone no rodapé |
+| `src/components/Footer.tsx` | `[___NÚMERO DE WHATSAPP___]` | WhatsApp no rodapé |
+| `src/components/Footer.tsx` | `[___EMAIL___]` | E-mail no rodapé |
+| `src/components/Footer.tsx` | `[___ÁREA DE ATUAÇÃO___]` | Área no rodapé |
+| `src/components/Hero.tsx` | `[tel:___NÚMERO___]` | Botão de ligação rápida |
+| `src/components/Hero.tsx` | `[whatsapp:___NÚMERO___]` | Botão WhatsApp rápido |
+| `src/components/About.tsx` | `[Fotografia da equipa..]` | Imagem real da empresa |
+| `src/components/Portfolio.tsx` | `[Fotografia antes/depois]` | Imagens reais de projetos |
+| `src/data/services.ts` | `[Localidade]`, `[Breve descrição...]` | Dados dos projetos |
+| `src/components/Testimonials.tsx` | `[Testemunho a substituir...]` | Opiniões reais de clientes |
+| `index.html` (JSON-LD) | `[___NÚMERO DE TELEFONE___]` | Structured data |
 
-Ficheiro: `site.config.mjs`
+### Cores e design
 
-Variáveis:
+O sistema de design está centralizado em `src/index.css` usando variáveis CSS Tailwind v4 `@theme`:
 
-- `SITE_URL` (URL pública)
-- `BASE_PATH` (subcaminho, ex.: `/LMDreams`)
-- `PAGES_MODE` (`project` ou `custom-domain`)
-- `CUSTOM_DOMAIN` (quando existir)
-- `CONTACT_FORM_ENDPOINT` (endpoint de submissão do formulário)
+- **`brand-*`** — Paleta principal (cinzas e pretos)
+- **`stone-*`** — Tons de pedra/areia
+- **`accent-*`** — Cor de destaque (cobre/terracota)
 
-## Deploy para GitHub Pages
+Para alterar a cor de destaque, modifique a paleta `accent-*` no `@theme`:
 
-- **Validação:** `.github/workflows/validate.yml`
-- **Deploy:** `.github/workflows/deploy-pages.yml`
-
-Passos:
-
-1. fazer push para `main`
-2. confirmar que Pages está configurado para GitHub Actions
-3. aguardar workflow `Deploy Pages`
-4. validar páginas publicadas e links internos
-
-## Project Pages vs domínio personalizado
-
-### Project Pages
-
-Exemplo: `https://username.github.io/repository-name/`
-
-Configuração típica:
-
-```bash
-SITE_URL=https://username.github.io/repository-name
-BASE_PATH=/repository-name
-PAGES_MODE=project
+```css
+/* Exemplo: alterar para dourado envelhecido */
+--color-accent-600: #b8944a;
+--color-accent-500: #d4b06a;
 ```
 
-### Domínio personalizado (futuro)
+### Tipografia
 
-Exemplo: `https://dominio-confirmado.pt/`
+O website usa:
 
-```bash
-SITE_URL=https://dominio-confirmado.pt
-BASE_PATH=/
-PAGES_MODE=custom-domain
-CUSTOM_DOMAIN=dominio-confirmado.pt
+- **Títulos:** [Instrument Serif](https://fonts.google.com/specimen/Instrument+Serif) — elegante e forte
+- **Corpo:** [Inter](https://fonts.google.com/specimen/Inter) — limpa e legível
+
+As fontes estão importadas no `index.html` via Google Fonts.
+
+---
+
+## Funcionalidades
+
+- **Totalmente responsivo** — Computador, tablet e telemóvel
+- **Animações suaves** — Fade-in ao scroll com IntersectionObserver
+- **Navegação fluída** — Scroll suave para âncoras
+- **Pesquisa de serviços** — Filtro em tempo real na grelha de serviços
+- **Portfólio filtrável** — Navegação por categorias de projeto
+- **Formulário de contacto** — Preparado para integração futura com API (EmailJS, Formspree, etc.)
+- **SEO completo** — Meta tags, Open Graph, JSON-LD, sitemap, robots.txt
+- **Acessibilidade** — Navegação por teclado, labels, contraste, leitores de ecrã
+- **Performance** — Lazy loading, animações com `prefers-reduced-motion`, build otimizado
+- **GitHub Pages** — Deploy automático via GitHub Actions
+- **Página 404** — Personalizada
+
+---
+
+## Formulário de contacto
+
+O formulário está preparado para ser ligado a um serviço de envio de e-mails. Por padrão, os dados são registados na consola (`console.log`).
+
+Para integrar com um serviço real:
+
+**Opção 1 — EmailJS**
+
+```tsx
+// Em src/components/Contact.tsx, no handleSubmit:
+import emailjs from '@emailjs/browser';
+
+emailjs.send(
+  'YOUR_SERVICE_ID',
+  'YOUR_TEMPLATE_ID',
+  formData,
+  'YOUR_PUBLIC_KEY'
+);
 ```
 
-> Só criar `public/CNAME` quando o domínio real estiver confirmado.
+**Opção 2 — API própria**
 
-## Como substituir o logótipo
+Crie um endpoint e faça fetch no `handleSubmit`:
 
-1. substituir `public/brand/lmdreams-logo.png`
-2. manter dimensões proporcionais e boa legibilidade
-3. atualizar `docs/design/asset-provenance.md`
-
-## Como atualizar informação da empresa
-
-Editar:
-
-- `src/data/company.ts`
-- `src/data/navigation.ts`
-
-## Como adicionar/editar um serviço
-
-Editar `src/data/services.ts`:
-
-1. adicionar entrada com `title`, `slug`, `summary`, `description`, `benefits`, `icon`
-2. manter flags de rascunho até aprovação formal
-
-## Como adicionar um projeto real
-
-Criar/editar entrada em `src/content/projects/*.md` com:
-
-- `published: true`
-- `authorizedForPublication: true`
-- imagens com `authorizedForPublication: true`
-- pelo menos uma imagem com `assetType` real (`real-project-photo` ou `company-photo`)
-
-## Como registar proveniência de ativos
-
-Atualizar `docs/design/asset-provenance.md` para cada novo asset:
-
-- ficheiro
-- fonte
-- autor/gerador
-- licença/permissão
-- data
-- uso
-- tipo (real/stock/illustrative/generated/placeholder)
-- elegibilidade para portefólio real
-
-## Configuração do formulário de contacto
-
-Definir variável:
-
-```bash
-CONTACT_FORM_ENDPOINT=https://<endpoint-real>
+```tsx
+const response = await fetch('https://sua-api.com/contact', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(formData),
+});
 ```
 
-Sem endpoint configurado, o site entra em modo seguro e não envia submissões.
+**Opção 3 — Formspree**
 
-## Como evitar publicação de placeholders
+Altere o `action` do formulário para `https://formspree.io/f/YOUR_FORM_ID`.
 
-Checklist mínima antes de lançamento:
+---
 
-- substituir placeholders de telefone/email/área de atuação
-- validar lista final de serviços
-- adicionar apenas projetos reais autorizados
-- rever metadados e textos legais
+## Licença
 
-## Como verificar o site publicado
+Este projeto é propriedade da LMDreams. Todos os direitos reservados.
 
-1. abrir homepage e navegar por todas as rotas principais
-2. validar menu mobile e teclado
-3. testar formulário (incluindo estados de erro/sucesso)
-4. confirmar ausência de links quebrados e imagens em falta
-5. correr validações automáticas
+---
 
-## Instruções de teste manual
-
-- navegação por teclado completa
-- visibilidade de foco
-- leitura com zoom 200%
-- teste de `prefers-reduced-motion`
-- validação de contraste de cor
-- verificação do menu mobile
-- verificação do formulário de contacto
-
-## Dependência de Higgsfield
-
-Este website **não tem dependência runtime de Higgsfield**.
+*Website desenvolvido para apresentação institucional da LMDreams — Construção Civil e Remodelações em Portugal.*
