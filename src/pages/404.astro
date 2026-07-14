@@ -1,0 +1,24 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { withBasePath } from '@/utils/validation';
+---
+
+<BaseLayout
+  canonicalPath="/404.html"
+  currentPath="/404.html"
+  description="Página não encontrada."
+  title="Página não encontrada"
+  noIndex={true}
+>
+  <div class="container">
+    <section class="card stack">
+      <p class="eyebrow">404</p>
+      <h1>Página não encontrada</h1>
+      <p>O endereço pedido não existe ou deixou de estar disponível. Utilize os atalhos seguintes para regressar ao conteúdo principal.</p>
+      <div class="button-row">
+        <a class="button button--primary" href={withBasePath('/')}>Voltar ao início</a>
+        <a class="button button--secondary" href={withBasePath('/servicos/')}>Ver serviços</a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

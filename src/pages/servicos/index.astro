@@ -1,0 +1,56 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import ServiceCard from '@/components/ServiceCard.astro';
+import CallToAction from '@/components/CallToAction.astro';
+import { services } from '@/data/services';
+---
+
+<BaseLayout
+  canonicalPath="/servicos/"
+  currentPath="/servicos/"
+  description="Serviços da LMDreams apresentados por categorias de rascunho, com foco em coordenação de especialidades."
+  title="Serviços"
+>
+  <div class="container stack">
+    <Breadcrumbs
+      items={[
+        { label: 'Início', href: '/' },
+        { label: 'Serviços' }
+      ]}
+    />
+
+    <section class="stack">
+      <p class="eyebrow">Serviços</p>
+      <h1>Serviços e especialidades coordenadas</h1>
+      <p>
+        A LMDreams coordena diferentes áreas necessárias em obras de construção e remodelação.
+        As categorias abaixo estão em rascunho e aguardam validação final.
+      </p>
+    </section>
+
+    <p class="notice">
+      Conteúdo de rascunho: categorias sujeitas a aprovação formal da empresa.
+    </p>
+    <div class="grid grid-2">
+      {services.map((service) => <ServiceCard service={service} />)}
+    </div>
+
+    <section class="card stack">
+      <SectionHeading
+        title="Não sabe exatamente de que serviço precisa?"
+        description="Descreva-nos o problema ou o resultado que pretende alcançar. A equipa LMDreams ajudará a identificar os profissionais e trabalhos necessários."
+      />
+    </section>
+
+    <CallToAction
+      title="Precisa de orientação para avançar?"
+      description="A equipa pode ajudar a enquadrar a sua necessidade e definir a melhor abordagem."
+      primaryLabel="Pedir orçamento"
+      primaryHref="/contactos/#pedido-orcamento"
+      secondaryLabel="Contactar a LMDreams"
+      secondaryHref="/contactos/"
+    />
+  </div>
+</BaseLayout>

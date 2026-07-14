@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520">
+  <rect width="800" height="520" rx="24" fill="#f1ebe2"/>
+  <g fill="#7c4322">
+    <circle cx="250" cy="280" r="80"/>
+    <circle cx="520" cy="280" r="100" opacity="0.85"/>
+  </g>
+  <path d="M250 210l-25 30 56 60 45-44-52-46-24 0zm290-65 25 25-48 48 24 24 48-48 25 25 18-18-74-74-18 18z" fill="#222426"/>
+  <text x="70" y="110" fill="#222426" font-size="42" font-family="Segoe UI, Arial, sans-serif" font-weight="700">
+    [Imagem ilustrativa]
+  </text>
+</svg>

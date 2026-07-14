@@ -1,0 +1,40 @@
+---
+import type { NavigationItem } from '@/types/content';
+import { withBasePath } from '@/utils/validation';
+
+interface Props {
+  items: NavigationItem[];
+  currentPath: string;
+}
+
+const { items, currentPath } = Astro.props;
+---
+
+<button
+  class="mobile-toggle"
+  type="button"
+  aria-expanded="false"
+  aria-controls="mobile-menu"
+  data-nav-toggle
+>
+  <span aria-hidden="true">☰</span>
+  <span class="sr-only">Abrir menu principal</span>
+</button>
+
+<div class="mobile-menu" id="mobile-menu" data-nav-panel hidden>
+  <ul class="list-reset mobile-nav-list">
+    {
+      items.map((item) => {
+        const active =
+          currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+        return (
+          <li>
+            <a class:list={['nav-link', active && 'is-active']} href={withBasePath(item.href)}>
+              {item.label}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</div>

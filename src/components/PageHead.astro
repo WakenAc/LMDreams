@@ -1,0 +1,48 @@
+---
+import siteConfig from '../../site.config.mjs';
+import { absoluteAssetUrl, absoluteUrl, withBasePath } from '@/utils/validation';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+  ogImage?: string;
+  noIndex?: boolean;
+  structuredData?: Record<string, unknown> | null;
+}
+
+const {
+  title = siteConfig.defaultTitle,
+  description = siteConfig.defaultDescription,
+  canonicalPath = '/',
+  ogImage = siteConfig.defaultOgImage,
+  noIndex = false,
+  structuredData = null
+} = Astro.props;
+
+const fullTitle = title === siteConfig.defaultTitle ? title : `${title} | LMDreams Construções Lda`;
+const canonicalUrl = absoluteUrl(canonicalPath);
+const ogImageUrl = absoluteAssetUrl(ogImage);
+---
+
+<meta charset="utf-8" />
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<meta content="telephone=no" name="format-detection" />
+<title>{fullTitle}</title>
+<meta content={description} name="description" />
+<link href={canonicalUrl} rel="canonical" />
+<link href={withBasePath('/favicon.svg')} rel="icon" type="image/svg+xml" />
+{noIndex && <meta content="noindex,nofollow" name="robots" />}
+
+<meta content={fullTitle} property="og:title" />
+<meta content={description} property="og:description" />
+<meta content={canonicalUrl} property="og:url" />
+<meta content="website" property="og:type" />
+<meta content={ogImageUrl} property="og:image" />
+<meta content="summary_large_image" name="twitter:card" />
+<meta content={fullTitle} name="twitter:title" />
+<meta content={description} name="twitter:description" />
+<meta content={ogImageUrl} name="twitter:image" />
+{structuredData && (
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+)}

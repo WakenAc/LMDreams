@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import ProjectGallery from '@/components/ProjectGallery.astro';
+import { isPublishedProject } from '@/utils/validation';
+
+const projects = (await getCollection('projects')).filter((entry) => isPublishedProject(entry.data));
+---
+
+<BaseLayout
+  canonicalPath="/projetos/"
+  currentPath="/projetos/"
+  description="Portefólio preparado para projetos reais, autorizados e completos."
+  title="Projetos"
+>
+  <div class="container stack">
+    <Breadcrumbs
+      items={[
+        { label: 'Início', href: '/' },
+        { label: 'Projetos' }
+      ]}
+    />
+
+    <section class="stack">
+      <p class="eyebrow">Projetos</p>
+      <h1>Projetos realizados</h1>
+      <p>
+        Esta secção está preparada para apresentar apenas projetos reais e autorizados. Cada cartão
+        suporta título, localização geral, tipo de intervenção, descrição, imagem real, serviços
+        envolvidos e ligação para detalhe.
+      </p>
+    </section>
+
+    <section class="card stack">
+      <SectionHeading
+        title="Tipologia de ativos visuais"
+        description="A plataforma distingue explicitamente fotografia real de projeto, fotografia de empresa, stock, imagem gerada, imagem ilustrativa e placeholders temporários."
+      />
+      <p>Somente fotografia real e autorizada pode surgir como prova de obra no portefólio.</p>
+    </section>
+
+    <ProjectGallery
+      projects={projects}
+      emptyTitle="Projetos em preparação"
+      emptyDescription="Estamos a reunir e organizar alguns dos trabalhos realizados pela nossa equipa. Em breve poderá conhecer exemplos reais das nossas obras."
+    />
+  </div>
+</BaseLayout>

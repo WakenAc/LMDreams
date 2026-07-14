@@ -1,0 +1,39 @@
+---
+import { companyInfo, contactDetails } from '@/data/company';
+import { footerNavigation } from '@/data/navigation';
+import { withBasePath } from '@/utils/validation';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <section class="stack">
+      <img
+        src={withBasePath('/brand/lmdreams-logo.png')}
+        alt="Logótipo da LMDreams Construções Lda"
+        width="88"
+        height="88"
+      />
+      <p>{companyInfo.intro}</p>
+    </section>
+
+    <section class="stack">
+      <h2>Mapa do site</h2>
+      <ul class="list-reset footer-nav">
+        {footerNavigation.map((item) => <li><a href={withBasePath(item.href)}>{item.label}</a></li>)}
+      </ul>
+    </section>
+
+    <section class="stack">
+      <h2>Contactos</h2>
+      <p><strong>Telefone:</strong> {contactDetails.phone}</p>
+      <p><strong>Email:</strong> {contactDetails.email}</p>
+      <p><strong>Área de atuação:</strong> {contactDetails.operationArea}</p>
+    </section>
+  </div>
+  <div class="container footer-meta">
+    <p>© {year} {companyInfo.legalName}. Todos os direitos reservados.</p>
+    <a href={withBasePath('/privacidade/')}>Política de privacidade</a>
+  </div>
+</footer>

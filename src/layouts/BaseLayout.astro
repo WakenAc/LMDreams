@@ -1,0 +1,49 @@
+---
+import siteConfig from '../../site.config.mjs';
+import PageHead from '@/components/PageHead.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import SkipLink from '@/components/SkipLink.astro';
+import '@/styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+  currentPath: string;
+  noIndex?: boolean;
+  structuredData?: Record<string, unknown> | null;
+}
+
+const {
+  title,
+  description,
+  canonicalPath = '/',
+  currentPath,
+  noIndex = false,
+  structuredData = null
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={siteConfig.defaultLocale}>
+  <head>
+    <PageHead
+      title={title}
+      description={description}
+      canonicalPath={canonicalPath}
+      noIndex={noIndex}
+      structuredData={structuredData}
+    />
+  </head>
+  <body>
+    <SkipLink />
+    <div class="site-shell">
+      <SiteHeader currentPath={currentPath} />
+      <main id="conteudo-principal">
+        <slot />
+      </main>
+      <SiteFooter />
+    </div>
+  </body>
+</html>

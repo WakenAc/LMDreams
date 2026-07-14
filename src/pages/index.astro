@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import HeroSection from '@/components/HeroSection.astro';
+import TrustIndicators from '@/components/TrustIndicators.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import ServiceCard from '@/components/ServiceCard.astro';
+import ProcessSteps from '@/components/ProcessSteps.astro';
+import ProjectGallery from '@/components/ProjectGallery.astro';
+import CallToAction from '@/components/CallToAction.astro';
+import { services } from '@/data/services';
+import { processSteps } from '@/data/process';
+import { specializationBenefits } from '@/data/company';
+import { getLocalBusinessSchema, getOrganizationSchema } from '@/utils/structured-data';
+import { isPublishedProject } from '@/utils/validation';
+
+const projects = (await getCollection('projects')).filter((entry) =>
+  isPublishedProject(entry.data)
+);
+---
+
+<BaseLayout
+  canonicalPath="/"
+  currentPath="/"
+  description="LMDreams Construções Lda: construção e remodelação com coordenação especializada, experiência e transparência."
+  structuredData={getOrganizationSchema() || getLocalBusinessSchema()}
+  title="Construção e remodelação com especialização"
+>
+  <div class="container stack">
+    <HeroSection />
+    <TrustIndicators />
+
+    <section>
+      <SectionHeading
+        eyebrow="Serviços"
+        title="Serviços em estrutura de rascunho"
+        description="Categorias base em revisão. Todos os itens seguintes são conteúdo de rascunho e exigem aprovação formal da LMDreams."
+      />
+      <div class="grid grid-3">
+        {services.map((service) => <ServiceCard service={service} />)}
+      </div>
+    </section>
+
+    <section>
+      <SectionHeading
+        eyebrow="Diferenciação"
+        title="Cada trabalho nas mãos certas."
+        description="Uma obra exige diferentes conhecimentos e competências. A LMDreams reúne profissionais especializados para cada área, garantindo melhor execução, maior responsabilização e uma coordenação mais transparente."
+      />
+      <div class="grid grid-2">
+        {specializationBenefits.map((benefit) => (
+          <article class="card stack">
+            <h3>{benefit.title}</h3>
+            <p>{benefit.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <ProcessSteps steps={processSteps} />
+
+    <section>
+      <SectionHeading
+        eyebrow="Projetos"
+        title="Portefólio preparado para obras reais"
+        description="A secção de projetos apresenta apenas trabalhos reais e autorizados para publicação."
+      />
+      <ProjectGallery
+        projects={projects}
+        emptyTitle="Projetos em preparação"
+        emptyDescription="Estamos a reunir e organizar alguns dos trabalhos realizados pela nossa equipa. Em breve poderá conhecer exemplos reais das nossas obras."
+      />
+    </section>
+
+    <CallToAction
+      title="Tem uma obra ou remodelação em mente?"
+      description="Conte-nos o que precisa. A equipa LMDreams analisará o seu pedido e entrará em contacto consigo."
+      primaryLabel="Pedir orçamento"
+      primaryHref="/contactos/#pedido-orcamento"
+      secondaryLabel="Contactar a LMDreams"
+      secondaryHref="/contactos/"
+    />
+  </div>
+</BaseLayout>

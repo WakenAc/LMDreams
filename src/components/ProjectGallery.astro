@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ProjectCard from '@/components/ProjectCard.astro';
+import EmptyState from '@/components/EmptyState.astro';
+
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+  emptyTitle: string;
+  emptyDescription: string;
+}
+
+const { projects, emptyTitle, emptyDescription } = Astro.props;
+---
+
+{
+  projects.length === 0 ? (
+    <EmptyState title={emptyTitle} description={emptyDescription} />
+  ) : (
+    <div class="grid grid-3">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  )
+}

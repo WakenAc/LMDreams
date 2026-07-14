@@ -1,0 +1,44 @@
+---
+import { withBasePath } from '@/utils/validation';
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav aria-label="Breadcrumb">
+  <ol class="breadcrumbs list-reset">
+    {items.map((item, index) => (
+      <li>
+        {item.href && index !== items.length - 1 ? (
+          <a href={withBasePath(item.href)}>{item.label}</a>
+        ) : (
+          <span aria-current="page">{item.label}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: var(--space-lg);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-300);
+  }
+
+  .breadcrumbs li + li::before {
+    content: '/';
+    margin-right: 0.5rem;
+  }
+</style>

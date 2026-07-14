@@ -1,0 +1,28 @@
+---
+import { contactDetails } from '@/data/company';
+---
+
+<section class="stack" aria-labelledby="contact-options-title">
+  <div class="section-heading">
+    <p class="eyebrow">Contactos</p>
+    <h2 id="contact-options-title">Contactos e área de atuação</h2>
+    <p>
+      Os dados abaixo estão assinalados como placeholders e devem ser substituídos por informação
+      validada antes da publicação final.
+    </p>
+  </div>
+  <div class="grid grid-3">
+    <article class="card stack">
+      <h3>Telefone</h3>
+      <p>{contactDetails.phone}</p>
+    </article>
+    <article class="card stack">
+      <h3>Email</h3>
+      <p>{contactDetails.email}</p>
+    </article>
+    <article class="card stack">
+      <h3>Área de atuação</h3>
+      <p>{contactDetails.operationArea}</p>
+    </article>
+  </div>
+</section>

@@ -1,0 +1,34 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import ContactOptions from '@/components/ContactOptions.astro';
+import ContactForm from '@/components/ContactForm.astro';
+---
+
+<BaseLayout
+  canonicalPath="/contactos/"
+  currentPath="/contactos/"
+  description="Contactos e pedido de orçamento da LMDreams."
+  title="Contactos"
+>
+  <div class="container stack">
+    <Breadcrumbs
+      items={[
+        { label: 'Início', href: '/' },
+        { label: 'Contactos' }
+      ]}
+    />
+
+    <section class="stack">
+      <p class="eyebrow">Contactos</p>
+      <h1>Contactos e pedido de orçamento</h1>
+      <p>
+        Conte-nos o contexto da sua obra ou remodelação. A equipa LMDreams analisará o pedido e
+        responderá através dos canais confirmados.
+      </p>
+    </section>
+
+    <ContactOptions />
+    <ContactForm />
+  </div>
+</BaseLayout>

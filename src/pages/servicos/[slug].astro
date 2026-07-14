@@ -1,0 +1,53 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { services } from '@/data/services';
+import { withBasePath } from '@/utils/validation';
+
+export async function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service }
+  }));
+}
+
+const { service } = Astro.props;
+---
+
+<BaseLayout
+  canonicalPath={`/servicos/${service.slug}/`}
+  currentPath={`/servicos/${service.slug}/`}
+  description={service.summary}
+  title={service.title}
+>
+  <div class="container stack">
+    <Breadcrumbs
+      items={[
+        { label: 'Início', href: '/' },
+        { label: 'Serviços', href: '/servicos/' },
+        { label: service.title }
+      ]}
+    />
+
+    <section class="section-heading">
+      <p class="eyebrow">Serviço</p>
+      <h1>{service.title}</h1>
+      <p>{service.description}</p>
+      <p class="notice">Conteúdo de rascunho, sujeito a aprovação formal da LMDreams.</p>
+    </section>
+
+    <section class="grid grid-2">
+      <article class="card stack">
+        <h2>Benefícios apresentados</h2>
+        <ul>
+          {service.benefits.map((benefit) => <li>{benefit}</li>)}
+        </ul>
+      </article>
+      <article class="card stack">
+        <h2>Precisa de apoio?</h2>
+        <p>Se esta categoria corresponder ao seu caso, fale connosco para enquadrar o pedido.</p>
+        <a class="button button--primary" href={withBasePath('/contactos/#pedido-orcamento')}>Pedir orçamento</a>
+      </article>
+    </section>
+  </div>
+</BaseLayout>

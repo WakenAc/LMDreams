@@ -1,0 +1,47 @@
+{
+  "ci": {
+    "collect": {
+      "startServerCommand": "node tests/static-server.mjs 4323",
+      "startServerReadyPattern": "Static test server ready",
+      "numberOfRuns": 1,
+      "url": [
+        "http://127.0.0.1:4323/LMDreams/",
+        "http://127.0.0.1:4323/LMDreams/empresa/",
+        "http://127.0.0.1:4323/LMDreams/servicos/",
+        "http://127.0.0.1:4323/LMDreams/projetos/",
+        "http://127.0.0.1:4323/LMDreams/contactos/"
+      ]
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": [
+          "warn",
+          {
+            "minScore": 0.9
+          }
+        ],
+        "categories:accessibility": [
+          "error",
+          {
+            "minScore": 0.95
+          }
+        ],
+        "categories:best-practices": [
+          "warn",
+          {
+            "minScore": 0.9
+          }
+        ],
+        "categories:seo": [
+          "error",
+          {
+            "minScore": 0.95
+          }
+        ]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}

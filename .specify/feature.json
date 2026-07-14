@@ -1,0 +1,8 @@
+﻿{
+  "feature_directory": "specs/001-lmdreams-website",
+  "feature_name": "website-institucional-lmdreams",
+  "created_at": "2026-07-13T00:00:00Z",
+  "version": "1.0.0",
+  "phase": "specify",
+  "status": "complete"
+}

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520">
+  <rect width="800" height="520" rx="24" fill="#f3ebde"/>
+  <g stroke="#7c4322" stroke-width="14" fill="none" stroke-linecap="round">
+    <path d="M170 390h460"/>
+    <path d="M250 390V210"/>
+    <path d="M550 390V210"/>
+    <path d="M230 210h340"/>
+  </g>
+  <text x="70" y="110" fill="#222426" font-size="42" font-family="Segoe UI, Arial, sans-serif" font-weight="700">
+    [Imagem ilustrativa]
+  </text>
+</svg>

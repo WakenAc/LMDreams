@@ -1,0 +1,31 @@
+---
+import type { ServiceEntry } from '@/types/content';
+import ServiceIcon from '@/components/ServiceIcon.astro';
+import { withBasePath } from '@/utils/validation';
+
+interface Props {
+  service: ServiceEntry;
+}
+
+const { service } = Astro.props;
+---
+
+<article class="card stack">
+  <div class="service-icon" aria-hidden="true">
+    <ServiceIcon icon={service.icon} />
+  </div>
+  <div class="stack">
+    <h3>{service.title}</h3>
+    <p>{service.summary}</p>
+    {service.draftContent && (
+      <p class="notice">
+        Conteúdo de rascunho para validação. Requer aprovação da LMDreams antes de publicação
+        final.
+      </p>
+    )}
+    <div class="button-row">
+      <a class="inline-link" href={withBasePath(`/servicos/${service.slug}/`)}>Saber mais</a>
+      <a class="inline-link" href={withBasePath('/contactos/#pedido-orcamento')}>Pedir orçamento</a>
+    </div>
+  </div>
+</article>

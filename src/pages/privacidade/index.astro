@@ -1,0 +1,76 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+---
+
+<BaseLayout
+  canonicalPath="/privacidade/"
+  currentPath="/privacidade/"
+  description="Política de privacidade do website institucional da LMDreams."
+  title="Privacidade"
+>
+  <div class="container stack">
+    <Breadcrumbs
+      items={[
+        { label: 'Início', href: '/' },
+        { label: 'Privacidade' }
+      ]}
+    />
+
+    <section class="stack">
+      <p class="eyebrow">Privacidade</p>
+      <h1>Política de privacidade</h1>
+      <p>
+        Este texto descreve, de forma resumida, como os dados são usados para responder a pedidos
+        de contacto. Deve ser revisto e aprovado pela empresa antes de publicação definitiva.
+      </p>
+    </section>
+
+    <section class="grid grid-2">
+      <article class="card stack">
+        <h2>Responsável e finalidade</h2>
+        <p>
+          O website institucional da LMDreams recolhe apenas os dados estritamente necessários para responder a um pedido de contacto ou orçamento: nome, meio de contacto, localidade geral, tipo de necessidade e descrição do pedido.
+        </p>
+        <p>
+          A finalidade é responder ao contacto iniciado pelo próprio visitante. Não existe criação de conta, perfil oculto ou analytics por defeito.
+        </p>
+      </article>
+
+      <article class="card stack">
+        <h2>Formulário de contacto</h2>
+        <p>
+          Quando o endpoint estiver configurado, os dados são enviados para o serviço de formulário
+          definido na configuração do projeto.
+        </p>
+        <p>
+          Antes da publicação, a empresa deve confirmar a política de retenção e os canais diretos
+          de contacto.
+        </p>
+      </article>
+    </section>
+
+    <section class="grid grid-2">
+      <article class="card stack">
+        <h2>Conservação e direitos</h2>
+        <p>
+          O website estático não guarda submissões localmente. A retenção depende do fornecedor de
+          formulário configurado e dos processos internos da empresa.
+        </p>
+        <p>
+          O visitante pode pedir acesso, correção ou eliminação dos dados através do contacto oficial da empresa assim que este for confirmado e publicado.
+        </p>
+      </article>
+
+      <article class="card stack">
+        <h2>Segurança e minimização</h2>
+        <ul>
+          <li>Sem segredos no frontend</li>
+          <li>Sem cookies não essenciais por defeito</li>
+          <li>Sem dependência runtime de Higgsfield</li>
+          <li>Sem recolha de dados excessivos na versão atual</li>
+        </ul>
+      </article>
+    </section>
+  </div>
+</BaseLayout>

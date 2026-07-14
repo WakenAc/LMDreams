@@ -1,0 +1,23 @@
+---
+import { withBasePath } from '@/utils/validation';
+
+interface Props {
+  title: string;
+  description: string;
+  primaryLabel: string;
+  primaryHref: string;
+  secondaryLabel: string;
+  secondaryHref: string;
+}
+
+const { title, description, primaryLabel, primaryHref, secondaryLabel, secondaryHref } = Astro.props;
+---
+
+<section class="card cta-block stack">
+  <h2>{title}</h2>
+  <p>{description}</p>
+  <div class="button-row">
+    <a class="button button--primary" href={withBasePath(primaryHref)}>{primaryLabel}</a>
+    <a class="button button--secondary" href={withBasePath(secondaryHref)}>{secondaryLabel}</a>
+  </div>
+</section>

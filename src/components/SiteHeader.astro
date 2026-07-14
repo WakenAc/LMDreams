@@ -1,0 +1,57 @@
+---
+import { primaryAction, primaryNavigation } from '@/data/navigation';
+import MobileNavigation from '@/components/MobileNavigation.astro';
+import { withBasePath } from '@/utils/validation';
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href={withBasePath('/')} aria-label="LMDreams, voltar ao início">
+      <img
+        src={withBasePath('/brand/lmdreams-logo.png')}
+        alt="Logótipo da LMDreams Construções Lda"
+        width="72"
+        height="72"
+      />
+      <span class="brand-text">
+        <strong>LMDreams Construções Lda</strong>
+        <span>O seu sonho, a nossa obra.</span>
+      </span>
+    </a>
+
+    <nav aria-label="Navegação principal" class="desktop-nav">
+      <ul class="list-reset nav-list">
+        {
+          primaryNavigation.map((item) => {
+            const active =
+              currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+            return (
+              <li>
+                <a class:list={['nav-link', active && 'is-active']} href={withBasePath(item.href)}>
+                  {item.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    <a class="button button--primary header-cta" href={withBasePath(primaryAction.href)}>
+      {primaryAction.label}
+    </a>
+    <div class="mobile-nav">
+      <MobileNavigation items={primaryNavigation} currentPath={currentPath} />
+    </div>
+  </div>
+</header>
+
+<script>
+  import '../scripts/navigation.ts';
+</script>

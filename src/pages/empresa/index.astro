@@ -1,0 +1,70 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import CallToAction from '@/components/CallToAction.astro';
+import { companyInfo, specializationBenefits } from '@/data/company';
+---
+
+<BaseLayout
+  canonicalPath="/empresa/"
+  currentPath="/empresa/"
+  description="Página institucional da LMDreams: experiência especializada, valores e modelo de coordenação."
+  title="Empresa"
+>
+  <div class="container stack">
+    <Breadcrumbs
+      items={[
+        { label: 'Início', href: '/' },
+        { label: 'Empresa' }
+      ]}
+    />
+
+    <section class="stack">
+      <p class="eyebrow">Empresa</p>
+      <h1>Experiência especializada para obras bem executadas.</h1>
+      <p>{companyInfo.intro}</p>
+    </section>
+
+    <section class="grid grid-2">
+      <article class="card stack">
+        <h2>Experiência e rigor</h2>
+        <p>{companyInfo.experienceStatement}</p>
+        <p>
+          A referência de experiência aplica-se aos profissionais envolvidos nas equipas, sem
+          indicar antiguidade da empresa.
+        </p>
+      </article>
+
+      <article class="card stack">
+        <h2>Valores</h2>
+        <ul>
+          {companyInfo.values.map((value) => <li>{value}</li>)}
+        </ul>
+      </article>
+    </section>
+
+    <SectionHeading
+      eyebrow="Modelo de trabalho"
+      title="Especialização, coordenação e comunicação"
+      description="A LMDreams coordena diferentes especialidades de forma estruturada para manter a execução alinhada com os objetivos da obra."
+    />
+    <div class="grid grid-2">
+      {specializationBenefits.map((benefit) => (
+        <article class="card stack">
+          <h3>{benefit.title}</h3>
+          <p>{benefit.description}</p>
+        </article>
+      ))}
+    </div>
+
+    <CallToAction
+      title="Quer discutir o seu projeto?"
+      description="Partilhe o que precisa e a equipa LMDreams entra em contacto para avaliar o enquadramento da intervenção."
+      primaryLabel="Pedir orçamento"
+      primaryHref="/contactos/#pedido-orcamento"
+      secondaryLabel="Ver contactos"
+      secondaryHref="/contactos/"
+    />
+  </div>
+</BaseLayout>

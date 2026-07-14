@@ -1,0 +1,13 @@
+---
+import { trustHighlights } from '@/data/company';
+---
+
+<section class="stack">
+  <div class="section-heading">
+    <p class="eyebrow">Confiança</p>
+    <h2>Compromisso com qualidade, especialização e comunicação clara</h2>
+  </div>
+  <ul class="grid grid-2 list-reset">
+    {trustHighlights.map((item) => <li class="card trust-item">{item}</li>)}
+  </ul>
+</section>

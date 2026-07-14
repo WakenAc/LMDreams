@@ -1,0 +1,28 @@
+---
+import type { ProcessStep } from '@/types/content';
+
+interface Props {
+  steps: ProcessStep[];
+}
+
+const { steps } = Astro.props;
+---
+
+<section class="stack">
+  <div class="section-heading">
+    <p class="eyebrow">Como trabalhamos</p>
+    <h2>Processo de trabalho</h2>
+    <p class="notice">
+      Fluxo de trabalho em rascunho. Conteúdo sujeito a aprovação formal da LMDreams.
+    </p>
+  </div>
+  <ol class="grid grid-2 process-list">
+    {steps.sort((a, b) => a.displayOrder - b.displayOrder).map((step) => (
+      <li class="card stack">
+        <p class="eyebrow">Passo {step.displayOrder}</p>
+        <h3>{step.title}</h3>
+        <p>{step.description}</p>
+      </li>
+    ))}
+  </ol>
+</section>

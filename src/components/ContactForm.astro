@@ -1,0 +1,169 @@
+---
+import { contactDetails } from '@/data/company';
+import { isContactFormConfigured } from '@/utils/validation';
+
+const formAction = contactDetails.formEndpoint;
+const formEnabled = isContactFormConfigured(formAction);
+---
+
+<section class="stack" aria-labelledby="pedido-orcamento">
+  <div class="section-heading">
+    <p class="eyebrow">Pedido de orçamento</p>
+    <h2 id="pedido-orcamento">Fale-nos da sua necessidade</h2>
+    <p>
+      Preencha os campos seguintes para partilhar o contexto da obra. Em modo de desenvolvimento,
+      o envio só fica ativo quando existir um endpoint configurado.
+    </p>
+  </div>
+
+  {!formEnabled && (
+    <div class="warning" role="status" data-form-dev-mode>
+      Modo seguro ativo: configure <code>CONTACT_FORM_ENDPOINT</code> para ativar o envio antes da
+      publicação.
+    </div>
+  )}
+
+  <form
+    class="card"
+    id="pedido-orcamento-form"
+    method="post"
+    action={formAction}
+    data-contact-form
+    data-endpoint={formAction || ''}
+  >
+    <div class="warning form-summary" data-form-summary hidden tabindex="-1" role="alert"></div>
+
+    <fieldset aria-describedby="contact-form-help">
+      <div class="grid grid-2">
+        <label>
+          Nome
+          <input autocomplete="name" maxlength="100" name="nome" required type="text" />
+          <small class="field-hint">Indique o nome de contacto principal.</small>
+        </label>
+        <label>
+          Email
+          <input
+            autocomplete="email"
+            maxlength="100"
+            name="email"
+            placeholder="nome@dominio.pt"
+            required
+            type="email"
+          />
+          <small class="field-hint">Será usado para resposta ao pedido.</small>
+        </label>
+      </div>
+
+      <div class="grid grid-2">
+        <label>
+          Telefone
+          <input
+            autocomplete="tel"
+            maxlength="30"
+            name="telefone"
+            placeholder="+351"
+            required
+            type="tel"
+          />
+          <small class="field-hint">Inclua indicativo nacional se aplicável.</small>
+        </label>
+
+        <label>
+          Localidade da obra
+          <input autocomplete="address-level2" maxlength="120" name="localidade" required type="text" />
+          <small class="field-hint">Zona geral da intervenção.</small>
+        </label>
+      </div>
+
+      <div class="grid grid-2">
+        <label>
+          Tipo de trabalho
+          <select name="tipoTrabalho" required>
+            <option value="">Selecionar</option>
+            <option value="construcao-remodelacao">Construção e remodelação</option>
+            <option value="especialidades-tecnicas">Especialidades técnicas</option>
+            <option value="acabamentos">Acabamentos</option>
+            <option value="reparacoes-melhorias">Reparações e melhorias</option>
+            <option value="coordenacao-trabalhos">Coordenação de trabalhos</option>
+            <option value="acompanhamento-obra">Acompanhamento de obra</option>
+            <option value="outro">Não sei ao certo / outro</option>
+          </select>
+          <small class="field-hint">Escolha aproximada; a equipa ajuda a clarificar.</small>
+        </label>
+        <label>
+          Descrição da necessidade
+          <textarea maxlength="3000" minlength="20" name="descricao" required></textarea>
+          <small class="field-hint">Explique o que pretende alcançar com o projeto.</small>
+        </label>
+      </div>
+
+      <label>
+        <span class="sr-only">Não preencher</span>
+        <input aria-hidden="true" autocomplete="off" name="website" tabindex="-1" type="text" class="honeypot" />
+      </label>
+
+      <label class="consent">
+        <input name="consentimentoPrivacidade" required type="checkbox" value="yes" />
+        <span>Li a informação de privacidade e autorizo o tratamento do pedido.</span>
+      </label>
+
+      <p class="field-hint" id="contact-form-help">
+        Se preferir, poderá usar telefone e email assim que os contactos oficiais forem confirmados.
+      </p>
+
+      <div class="success" aria-live="polite" data-form-success hidden></div>
+      <div class="warning" aria-live="assertive" data-form-error hidden></div>
+
+      <button
+        class="button button--primary"
+        type="submit"
+        data-submit-button
+      >
+        Enviar pedido
+      </button>
+    </fieldset>
+  </form>
+</section>
+
+<script>
+  import '../scripts/contact-form.ts';
+</script>
+
+<style>
+  .form-summary ul {
+    margin: 0;
+    padding-left: 1rem;
+  }
+
+  fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .field-hint {
+    color: var(--color-text-muted);
+  }
+
+  .consent {
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    font-weight: 500;
+  }
+
+  .consent input {
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-top: 0.3rem;
+  }
+
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+</style>

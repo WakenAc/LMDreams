@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { isPublishedProject } from '@/utils/validation';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects
+    .filter((entry) => isPublishedProject(entry.data))
+    .map((entry) => ({
+      params: { slug: entry.data.slug },
+      props: { project: entry }
+    }));
+}
+
+const { project } = Astro.props;
+---
+
+<BaseLayout
+  canonicalPath={`/projetos/${project.data.slug}/`}
+  currentPath={`/projetos/${project.data.slug}/`}
+  description={project.data.summary}
+  title={project.data.title}
+>
+  <div class="container stack">
+    <Breadcrumbs
+      items={[
+        { label: 'Início', href: '/' },
+        { label: 'Projetos', href: '/projetos/' },
+        { label: project.data.title }
+      ]}
+    />
+    <section class="section-heading">
+      <p class="eyebrow">Projeto</p>
+      <h1>{project.data.title}</h1>
+      <p>{project.data.summary}</p>
+    </section>
+
+    <section class="grid grid-2">
+      <article class="card stack">
+        <h2>Dados do projeto</h2>
+        <p><strong>Localização geral:</strong> {project.data.locationGeneral}</p>
+        <p><strong>Tipo de intervenção:</strong> {project.data.interventionType}</p>
+        <p><strong>Serviços envolvidos:</strong> {project.data.servicesInvolved.join(', ')}</p>
+      </article>
+      <article class="card stack">
+        <h2>Galeria</h2>
+        <p>Fotografias reais e autorizadas para publicação.</p>
+      </article>
+    </section>
+  </div>
+</BaseLayout>

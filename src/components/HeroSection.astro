@@ -1,0 +1,37 @@
+---
+import { companyInfo } from '@/data/company';
+import { withBasePath } from '@/utils/validation';
+---
+
+<section class="hero-grid">
+  <div class="stack">
+    <p class="eyebrow">Construção, remodelação e especialização</p>
+    <h1>Construímos com experiência, rigor e transparência.</h1>
+    <p>
+      Na LMDreams, cada área da sua obra é entregue a profissionais especializados.
+      Coordenamos experiência, qualidade e comunicação clara para transformar cada projeto numa
+      obra bem executada.
+    </p>
+    <div class="button-row">
+      <a class="button button--primary" href={withBasePath('/contactos/#pedido-orcamento')}>
+        Pedir orçamento
+      </a>
+      <a class="button button--secondary" href={withBasePath('/servicos/')}>Conhecer os serviços</a>
+    </div>
+    <p class="hero-slogan">{companyInfo.slogan}</p>
+  </div>
+
+  <figure class="hero-figure card">
+    <img
+      src={withBasePath('/illustrative/hero-grid.svg')}
+      alt="Imagem ilustrativa de contexto de construção e remodelação."
+      width="1200"
+      height="800"
+      fetchpriority="high"
+    />
+    <figcaption class="muted">
+      Visual ilustrativo para enquadramento institucional. Não representa um projeto real da
+      LMDreams.
+    </figcaption>
+  </figure>
+</section>

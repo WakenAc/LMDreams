@@ -1,0 +1,13 @@
+---
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<section class="card stack empty-state" aria-live="polite">
+  <h3>{title}</h3>
+  <p>{description}</p>
+</section>

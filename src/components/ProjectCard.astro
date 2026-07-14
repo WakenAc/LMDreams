@@ -1,0 +1,33 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { withBasePath } from '@/utils/validation';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const heroImage = project.data.images[0];
+---
+
+<article class="card stack">
+  {heroImage && (
+    <img
+      alt={heroImage.alt}
+      height={heroImage.height}
+      loading="lazy"
+      src={heroImage.src}
+      width={heroImage.width}
+    />
+  )}
+  <div class="stack">
+    <h3>{project.data.title}</h3>
+    <p>{project.data.summary}</p>
+    <p><strong>Localização geral:</strong> {project.data.locationGeneral}</p>
+    <p><strong>Tipo de intervenção:</strong> {project.data.interventionType}</p>
+    <p><strong>Serviços envolvidos:</strong> {project.data.servicesInvolved.join(', ')}</p>
+    <a class="inline-link" href={withBasePath(`/projetos/${project.data.slug}/`)}>
+      Ver projeto
+    </a>
+  </div>
+</article>
