@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useInView } from '../hooks/useInView';
-import { services } from '../data/services';
+import { services } from '../data/services-react';
 import { FaSearch } from 'react-icons/fa';
 
 export function Services() {

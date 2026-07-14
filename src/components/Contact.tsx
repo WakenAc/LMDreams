@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useInView } from '../hooks/useInView';
-import { services } from '../data/services';
+import { services } from '../data/services-react';
 import { FaPaperPlane, FaPhone, FaWhatsapp, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
 const SERVICE_TYPES = [

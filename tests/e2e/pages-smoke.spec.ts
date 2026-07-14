@@ -40,7 +40,7 @@ test('robots and main assets are reachable under the configured base path', asyn
 test('mobile navigation works on small viewport', async ({ browser }) => {
   const context = await browser.newContext({ viewport: { width: 320, height: 640 } });
   const page = await context.newPage();
-  await page.goto(`http://127.0.0.1:${process.env.PLAYWRIGHT_PORT || '4325'}${withBase('/')}`);
+  await page.goto(`http://127.0.0.1:${process.env.PLAYWRIGHT_PORT || '4322'}${withBase('/')}`);
   await page.getByRole('button', { name: 'Abrir menu principal' }).click();
   await expect(page.locator('[data-nav-panel]').getByRole('link', { name: 'Serviços' })).toBeVisible();
   await context.close();
