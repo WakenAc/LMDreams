@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useInView } from '../hooks/useInView';
-import { portfolioItems, serviceCategories } from '../data/services';
+import { portfolioItems, serviceCategories } from '../data/services-react';
 import { FaCamera } from 'react-icons/fa';
 
 export function Portfolio() {
