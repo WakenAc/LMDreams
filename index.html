@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1c1917" />
+
+    <title>LMDreams | Empresa de Construção Civil e Remodelações em Portugal</title>
+    <meta
+      name="description"
+      content="LMDreams é uma empresa de construção civil com profissionais especializados em cada área da obra. Construção, remodelações, cozinhas, casas de banho e muito mais — com rigor e transparência do início ao fim."
+    />
+    <meta
+      name="keywords"
+      content="empresa de construção civil, remodelações, obras, construção e remodelação, remodelação de casas, remodelação de cozinhas, remodelação de casas de banho, empresa de obras, profissionais de construção"
+    />
+    <meta name="author" content="LMDreams" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://wakenac.github.io/lmdreams/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_PT" />
+    <meta property="og:site_name" content="LMDreams" />
+    <meta property="og:title" content="LMDreams | A sua obra executada por especialistas" />
+    <meta
+      property="og:description"
+      content="Construção civil e remodelações com profissionais especializados em cada área. Qualidade, rigor e transparência do início ao fim."
+    />
+    <meta property="og:url" content="https://wakenac.github.io/lmdreams/" />
+    <meta property="og:image" content="https://wakenac.github.io/lmdreams/og-image.svg" />
+    <meta property="og:image:type" content="image/svg+xml" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="LMDreams | A sua obra executada por especialistas" />
+    <meta
+      name="twitter:description"
+      content="Construção civil e remodelações com profissionais especializados em cada área. Qualidade, rigor e transparência do início ao fim."
+    />
+    <meta name="twitter:image" content="https://wakenac.github.io/lmdreams/og-image.svg" />
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="apple-touch-icon" href="favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "GeneralContractor",
+        "name": "LMDreams",
+        "description": "Empresa de construção civil e remodelações, com profissionais especializados em cada área da obra.",
+        "url": "https://wakenac.github.io/lmdreams/",
+        "telephone": "+351919233372",
+        "email": "mendes3pm@gmail.com",
+        "areaServed": {
+          "@type": "Country",
+          "name": "Portugal"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "PT"
+        },
+        "priceRange": "$$"
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!--
+      Complemento do truque de redireccionamento em public/404.html
+      (https://github.com/rafgraph/spa-github-pages): reconstitui o
+      caminho original a partir da query string antes de o React Router
+      assumir o controlo da navegação.
+    -->
+    <script>
+      (function (l) {
+        if (l.search[1] === "/") {
+          var decoded = l.search
+            .slice(1)
+            .split("&")
+            .map(function (s) {
+              return s.replace(/~and~/g, "&");
+            })
+            .join("?");
+          window.history.replaceState(
+            null,
+            "",
+            l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      })(window.location);
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

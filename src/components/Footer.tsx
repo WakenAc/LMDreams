@@ -1,0 +1,146 @@
+import { Link } from "react-router-dom";
+import { ExternalLink, Facebook, Instagram, Mail, Phone } from "lucide-react";
+import { Logo } from "./Logo";
+import { Container } from "./ui/Container";
+import { SITE } from "../lib/site";
+import { NAV_ITEMS } from "../data/nav";
+
+const SERVICOS_RODAPE = [
+  "Construção civil",
+  "Remodelações completas",
+  "Remodelação de cozinhas",
+  "Remodelação de casas de banho",
+  "Canalização e eletricidade",
+];
+
+export function Footer() {
+  const ano = new Date().getFullYear();
+
+  return (
+    <footer className="bg-stone-900 text-stone-300">
+      <Container className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr] lg:gap-8">
+        <div className="flex flex-col gap-4">
+          <Logo variant="light" markClassName="h-10 w-10" />
+          <p className="max-w-xs text-sm leading-relaxed text-stone-400">
+            Empresa de construção civil com profissionais especializados em
+            cada área da obra. Qualidade, rigor e transparência do início ao
+            fim.
+          </p>
+          <div className="flex items-center gap-3 pt-1">
+            <a
+              href={SITE.instagramHref}
+              title="Placeholder — associar Instagram real"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-stone-700 text-stone-400 transition-colors hover:border-copper-400 hover:text-copper-300"
+            >
+              <Instagram className="h-4 w-4" aria-hidden="true" />
+            </a>
+            <a
+              href={SITE.facebookHref}
+              title="Placeholder — associar Facebook real"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-stone-700 text-stone-400 transition-colors hover:border-copper-400 hover:text-copper-300"
+            >
+              <Facebook className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+
+        <nav aria-label="Ligações rápidas">
+          <h3 className="font-display text-sm font-semibold text-paper">
+            Ligações rápidas
+          </h3>
+          <ul className="mt-4 flex flex-col gap-2.5 text-sm">
+            {NAV_ITEMS.map((item) => (
+              <li key={item.hash}>
+                <Link
+                  to={{ pathname: "/", hash: item.hash }}
+                  className="text-stone-400 transition-colors hover:text-copper-300"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <nav aria-label="Serviços">
+          <h3 className="font-display text-sm font-semibold text-paper">
+            Serviços
+          </h3>
+          <ul className="mt-4 flex flex-col gap-2.5 text-sm">
+            {SERVICOS_RODAPE.map((servico) => (
+              <li key={servico}>
+                <Link
+                  to={{ pathname: "/", hash: "servicos" }}
+                  className="text-stone-400 transition-colors hover:text-copper-300"
+                >
+                  {servico}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div>
+          <h3 className="font-display text-sm font-semibold text-paper">
+            Contactos
+          </h3>
+          <ul className="mt-4 flex flex-col gap-2.5 text-sm text-stone-400">
+            <li>
+              <a
+                href={SITE.telefoneHref}
+                className="flex items-center gap-2 transition-colors hover:text-copper-300"
+              >
+                <Phone className="h-3.5 w-3.5" aria-hidden="true" />
+                {SITE.telefone}
+              </a>
+            </li>
+            <li>
+              <a
+                href={`mailto:${SITE.email}`}
+                className="flex items-center gap-2 transition-colors hover:text-copper-300"
+              >
+                <Mail className="h-3.5 w-3.5" aria-hidden="true" />
+                {SITE.email}
+              </a>
+            </li>
+            <li className="pt-1 text-stone-500">{SITE.areaAtuacao}</li>
+          </ul>
+        </div>
+      </Container>
+
+      <div className="border-t border-stone-800">
+        <Container className="flex flex-col gap-4 py-6 text-xs text-stone-500 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {ano} LMDreams. Todos os direitos reservados.</p>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2">
+            <li>
+              <Link to="/politica-de-privacidade" className="hover:text-copper-300">
+                Política de privacidade
+              </Link>
+            </li>
+            <li>
+              <Link to="/politica-de-cookies" className="hover:text-copper-300">
+                Política de cookies
+              </Link>
+            </li>
+            <li>
+              <Link to="/termos-e-condicoes" className="hover:text-copper-300">
+                Termos e condições
+              </Link>
+            </li>
+            <li>
+              <a
+                href="https://www.livroreclamacoes.pt/Inicio/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 hover:text-copper-300"
+              >
+                Livro de reclamações
+                <ExternalLink className="h-3 w-3" aria-hidden="true" />
+              </a>
+            </li>
+          </ul>
+        </Container>
+      </div>
+    </footer>
+  );
+}

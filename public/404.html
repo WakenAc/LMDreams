@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="UTF-8" />
+    <title>LMDreams</title>
+    <!--
+      Truque de redireccionamento para SPA em GitHub Pages
+      (https://github.com/rafgraph/spa-github-pages).
+
+      O GitHub Pages não suporta reescrita de rotas do lado do servidor.
+      Este ficheiro é servido para qualquer caminho desconhecido (ex.:
+      depois de um F5 numa página interna) e redireciona para o
+      index.html, preservando o caminho original numa query string que
+      é depois reconstituída pelo script incluído em index.html.
+
+      pathSegmentsToKeep = 1 porque o site é publicado num caminho de
+      projeto (https://<utilizador>.github.io/lmdreams/). Se publicar
+      num domínio próprio na raiz (via CNAME), mude para 0.
+    -->
+    <script>
+      var pathSegmentsToKeep = 1;
+      var l = window.location;
+      l.replace(
+        l.protocol +
+          "//" +
+          l.hostname +
+          (l.port ? ":" + l.port : "") +
+          l.pathname
+            .split("/")
+            .slice(0, 1 + pathSegmentsToKeep)
+            .join("/") +
+          "/?/" +
+          l.pathname
+            .slice(1)
+            .split("/")
+            .slice(pathSegmentsToKeep)
+            .join("/")
+            .replace(/&/g, "~and~") +
+          (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "") +
+          l.hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html>

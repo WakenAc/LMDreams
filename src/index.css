@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", "Georgia", serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  /* Neutros — betão, pedra, cimento */
+  --color-ink: #1c1815;
+  --color-ink-2: #2a2420;
+  --color-ink-3: #3a332c;
+  --color-paper: #faf7f2;
+  --color-paper-2: #f3ede2;
+  --color-stone-50: #f7f4ee;
+  --color-stone-100: #efe8db;
+  --color-stone-200: #e2d8c4;
+  --color-stone-300: #cabb9d;
+  --color-stone-400: #a9987a;
+  --color-stone-500: #8a7a5f;
+  --color-stone-600: #6b5e48;
+  --color-stone-700: #4f4536;
+  --color-stone-800: #382f24;
+  --color-stone-900: #241e17;
+
+  /* Cor de destaque — cobre / terracota queimada */
+  --color-copper-50: #fbeee6;
+  --color-copper-100: #f6dcc8;
+  --color-copper-200: #eab894;
+  --color-copper-300: #dd9968;
+  --color-copper-400: #c97a49;
+  --color-copper-500: #b5622f;
+  --color-copper-600: #954e25;
+  --color-copper-700: #713b1d;
+  --color-copper-800: #522c16;
+  --color-copper-900: #392010;
+
+  --shadow-soft: 0 1px 2px rgba(28, 24, 21, 0.04), 0 8px 24px -8px rgba(28, 24, 21, 0.12);
+  --shadow-lift: 0 4px 8px rgba(28, 24, 21, 0.06), 0 24px 48px -16px rgba(28, 24, 21, 0.22);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-stone-200);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-copper-500);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background-color: var(--color-copper-200);
+    color: var(--color-ink);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer utilities {
+  .container-lm {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .container-lm {
+      padding-inline: 2rem;
+    }
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .fade-up {
+    animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
