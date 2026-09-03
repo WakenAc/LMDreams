@@ -78,19 +78,23 @@ O projeto já vem preparado para publicação automática:
 2. Em **Settings → Pages**, defina a origem como **GitHub Actions**.
 3. Faça push para o branch `main` — o workflow em
    `.github/workflows/deploy.yml` faz o build e publica automaticamente em
-   `https://<o-seu-utilizador>.github.io/lmdreams/`.
+   `https://<o-seu-utilizador>.github.io/LMDreams/`.
 
 Também pode acionar o deployment manualmente em **Actions → Publicar no
 GitHub Pages → Run workflow**.
 
 ### Caminho base (`base path`)
 
-O `vite.config.ts` define `base: "/lmdreams/"`, o valor correto para uma
-"página de projeto" do GitHub Pages (`https://<utilizador>.github.io/lmdreams/`).
+O `vite.config.ts` define `base: "/LMDreams/"`, o valor correto para uma
+"página de projeto" do GitHub Pages (`https://<utilizador>.github.io/LMDreams/`).
 
-- **Se o nome do repositório for diferente de `lmdreams`**, atualize o
-  valor de `BASE_PATH` em `vite.config.ts` para corresponder ao nome real
-  do repositório.
+- **Este valor tem de corresponder exatamente ao nome do repositório no
+  GitHub, incluindo maiúsculas/minúsculas** — o GitHub Pages é sensível a
+  maiúsculas/minúsculas nos caminhos dos ficheiros. Se o nome do
+  repositório for diferente de `LMDreams`, atualize o valor de
+  `BASE_PATH` em `vite.config.ts` para corresponder exatamente ao nome
+  real do repositório (uma diferença de maiúsculas/minúsculas faz o
+  JavaScript e o CSS devolverem 404, resultando numa página em branco).
 - **Se for usar um domínio próprio** (ver secção seguinte), mude
   `BASE_PATH` para `"/"`.
 
@@ -164,7 +168,7 @@ ir para produção:
 | Páginas legais | `src/pages/PrivacyPolicy.tsx`, `CookiePolicy.tsx`, `Terms.tsx` | Modelos genéricos, sinalizados no topo de cada página. Devem ser revistos por um profissional habilitado antes da publicação. |
 | Livro de reclamações | `src/components/Footer.tsx` | Liga atualmente ao portal oficial [livroreclamacoes.pt](https://www.livroreclamacoes.pt/Inicio/). Se a empresa tiver um código/QR específico do livro de reclamações físico ou eletrónico, adicionar aqui. |
 | Imagem Open Graph | `public/og-image.svg` | Composição gráfica original em SVG. Para melhor compatibilidade em todas as redes sociais, recomenda-se substituir por um ficheiro `.jpg`/`.png` de 1200×630px com uma fotografia real de uma obra, atualizando também as referências em `index.html`. |
-| URLs de produção | `index.html`, `public/robots.txt`, `public/sitemap.xml` | Atualmente apontam para `https://wakenac.github.io/lmdreams/`. Atualizar se o repositório, utilizador ou domínio final forem diferentes. |
+| URLs de produção | `index.html`, `public/robots.txt`, `public/sitemap.xml` | Atualmente apontam para `https://wakenac.github.io/LMDreams/`. Atualizar se o repositório, utilizador ou domínio final forem diferentes. |
 
 Dados de contacto **reais**, fornecidos e já em uso no site (`src/lib/site.ts`):
 
