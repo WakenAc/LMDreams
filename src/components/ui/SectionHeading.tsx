@@ -3,18 +3,15 @@ import { cn } from "../../lib/utils";
 
 export function Eyebrow({
   children,
-  tone = "light",
   className,
 }: {
   children: ReactNode;
-  tone?: "light" | "dark";
   className?: string;
 }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em]",
-        tone === "light" ? "text-copper-500" : "text-copper-200",
+        "inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-brand",
         className
       )}
     >
@@ -28,7 +25,6 @@ export function SectionHeading({
   eyebrow,
   title,
   description,
-  tone = "light",
   align = "left",
   className,
   as: Tag = "h2",
@@ -36,7 +32,6 @@ export function SectionHeading({
   eyebrow?: string;
   title: ReactNode;
   description?: ReactNode;
-  tone?: "light" | "dark";
   align?: "left" | "center";
   className?: string;
   as?: "h1" | "h2" | "h3";
@@ -49,22 +44,12 @@ export function SectionHeading({
         className
       )}
     >
-      {eyebrow && <Eyebrow tone={tone}>{eyebrow}</Eyebrow>}
-      <Tag
-        className={cn(
-          "text-balance font-display text-3xl font-semibold leading-[1.1] sm:text-4xl lg:text-[2.75rem]",
-          tone === "light" ? "text-ink" : "text-paper"
-        )}
-      >
+      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+      <Tag className="text-balance font-display text-3xl font-semibold leading-[1.1] text-fg sm:text-4xl lg:text-[2.75rem]">
         {title}
       </Tag>
       {description && (
-        <p
-          className={cn(
-            "max-w-2xl text-balance text-base leading-relaxed sm:text-lg",
-            tone === "light" ? "text-stone-600" : "text-stone-300"
-          )}
-        >
+        <p className="max-w-2xl text-balance text-base leading-relaxed text-fg-muted sm:text-lg">
           {description}
         </p>
       )}

@@ -13,21 +13,17 @@ export function PlaceholderImage({
   label,
   className,
   patternId,
-  tone = "sand",
   icon,
 }: {
   label: string;
   className?: string;
   patternId: string;
-  tone?: "sand" | "ink";
   icon?: ReactNode;
 }) {
-  const isDark = tone === "ink";
   return (
     <div
       className={cn(
-        "relative flex items-center justify-center overflow-hidden",
-        isDark ? "bg-ink-2" : "bg-stone-100",
+        "relative flex items-center justify-center overflow-hidden bg-surface",
         className
       )}
     >
@@ -41,14 +37,14 @@ export function PlaceholderImage({
           >
             <path
               d="M0 28 L28 0"
-              stroke={isDark ? "#ffffff" : "#1c1815"}
-              strokeOpacity={isDark ? 0.06 : 0.05}
+              stroke="#ffffff"
+              strokeOpacity="0.05"
               strokeWidth="1"
             />
             <path
               d="M0 0 L0 28 M0 0 L28 0"
-              stroke={isDark ? "#ffffff" : "#1c1815"}
-              strokeOpacity={isDark ? 0.05 : 0.04}
+              stroke="#ffffff"
+              strokeOpacity="0.04"
               strokeWidth="1"
             />
           </pattern>
@@ -56,20 +52,10 @@ export function PlaceholderImage({
         <rect width="100%" height="100%" fill={`url(#${patternId})`} />
       </svg>
       <div className="relative flex flex-col items-center gap-2 px-4 text-center">
-        <span
-          className={cn(
-            "flex h-11 w-11 items-center justify-center rounded-full border",
-            isDark ? "border-paper/25 text-paper/70" : "border-stone-300 text-stone-400"
-          )}
-        >
+        <span className="flex h-11 w-11 items-center justify-center rounded-full border border-line-strong text-fg-subtle">
           {icon ?? <ImageOff className="h-5 w-5" aria-hidden="true" />}
         </span>
-        <p
-          className={cn(
-            "max-w-[14rem] text-xs font-medium leading-snug",
-            isDark ? "text-paper/60" : "text-stone-500"
-          )}
-        >
+        <p className="max-w-[14rem] text-xs font-medium leading-snug text-fg-subtle">
           {label}
         </p>
       </div>

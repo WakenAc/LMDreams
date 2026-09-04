@@ -5,12 +5,12 @@ import { SITE } from "../lib/site";
 
 export function CtaBanner() {
   return (
-    <section className="relative overflow-hidden bg-ink py-20 text-paper sm:py-24">
+    <section className="relative overflow-hidden bg-ink py-20 text-fg sm:py-24">
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 50% 0%, rgba(181,98,47,0.25), transparent 55%)",
+            "radial-gradient(circle at 50% 0%, rgba(199,212,54,0.16), transparent 55%)",
         }}
         aria-hidden="true"
       />
@@ -18,7 +18,7 @@ export function CtaBanner() {
         <h2 className="text-balance font-display text-3xl font-semibold sm:text-4xl">
           Tem uma obra ou remodelação em mente?
         </h2>
-        <p className="max-w-xl text-balance text-base leading-relaxed text-stone-300 sm:text-lg">
+        <p className="max-w-xl text-balance text-base leading-relaxed text-fg-muted sm:text-lg">
           Fale connosco sobre o seu projeto. Analisamos as suas necessidades
           e apresentamos uma solução clara, adequada e executada pelos
           profissionais certos.
@@ -27,13 +27,13 @@ export function CtaBanner() {
           <Button href="#contactos" size="lg" icon={<Send className="h-4 w-4" />}>
             Pedir orçamento
           </Button>
-          <Button href={SITE.telefoneHref} size="lg" variant="outlineLight" icon={<Phone className="h-4 w-4" />}>
+          <Button href={SITE.telefoneHref} size="lg" variant="ghost" icon={<Phone className="h-4 w-4" />}>
             Contactar por telefone
           </Button>
           <Button
             href={SITE.whatsappHref}
             size="lg"
-            variant="outlineLight"
+            variant="ghost"
             icon={<MessageCircle className="h-4 w-4" />}
             target="_blank"
             rel="noopener noreferrer"

@@ -6,16 +6,16 @@ import { Container } from "../components/ui/Container";
 
 export function NotFound() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-ink px-6 text-center text-paper">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-ink px-6 text-center text-fg">
       <Container className="flex flex-col items-center gap-6">
         <Link to="/">
-          <Logo variant="light" markClassName="h-12 w-12" />
+          <Logo markClassName="h-12 w-12" />
         </Link>
-        <p className="font-display text-7xl font-semibold text-copper-400">404</p>
+        <p className="font-display text-7xl font-semibold text-brand">404</p>
         <h1 className="font-display text-2xl font-semibold sm:text-3xl">
           Página não encontrada
         </h1>
-        <p className="max-w-md text-balance text-stone-300">
+        <p className="max-w-md text-balance text-fg-muted">
           A página que procura pode ter sido movida ou já não existe.
           Volte à página inicial para continuar a navegar no site da
           LMDreams.

@@ -18,6 +18,32 @@ pronto para publicação em GitHub Pages.
 - Sem dependência de backend: o formulário de contacto funciona no
   browser e está preparado para ser ligado a um serviço externo.
 
+## Identidade visual
+
+O site usa um tema **escuro**, alinhado com o logótipo da LMDreams
+(fundo carvão + lima). Todas as cores são tokens CSS definidos num único
+sítio — o bloco `@theme` em `src/index.css` — pelo que mudar a paleta
+inteira é mudar esse bloco.
+
+| Token | Valor | Uso |
+|---|---|---|
+| `--color-ink` | `#121110` | Fundo principal das secções |
+| `--color-surface` | `#1a1816` | Fundo das secções alternadas |
+| `--color-surface-2` | `#221f1b` | Cartões e campos de formulário |
+| `--color-surface-3` | `#2b2723` | Estado hover de cartões |
+| `--color-line` / `--color-line-strong` | `#322d28` / `#443e37` | Bordas e separadores |
+| `--color-fg` | `#f6f3ed` | Títulos e texto de destaque |
+| `--color-fg-muted` | `#b6afa2` | Texto corrente |
+| `--color-fg-subtle` | `#8a8376` | Legendas e texto secundário |
+| `--color-brand` | `#c7d436` | Cor de acento — o lima do logótipo |
+| `--color-brand-soft` / `--color-brand-deep` | `#dde36d` / `#97a327` | Estados hover/active dos botões |
+
+Nas classes Tailwind estes tokens aparecem como `bg-ink`, `bg-surface-2`,
+`text-fg-muted`, `border-line`, `text-brand`, `bg-brand`, etc.
+
+Tipografia: **Fraunces** (títulos) e **Inter** (texto), carregadas do
+Google Fonts em `index.html`.
+
 ## Estrutura do projeto
 
 ```

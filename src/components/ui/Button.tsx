@@ -1,7 +1,7 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
 import { cn } from "../../lib/utils";
 
-type Variant = "primary" | "secondary" | "ghost" | "outlineLight";
+type Variant = "primary" | "secondary" | "ghost";
 type Size = "md" | "lg";
 
 const base =
@@ -9,13 +9,11 @@ const base =
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-copper-500 text-white shadow-soft hover:bg-copper-600 hover:shadow-lift active:bg-copper-700",
+    "bg-brand text-ink shadow-soft hover:bg-brand-soft hover:shadow-lift active:bg-brand-deep",
   secondary:
-    "bg-ink text-paper hover:bg-ink-2 shadow-soft hover:shadow-lift",
+    "bg-surface-2 text-fg border border-line-strong hover:border-brand hover:bg-surface-3",
   ghost:
-    "bg-transparent text-ink border border-stone-300 hover:border-ink hover:bg-stone-50",
-  outlineLight:
-    "bg-transparent text-paper border border-paper/40 hover:border-paper hover:bg-paper/10",
+    "bg-transparent text-fg border border-line-strong hover:border-brand hover:text-brand",
 };
 
 const sizes: Record<Size, string> = {

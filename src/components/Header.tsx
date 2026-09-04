@@ -26,8 +26,10 @@ export function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 bg-paper/90 backdrop-blur-md transition-shadow duration-300 ${
-        scrolled || open ? "shadow-soft" : ""
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled || open
+          ? "border-b border-line bg-ink/85 shadow-soft backdrop-blur-md"
+          : "border-b border-transparent bg-gradient-to-b from-ink/80 to-transparent"
       }`}
     >
       <Container className="flex h-[4.5rem] items-center justify-between sm:h-20">
@@ -47,17 +49,17 @@ export function Header() {
             <a
               key={item.hash}
               href={`#${item.hash}`}
-              className="text-sm font-medium text-ink/80 transition-colors hover:text-copper-500"
+              className="text-sm font-medium text-fg-muted transition-colors hover:text-brand"
             >
               {item.label}
             </a>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-4 lg:flex">
           <a
             href={SITE.telefoneHref}
-            className="flex items-center gap-2 text-sm font-semibold text-ink/80 transition-colors hover:text-copper-500"
+            className="flex items-center gap-2 text-sm font-semibold text-fg transition-colors hover:text-brand"
           >
             <Phone className="h-4 w-4" aria-hidden="true" />
             {SITE.telefone}
@@ -69,7 +71,7 @@ export function Header() {
 
         <button
           type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-full text-ink lg:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-full text-fg lg:hidden"
           aria-expanded={open}
           aria-controls="menu-mobile"
           aria-label={open ? "Fechar menu" : "Abrir menu"}
@@ -82,7 +84,7 @@ export function Header() {
       {open && (
         <div
           id="menu-mobile"
-          className="border-t border-stone-200 bg-paper px-2 pb-6 pt-2 lg:hidden"
+          className="border-t border-line bg-ink px-2 pb-6 pt-2 lg:hidden"
         >
           <nav className="flex flex-col" aria-label="Navegação móvel">
             {NAV_ITEMS.map((item) => (
@@ -90,7 +92,7 @@ export function Header() {
                 key={item.hash}
                 href={`#${item.hash}`}
                 onClick={() => setOpen(false)}
-                className="border-b border-stone-100 px-3 py-3.5 text-base font-medium text-ink"
+                className="border-b border-line px-3 py-3.5 text-base font-medium text-fg"
               >
                 {item.label}
               </a>
@@ -99,7 +101,7 @@ export function Header() {
           <div className="mt-4 flex flex-col gap-3 px-3">
             <a
               href={SITE.telefoneHref}
-              className="flex items-center justify-center gap-2 text-sm font-semibold text-ink"
+              className="flex items-center justify-center gap-2 text-sm font-semibold text-fg"
             >
               <Phone className="h-4 w-4" aria-hidden="true" />
               {SITE.telefone}
