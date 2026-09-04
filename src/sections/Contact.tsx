@@ -17,9 +17,9 @@ import { FAIXAS_DE_ORCAMENTO, TIPOS_DE_SERVICO } from "../data/contactOptions";
 import { SITE } from "../lib/site";
 
 const inputClass =
-  "w-full rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm text-ink placeholder:text-stone-400 transition-colors focus:border-copper-500 focus:outline-none focus:ring-2 focus:ring-copper-500/20";
+  "w-full rounded-xl border border-line-strong bg-surface-2 px-4 py-2.5 text-sm text-fg placeholder:text-fg-subtle transition-colors focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25";
 
-const labelClass = "text-sm font-medium text-ink";
+const labelClass = "text-sm font-medium text-fg";
 
 export function Contact() {
   const [enviado, setEnviado] = useState(false);
@@ -34,7 +34,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contactos" className="scroll-mt-20 bg-paper py-20 sm:py-28">
+    <section id="contactos" className="scroll-mt-20 bg-ink py-20 sm:py-28">
       <Container className="grid gap-14 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
         <div>
           <SectionHeading
@@ -46,16 +46,16 @@ export function Contact() {
           <div className="mt-10 flex flex-col gap-5">
             <a
               href={SITE.telefoneHref}
-              className="flex items-center gap-4 rounded-xl border border-stone-200 bg-white p-4 transition-colors hover:border-copper-400/50"
+              className="flex items-center gap-4 rounded-xl border border-line bg-surface-2 p-4 transition-colors hover:border-brand/50"
             >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-copper-50 text-copper-600">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand/10 text-brand">
                 <Phone className="h-5 w-5" aria-hidden="true" />
               </span>
               <span>
-                <span className="block text-xs font-medium uppercase tracking-wide text-stone-500">
+                <span className="block text-xs font-medium uppercase tracking-wide text-fg-subtle">
                   Telefone / WhatsApp
                 </span>
-                <span className="block font-semibold text-ink">
+                <span className="block font-semibold text-fg">
                   {SITE.telefone}
                 </span>
               </span>
@@ -63,44 +63,44 @@ export function Contact() {
 
             <a
               href={`mailto:${SITE.email}`}
-              className="flex items-center gap-4 rounded-xl border border-stone-200 bg-white p-4 transition-colors hover:border-copper-400/50"
+              className="flex items-center gap-4 rounded-xl border border-line bg-surface-2 p-4 transition-colors hover:border-brand/50"
             >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-copper-50 text-copper-600">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand/10 text-brand">
                 <Mail className="h-5 w-5" aria-hidden="true" />
               </span>
               <span>
-                <span className="block text-xs font-medium uppercase tracking-wide text-stone-500">
+                <span className="block text-xs font-medium uppercase tracking-wide text-fg-subtle">
                   E-mail
                 </span>
-                <span className="block font-semibold text-ink">{SITE.email}</span>
+                <span className="block font-semibold text-fg">{SITE.email}</span>
               </span>
             </a>
 
-            <div className="flex items-center gap-4 rounded-xl border border-stone-200 bg-white p-4">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-copper-50 text-copper-600">
+            <div className="flex items-center gap-4 rounded-xl border border-line bg-surface-2 p-4">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand/10 text-brand">
                 <MapPin className="h-5 w-5" aria-hidden="true" />
               </span>
               <span>
-                <span className="block text-xs font-medium uppercase tracking-wide text-stone-500">
+                <span className="block text-xs font-medium uppercase tracking-wide text-fg-subtle">
                   Área de atuação
                 </span>
-                <span className="block font-semibold text-ink">
+                <span className="block font-semibold text-fg">
                   {SITE.areaAtuacao}
                 </span>
               </span>
             </div>
 
-            <div className="flex items-center gap-4 rounded-xl border border-stone-200 bg-white p-4">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-copper-50 text-copper-600">
+            <div className="flex items-center gap-4 rounded-xl border border-line bg-surface-2 p-4">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand/10 text-brand">
                 <Clock className="h-5 w-5" aria-hidden="true" />
               </span>
               <span>
-                <span className="block text-xs font-medium uppercase tracking-wide text-stone-500">
+                <span className="block text-xs font-medium uppercase tracking-wide text-fg-subtle">
                   Horário de atendimento
                 </span>
-                <span className="block font-semibold text-ink">
+                <span className="block font-semibold text-fg">
                   {SITE.horario}{" "}
-                  <span className="font-normal text-stone-400">
+                  <span className="font-normal text-fg-subtle">
                     (a confirmar)
                   </span>
                 </span>
@@ -108,20 +108,20 @@ export function Contact() {
             </div>
 
             <div className="flex items-center gap-3 pt-2">
-              <span className="text-xs font-medium uppercase tracking-wide text-stone-500">
+              <span className="text-xs font-medium uppercase tracking-wide text-fg-subtle">
                 Redes sociais
               </span>
               <a
                 href={SITE.instagramHref}
                 title="Placeholder — associar Instagram real"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-stone-300 text-stone-400 transition-colors hover:border-copper-400 hover:text-copper-500"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-line-strong text-fg-subtle transition-colors hover:border-brand hover:text-brand"
               >
                 <Instagram className="h-4 w-4" aria-hidden="true" />
               </a>
               <a
                 href={SITE.facebookHref}
                 title="Placeholder — associar Facebook real"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-stone-300 text-stone-400 transition-colors hover:border-copper-400 hover:text-copper-500"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-line-strong text-fg-subtle transition-colors hover:border-brand hover:text-brand"
               >
                 <Facebook className="h-4 w-4" aria-hidden="true" />
               </a>
@@ -129,14 +129,14 @@ export function Contact() {
           </div>
         </div>
 
-        <div className="rounded-3xl border border-stone-200 bg-white p-6 shadow-soft sm:p-9">
+        <div className="rounded-3xl border border-line bg-surface-2 p-6 shadow-soft sm:p-9">
           {enviado ? (
             <div className="flex flex-col items-center gap-3 py-16 text-center">
-              <CheckCircle2 className="h-10 w-10 text-copper-500" aria-hidden="true" />
-              <h3 className="font-display text-xl font-semibold text-ink">
+              <CheckCircle2 className="h-10 w-10 text-brand" aria-hidden="true" />
+              <h3 className="font-display text-xl font-semibold text-fg">
                 Pedido preparado com sucesso
               </h3>
-              <p className="max-w-sm text-sm leading-relaxed text-stone-500">
+              <p className="max-w-sm text-sm leading-relaxed text-fg-subtle">
                 Este formulário ainda não está ligado a um serviço de envio.
                 Assim que a integração for ativada, receberá aqui a
                 confirmação real do seu pedido. Entretanto, contacte-nos
@@ -145,7 +145,7 @@ export function Contact() {
               <button
                 type="button"
                 onClick={() => setEnviado(false)}
-                className="mt-2 text-sm font-semibold text-copper-600 underline underline-offset-4"
+                className="mt-2 text-sm font-semibold text-brand underline underline-offset-4"
               >
                 Preencher novamente
               </button>
@@ -238,7 +238,7 @@ export function Contact() {
                 </label>
                 <label
                   htmlFor="fotografias"
-                  className="flex cursor-pointer items-center gap-2 rounded-xl border border-dashed border-stone-300 bg-stone-50 px-4 py-3 text-sm text-stone-500 transition-colors hover:border-copper-400 hover:text-copper-600"
+                  className="flex cursor-pointer items-center gap-2 rounded-xl border border-dashed border-line-strong bg-surface px-4 py-3 text-sm text-fg-subtle transition-colors hover:border-brand hover:text-brand"
                 >
                   <Paperclip className="h-4 w-4" aria-hidden="true" />
                   Anexar fotografias do espaço
@@ -259,14 +259,14 @@ export function Contact() {
                   name="consentimento"
                   type="checkbox"
                   required
-                  className="mt-1 h-4 w-4 rounded border-stone-300 text-copper-500 focus:ring-copper-500/30"
+                  className="mt-1 h-4 w-4 rounded border-line-strong text-brand focus:ring-brand/30"
                 />
-                <label htmlFor="consentimento" className="text-sm leading-relaxed text-stone-600">
+                <label htmlFor="consentimento" className="text-sm leading-relaxed text-fg-muted">
                   Autorizo o tratamento dos meus dados pessoais para efeitos
                   de resposta a este pedido de contacto, nos termos da{" "}
                   <Link
                     to="/politica-de-privacidade"
-                    className="font-medium text-copper-600 underline underline-offset-2"
+                    className="font-medium text-brand underline underline-offset-2"
                   >
                     Política de Privacidade
                   </Link>
@@ -278,7 +278,7 @@ export function Contact() {
                 <Button type="submit" size="lg" className="w-full sm:w-auto">
                   Enviar pedido de orçamento
                 </Button>
-                <p className="mt-3 text-xs leading-relaxed text-stone-400">
+                <p className="mt-3 text-xs leading-relaxed text-fg-subtle">
                   * Campos obrigatórios. Este formulário está preparado para
                   integração com um serviço de envio externo — ver README do
                   projeto.

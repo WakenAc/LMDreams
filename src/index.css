@@ -4,68 +4,64 @@
   --font-display: "Fraunces", "Georgia", serif;
   --font-sans: "Inter", system-ui, sans-serif;
 
-  /* Neutros — betão, pedra, cimento */
-  --color-ink: #1c1815;
-  --color-ink-2: #2a2420;
-  --color-ink-3: #3a332c;
-  --color-paper: #faf7f2;
-  --color-paper-2: #f3ede2;
-  --color-stone-50: #f7f4ee;
-  --color-stone-100: #efe8db;
-  --color-stone-200: #e2d8c4;
-  --color-stone-300: #cabb9d;
-  --color-stone-400: #a9987a;
-  --color-stone-500: #8a7a5f;
-  --color-stone-600: #6b5e48;
-  --color-stone-700: #4f4536;
-  --color-stone-800: #382f24;
-  --color-stone-900: #241e17;
+  /* Superfícies escuras — carvão, betão, sombra */
+  --color-ink: #121110;
+  --color-surface: #1a1816;
+  --color-surface-2: #221f1b;
+  --color-surface-3: #2b2723;
+  --color-line: #322d28;
+  --color-line-strong: #443e37;
 
-  /* Cor de destaque — cobre / terracota queimada */
-  --color-copper-50: #fbeee6;
-  --color-copper-100: #f6dcc8;
-  --color-copper-200: #eab894;
-  --color-copper-300: #dd9968;
-  --color-copper-400: #c97a49;
-  --color-copper-500: #b5622f;
-  --color-copper-600: #954e25;
-  --color-copper-700: #713b1d;
-  --color-copper-800: #522c16;
-  --color-copper-900: #392010;
+  /* Texto sobre fundo escuro */
+  --color-fg: #f6f3ed;
+  --color-fg-muted: #b6afa2;
+  --color-fg-subtle: #8a8376;
 
-  --shadow-soft: 0 1px 2px rgba(28, 24, 21, 0.04), 0 8px 24px -8px rgba(28, 24, 21, 0.12);
-  --shadow-lift: 0 4px 8px rgba(28, 24, 21, 0.06), 0 24px 48px -16px rgba(28, 24, 21, 0.22);
+  /* Acento — o lima do logótipo LMDreams */
+  --color-brand: #c7d436;
+  --color-brand-soft: #dde36d;
+  --color-brand-deep: #97a327;
+  --color-brand-shade: #3a3f12;
+
+  /* Tom quente de apoio, para luz e calor nas fotografias */
+  --color-ember: #c98a4b;
+
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px -12px rgba(0, 0, 0, 0.6);
+  --shadow-lift: 0 4px 10px rgba(0, 0, 0, 0.35), 0 28px 60px -20px rgba(0, 0, 0, 0.75);
 }
 
 @layer base {
   * {
-    border-color: var(--color-stone-200);
+    border-color: var(--color-line);
   }
 
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    background-color: var(--color-ink);
+    color-scheme: dark;
   }
 
   body {
-    background-color: var(--color-paper);
-    color: var(--color-ink);
+    background-color: var(--color-ink);
+    color: var(--color-fg-muted);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
 
   h1, h2, h3, h4 {
+    color: var(--color-fg);
     font-family: var(--font-display);
     letter-spacing: -0.01em;
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-copper-500);
+    outline: 2px solid var(--color-brand);
     outline-offset: 3px;
   }
 
   ::selection {
-    background-color: var(--color-copper-200);
+    background-color: var(--color-brand);
     color: var(--color-ink);
   }
 }
@@ -101,6 +97,14 @@
 
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Textura subtil de betão para separar secções sem usar imagens */
+  .grid-texture {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+    background-size: 72px 72px;
   }
 
   .fade-up {

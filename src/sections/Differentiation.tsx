@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Container } from "../components/ui/Container";
 import { SectionHeading } from "../components/ui/SectionHeading";
+import { asset } from "../lib/asset";
 
 const CARTOES = [
   {
@@ -38,15 +39,28 @@ const CARTOES = [
 
 export function Differentiation() {
   return (
-    <section className="bg-ink py-20 text-paper sm:py-28">
+    <section className="relative isolate overflow-hidden bg-ink py-20 text-fg sm:py-28">
+      {/* Fotografia de ambiente — imagem ilustrativa, ver README */}
+      <img
+        src={asset("images/especialistas.webp")}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        className="absolute inset-0 -z-10 h-full w-full object-cover"
+      />
+      <div className="absolute inset-0 -z-10 bg-ink/88" aria-hidden="true" />
+      <div
+        className="absolute inset-0 -z-10 bg-gradient-to-b from-ink via-transparent to-ink"
+        aria-hidden="true"
+      />
+
       <Container>
         <SectionHeading
-          tone="dark"
           align="center"
           eyebrow="A nossa diferença"
           title={
             <>
-              Não acreditamos no <span className="text-copper-400">&ldquo;faz tudo&rdquo;</span>.
+              Não acreditamos no <span className="text-brand">&ldquo;faz tudo&rdquo;</span>.
               <br className="hidden sm:block" /> Acreditamos em especialistas.
             </>
           }
@@ -58,17 +72,17 @@ export function Differentiation() {
           {CARTOES.map(({ icon: Icon, title, text }, i) => (
             <div
               key={title}
-              className={`rounded-2xl border border-paper/10 bg-paper/[0.04] p-6 transition-all duration-300 hover:border-copper-400/40 hover:bg-paper/[0.07] ${
+              className={`rounded-2xl border border-line bg-surface-2/95 p-6 backdrop-blur-sm transition-all duration-300 hover:border-brand/40 hover:bg-surface-3 ${
                 i === CARTOES.length - 1 ? "sm:col-span-2 lg:col-span-1" : ""
               }`}
             >
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-copper-500/15 text-copper-300">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand/15 text-brand">
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </span>
               <h3 className="mt-5 font-display text-lg font-semibold">
                 {title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-stone-300">
+              <p className="mt-2 text-sm leading-relaxed text-fg-muted">
                 {text}
               </p>
             </div>

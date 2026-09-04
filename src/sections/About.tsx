@@ -1,6 +1,7 @@
 import { HardHat, MessageCircle, ShieldCheck, Users } from "lucide-react";
 import { Container } from "../components/ui/Container";
 import { SectionHeading } from "../components/ui/SectionHeading";
+import { Photo } from "../components/ui/Photo";
 
 const PONTOS = [
   {
@@ -27,7 +28,7 @@ const PONTOS = [
 
 export function About() {
   return (
-    <section id="sobre" className="scroll-mt-20 bg-paper py-20 sm:py-28">
+    <section id="sobre" className="scroll-mt-20 bg-ink py-20 sm:py-28">
       <Container className="grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <SectionHeading
@@ -35,28 +36,34 @@ export function About() {
             title="Mais de 25 anos de experiência a coordenar as pessoas certas para cada obra."
             description="A LMDreams reúne profissionais com mais de 25 anos de experiência no mercado da construção civil, capazes de responder a praticamente todas as necessidades de uma obra — desde pequenas remodelações a projetos de construção mais completos."
           />
-          <p className="mt-6 max-w-xl text-balance text-base leading-relaxed text-stone-600">
+          <p className="mt-6 max-w-xl text-balance text-base leading-relaxed text-fg-muted">
             Em vez de depender de uma única pessoa a tentar fazer um pouco de
             tudo, trabalhamos com profissionais dedicados a cada
             especialidade. É esta organização que nos permite manter
             elevados padrões de qualidade, rigor e transparência, obra após
             obra.
           </p>
+
+          <Photo
+            src="images/obra.webp"
+            alt="Estaleiro de construção ao final do dia, com grua e equipa em obra"
+            className="mt-8 aspect-[4/3] rounded-2xl border border-line"
+          />
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2">
           {PONTOS.map(({ icon: Icon, title, text }) => (
             <div
               key={title}
-              className="group rounded-2xl border border-stone-200 bg-white/60 p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-copper-400/50 hover:shadow-lift"
+              className="group rounded-2xl border border-line bg-surface-2 p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-brand/50 hover:shadow-lift"
             >
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-copper-50 text-copper-600">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand">
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </span>
-              <h3 className="mt-5 font-display text-lg font-semibold text-ink">
+              <h3 className="mt-5 font-display text-lg font-semibold text-fg">
                 {title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-stone-600">
+              <p className="mt-2 text-sm leading-relaxed text-fg-muted">
                 {text}
               </p>
             </div>

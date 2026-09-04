@@ -18,6 +18,32 @@ pronto para publicação em GitHub Pages.
 - Sem dependência de backend: o formulário de contacto funciona no
   browser e está preparado para ser ligado a um serviço externo.
 
+## Identidade visual
+
+O site usa um tema **escuro**, alinhado com o logótipo da LMDreams
+(fundo carvão + lima). Todas as cores são tokens CSS definidos num único
+sítio — o bloco `@theme` em `src/index.css` — pelo que mudar a paleta
+inteira é mudar esse bloco.
+
+| Token | Valor | Uso |
+|---|---|---|
+| `--color-ink` | `#121110` | Fundo principal das secções |
+| `--color-surface` | `#1a1816` | Fundo das secções alternadas |
+| `--color-surface-2` | `#221f1b` | Cartões e campos de formulário |
+| `--color-surface-3` | `#2b2723` | Estado hover de cartões |
+| `--color-line` / `--color-line-strong` | `#322d28` / `#443e37` | Bordas e separadores |
+| `--color-fg` | `#f6f3ed` | Títulos e texto de destaque |
+| `--color-fg-muted` | `#b6afa2` | Texto corrente |
+| `--color-fg-subtle` | `#8a8376` | Legendas e texto secundário |
+| `--color-brand` | `#c7d436` | Cor de acento — o lima do logótipo |
+| `--color-brand-soft` / `--color-brand-deep` | `#dde36d` / `#97a327` | Estados hover/active dos botões |
+
+Nas classes Tailwind estes tokens aparecem como `bg-ink`, `bg-surface-2`,
+`text-fg-muted`, `border-line`, `text-brand`, `bg-brand`, etc.
+
+Tipografia: **Fraunces** (títulos) e **Inter** (texto), carregadas do
+Google Fonts em `index.html`.
+
 ## Estrutura do projeto
 
 ```
@@ -130,6 +156,46 @@ que uma atualização de página (F5) numa rota interna (por exemplo,
 (`public/404.html` + pequeno script em `index.html`), pelo que isto
 funciona sem configuração adicional.
 
+## Imagens
+
+O site usa duas pastas distintas:
+
+- **`public/images/`** — as imagens efetivamente publicadas: WebP,
+  redimensionadas e comprimidas (≈400 KB no total para seis fotografias).
+- **`design/originais/`** — os ficheiros de origem em alta resolução.
+  Esta pasta **não** é copiada para o site publicado; serve para poder
+  recortar ou re-exportar mais tarde.
+
+### Substituir por fotografias reais
+
+As fotografias atuais são composições geradas por IA e servem apenas de
+ambiente visual — **não são obras da LMDreams**. Por isso são
+apresentadas com a etiqueta discreta "Imagem ilustrativa".
+
+Para trocar uma delas por uma fotografia real:
+
+1. Substituir o ficheiro correspondente em `public/images/`, mantendo o
+   nome e o formato (ver tabela abaixo).
+2. Remover a etiqueta:
+   - nas secções que usam o componente `Photo` (Sobre, Método,
+     Transparência), passar `illustrative={false}`;
+   - no hero e no CTA, apagar o `<span>` com o texto "Imagem
+     ilustrativa" no fim de `src/sections/Hero.tsx` e
+     `src/sections/CtaBanner.tsx`.
+3. Atualizar o `alt` da imagem para descrever a obra real.
+
+| Ficheiro | Onde aparece | Dimensões |
+|---|---|---|
+| `hero.webp` | Fundo do hero | 1920×1080 |
+| `obra.webp` | Sobre a LMDreams | 1200×800 |
+| `especialistas.webp` | Fundo da secção "A nossa diferença" | 1200×800 |
+| `planeamento.webp` | Transparência e confiança | 1200×800 |
+| `interior.webp` | Fim do método de trabalho | 1200×800 |
+| `cta.webp` | Fundo da chamada para ação | 1600×900 |
+
+A secção **Projetos** mantém-se propositadamente com placeholders: aí só
+devem entrar fotografias reais de obras concluídas.
+
 ## Formulário de contacto
 
 O formulário em `src/sections/Contact.tsx` funciona apenas no browser —
@@ -159,7 +225,7 @@ ir para produção:
 
 | Elemento | Localização | Nota |
 |---|---|---|
-| Logótipo | `src/components/Logo.tsx`, `public/favicon.svg`, `public/og-image.svg` | Recriação vetorial aproximada do logótipo fornecido (não foi possível extrair o ficheiro original anexado na conversa). Substituir pelo ficheiro oficial da marca. |
+| Logótipo | `public/logo.png`, `public/favicon.png` | Logótipo oficial da LMDreams. Para o trocar, basta substituir estes ficheiros — nenhum código precisa de mudar. |
 | Horário de atendimento | `src/lib/site.ts` (`SITE.horario`) | Valor de exemplo — confirmar horário real. |
 | Redes sociais | `src/lib/site.ts` (`SITE.instagramHref`, `SITE.facebookHref`) | Ligações a `#` — substituir pelos perfis reais assim que existirem. |
 | Fotografias de projetos | `src/sections/Projects.tsx`, `src/data/projects.ts`, `src/components/ui/PlaceholderImage.tsx` | Todos os projetos são exemplos de estrutura, com nome, localidade e imagens claramente marcados como placeholder. Substituir por projetos reais e fotografias próprias (nunca imagens geradas por IA apresentadas como obras reais). |
@@ -167,7 +233,8 @@ ir para produção:
 | Lista de serviços | `src/data/services.ts` | Lista indicativa, com aviso no próprio site a pedir confirmação — validar com a empresa quais os serviços efetivamente disponíveis. |
 | Páginas legais | `src/pages/PrivacyPolicy.tsx`, `CookiePolicy.tsx`, `Terms.tsx` | Modelos genéricos, sinalizados no topo de cada página. Devem ser revistos por um profissional habilitado antes da publicação. |
 | Livro de reclamações | `src/components/Footer.tsx` | Liga atualmente ao portal oficial [livroreclamacoes.pt](https://www.livroreclamacoes.pt/Inicio/). Se a empresa tiver um código/QR específico do livro de reclamações físico ou eletrónico, adicionar aqui. |
-| Imagem Open Graph | `public/og-image.svg` | Composição gráfica original em SVG. Para melhor compatibilidade em todas as redes sociais, recomenda-se substituir por um ficheiro `.jpg`/`.png` de 1200×630px com uma fotografia real de uma obra, atualizando também as referências em `index.html`. |
+| Imagem Open Graph | `public/og-image.jpg` | 1200×630px, gerada a partir da fotografia do hero. Substituir por uma fotografia real de uma obra quando existir. |
+| Fotografias de ambiente | `public/images/*.webp` | Composições geradas por IA, usadas como ambiente visual no hero, Sobre, Diferenciação, Método, Transparência e CTA. Cada uma aparece no site com a etiqueta **"Imagem ilustrativa"** — ver secção [Imagens](#imagens) para as substituir por fotografias reais. |
 | URLs de produção | `index.html`, `public/robots.txt`, `public/sitemap.xml` | Atualmente apontam para `https://wakenac.github.io/LMDreams/`. Atualizar se o repositório, utilizador ou domínio final forem diferentes. |
 
 Dados de contacto **reais**, fornecidos e já em uso no site (`src/lib/site.ts`):

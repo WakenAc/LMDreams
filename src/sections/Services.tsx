@@ -4,7 +4,7 @@ import { SERVICES } from "../data/services";
 
 export function Services() {
   return (
-    <section id="servicos" className="scroll-mt-20 bg-stone-50 py-20 sm:py-28">
+    <section id="servicos" className="scroll-mt-20 bg-surface py-20 sm:py-28">
       <Container>
         <SectionHeading
           eyebrow="Serviços"
@@ -16,16 +16,16 @@ export function Services() {
           {SERVICES.map(({ icon: Icon, title, text }) => (
             <div
               key={title}
-              className="group flex flex-col gap-4 rounded-2xl border border-stone-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-copper-400/50 hover:shadow-lift sm:p-6"
+              className="group flex flex-col gap-4 rounded-2xl border border-line bg-surface-2 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand/50 hover:shadow-lift sm:p-6"
             >
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-ink text-copper-300 transition-colors duration-300 group-hover:bg-copper-500 group-hover:text-white">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-ink text-brand transition-colors duration-300 group-hover:bg-brand group-hover:text-ink">
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </span>
               <div>
-                <h3 className="font-display text-base font-semibold text-ink">
+                <h3 className="font-display text-base font-semibold text-fg">
                   {title}
                 </h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-stone-600">
+                <p className="mt-1.5 text-sm leading-relaxed text-fg-muted">
                   {text}
                 </p>
               </div>
@@ -33,7 +33,7 @@ export function Services() {
           ))}
         </div>
 
-        <p className="mt-10 max-w-2xl text-sm leading-relaxed text-stone-500">
+        <p className="mt-10 max-w-2xl text-sm leading-relaxed text-fg-subtle">
           Esta lista é indicativa e pode não refletir a totalidade dos
           serviços atualmente disponíveis. Contacte-nos para confirmar a
           disponibilidade e adequação ao seu projeto.

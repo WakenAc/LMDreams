@@ -10,7 +10,7 @@ export function PlaceholderBadge({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border border-copper-400/60 bg-copper-50 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-copper-600",
+        "inline-flex items-center gap-1.5 rounded-full border border-brand/40 bg-brand/10 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-brand",
         className
       )}
     >
