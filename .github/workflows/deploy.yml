@@ -32,6 +32,13 @@ jobs:
 
       - name: Build de produção
         run: npm run build
+        env:
+          # Configuração do formulário de contacto. Definir em
+          # Settings → Secrets and variables → Actions → Secrets.
+          # Se não existirem, o site é publicado na mesma e o formulário
+          # indica que o envio automático ainda não está ativo.
+          VITE_FORM_ENDPOINT: ${{ secrets.VITE_FORM_ENDPOINT }}
+          VITE_FORM_ACCESS_KEY: ${{ secrets.VITE_FORM_ACCESS_KEY }}
 
       - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5

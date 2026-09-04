@@ -15,8 +15,8 @@ pronto para publicação em GitHub Pages.
 - [Tailwind CSS v4](https://tailwindcss.com/) (via `@tailwindcss/vite`, sem `tailwind.config.js` — o tema vive em `src/index.css`)
 - [React Router](https://reactrouter.com/) (página inicial + páginas legais)
 - [lucide-react](https://lucide.dev/) (ícones)
-- Sem dependência de backend: o formulário de contacto funciona no
-  browser e está preparado para ser ligado a um serviço externo.
+- Sem backend próprio: o formulário de contacto envia através de um
+  serviço externo configurável — ver [Formulário de contacto](#formulário-de-contacto).
 
 ## Identidade visual
 
@@ -198,22 +198,67 @@ devem entrar fotografias reais de obras concluídas.
 
 ## Formulário de contacto
 
-O formulário em `src/sections/Contact.tsx` funciona apenas no browser —
-não envia dados para lado nenhum. Ao submeter, mostra uma mensagem de
-confirmação local, deixando claro que ainda não está ligado a um serviço
-real (ver `handleSubmit` no mesmo ficheiro).
+O site é estático, pelo que o envio do e-mail é feito por um **serviço
+externo**: o formulário faz um `POST` para um endpoint, e esse serviço
+encaminha o pedido para o e-mail da empresa.
 
-Para ativar o envio real, é necessário escolher um serviço externo (não
-requer backend próprio), por exemplo:
+A configuração está isolada em `src/lib/contactForm.ts` e é feita por
+variáveis de ambiente, o que permite **trocar de serviço sem mexer em
+nenhum componente**:
 
-- [Formspree](https://formspree.io/)
-- [Getform](https://getform.io/)
-- [EmailJS](https://www.emailjs.com/)
-- Uma função serverless própria (Cloudflare Workers, Vercel Functions, etc.)
+| Variável | O que é |
+|---|---|
+| `VITE_FORM_ENDPOINT` | URL para onde o formulário é enviado |
+| `VITE_FORM_ACCESS_KEY` | Chave pública do serviço (opcional — o Formspree, por exemplo, não usa) |
 
-e substituir o corpo da função `handleSubmit` por um pedido `fetch`/`POST`
-para esse serviço, usando os dados do `FormData` do formulário (incluindo,
-se aplicável, os ficheiros anexados no campo "Fotografias").
+Enquanto `VITE_FORM_ENDPOINT` não estiver definida, o site funciona
+normalmente mas o botão de envio fica desativado e o formulário avisa que
+o envio automático ainda não está ligado, remetendo para telefone,
+e-mail e WhatsApp.
+
+### Ativar (Web3Forms, gratuito)
+
+1. Em [web3forms.com](https://web3forms.com), indicar o e-mail que deve
+   receber os pedidos (`mendes3pm@gmail.com`) e confirmar. Recebe uma
+   *access key*.
+2. **Para testar localmente:** copiar `.env.example` para `.env` e colar
+   a chave em `VITE_FORM_ACCESS_KEY`. Depois `npm run dev`.
+3. **Para o site publicado:** no GitHub, em **Settings → Secrets and
+   variables → Actions → New repository secret**, criar dois segredos:
+   - `VITE_FORM_ENDPOINT` = `https://api.web3forms.com/submit`
+   - `VITE_FORM_ACCESS_KEY` = a chave do passo 1
+4. Correr o workflow de deployment (ou fazer um push para `main`).
+
+### Trocar de serviço
+
+Basta mudar os dois segredos. Exemplos:
+
+- **Formspree** — `VITE_FORM_ENDPOINT=https://formspree.io/f/xxxxxxxx`,
+  sem access key.
+- **Função serverless própria** (Cloudflare Workers, Vercel…) —
+  apontar `VITE_FORM_ENDPOINT` para o endpoint criado. É a opção
+  recomendada quando existir domínio próprio, porque permite enviar os
+  e-mails a partir de um endereço da empresa (ex.: `geral@lmdreams.pt`),
+  o que melhora bastante a entregabilidade e a credibilidade.
+
+### O que já está tratado
+
+- **Spam:** o formulário inclui um campo-armadilha (*honeypot*) invisível.
+  Se os pedidos de spam se tornarem um problema, o passo seguinte é
+  acrescentar o [Cloudflare Turnstile](https://www.cloudflare.com/products/turnstile/),
+  que é gratuito e não obriga o visitante a resolver puzzles.
+- **Erros:** se o envio falhar, o formulário mostra o motivo e os
+  contactos alternativos, em vez de deixar o visitante sem resposta.
+- **Fotografias:** não são anexadas no formulário — a esmagadora maioria
+  dos serviços gratuitos não aceita anexos, e fotografias de telemóvel
+  ultrapassam depressa os limites. Em vez disso, o formulário convida a
+  enviá-las por WhatsApp.
+
+> ⚠️ **RGPD:** seja qual for o serviço escolhido, ele passa a subcontratante
+> do tratamento dos dados. A Política de Privacidade
+> (`src/pages/PrivacyPolicy.tsx`, secção 4) tem um placeholder à espera do
+> nome do serviço e da localização dos servidores. Serviços com servidores
+> na UE simplificam o cumprimento.
 
 ## Elementos a substituir antes de publicar
 
