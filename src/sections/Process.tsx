@@ -1,5 +1,6 @@
 import { Container } from "../components/ui/Container";
 import { SectionHeading } from "../components/ui/SectionHeading";
+import { Photo } from "../components/ui/Photo";
 import { PROCESS_STEPS } from "../data/process";
 
 export function Process() {
@@ -31,6 +32,13 @@ export function Process() {
             </li>
           ))}
         </ol>
+
+        <Photo
+          src="images/interior.webp"
+          alt="Interior de habitação remodelada, com iluminação quente ao fim do dia"
+          className="mt-16 aspect-[21/9] rounded-2xl border border-line"
+          overlay="soft"
+        />
       </Container>
     </section>
   );

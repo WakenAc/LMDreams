@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Container } from "../components/ui/Container";
 import { SectionHeading } from "../components/ui/SectionHeading";
+import { asset } from "../lib/asset";
 
 const CARTOES = [
   {
@@ -38,7 +39,21 @@ const CARTOES = [
 
 export function Differentiation() {
   return (
-    <section className="bg-ink py-20 text-fg sm:py-28">
+    <section className="relative isolate overflow-hidden bg-ink py-20 text-fg sm:py-28">
+      {/* Fotografia de ambiente — imagem ilustrativa, ver README */}
+      <img
+        src={asset("images/especialistas.webp")}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        className="absolute inset-0 -z-10 h-full w-full object-cover"
+      />
+      <div className="absolute inset-0 -z-10 bg-ink/88" aria-hidden="true" />
+      <div
+        className="absolute inset-0 -z-10 bg-gradient-to-b from-ink via-transparent to-ink"
+        aria-hidden="true"
+      />
+
       <Container>
         <SectionHeading
           align="center"
@@ -57,7 +72,7 @@ export function Differentiation() {
           {CARTOES.map(({ icon: Icon, title, text }, i) => (
             <div
               key={title}
-              className={`rounded-2xl border border-line bg-surface-2 p-6 transition-all duration-300 hover:border-brand/40 hover:bg-surface-3 ${
+              className={`rounded-2xl border border-line bg-surface-2/95 p-6 backdrop-blur-sm transition-all duration-300 hover:border-brand/40 hover:bg-surface-3 ${
                 i === CARTOES.length - 1 ? "sm:col-span-2 lg:col-span-1" : ""
               }`}
             >

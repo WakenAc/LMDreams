@@ -2,15 +2,25 @@ import { MessageCircle, Phone, Send } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { Container } from "../components/ui/Container";
 import { SITE } from "../lib/site";
+import { asset } from "../lib/asset";
 
 export function CtaBanner() {
   return (
-    <section className="relative overflow-hidden bg-ink py-20 text-fg sm:py-24">
+    <section className="relative isolate overflow-hidden bg-ink py-20 text-fg sm:py-24">
+      {/* Fotografia de ambiente — imagem ilustrativa, ver README */}
+      <img
+        src={asset("images/cta.webp")}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        className="absolute inset-0 -z-10 h-full w-full object-cover"
+      />
+      <div className="absolute inset-0 -z-10 bg-ink/85" aria-hidden="true" />
       <div
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 -z-10"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 50% 0%, rgba(199,212,54,0.16), transparent 55%)",
+            "radial-gradient(circle at 50% 0%, rgba(199,212,54,0.14), transparent 55%)",
         }}
         aria-hidden="true"
       />
@@ -42,6 +52,10 @@ export function CtaBanner() {
           </Button>
         </div>
       </Container>
+
+      <span className="pointer-events-none absolute bottom-3 right-3 rounded-md bg-ink/70 px-2 py-1 text-[0.6rem] font-medium uppercase tracking-wide text-fg-subtle backdrop-blur-sm">
+        Imagem ilustrativa
+      </span>
     </section>
   );
 }

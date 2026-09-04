@@ -1,6 +1,7 @@
 import { HardHat, MessageCircle, ShieldCheck, Users } from "lucide-react";
 import { Container } from "../components/ui/Container";
 import { SectionHeading } from "../components/ui/SectionHeading";
+import { Photo } from "../components/ui/Photo";
 
 const PONTOS = [
   {
@@ -42,6 +43,12 @@ export function About() {
             elevados padrões de qualidade, rigor e transparência, obra após
             obra.
           </p>
+
+          <Photo
+            src="images/obra.webp"
+            alt="Estaleiro de construção ao final do dia, com grua e equipa em obra"
+            className="mt-8 aspect-[4/3] rounded-2xl border border-line"
+          />
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2">
