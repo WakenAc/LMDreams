@@ -1,0 +1,8 @@
+node_modules/
+dist/
+dist-ssr/
+.tmp/
+.revisao/
+.lighthouseci/
+assets-src/ilustrativas/_rejeitadas/
+.claude/settings.local.json
