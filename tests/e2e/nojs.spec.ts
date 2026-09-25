@@ -33,7 +33,9 @@ test('página principal sem JavaScript: todas as secções e o formulário', asy
         const s = getComputedStyle(el)
         return (el.textContent ?? '').trim().length > 0 && (s.opacity === '0' || s.visibility === 'hidden')
       })
-      .filter((el) => !el.closest('dialog, [aria-hidden="true"], .sr-only'))
+      // Os filtros e os botões do detalhe dos projetos só funcionam com JavaScript e ficam
+      // de fora de propósito; os sete projetos, com o conteúdo todo, continuam visíveis.
+      .filter((el) => !el.closest('dialog, [aria-hidden="true"], .sr-only, [data-filter-group], [data-project-open]'))
       .map((el) => el.tagName)
       .slice(0, 10),
   )

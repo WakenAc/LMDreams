@@ -3,6 +3,7 @@ import { ui } from '../../content/common'
 import { projectsSection } from '../../content/projects'
 import type { ProjectPhoto } from '../../content/tipos'
 import { withBase } from '../../lib/links'
+import { PlaceholderArt, type PlaceholderVariant } from './PlaceholderArt'
 
 // Galeria antes e depois dos projetos (Partes 3.10 e 5.4 §7). Com fotografias reais dos
 // dois lados, cada par tem um comparador operável por teclado (<input type="range">,
@@ -87,6 +88,11 @@ function PlanArt({ drawing, className }: { drawing: PlaceholderDrawing; classNam
 
 interface PhotoPlaceholderProps {
   drawing?: PlaceholderDrawing
+  /**
+   * Desenho pelo assunto (capas dos projetos, pela categoria), no mesmo traço dos
+   * placeholders das secções. Sem ele, usa a planta de `drawing` (antes e depois).
+   */
+  variant?: PlaceholderVariant
   /** Rótulo visível no canto superior esquerdo (ex.: "Antes"). */
   label?: string
   /** Classes do enquadramento (proporção, raio). */
@@ -96,13 +102,17 @@ interface PhotoPlaceholderProps {
 }
 
 /** Imagem em falta gerada em código, com a etiqueta "Imagem a substituir" (Parte 5.3). */
-export function PhotoPlaceholder({ drawing = 'plan', label, className, artClassName }: PhotoPlaceholderProps) {
+export function PhotoPlaceholder({ drawing = 'plan', variant, label, className, artClassName }: PhotoPlaceholderProps) {
   return (
     <figure
-      data-photo-placeholder={drawing}
+      data-photo-placeholder={variant ?? drawing}
       className={['relative overflow-hidden bg-sand', className].filter(Boolean).join(' ')}
     >
-      <PlanArt drawing={drawing} className={artClassName} />
+      {variant ? (
+        <PlaceholderArt variant={variant} className={artClassName} />
+      ) : (
+        <PlanArt drawing={drawing} className={artClassName} />
+      )}
       <figcaption className="absolute inset-0 flex flex-col items-start gap-2 p-2 sm:p-3">
         {label ? (
           <span className="rounded-sm bg-bg px-2 py-0.5 text-small font-semibold text-ink">{label}</span>

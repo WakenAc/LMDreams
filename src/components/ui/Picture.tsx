@@ -3,6 +3,7 @@ import { company } from '../../content/company'
 import { ui } from '../../content/common'
 import { getImage, type PictureAsset } from '../../content/images'
 import type { ImageId } from '../../content/tipos'
+import { PlaceholderArt, type PlaceholderVariant } from './PlaceholderArt'
 
 // Imagem otimizada do registo (Partes 3.7 e 4.8): <picture> com AVIF e WebP, `img`
 // com width, height, sizes e alt. Imagens geradas por IA levam a legenda visível
@@ -61,28 +62,21 @@ function orderedSources(asset: PictureAsset): [string, string][] {
 }
 
 /**
- * Placeholder SVG com linhas de planta sobre tons de pedra (plano B, Parte 4.2). Sem papel
- * de desenho nem cotas: esses motivos ficam só no Hero e no Método (direção visual,
- * secções 6 e 11).
+ * Desenho do placeholder SVG de cada imagem (plano B, Parte 4.2): um assunto por imagem,
+ * no mesmo traço, para as secções não repetirem o mesmo desenho.
  */
-function PlaceholderArt() {
-  return (
-    <svg
-      aria-hidden="true"
-      focusable="false"
-      className="absolute inset-0 h-full w-full"
-      preserveAspectRatio="xMidYMid slice"
-      viewBox="0 0 400 300"
-    >
-      <rect width="400" height="300" fill="#d6d2c7" />
-      <g fill="none" stroke="#4a5361" strokeOpacity="0.45" strokeWidth="1.2">
-        <path d="M60 60H340V240H60Z" />
-        <path d="M60 150H190V240M190 60V120M250 150H340M250 150V240" />
-        <path d="M190 120a30 30 0 0 1 30 30" />
-        <path d="M110 240v-14h40v14" />
-      </g>
-    </svg>
-  )
+const PLACEHOLDER_VARIANT: Record<ImageId, PlaceholderVariant> = {
+  hero: 'planta',
+  sobre: 'planta',
+  diferenciacao: 'corte',
+  'servico-construcao': 'estrutura',
+  'servico-cozinhas': 'cozinha',
+  'servico-casas-de-banho': 'casa-de-banho',
+  'servico-pavimentos': 'pavimento',
+  'servico-recuperacao': 'fachada',
+  'servico-exteriores': 'exterior',
+  transparencia: 'cronograma',
+  cta: 'planta',
 }
 
 export function Picture({
@@ -112,7 +106,7 @@ export function Picture({
   if (!entry.picture) {
     return (
       <figure data-image-placeholder={id} className={frame} style={frameStyle}>
-        <PlaceholderArt />
+        <PlaceholderArt variant={PLACEHOLDER_VARIANT[id]} />
         {/* Contorno tracejado de 1 px `muted` (Parte 5.3). Não no fundo do CTA, que fica sob o véu. */}
         {fill ? null : (
           <span
