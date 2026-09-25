@@ -107,7 +107,7 @@ Regras: texto pequeno em acento só sobre `bg`; sobre `surface` usa-se `accent-h
 | etiqueta (maiúsculas, mono) | `0.75rem` | 12 | 12 | 1,35 | 0,08em |
 | número de etapa (mono) | `1rem` | 16 | 16 | 1 | 0,02em |
 
-O texto grande desce a 15,5 px abaixo de 768 px para o subtítulo do hero caber em 3 linhas a 390 px (medido na maqueta). Largura máxima do texto corrido: 65 caracteres (`max-width: 36em` a 17 px).
+O texto grande desce a 15,5 px abaixo de 768 px para o subtítulo do hero caber em 3 linhas a 390 px (medido na maqueta). Largura máxima do texto corrido: 65 caracteres (`max-w-texto`, token `--container-texto: 30em`, cerca de 0,465em por carácter em IBM Plex Sans, medido no próprio parágrafo) **(ajuste: o `max-w-prose` do Tailwind dá 65ch, que em Plex Sans corresponde a mais de 65 caracteres)**. Abaixo de 380 px, o subtítulo do hero pode ocupar 4 linhas (o texto é fixo pelo brief); usa `text-wrap: pretty` só aí, para não deixar uma palavra isolada **(ajuste)**.
 
 ## 5. Espaço, grelha, raios, linhas, sombras e movimento
 
@@ -148,9 +148,9 @@ Regra de contenção: no máximo dois motivos por secção e nenhum atrás de pa
 
 ## 8. Hero
 
-- **Computador (≥ 1024 px):** fundo `bg` com papel de desenho na metade direita. Linha 1: etiqueta em Plex Mono maiúsculas precedida de uma pequena cota, e o H1 em 2 linhas (quebra estável depois de “mãos”). Linha 2: à esquerda (colunas 1 a 5) o subtítulo em 3 linhas, os dois botões lado a lado (lg) e, logo abaixo, a linha de confiança como três linhas com régua e cruz, sobre a linha de terra **(ajuste: junto aos botões)**; à direita (colunas 7 a 12) a fotografia 4:3 com cota horizontal por cima, cota vertical só com margem de pelo menos 56 px, 2 ou 3 anotações e a legenda de IA no canto superior direito.
+- **Computador (≥ 1024 px):** fundo `bg` com papel de desenho na metade direita. Linha 1: etiqueta em Plex Mono maiúsculas precedida de uma pequena cota, e o H1 em 2 linhas (quebra estável depois de “mãos”). Linha 2: à esquerda (colunas 1 a 5) o subtítulo em 3 linhas, os dois botões lado a lado (lg) e, logo abaixo, a linha de confiança como três linhas com régua e cruz, sobre a linha de terra **(ajuste: junto aos botões)**; à direita (colunas 7 a 12) a fotografia **na proporção do ficheiro (≈ 16:9) (ajuste: em vez de 4:3, para o hero caber a 1280 × 720 e as anotações não derivarem com o recorte)** com cota horizontal por cima, cota vertical só com margem de pelo menos 56 px, 2 ou 3 anotações e a legenda de IA no canto superior direito.
 - **1280 × 720:** tudo o que é obrigatório (título, subtítulo, botões, linha de confiança, legenda) visível sem scroll; a fotografia recorta pelo sujeito.
-- **Tablet (768 a 1023 px):** texto por cima, fotografia 4:3 a toda a largura por baixo, só com a cota horizontal; especialidades como etiquetas por baixo da fotografia.
+- **Tablet (768 a 1023 px):** texto por cima, fotografia na proporção do ficheiro (≈ 16:9) a toda a largura por baixo, só com a cota horizontal; especialidades como etiquetas por baixo da fotografia.
 - **Telemóvel (< 768 px):** H1 a 36 px em até 3 linhas; subtítulo em 3 linhas; botões empilhados a toda a largura (48 px); linha de confiança; fotografia 4:5 a toda a largura com a legenda de IA no canto superior direito; etiquetas das especialidades por baixo; a barra de contacto móvel nunca tapa os botões nem a linha de confiança.
 - **Altura mínima:** `calc(100dvh - 72px)` com teto razoável; abaixo de 768 px, menos também a barra de contacto e a *safe area*.
 
