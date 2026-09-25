@@ -1,0 +1,23 @@
+{
+  "nota": "Correspondência index → ID do asset → job_id (Parte 4.6). Os job_id servem de referência de estilo na Higgsfield.",
+  "jobs": [
+    {
+      "index": 1,
+      "asset": "hero",
+      "versao": "v1",
+      "job_id": "555c2906-3954-4aaf-8ffd-6d9f31f39366",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "16:9",
+      "estado": "completed"
+    },
+    {
+      "index": 0,
+      "asset": "hero",
+      "versao": "v2",
+      "job_id": null,
+      "modelo": "gpt_image_2_5",
+      "proporcao": "16:9",
+      "estado": "submission_failed: limite diário de gerações do período de tolerância"
+    }
+  ]
+}

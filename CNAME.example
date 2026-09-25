@@ -1,0 +1,14 @@
+# Domínio próprio para o GitHub Pages (exemplo; este ficheiro NÃO é publicado)
+#
+# Com a publicação por GitHub Actions, um ficheiro CNAME na pasta publicada é
+# ignorado e não é necessário. O domínio configura-se no GitHub:
+#   Settings → Pages → Custom domain
+# ou com o GitHub CLI:
+#   gh api -X PUT repos/WakenAc/LMDreams/pages -f cname=www.dominio.pt
+#
+# Depois, correr "npm run deploy" para reconstruir o site com base "/".
+# Passo a passo completo (DNS, verificação do domínio, HTTPS): README.md,
+# secção "Domínio próprio".
+#
+# Domínio de exemplo:
+www.dominio.pt

@@ -1,0 +1,130 @@
+// Projetos (Anexo A §7; Parte 5.4 §7). Um projeto placeholder por categoria:
+// só a categoria é real. Nunca nomes de obras, localidades nem imagens de IA.
+// Para publicar uma obra real: preencher os campos, juntar as fotografias
+// autorizadas pelo cliente e pôr `placeholder: false`.
+
+import type { Project, ProjectsContent } from './tipos'
+import { PH } from '../lib/placeholders'
+import { company } from './company'
+
+export const projectsSection = {
+  heading: 'Projetos',
+  introPlaceholder: `Esta secção vai reunir obras realizadas pela ${company.name}, com fotografias publicadas com autorização dos clientes.`,
+  introReal: `Fotografias de obras realizadas pela ${company.name}, publicadas com autorização dos clientes.`,
+  filtersLabel: 'Filtrar projetos por categoria',
+  allLabel: 'Todos',
+  categories: {
+    remodelacoes: 'Remodelações',
+    cozinhas: 'Cozinhas',
+    'casas-de-banho': 'Casas de banho',
+    interiores: 'Interiores',
+    exteriores: 'Exteriores',
+    construcao: 'Construção',
+    recuperacao: 'Recuperação de imóveis',
+  },
+  results: {
+    zero: 'Nenhum projeto para mostrar.',
+    one: 'A mostrar {n} projeto.',
+    other: 'A mostrar {n} projetos.',
+  },
+  fieldLabels: {
+    type: 'Tipo de intervenção',
+    locality: 'Localidade',
+    category: 'Categoria',
+  },
+  dialog: {
+    galleryHeading: 'Antes e depois',
+    beforeLabel: 'Antes',
+    afterLabel: 'Depois',
+    sliderLabel: 'Comparar antes e depois',
+    sliderValueText: '{antes}\u00A0% antes, {depois}\u00A0% depois',
+    noPhotos: 'As fotografias deste projeto ainda não foram publicadas.',
+  },
+} satisfies ProjectsContent
+
+export const projects = [
+  {
+    id: 'projeto-remodelacoes',
+    nome: PH('projetos', 'nome de uma obra de remodelação'),
+    categoria: 'remodelacoes',
+    tipoDeIntervencao: PH('projetos', 'tipo de intervenção'),
+    localidade: PH('projetos', 'concelho ou localidade da obra'),
+    descricao: PH('projetos', 'breve descrição da obra e do que foi feito'),
+    capa: null,
+    antes: [],
+    depois: [],
+    placeholder: true,
+  },
+  {
+    id: 'projeto-cozinhas',
+    nome: PH('projetos', 'nome de uma obra de cozinha'),
+    categoria: 'cozinhas',
+    tipoDeIntervencao: PH('projetos', 'tipo de intervenção'),
+    localidade: PH('projetos', 'concelho ou localidade da obra'),
+    descricao: PH('projetos', 'breve descrição da obra e do que foi feito'),
+    capa: null,
+    antes: [],
+    depois: [],
+    placeholder: true,
+  },
+  {
+    id: 'projeto-casas-de-banho',
+    nome: PH('projetos', 'nome de uma obra de casa de banho'),
+    categoria: 'casas-de-banho',
+    tipoDeIntervencao: PH('projetos', 'tipo de intervenção'),
+    localidade: PH('projetos', 'concelho ou localidade da obra'),
+    descricao: PH('projetos', 'breve descrição da obra e do que foi feito'),
+    capa: null,
+    antes: [],
+    depois: [],
+    placeholder: true,
+  },
+  {
+    id: 'projeto-interiores',
+    nome: PH('projetos', 'nome de uma obra de interiores'),
+    categoria: 'interiores',
+    tipoDeIntervencao: PH('projetos', 'tipo de intervenção'),
+    localidade: PH('projetos', 'concelho ou localidade da obra'),
+    descricao: PH('projetos', 'breve descrição da obra e do que foi feito'),
+    capa: null,
+    antes: [],
+    depois: [],
+    placeholder: true,
+  },
+  {
+    id: 'projeto-exteriores',
+    nome: PH('projetos', 'nome de uma obra de exteriores'),
+    categoria: 'exteriores',
+    tipoDeIntervencao: PH('projetos', 'tipo de intervenção'),
+    localidade: PH('projetos', 'concelho ou localidade da obra'),
+    descricao: PH('projetos', 'breve descrição da obra e do que foi feito'),
+    capa: null,
+    antes: [],
+    depois: [],
+    placeholder: true,
+  },
+  {
+    id: 'projeto-construcao',
+    nome: PH('projetos', 'nome de uma obra de construção'),
+    categoria: 'construcao',
+    tipoDeIntervencao: PH('projetos', 'tipo de intervenção'),
+    localidade: PH('projetos', 'concelho ou localidade da obra'),
+    descricao: PH('projetos', 'breve descrição da obra e do que foi feito'),
+    capa: null,
+    antes: [],
+    depois: [],
+    placeholder: true,
+  },
+  {
+    id: 'projeto-recuperacao',
+    nome: PH('projetos', 'nome de uma obra de recuperação de imóvel'),
+    categoria: 'recuperacao',
+    tipoDeIntervencao: PH('projetos', 'tipo de intervenção'),
+    localidade: PH('projetos', 'concelho ou localidade da obra'),
+    descricao: PH('projetos', 'breve descrição da obra e do que foi feito'),
+    capa: null,
+    antes: [],
+    depois: [],
+    placeholder: true,
+  },
+] satisfies readonly Project[]

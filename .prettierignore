@@ -1,0 +1,13 @@
+BRIEF-LMDREAMS.md
+CONTEUDO-A-SUBSTITUIR.md
+dist
+dist-ssr
+assets-src
+design
+node_modules
+package-lock.json
+.tmp
+.revisao
+.lighthouseci
+public
+docs/capturas

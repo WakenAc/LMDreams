@@ -6,3 +6,12 @@ dist-ssr/
 .lighthouseci/
 assets-src/ilustrativas/_rejeitadas/
 .claude/settings.local.json
+*.local
+*.log
+test-results/
+playwright-report/
+blob-report/
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
