@@ -33,6 +33,10 @@ for (const p of PAGES) {
     await expect(page.locator('h1')).toHaveCount(1)
     await expect(page.locator('main#conteudo')).toBeVisible()
     await page.waitForLoadState('networkidle')
+    // O JavaScript das ilhas só é pedido depois do evento load (scripts/prerender.ts): o
+    // axe e a consola só contam depois da hidratação, mais 500 ms para avisos tardios.
+    await page.waitForSelector('html[data-hydrated]', { state: 'attached' })
+    await page.waitForTimeout(500)
 
     const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze()
     const serious = axe.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical')

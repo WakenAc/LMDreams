@@ -3,6 +3,8 @@ import { expect, test } from '@playwright/test'
 
 // Acessibilidade (Partes 3.10 e 6.1): axe em todas as páginas a 390, 768 e 1440 px,
 // e percursos de teclado. Corre só no projeto "desktop" (define a janela em cada teste).
+// O axe corre sobre as ilhas já hidratadas (html[data-hydrated]); o estado antes da
+// hidratação, igual ao HTML sem JavaScript, é verificado em nojs.spec.ts.
 
 const PAGES = ['./', 'politica-de-privacidade/', 'politica-de-cookies/', 'termos-e-condicoes/', 'pagina-inexistente/']
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']
@@ -13,6 +15,7 @@ for (const width of [390, 768, 1440]) {
       await page.setViewportSize({ width, height: 900 })
       await page.goto(path)
       await page.waitForLoadState('networkidle')
+      await page.waitForSelector('html[data-hydrated]', { state: 'attached' })
       const r = await new AxeBuilder({ page }).withTags(TAGS).analyze()
       const serious = r.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical')
       expect(serious.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(' | ')}`)).toEqual([])

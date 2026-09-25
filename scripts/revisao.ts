@@ -2,11 +2,15 @@
 // capturas (ecrã visível e página inteira, movimento normal e reduzido, sem JavaScript),
 // medições (scroll horizontal, cabeçalho, hero, alvos de toque, pedidos externos,
 // consola) e violações do axe. Corre sobre a pasta de saída já construída.
+// Proveniência: o chunk de entrada e a data do dist ficam em medicoes.json e axe.json
+// (chave "proveniencia"); se o dist mudar durante a recolha, o script falha sem os gravar.
+// Com JavaScript, cada captura, medição e axe é feita depois da hidratação.
 // Uso: npx tsx scripts/revisao.ts --ronda 1
 import fs from 'node:fs'
 import path from 'node:path'
 import { AxeBuilder } from '@axe-core/playwright'
 import { chromium, type Browser, type Page } from '@playwright/test'
+import { provenanceChange, readProvenance } from './proveniencia.ts'
 import { startServer } from './serve-dist.ts'
 
 function arg(name: string, fallback: string): string {
@@ -29,12 +33,29 @@ const PAGES = [
   { name: '404', path: 'a/b/pagina-inexistente/' },
 ]
 
-const server = await startServer({ dir: 'dist', base: '/LMDreams/', port: 4180 })
+const DIST = 'dist'
+const provenance = readProvenance(DIST)
+if (!provenance.entrada) {
+  console.error(`revisao: não encontrei o chunk de entrada em ${path.join(DIST, 'index.html')} (data-lmd-loader); corra primeiro o build`)
+  process.exit(1)
+}
+console.log(`revisao: build de ${provenance.buildEm}, entrada ${provenance.entrada}`)
+
+const server = await startServer({ dir: DIST, base: '/LMDreams/', port: 4180 })
 const BASE = server.url.endsWith('/') ? server.url : `${server.url}/`
 console.log(`revisao: servidor em ${BASE}`)
 
 const medicoes: Record<string, unknown> = {}
 const axe: Record<string, unknown> = {}
+
+/** Espera pela hidratação das ilhas; se não acontecer, fica registado na consola da página. */
+async function waitForHydration(page: Page, consoleMsgs: string[]) {
+  try {
+    await page.waitForSelector('html[data-hydrated]', { state: 'attached', timeout: 15_000 })
+  } catch {
+    consoleMsgs.push('hidratação: html[data-hydrated] não apareceu em 15 s (capturas e axe sobre o HTML sem JavaScript)')
+  }
+}
 
 async function scrollThrough(page: Page) {
   // Percorre a página até ao fim para disparar as entradas suaves (e as imagens lazy)
@@ -120,6 +141,7 @@ async function run(browser: Browser) {
         })
         page.on('pageerror', (e) => consoleMsgs.push(`pageerror: ${e.message}`))
         await page.goto(BASE + p.path, { waitUntil: 'networkidle' })
+        await waitForHydration(page, consoleMsgs)
         await page.evaluate(() => document.fonts.ready)
         const suffix = mode === 'reduced' ? '-reduced' : ''
         await page.screenshot({ path: path.join(SHOTS, `${p.name}-${width}${suffix}.png`) })
@@ -159,8 +181,15 @@ try {
   await browser.close()
   await server.close()
 }
-fs.writeFileSync(path.join(OUT, 'medicoes.json'), `${JSON.stringify(medicoes, null, 2)}\n`)
-fs.writeFileSync(path.join(OUT, 'axe.json'), `${JSON.stringify(axe, null, 2)}\n`)
+
+// O dist não pode ter mudado a meio: as capturas, as medições e o axe seriam de dois builds.
+const changed = provenanceChange(provenance, readProvenance(DIST))
+if (changed) {
+  console.error(`revisao FALHOU: ${changed}. medicoes.json e axe.json não foram gravados; volte a correr sem nenhum build pelo meio.`)
+  process.exit(1)
+}
+fs.writeFileSync(path.join(OUT, 'medicoes.json'), `${JSON.stringify({ proveniencia: provenance, ...medicoes }, null, 2)}\n`)
+fs.writeFileSync(path.join(OUT, 'axe.json'), `${JSON.stringify({ proveniencia: provenance, ...axe }, null, 2)}\n`)
 const graves = Object.entries(axe).flatMap(([k, v]) =>
   (v as { id: string; impact: string }[]).filter((x) => x.impact === 'serious' || x.impact === 'critical').map((x) => `${k}: ${x.id}`),
 )

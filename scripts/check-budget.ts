@@ -3,6 +3,17 @@
 // primeiro carregamento em telemóvel (informativo).
 //
 // Uso: tsx scripts/check-budget.ts [--dir dist] [--base /LMDreams/]
+//
+// Método e unidades:
+// - O brief (Partes 3.11 e 6.1) dá os limites em "KB" sem definir a unidade. Este gate usa
+//   KiB (1 KiB = 1024 bytes) e escreve-o assim na saída, com os bytes ao lado.
+// - JavaScript e CSS: cada ficheiro é comprimido à parte com gzip de nível 9 e os tamanhos
+//   somam-se. O JavaScript inicial é o do carregador (data-src e data-preload), dos
+//   <script type="module"> e dos modulepreload da página principal.
+// - A coluna "gzip" do Vite no fim do build usa kB (1000 bytes) e a compressão do próprio
+//   Vite: a soma dos mesmos ficheiros não coincide com este total e não é o valor do gate.
+// - Acima de 95% de um limite, o gate passa com um aviso: os dados reais (projetos,
+//   fotografias, dados legais) ainda vão fazer crescer o JavaScript das ilhas.
 
 import fs from 'node:fs'
 import path from 'node:path'
@@ -11,15 +22,18 @@ import { parse, type HTMLElement } from 'node-html-parser'
 import { cssUrls, parseSrcset, type SrcsetCandidate } from './check-links.ts'
 import { argValue, DEFAULT_BASE, isMainModule, normalizeBase } from './serve-dist.ts'
 
-const KB = 1024
+const KIB = 1024
 export const LIMITS = {
-  js: 100 * KB,
-  css: 30 * KB,
-  heroDesktop: 250 * KB,
-  mediaVariant: 120 * KB,
-  image: 120 * KB,
-  firstLoad: 1.2 * KB * KB,
+  js: 100 * KIB,
+  css: 30 * KIB,
+  heroDesktop: 250 * KIB,
+  mediaVariant: 120 * KIB,
+  image: 120 * KIB,
+  firstLoad: 1.2 * KIB * KIB,
 } as const
+
+/** Fração de um limite a partir da qual o gate avisa (passa, mas com pouca folga). */
+const WARN_RATIO = 0.95
 
 const HERO_VIEWPORT = 1440
 const MOBILE_VIEWPORT = 390
@@ -191,7 +205,19 @@ const FORMAT_BY_EXT: Readonly<Record<string, Format>> = {
 }
 
 function kb(bytes: number): string {
-  return `${(bytes / KB).toFixed(1).replace('.', ',')} KB`
+  return `${(bytes / KIB).toFixed(1).replace('.', ',')} KiB`
+}
+
+/** Bytes com separador de milhares (espaço), para a folga exata. */
+function bytesText(bytes: number): string {
+  return `${String(Math.round(bytes)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} B`
+}
+
+/** Aviso quando um total passa WARN_RATIO do limite sem o ultrapassar. */
+function nearLimit(what: string, total: number, limit: number): string | null {
+  if (total > limit || total <= limit * WARN_RATIO) return null
+  const pct = ((total / limit) * 100).toFixed(1).replace('.', ',')
+  return `${what} a ${pct}% do limite (${kb(total)} de ${kb(limit)}; folga de ${bytesText(limit - total)} em gzip)`
 }
 
 function limitCell(bytes: number, limit: number): string {
@@ -422,7 +448,7 @@ function checkPictures(doc: HTMLElement, budget: Budget): ImageRow[] {
   return rows
 }
 
-/** Imagens AVIF de fundo (atributos style da página e CSS inicial), como a da CTA: até 120 KB. */
+/** Imagens AVIF de fundo (atributos style da página e CSS inicial), como a da CTA: até 120 KiB. */
 function checkBackgrounds(doc: HTMLElement, cssFiles: Iterable<string>, budget: Budget): ImageRow[] {
   const found = new Map<string, string>()
   const collect = (css: string, fromUrl: string, where: string) => {
@@ -594,9 +620,12 @@ export function checkBudget(options: { dir: string; base?: string }): BudgetRepo
 
   if (jsTotal > LIMITS.js) budget.errors.push(`JavaScript inicial com ${kb(jsTotal)} em gzip (limite ${kb(LIMITS.js)})`)
   if (cssTotal > LIMITS.css) budget.errors.push(`CSS com ${kb(cssTotal)} em gzip (limite ${kb(LIMITS.css)})`)
+  for (const near of [nearLimit('JavaScript inicial', jsTotal, LIMITS.js), nearLimit('CSS', cssTotal, LIMITS.css)]) {
+    if (near) budget.warnings.push(near)
+  }
   for (const row of images) if (!row.ok) budget.errors.push(`imagem ${row.image} (${row.variant}) acima do objetivo`)
   if (total > LIMITS.firstLoad) {
-    budget.warnings.push(`primeiro carregamento em telemóvel com cerca de ${kb(total)} (objetivo: até cerca de 1,2 MB)`)
+    budget.warnings.push(`primeiro carregamento em telemóvel com cerca de ${kb(total)} (objetivo: até cerca de 1,2 MiB)`)
   }
 
   return {
@@ -626,8 +655,11 @@ function printTable(headers: string[], rows: string[][]): void {
 function printFiles(title: string, files: { rel: string; gzip: number }[], total: number, limit: number): void {
   console.log(`\n${title}`)
   const rows = files.map((f) => [f.rel, kb(f.gzip)])
-  rows.push(['Total', `${kb(total)} / ${kb(limit)}  ${total <= limit ? 'OK' : 'FALHA'}`])
-  printTable(['Ficheiro', 'gzip (nível 9)'], rows)
+  rows.push([
+    'Total',
+    `${kb(total)} / ${kb(limit)} (${bytesText(total)} de ${bytesText(limit)})  ${total <= limit ? 'OK' : 'FALHA'}`,
+  ])
+  printTable(['Ficheiro', 'gzip (nível 9; 1 KiB = 1024 B)'], rows)
 }
 
 function main(): void {
@@ -661,7 +693,7 @@ function main(): void {
     ...f.fonts.map((x) => [`  ${x.rel}`, kb(x.bytes)]),
     [`Imagens sem loading="lazy" (${f.images.length})`, kb(f.images.reduce((s, x) => s + x.bytes, 0))],
     ...f.images.map((x) => [`  ${x.rel}`, kb(x.bytes)]),
-    ['Total aproximado', `${kb(f.total)} (objetivo: até cerca de 1,2 MB)`],
+    ['Total aproximado', `${kb(f.total)} (objetivo: até cerca de 1,2 MiB)`],
   ]
   printTable(['Parte', 'Peso'], rows)
 

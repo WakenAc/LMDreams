@@ -8,6 +8,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { chromium } from '@playwright/test'
 import lighthouse, { desktopConfig } from 'lighthouse'
+import { provenanceChange, readProvenance } from './proveniencia.ts'
 import { startServer } from './serve-dist.ts'
 
 const ALL_PAGES = ['', 'politica-de-privacidade/', 'politica-de-cookies/', 'termos-e-condicoes/']
@@ -39,14 +40,13 @@ fs.mkdirSync(OUT, { recursive: true })
 // Proveniência: o chunk de entrada do build medido (data-src do carregador em index.html).
 // Fica em cada linha do resumo, para confirmar que o Lighthouse, as capturas e os gates
 // vêm do mesmo build; se o Lighthouse carregar ficheiros que não existem no dist (outro
-// build), a recolha falha.
+// build), ou se o dist mudar durante a recolha, a recolha falha.
 const DIST = process.env.OUT_DIR ?? 'dist'
 const distIndex = path.join(DIST, 'index.html')
-const entryChunk = fs.existsSync(distIndex)
-  ? (fs.readFileSync(distIndex, 'utf8').match(/<script data-lmd-loader data-src="([^"]+)"/)?.[1] ?? '')
-  : ''
+const provenance = readProvenance(DIST)
+const entryChunk = provenance.entrada
 const entryName = entryChunk.split('/').pop() ?? ''
-const distBuiltAt = fs.existsSync(distIndex) ? fs.statSync(distIndex).mtime.toISOString() : ''
+const distBuiltAt = provenance.buildEm
 const distAssetsDir = path.join(DIST, 'assets')
 const distAssets = new Set(fs.existsSync(distAssetsDir) ? fs.readdirSync(distAssetsDir) : [])
 if (!entryName) console.warn(`lighthouse: não encontrei o chunk de entrada em ${distIndex} (data-lmd-loader)`)
@@ -152,10 +152,18 @@ try {
 }
 
 fs.writeFileSync(path.join(OUT, 'resumo.json'), `${JSON.stringify(rows, null, 2)}\n`)
+
+// O dist não pode ter mudado durante a recolha: senão, o resumo não certifica nenhum build.
+const changed = provenanceChange(provenance, readProvenance(DIST))
+if (changed) {
+  console.error(`\nlighthouse FALHOU: ${changed}. Volte a correr sem nenhum build pelo meio.`)
+  process.exit(1)
+}
+
 const failed = rows.filter((r) => r.falhas.length > 0)
 console.log(
   failed.length === 0
-    ? `\nlighthouse passou: ${rows.length} recolhas dentro dos limites da Parte 6.1.`
+    ? `\nlighthouse passou: ${rows.length} recolhas dentro dos limites da Parte 6.1 (entrada ${entryChunk}).`
     : `\nlighthouse: ${failed.length} de ${rows.length} recolhas abaixo dos limites (ver acima e .lighthouseci/).`,
 )
 process.exit(failed.length === 0 ? 0 : 1)
