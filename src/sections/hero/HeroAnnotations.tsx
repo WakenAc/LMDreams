@@ -9,6 +9,8 @@ import type { HeroAnnotation } from '../../content/tipos'
 export interface HeroPin extends HeroAnnotation {
   /** Ponto da anotação em percentagem da imagem (0 a 100), ou null se não existir. */
   point: { x: number; y: number } | null
+  /** Falso se o ponto fica fora do recorte de telemóvel: o item esconde-se abaixo de 768 px. */
+  onMobile?: boolean
 }
 
 interface HeroAnnotationsProps {
@@ -51,6 +53,7 @@ export function HeroAnnotations({ label, pins, overlay }: HeroAnnotationsProps) 
             style={point ? { left: `${point.x}%`, top: `${point.y}%` } : undefined}
             className={[
               'flex',
+              pin.onMobile === false ? 'max-md:hidden' : '',
               point
                 ? [
                     'lg:absolute lg:w-max lg:items-center lg:-translate-y-1/2',

@@ -13,7 +13,7 @@ export const seo = {
   siteName: company.name,
   locale: 'pt_PT',
   // Descreve public/og-image.jpg e transcreve o texto que ela tem escrito (WCAG 1.1.1).
-  ogImageAlt: `Logótipo da ${company.name}, a frase “${fraseDaImagemOg}” e um profissional a verificar com um nível um revestimento de pedra, com a legenda “${company.aiImageLabel}”.`,
+  ogImageAlt: `Logótipo da ${company.name}, a frase “${fraseDaImagemOg}”, a etiqueta “${hero.eyebrow}” e um profissional a verificar com um nível um revestimento de pedra, com a legenda “${company.aiImageLabel}”.`,
   pages: {
     home: {
       title: `${company.name} | Construção civil e remodelações por especialistas`,

@@ -62,8 +62,12 @@ export const cookiesPage = {
       blocks: [
         {
           type: 'p',
+          text: 'O site está alojado no GitHub Pages, serviço da GitHub. Como a generalidade dos serviços de alojamento, o GitHub Pages regista o endereço IP de cada visita, por motivos de segurança e de funcionamento do serviço.',
+        },
+        {
+          type: 'p',
           text: [
-            'O site está alojado no GitHub Pages, serviço da GitHub. Como a generalidade dos serviços de alojamento, o GitHub Pages regista o endereço IP de cada visita, por motivos de segurança e de funcionamento do serviço. Estes registos não dependem de cookies, e não os usamos para identificar visitantes. Mais informação na ',
+            'Estes registos não dependem de cookies, e não os usamos para identificar visitantes. Mais informação na ',
             { text: 'Política de privacidade', page: 'privacy' },
             '.',
           ],

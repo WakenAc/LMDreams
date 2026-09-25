@@ -9,7 +9,7 @@
 | Fase 2: Fundações e conteúdos | concluída | Build, pré-renderização, SEO, scripts de verificação e CI a funcionar; textos escritos, revistos (25 achados, 15 aplicados, 2 refutados) e corrigidos. Commit `4fed3d8`. |
 | Fase 3: Imagens | em curso | Hero gerado e otimizado (recorte 4:5, imagem OG). Higgsfield com limite diário do período de tolerância: restantes imagens por gerar (plano B entretanto). |
 | Fase 4: Secções e páginas | concluída | 8 pacotes entregues; integração: ilhas de hidratação (JS inicial 96,3 KB gzip), correção do menu móvel, 66/66 testes E2E. |
-| Fase 5: Integração e revisão editorial | pendente | |
+| Fase 5: Integração e revisão editorial | concluída | Editor (5 alterações), matriz de rastreabilidade preenchida (261 feito, 17 adaptado, 11 parcial, 6 pendente do cliente, 4 pendente), ilhas, desempenho (Lighthouse 98 a 100), build:root a passar, 66/66 E2E. |
 | Fase 6: Verificação adversarial | pendente | |
 | Fase 7: Documentação | pendente | |
 | Fase 8: Entrega | pendente | |

@@ -43,7 +43,9 @@ export function Hero() {
   const image = getImage('hero')
   const pins: HeroPin[] = hero.annotations.map((a) => {
     const spot = image.hotspots?.find((h) => h.number === a.number)
-    return { ...a, point: spot ? { x: spot.x, y: spot.y } : null }
+    const crop = image.mobileCrop
+    const onMobile = !spot || !crop || (spot.x >= crop.x0 && spot.x <= crop.x1)
+    return { ...a, point: spot ? { x: spot.x, y: spot.y } : null, onMobile }
   })
   // Só sobre a fotografia real, na proporção do ficheiro, e com todos os pontos definidos.
   const overlay = image.picture !== null && pins.length > 0 && pins.every((p) => p.point !== null)

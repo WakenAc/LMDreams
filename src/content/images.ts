@@ -4,7 +4,7 @@
 // Proveniência das imagens geradas: assets-src/ilustrativas/manifest.json.
 // Para trocar por uma fotografia real: substituir o ficheiro importado e pôr `ilustrativa: false`.
 
-import heroMobile from '@ilustrativas/hero-telemovel.jpg?w=480;720;960;1216&format=avif;webp;jpg&quality=58&as=picture'
+import heroMobile from '@ilustrativas/hero-telemovel.jpg?w=480;640;800;1024;1216&format=avif;webp;jpg&quality=56&as=picture'
 import hero from '@ilustrativas/hero.jpg?w=640;960;1280;1600;1920&format=avif;webp;jpg&quality=60&as=picture'
 import type { ImageId } from './tipos'
 
@@ -33,6 +33,11 @@ export interface ImageEntry {
    * da anotação em src/content/hero.ts. Só se usam com a imagem na proporção do ficheiro.
    */
   hotspots?: readonly { number: string; x: number; y: number }[]
+  /**
+   * Parte horizontal da imagem inteira (em percentagem) que o recorte de telemóvel mostra.
+   * As anotações cujo ponto fica fora dele não aparecem abaixo de 768 px.
+   */
+  mobileCrop?: { x0: number; x1: number }
 }
 
 export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
@@ -49,6 +54,8 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
       { number: '02', x: 15, y: 67 }, // painel de carvalho com puxador
       { number: '03', x: 40, y: 18.5 }, // foco embutido no teto
     ],
+    // hero-telemovel.jpg: recorte x = 1212 a 2428 dos 2688 px do original.
+    mobileCrop: { x0: 45.1, x1: 90.3 },
   },
   sobre: {
     id: 'sobre',

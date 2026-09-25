@@ -7,8 +7,8 @@ import { company } from './company'
 export const about = {
   heading: 'Uma empresa de construção civil organizada por especialidades',
   paragraphs: [
-    `A ${company.name} reúne profissionais com ${company.experienceText} de experiência, cada um na sua especialidade. Com eles, fazemos desde pequenas reparações a obras completas.`,
-    'Um trabalho bem feito começa pela pessoa certa, e isso nota-se no acabamento e na forma como a obra resiste ao tempo. Acompanhamos de perto quem nos confia a obra, seja uma família ou um arquiteto, e explicamos com clareza o que está feito e o que falta fazer.',
+    `A ${company.name} é uma empresa de obras que reúne profissionais de construção com ${company.experienceText} de experiência, cada um na sua especialidade. Com eles, fazemos desde pequenas reparações a obras completas.`,
+    'Um trabalho bem feito começa pela pessoa certa, e isso nota-se no acabamento e na forma como a obra resiste ao tempo. Acompanhamos de perto quem nos confia a obra, seja uma família ou um arquiteto.',
   ],
   highlights: [
     'Profissionais especializados em cada área',

@@ -7,7 +7,7 @@ import type { Service, ServicesContent } from './tipos'
 export const servicesSection = {
   heading: 'Serviços de construção e remodelação',
   intro:
-    'Fazemos obras em casas, condomínios, escritórios e espaços comerciais, e recuperamos imóveis para quem os quer habitar, arrendar ou vender. Cada trabalho fica a cargo de profissionais da respetiva especialidade.',
+    'Fazemos a remodelação de casas e obras em condomínios, escritórios e espaços comerciais, e recuperamos imóveis para quem os quer habitar, arrendar ou vender.',
   featuredLabel: 'Serviços em destaque',
   othersHeading: 'Outros serviços',
   visitorNote:

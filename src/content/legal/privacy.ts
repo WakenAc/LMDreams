@@ -169,7 +169,11 @@ export const privacyPage = {
       blocks: [
         {
           type: 'p',
-          text: 'A Google (Gmail) e a GitHub (GitHub Pages) podem tratar dados fora do Espaço Económico Europeu, em especial nos Estados Unidos. Essas transferências assentam nas garantias previstas no RGPD: a decisão de adequação da Comissão Europeia relativa ao Quadro de Privacidade de Dados UE-EUA (EU-U.S. Data Privacy Framework), a que a GitHub declara ter aderido, ou cláusulas contratuais-tipo aprovadas pela Comissão.',
+          text: 'A Google (Gmail) e a GitHub (GitHub Pages) podem tratar dados fora do Espaço Económico Europeu, em especial nos Estados Unidos.',
+        },
+        {
+          type: 'p',
+          text: 'Essas transferências assentam nas garantias previstas no RGPD: a decisão de adequação da Comissão Europeia relativa ao Quadro de Privacidade de Dados UE-EUA (EU-U.S. Data Privacy Framework), a que a GitHub declara ter aderido, ou cláusulas contratuais-tipo aprovadas pela Comissão.',
         },
         {
           type: 'p',

@@ -3,7 +3,18 @@ import { expect, test } from '@playwright/test'
 // Conteúdo completo e visível sem JavaScript (Parte 1.4, regra 10).
 test.use({ javaScriptEnabled: false })
 
-const SECTIONS = ['inicio', 'sobre', 'servicos', 'metodo', 'projetos', 'transparencia', 'testemunhos', 'contactos']
+const SECTIONS = [
+  'inicio',
+  'sobre',
+  'diferenciacao',
+  'servicos',
+  'metodo',
+  'projetos',
+  'transparencia',
+  'testemunhos',
+  'orcamento',
+  'contactos',
+]
 
 test('página principal sem JavaScript: todas as secções e o formulário', async ({ page }) => {
   await page.goto('./')
