@@ -98,6 +98,8 @@ async function run(browser: Browser) {
           reducedMotion: mode === 'reduced' ? 'reduce' : 'no-preference',
           locale: 'pt-PT',
         })
+        // O tsx (esbuild) injeta __name nas funções passadas ao page.evaluate.
+        await context.addInitScript({ content: 'window.__name = (f) => f' })
         const page = await context.newPage()
         const external: string[] = []
         const consoleMsgs: string[] = []
