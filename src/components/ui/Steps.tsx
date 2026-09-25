@@ -12,6 +12,11 @@ import { PlainText } from './RichText'
 //
 // Geometria (px, relativa ao <li>): a cota tem 1 px e está a 8 px do topo (linha horizontal)
 // ou a 5 px da esquerda (linha vertical); o traço de 11 x 11 fica centrado no ponto da cota.
+// Na versão vertical, a linha de chamada e o traço ficam a meia altura do número
+// (var(--text-step-lg) / 2, porque a altura de linha é 1), e acompanham o tamanho fluido.
+//
+// Os números 01 a 08 são o elemento mais forte de cada etapa, maiores do que o H3, como no
+// board do Método (text-step-lg, 28 a 52 px).
 
 /** Colunas da grelha a partir de 1024 px. */
 const COLS = 4
@@ -51,13 +56,13 @@ function Chain({ first, last, turnsDown }: ChainProps) {
       <span
         className={[
           'absolute bottom-0 left-[5px] w-px bg-cota',
-          first ? 'top-2' : 'top-0',
+          first ? 'top-[calc(var(--text-step-lg)/2)]' : 'top-0',
           'lg:top-2 lg:right-0 lg:bottom-auto lg:left-0 lg:h-px lg:w-auto',
         ].join(' ')}
       />
-      {/* Linha de chamada no início da etapa. */}
-      <span className="absolute top-2 left-0 h-px w-[26px] bg-cota lg:top-0.5 lg:h-6 lg:w-px" />
-      <Tick className="top-[3px] left-0 lg:-left-[5px]" />
+      {/* Linha de chamada no início da etapa (aponta para o meio do número). */}
+      <span className="absolute top-[calc(var(--text-step-lg)/2)] left-0 h-px w-[26px] bg-cota lg:top-0.5 lg:h-6 lg:w-px" />
+      <Tick className="top-[calc(var(--text-step-lg)/2_-_5px)] left-0 lg:top-[3px] lg:-left-[5px]" />
       {/* Fecho da cota no fim da última etapa (só na versão vertical). */}
       {last ? (
         <>
@@ -101,7 +106,7 @@ export function Steps({ steps, className }: StepsProps) {
           >
             <Chain first={first} last={last} turnsDown={turnsDown} />
             <div className="grid gap-y-2 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:items-baseline md:gap-x-10 lg:grid-cols-1">
-              <p className="tabular mb-1 font-mono text-step font-medium text-accent-hover md:col-span-2 lg:col-span-1">
+              <p className="tabular mb-1 font-mono text-step-lg font-medium text-accent-hover md:col-span-2 lg:col-span-1">
                 {step.number}
               </p>
               <h3 className="text-h3 text-ink">

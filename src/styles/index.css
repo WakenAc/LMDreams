@@ -126,6 +126,12 @@
   --text-step: 1rem;
   --text-step--line-height: 1;
   --text-step--letter-spacing: 0.02em;
+  /* Número de etapa do Método (01 a 08): o elemento mais forte de cada etapa, como no
+     board (design/boards/board-metodo-C-v1.png). 28 px a 390, 36 a 768, 42,4 a 1024,
+     48,8 a 1280 e 52 a partir de 1408 px. O text-step fica para as páginas legais. */
+  --text-step-lg: clamp(1.75rem, 1.05rem + 2.5vw, 3.25rem);
+  --text-step-lg--line-height: 1;
+  --text-step-lg--letter-spacing: -0.01em;
 
   /* Raios: uma única escala. */
   --radius-*: initial;
@@ -167,6 +173,16 @@
   @media (min-width: 48rem) {
     :root {
       --header-h: 72px;
+      --mobile-bar-h: 0px;
+    }
+  }
+
+  /* Janela baixa abaixo de 768 px (telemóvel na horizontal, zoom a 200%): a barra de
+     contacto móvel esconde-se (MobileContactBar.tsx) para o cabeçalho e a barra não taparem
+     um terço da altura; "Pedir orçamento" fica no cabeçalho e o telefone e o WhatsApp no
+     menu. */
+  @media (max-width: 47.99rem) and (max-height: 30rem) {
+    :root {
       --mobile-bar-h: 0px;
     }
   }

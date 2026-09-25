@@ -13,7 +13,9 @@ import { Button } from '../ui/Button'
 // com nomes acessíveis que começam pelo texto visível.
 // Esconde-se (visibility: hidden, fora do Tab e da árvore de acessibilidade) com o menu
 // aberto (html[data-menu-open]) e enquanto a secção #contactos estiver visível.
-// Sem JavaScript fica sempre visível.
+// Sem JavaScript fica sempre visível, exceto em janelas com até 480 px de altura
+// (telemóvel na horizontal, zoom a 200%), onde não aparece: aí o cabeçalho já tem
+// "Pedir orçamento" e o menu tem o telefone e o WhatsApp (index.css, --mobile-bar-h a 0).
 //
 // Larguras: as três ligações ocupam a sua largura natural e repartem o espaço que
 // sobra (flex-auto). A 320 px: cerca de 48 + 83 + 125 px (padding de 8 px) em 272 px
@@ -46,6 +48,7 @@ export function MobileContactBar() {
       data-hidden={contactsVisible ? '' : undefined}
       className={[
         'fixed inset-x-0 bottom-0 z-40 h-[var(--mobile-bar-h)] border-t border-line bg-bg pb-[env(safe-area-inset-bottom,0px)] md:hidden',
+        '[@media(max-height:30rem)]:hidden',
         'transition-[translate,visibility] duration-250 ease-planta',
         '[html[data-menu-open]_&]:invisible [html[data-menu-open]_&]:translate-y-full',
         contactsVisible ? 'invisible translate-y-full' : '',
