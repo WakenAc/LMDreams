@@ -41,7 +41,7 @@ export const method = {
     {
       number: '07',
       title: 'Acompanhamento e comunicação',
-      text: 'Mantemo-lo a par do andamento da obra e falamos consigo antes de qualquer alteração.',
+      text: 'Mantemo-lo a par do andamento da obra e, se o combinado tiver de mudar, falamos consigo antes de avançar.',
     },
     {
       number: '08',

@@ -30,7 +30,7 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Sociedade (e tipo: Lda., Unipessoal Lda., S.A.) ou empresário em nome individual
 - Bloqueia publicação: Sim (a forma jurídica atual é sociedade, por isso bloqueia)
 - Ocorrências:
-  - `src/content/company.ts:77`, campo `legal.companyType`: tipo de sociedade (Lda., Unipessoal Lda. ou S.A.)
+  - `src/content/company.ts:76`, campo `legal.companyType`: tipo de sociedade (Lda., Unipessoal Lda. ou S.A.)
 
 ### `denominacao-social` (1)
 
@@ -39,7 +39,7 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Firma (ou nome civil, se for empresário em nome individual). Depois de a confirmar, decidir se o aviso de direitos de autor do rodapé passa a nomear a firma (hoje nomeia só a marca: “© [ano] LMDreams. Todos os direitos reservados.”, como pede a Parte 5.4 do brief)
 - Bloqueia publicação: Sim
 - Ocorrências:
-  - `src/content/company.ts:81`, campo `legal.name`: denominação social
+  - `src/content/company.ts:80`, campo `legal.name`: denominação social
 
 ### `nipc` (1)
 
@@ -48,7 +48,7 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: NIPC ou NIF
 - Bloqueia publicação: Sim
 - Ocorrências:
-  - `src/content/company.ts:83`, campo `legal.nipc`: NIPC
+  - `src/content/company.ts:82`, campo `legal.nipc`: NIPC
 
 ### `sede` (1)
 
@@ -57,7 +57,7 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Morada da sede (uso legal, não comercial)
 - Bloqueia publicação: Sim
 - Ocorrências:
-  - `src/content/company.ts:85`, campo `legal.address`: morada da sede
+  - `src/content/company.ts:84`, campo `legal.address`: morada da sede
 
 ### `titulo-impic` (2)
 
@@ -66,8 +66,8 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Tipo (alvará ou certificado de empreiteiro) e número; classes e categorias opcionais
 - Bloqueia publicação: Sim
 - Ocorrências:
-  - `src/content/company.ts:98`, campo `legal.license.type`: alvará ou certificado
-  - `src/content/company.ts:99`, campo `legal.license.number`: número
+  - `src/content/company.ts:97`, campo `legal.license.type`: alvará ou certificado
+  - `src/content/company.ts:98`, campo `legal.license.number`: número
 
 ### `ral` (2)
 
@@ -76,8 +76,8 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Entidade(s) de resolução alternativa de litígios a que a empresa aderiu ou que são competentes, com o site (o CNIACC já consta como entidade de competência genérica)
 - Bloqueia publicação: Sim
 - Ocorrências:
-  - `src/content/company.ts:102`, campo `legal.ral`: centros de arbitragem de conflitos de consumo competentes em Portugal continental, com os sites
-  - `src/content/company.ts:106`, campo `legal.ralMembership`: entidade RAL a que a empresa aderiu, se houver, com o site
+  - `src/content/company.ts:101`, campo `legal.ral`: centros de arbitragem de conflitos de consumo competentes em Portugal continental, com os sites
+  - `src/content/company.ts:105`, campo `legal.ralMembership`: entidade RAL a que a empresa aderiu, se houver, com o site
 
 ### `registo-comercial` (2)
 
@@ -86,8 +86,8 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Conservatória e capital social
 - Bloqueia publicação: Sim, se for sociedade (a forma jurídica atual é sociedade, por isso bloqueia)
 - Ocorrências:
-  - `src/content/company.ts:86`, campo `legal.registry`: conservatória
-  - `src/content/company.ts:87`, campo `legal.shareCapital`: capital social
+  - `src/content/company.ts:85`, campo `legal.registry`: conservatória
+  - `src/content/company.ts:86`, campo `legal.shareCapital`: capital social
 
 ### `responsavel-dados` (1)
 
@@ -96,7 +96,7 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Contacto para questões de dados pessoais
 - Bloqueia publicação: Sim
 - Ocorrências:
-  - `src/content/company.ts:109`, campo `legal.dataController`: e-mail para dados pessoais
+  - `src/content/company.ts:108`, campo `legal.dataController`: e-mail para dados pessoais
 
 ### `prazo-conservacao` (1)
 
@@ -105,7 +105,7 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Prazo de conservação dos pedidos que não dão origem a contrato
 - Bloqueia publicação: Sim
 - Ocorrências:
-  - `src/content/company.ts:110`, campo `legal.dataRetention`: prazo de conservação
+  - `src/content/company.ts:109`, campo `legal.dataRetention`: prazo de conservação
 
 ### `fornecedores-dados` (2)
 
@@ -114,8 +114,8 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Serviço de formulários e serviço de e-mail usados (subcontratantes)
 - Bloqueia publicação: Sim
 - Ocorrências:
-  - `src/content/company.ts:111`, campo `legal.processors`: serviços de formulários e de e-mail
-  - `src/content/company.ts:113`, campo `legal.formService`: serviço de formulários
+  - `src/content/company.ts:110`, campo `legal.processors`: serviços de formulários e de e-mail
+  - `src/content/company.ts:112`, campo `legal.formService`: serviço de formulários
 
 ### `data-politicas` (1)
 
@@ -124,7 +124,7 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Data da última revisão das políticas
 - Bloqueia publicação: Sim
 - Ocorrências:
-  - `src/content/company.ts:114`, campo `legal.policiesUpdatedAt`: data da última atualização
+  - `src/content/company.ts:113`, campo `legal.policiesUpdatedAt`: data da última atualização
 
 ### `capital-realizado-proprio` (2)
 
@@ -133,8 +133,8 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Capital realizado, se diferente do capital social; capital próprio, se for igual ou inferior a metade do capital social
 - Bloqueia publicação: Sim, se aplicável (a forma jurídica atual é sociedade, por isso bloqueia)
 - Ocorrências:
-  - `src/content/company.ts:89`, campo `legal.paidUpCapital`: capital realizado, se for diferente do capital social
-  - `src/content/company.ts:93`, campo `legal.equityNote`: capital próprio, se for igual ou inferior a metade do capital social
+  - `src/content/company.ts:88`, campo `legal.paidUpCapital`: capital realizado, se for diferente do capital social
+  - `src/content/company.ts:92`, campo `legal.equityNote`: capital próprio, se for igual ou inferior a metade do capital social
 
 ### `epd` (1)
 
@@ -143,7 +143,7 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Encarregado de proteção de dados e contacto, ou confirmação de que não foi designado
 - Bloqueia publicação: Sim
 - Ocorrências:
-  - `src/content/company.ts:115`, campo `legal.dpo`: encarregado de proteção de dados ou confirmação de que não foi designado
+  - `src/content/company.ts:114`, campo `legal.dpo`: encarregado de proteção de dados ou confirmação de que não foi designado
 
 ## Outros pendentes
 
@@ -154,7 +154,7 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Validade habitual dos orçamentos
 - Bloqueia publicação: Não
 - Ocorrências:
-  - `src/content/company.ts:119`, campo `legal.quoteValidity`: validade dos orçamentos
+  - `src/content/company.ts:118`, campo `legal.quoteValidity`: validade dos orçamentos
 
 ### `garantia-comercial` (1)
 
@@ -163,7 +163,7 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Existe garantia comercial? Com que condições escritas?
 - Bloqueia publicação: Não
 - Ocorrências:
-  - `src/content/company.ts:120`, campo `legal.commercialWarranty`: garantia comercial
+  - `src/content/company.ts:119`, campo `legal.commercialWarranty`: garantia comercial
 
 ### `icone-livro-reclamacoes` (1)
 
@@ -172,7 +172,7 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Ícone oficial descarregado da plataforma do Livro de Reclamações, depois de registar a empresa
 - Bloqueia publicação: Não (existe a ligação em texto)
 - Ocorrências:
-  - `src/content/company.ts:70`, campo `complaintsBookIcon`: ícone oficial do Livro de Reclamações Eletrónico
+  - `src/content/company.ts:69`, campo `complaintsBookIcon`: ícone oficial do Livro de Reclamações Eletrónico
 
 ### `horario` (1)
 
@@ -181,7 +181,7 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Horário de atendimento
 - Bloqueia publicação: Não
 - Ocorrências:
-  - `src/content/company.ts:53`, campo `hours`: horário de atendimento
+  - `src/content/company.ts:52`, campo `hours`: horário de atendimento
 
 ### `redes-sociais` (1)
 
@@ -190,7 +190,7 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Endereços das redes sociais (os ícones só aparecem quando houver URL)
 - Bloqueia publicação: Não
 - Ocorrências:
-  - `src/content/company.ts:58`, campo `socialPending`: redes sociais
+  - `src/content/company.ts:57`, campo `socialPending`: redes sociais
 
 ### `servicos` (16)
 
