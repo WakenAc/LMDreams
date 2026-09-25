@@ -1,5 +1,5 @@
 import { BookOpen, Clock, Copy, Mail, MapPin, MessageCircle, Phone, Share2, type LucideIcon } from 'lucide-react'
-import { useState, type ReactNode } from 'react'
+import { useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { flushSync } from 'react-dom'
 import { company } from '../content/company'
 import { ui } from '../content/common'
@@ -66,6 +66,23 @@ const IDS = {
 /** Nome do campo-armadilha: sem significado, para o preenchimento automático não o reconhecer. */
 const TRAP_NAME = 'campo_k7x'
 
+/**
+ * Atributo `name` de cada campo (é também o rótulo dos campos no e-mail sem JavaScript).
+ * Serve para ler o que já estava escrito antes da hidratação (valuesFromForm).
+ */
+const NAMES = {
+  name: 'nome',
+  phone: 'telefone',
+  email: 'email',
+  location: 'localizacao',
+  service: 'servico',
+  budget: 'orcamento',
+  message: 'mensagem',
+  trap: TRAP_NAME,
+  privacy: 'privacidade',
+  photos: 'fotografias',
+} as const
+
 /** Degradação sem JavaScript: o navegador abre o programa de e-mail com os campos em texto. */
 const NO_JS_ACTION = `mailto:${company.email}?subject=${encodeURIComponent(contact.emailDraft.subject)}`
 
@@ -73,7 +90,8 @@ const SERVICE_OPTIONS: readonly string[] = [...services.map((s) => s.name), cont
 
 /**
  * Etiqueta da caixa da Política de privacidade. `required` é a obrigatoriedade escrita por
- * extenso (Parte 3.8), mostrada depois da frase fixa, como nos outros campos obrigatórios.
+ * extenso (Parte 3.8), logo a seguir ao nome, como nos outros campos obrigatórios, e antes
+ * do ponto final da frase fixa: "Tomei conhecimento da Política de privacidade (obrigatório)."
  */
 const PRIVACY_LABEL: ContactContent['fields']['privacy'] & { required?: string } = contact.fields.privacy
 
@@ -132,6 +150,35 @@ const DETAIL_LINK =
   'underline-offset-4 transition-[text-decoration-color] duration-150 ease-planta ' +
   'hover:decoration-current focus-visible:decoration-current'
 
+/**
+ * Valores que estão no DOM do formulário: o que o visitante escreveu (ou o navegador
+ * preencheu) no HTML pré-renderizado, antes de o JavaScript chegar.
+ */
+function valuesFromForm(form: HTMLFormElement): LeadValues {
+  const text = (name: string): string => {
+    const el = form.elements.namedItem(name)
+    return el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement || el instanceof HTMLSelectElement
+      ? el.value
+      : ''
+  }
+  const privacy = form.elements.namedItem(NAMES.privacy)
+  return {
+    name: text(NAMES.name),
+    phone: text(NAMES.phone),
+    email: text(NAMES.email),
+    location: text(NAMES.location),
+    service: text(NAMES.service),
+    budget: text(NAMES.budget),
+    message: text(NAMES.message),
+    trap: text(NAMES.trap),
+    privacy: privacy instanceof HTMLInputElement && privacy.checked,
+  }
+}
+
+function sameValues(a: LeadValues, b: LeadValues): boolean {
+  return (Object.keys(a) as (keyof LeadValues)[]).every((key) => a[key] === b[key])
+}
+
 function focusField(id: string): void {
   const campo = document.getElementById(id)
   if (!(campo instanceof HTMLElement)) return
@@ -154,6 +201,29 @@ function LeadForm() {
   const [fileErrors, setFileErrors] = useState<readonly string[]>([])
   const [status, setStatus] = useState<Status>({ kind: 'idle' })
   const [copy, setCopy] = useState<CopyState>('idle')
+  const formRef = useRef<HTMLFormElement>(null)
+
+  // Hidratação: o formulário do HTML pré-renderizado já aceita texto antes de o JavaScript
+  // chegar (o carregador só o pede depois do evento load). Na hidratação, o React não mexe
+  // nos valores do DOM, mas o render seguinte (useHydrated) repunha nos campos controlados
+  // o estado vazio e apagava o que o visitante escreveu. Este efeito corre no commit da
+  // hidratação, antes desse render, e passa para o estado o que está no DOM, incluindo o
+  // campo-armadilha (continua a apanhar robôs) e as fotografias já escolhidas.
+  useLayoutEffect(() => {
+    const form = formRef.current
+    if (!form) return
+    const found = valuesFromForm(form)
+    if (!sameValues(found, EMPTY)) setValues(found)
+    if (formAcceptsFiles) {
+      const input = form.elements.namedItem(NAMES.photos)
+      const chosen = input instanceof HTMLInputElement ? Array.from(input.files ?? []) : []
+      if (chosen.length > 0) {
+        const result = addLeadFiles([], chosen)
+        setFiles(result.files)
+        setFileErrors(result.errors)
+      }
+    }
+  }, [])
 
   const busy = status.kind === 'sending' || status.kind === 'mailto-before'
   const contactErrorId = fieldIds(IDS.contact).error
@@ -270,6 +340,7 @@ function LeadForm() {
 
   return (
     <form
+      ref={formRef}
       data-lead-form=""
       noValidate={hydrated}
       action={NO_JS_ACTION}
@@ -282,13 +353,13 @@ function LeadForm() {
       }}
       className="relative mt-6 grid gap-6"
     >
-      <Honeypot id={IDS.trap} name={TRAP_NAME} value={values.trap} onChange={(v) => update('trap', v)} />
+      <Honeypot id={IDS.trap} name={NAMES.trap} value={values.trap} onChange={(v) => update('trap', v)} />
 
       <Field id={IDS.name} label={contact.fields.name.label} error={errors.name}>
         {(a11y) => (
           <Input
             {...a11y}
-            name="nome"
+            name={NAMES.name}
             autoComplete="name"
             required
             maxLength={120}
@@ -315,7 +386,7 @@ function LeadForm() {
                 {...a11y}
                 type="tel"
                 inputMode="tel"
-                name="telefone"
+                name={NAMES.phone}
                 autoComplete="tel"
                 spellCheck={false}
                 maxLength={30}
@@ -337,7 +408,7 @@ function LeadForm() {
                 {...a11y}
                 type="email"
                 inputMode="email"
-                name="email"
+                name={NAMES.email}
                 autoComplete="email"
                 autoCapitalize="none"
                 spellCheck={false}
@@ -360,7 +431,7 @@ function LeadForm() {
         {(a11y) => (
           <Input
             {...a11y}
-            name="localizacao"
+            name={NAMES.location}
             autoComplete="address-level2"
             required
             maxLength={120}
@@ -375,7 +446,7 @@ function LeadForm() {
         {(a11y) => (
           <Select
             {...a11y}
-            name="servico"
+            name={NAMES.service}
             value={values.service}
             onChange={(e) => update('service', e.currentTarget.value)}
           >
@@ -398,7 +469,7 @@ function LeadForm() {
         {(a11y) => (
           <Textarea
             {...a11y}
-            name="mensagem"
+            name={NAMES.message}
             required
             maxLength={5000}
             value={values.message}
@@ -412,7 +483,7 @@ function LeadForm() {
         {(a11y) => (
           <Select
             {...a11y}
-            name="orcamento"
+            name={NAMES.budget}
             value={values.budget}
             onChange={(e) => update('budget', e.currentTarget.value)}
           >
@@ -437,7 +508,7 @@ function LeadForm() {
             {(a11y) => (
               <FileInput
                 {...a11y}
-                name="fotografias"
+                name={NAMES.photos}
                 accept={LEAD_FILE_ACCEPT}
                 files={files}
                 onFilesSelected={addFiles}
@@ -459,7 +530,7 @@ function LeadForm() {
       <div>
         <Checkbox
           id={IDS.privacy}
-          name="privacidade"
+          name={NAMES.privacy}
           required
           checked={values.privacy}
           onChange={(e) => update('privacy', e.currentTarget.checked)}
@@ -470,8 +541,8 @@ function LeadForm() {
           <a href={pageHref('privacy')} className={TEXT_LINK}>
             {PRIVACY_LABEL.link}
           </a>
-          {PRIVACY_LABEL.after}
           {PRIVACY_LABEL.required ? <span data-required=""> {PRIVACY_LABEL.required}</span> : null}
+          {PRIVACY_LABEL.after}
         </Checkbox>
         <div className="pl-9">
           <FieldError id={privacyErrorId} messages={errors.privacy} />

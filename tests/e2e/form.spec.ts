@@ -23,6 +23,49 @@ test('validação: erros anunciados e foco no primeiro campo com erro', async ({
   await expect(form).toContainText('Confirme que tomou conhecimento da Política de privacidade.')
 })
 
+// O carregador só pede o JavaScript depois do evento load (scripts/prerender.ts): até lá, o
+// formulário do HTML pré-renderizado já aceita texto. O que foi escrito antes da hidratação
+// tem de continuar lá depois dela, e contar para a validação própria.
+test('o que se escreve antes da hidratação continua no formulário depois dela', async ({ page }) => {
+  let release: (() => void) | undefined
+  const gate = new Promise<void>((resolve) => {
+    release = resolve
+  })
+  // Retém o chunk de entrada (index-<hash>.js) até o formulário estar preenchido.
+  await page.route('**/assets/index-*.js', async (route) => {
+    await gate
+    await route.continue()
+  })
+  await page.goto('./#contactos')
+  const form = page.locator('form[data-lead-form]')
+  await page.locator('#campo-nome').fill('Maria Teste')
+  await page.locator('#campo-email').fill('maria@exemplo.pt')
+  await page.locator('#campo-localizacao').fill('Leiria')
+  await page.locator('#campo-servico').selectOption({ index: 2 })
+  const service = await page.locator('#campo-servico').inputValue()
+  expect(service).not.toBe('')
+  await page.locator('#campo-mensagem').fill('Remodelação de uma casa de banho com cerca de 6 m².')
+  await page.locator('#campo-privacidade').check()
+  // Ainda sem JavaScript: validação nativa e nenhuma marca de hidratação.
+  await expect(page.locator('html[data-hydrated]')).toHaveCount(0)
+  await expect(form).toHaveJSProperty('noValidate', false)
+
+  release?.()
+  await hydratedForm(page)
+  await expect(page.locator('#campo-nome')).toHaveValue('Maria Teste')
+  await expect(page.locator('#campo-email')).toHaveValue('maria@exemplo.pt')
+  await expect(page.locator('#campo-localizacao')).toHaveValue('Leiria')
+  await expect(page.locator('#campo-servico')).toHaveValue(service)
+  await expect(page.locator('#campo-mensagem')).toHaveValue('Remodelação de uma casa de banho com cerca de 6 m².')
+  await expect(page.locator('#campo-privacidade')).toBeChecked()
+
+  // O estado do formulário tem os mesmos valores: o envio não acusa campos vazios.
+  await form.locator('button[type="submit"]').click()
+  await expect(page.locator('#contactos [role="status"]').first()).toContainText(/programa de e-mail/)
+  await expect(form).not.toContainText('Indique o seu nome.')
+  await expect(form).not.toContainText('Confirme que tomou conhecimento da Política de privacidade.')
+})
+
 test('modo por e-mail: abre o rascunho, oferece "Copiar pedido" e nunca diz "Recebemos"', async ({ page }) => {
   await page.goto('./#contactos')
   // O Chromium sem interface ignora o mailto: (não há programa de e-mail associado).
