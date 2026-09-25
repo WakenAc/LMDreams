@@ -2,12 +2,10 @@
 // as ilhas interativas (cabeçalho, barra móvel, projetos, formulário) são hidratadas,
 // cada uma com o seu import(): o texto das secções estáticas e das páginas legais não
 // entra no JavaScript. Em desenvolvimento (#root vazio), a página inteira é renderizada
-// no cliente, escolhida pelo caminho.
+// no cliente por src/dev-render.tsx, escolhida pelo caminho.
 import './styles/index.css'
 import { StrictMode, type ComponentType } from 'react'
-import { flushSync } from 'react-dom'
-import { createRoot, hydrateRoot } from 'react-dom/client'
-import { App } from './App'
+import { hydrateRoot } from 'react-dom/client'
 import { islandPrefix, isIslandId, type IslandId } from './lib/islands'
 import { PageContext } from './lib/page-context'
 import { isPageId, PAGES, type PageId } from './lib/pages'
@@ -19,14 +17,6 @@ const islandLoaders: Record<IslandId, () => Promise<{ default: ComponentType }>>
   'mobile-bar': () => import('./islands/mobile-bar'),
   projects: () => import('./islands/projects'),
   contact: () => import('./islands/contact'),
-}
-
-const pageLoaders: Record<PageId, () => Promise<{ default: ComponentType }>> = {
-  home: () => import('./pages/HomePage'),
-  privacy: () => import('./pages/PrivacyPage'),
-  cookies: () => import('./pages/CookiesPage'),
-  terms: () => import('./pages/TermsPage'),
-  notFound: () => import('./pages/NotFoundPage'),
 }
 
 function pageFromPath(pathname: string): PageId {
@@ -76,14 +66,10 @@ async function start(): Promise<void> {
   let allHydrated = true
   if (prerendered) {
     allHydrated = await hydrateIslands(page)
-  } else {
-    const { default: Page } = await pageLoaders[page]()
-    if (import.meta.env.DEV) {
-      const { seo } = await import('./content/seo')
-      document.title = seo.pages[page].title
-    }
-    const app = createRoot(root)
-    flushSync(() => app.render(<App page={page} Page={Page} />))
+  } else if (import.meta.env.DEV) {
+    // Só em desenvolvimento: fora do build de produção (sem as páginas completas em JS).
+    const { renderDev } = await import('./dev-render')
+    await renderDev(root, page)
   }
   initReveal()
   initQuoteLinks()

@@ -42,6 +42,10 @@ export default defineConfig({
     // navegador sem modulepreload carrega os mesmos módulos pelo import(), só sem o
     // pré-carregamento.
     modulePreload: { polyfill: false },
+    // As imagens (e outros assets) usados só pelas secções estáticas não passam pelo
+    // JavaScript do cliente: o build SSR emite-os e o scripts/prerender.ts copia-os para
+    // a pasta de saída (mesmos nomes com hash).
+    ssrEmitAssets: true,
   },
   define: {
     __BUILD_YEAR__: JSON.stringify(String(new Date().getFullYear())),

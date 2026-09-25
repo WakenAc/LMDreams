@@ -99,11 +99,13 @@ for (const page of PAGES) {
     "function idle(){var r=window.requestIdleCallback;r?r(go,{timeout:2500}):setTimeout(go,200)}" +
     "if(document.readyState==='complete')idle();else addEventListener('load',idle,{once:true})})()</script>"
 
+  // Substituições com função: num texto de substituição, "$&", "$'", "$`" e "$$" têm
+  // significado especial, e um "$" no conteúdo (um preço, um texto legal) corrompia o HTML.
   const out = template
-    .replace('<!--app-head-->', headHtml)
-    .replace('<!--app-html-->', html)
-    .replace('<body>', `<body data-page="${page.id}">`)
-    .replace(entryTag[0], loader)
+    .replace('<!--app-head-->', () => headHtml)
+    .replace('<!--app-html-->', () => html)
+    .replace('<body>', () => `<body data-page="${page.id}">`)
+    .replace(entryTag[0], () => loader)
 
   if (out.includes('<!--app-')) fail(`marcadores por substituir na página ${page.id}`)
   const target = path.join(outDir, page.file)
@@ -112,6 +114,24 @@ for (const page of PAGES) {
   count++
   console.log(`prerender: ${page.file}`)
 }
+
+// Assets emitidos só pelo build SSR (imagens das secções estáticas, que não passam pelo
+// JavaScript do cliente): copiá-los para a pasta de saída, com os mesmos nomes.
+let copied = 0
+const ssrAssets = path.join(ssrDir, 'assets')
+if (fs.existsSync(ssrAssets)) {
+  const target = path.join(outDir, 'assets')
+  fs.mkdirSync(target, { recursive: true })
+  for (const name of fs.readdirSync(ssrAssets)) {
+    if (name.endsWith('.js') || name.endsWith('.map')) continue
+    const dest = path.join(target, name)
+    if (!fs.existsSync(dest)) {
+      fs.copyFileSync(path.join(ssrAssets, name), dest)
+      copied++
+    }
+  }
+}
+console.log(`prerender: ${copied} assets do build SSR copiados para a pasta de saída`)
 
 // Limpeza: o bundle SSR e o manifest não são publicados.
 fs.rmSync(ssrDir, { recursive: true, force: true })
