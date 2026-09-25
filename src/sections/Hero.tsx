@@ -19,8 +19,8 @@ import { CotaEtiqueta, CotaHorizontal, CotaVertical, LinhaDeTerra, MarcaCruz } f
 //   ≈ 354 a 383 (fotografia 596 × 337 com a cota de 24 por cima).
 // - 390 × 844: cabeçalho 64; 20; etiqueta 2 × 16 + 12; H1 3 × 36,7; 16; subtítulo
 //   3 × 23,3; 24; botões 48 + 12 + 48; 20; confiança 3 × 34. Fim da confiança ≈ 578;
-//   legenda de IA ≈ 647 a 676 (mesmo com H1 e subtítulo em 4 linhas, ≈ 736); a barra
-//   móvel começa em 783 (844 − 61).
+//   fotografia (sem cota por cima) a partir de ≈ 611; legenda de IA ≈ 623 a 652 (mesmo
+//   com H1 e subtítulo em 4 linhas, ≈ 712); a barra móvel começa em 783 (844 − 61).
 // Em computador, os espaçamentos verticais encolhem com a altura da janela (vh) e, até
 // 680 px de altura, reduzem-se mais um pouco.
 
@@ -100,7 +100,13 @@ export function Hero() {
             </Button>
           </div>
           <div className="mt-5 max-w-md md:mt-6 lg:[@media(max-height:42.5rem)]:mt-4">
-            <ul aria-label={hero.trustLabel}>
+            {/* role="list" explícito: o Safari (VoiceOver) tira o papel de lista a <ul> com
+                list-style: none. */}
+            <ul
+              // oxlint-disable-next-line jsx-a11y/no-redundant-roles -- compatibilidade com o VoiceOver no Safari (list-style: none)
+              role="list"
+              aria-label={hero.trustLabel}
+            >
               {hero.trustItems.map((item) => (
                 <li
                   key={item}
@@ -115,10 +121,13 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Figura: fotografia na proporção do ficheiro (4:5 em telemóvel), cotas e anotações. */}
-        <div data-reveal className="relative mt-8 md:mt-10 lg:col-span-6 lg:col-start-7 lg:mt-0">
+        {/* Figura: fotografia na proporção do ficheiro (4:5 em telemóvel), cotas e anotações.
+            Abaixo de 768 px não há cota por cima da fotografia (direção visual, secção 8):
+            com a linha de terra logo acima, as duas liam-se como uma régua dupla. Em
+            tablet, a cota fica, mais afastada da linha de terra (md:mt-16). */}
+        <div data-reveal className="relative mt-8 md:mt-16 lg:col-span-6 lg:col-start-7 lg:mt-0">
           <div aria-hidden="true" className={PLANTA_SM} />
-          <CotaHorizontal />
+          <CotaHorizontal className="max-md:hidden" />
           <div className="relative">
             <Picture
               id="hero"
