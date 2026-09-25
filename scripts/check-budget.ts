@@ -519,6 +519,15 @@ export function checkBudget(options: { dir: string; base?: string }): BudgetRepo
     const rel = budget.resolve(src, base, 'script[src]')
     if (rel) jsFiles.add(rel)
   }
+  // Carregador diferido (scripts/prerender.ts): o JavaScript das ilhas só é pedido depois
+  // do evento load, mas conta na mesma para o orçamento do JavaScript inicial.
+  for (const loader of doc.querySelectorAll('script[data-lmd-loader]')) {
+    const urls = [loader.getAttribute('data-src') ?? '', ...(loader.getAttribute('data-preload') ?? '').split(' ')]
+    for (const u of urls.filter(Boolean)) {
+      const rel = budget.resolve(u, base, 'script[data-lmd-loader]')
+      if (rel) jsFiles.add(rel)
+    }
+  }
   const cssFiles = new Set<string>()
   for (const link of doc.querySelectorAll('link')) {
     const r = rels(link)

@@ -82,6 +82,8 @@ async function start(): Promise<void> {
   }
   initReveal()
   initQuoteLinks()
+  // Marca para os testes E2E (e para depuração): as ilhas já estão interativas.
+  document.documentElement.dataset.hydrated = 'true'
 }
 
 void start()

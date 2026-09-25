@@ -79,18 +79,31 @@ for (const page of PAGES) {
   const sources = islands.map((id) => server.ISLAND_SOURCES[id]).filter((s): s is string => Boolean(s))
   const seen = new Set<string>()
   const files = sources.flatMap((s) => collectImports(s, seen))
-  const preloads = [...new Set(files)]
-    .filter((f) => !entryImports.has(f))
-    .map((f) => `<link rel="modulepreload" crossorigin href="${base}${f}">`)
+  const preloadUrls = [...new Set(files)].filter((f) => !entryImports.has(f)).map((f) => `${base}${f}`)
   const extraCss = [...new Set(sources.flatMap((s) => manifest[s]?.css ?? []))].map(
     (f) => `<link rel="stylesheet" crossorigin href="${base}${f}">`,
   )
-  const headHtml = [head, fontPreload, ...preloads, ...extraCss].filter(Boolean).join('\n    ')
+  const headHtml = [head, fontPreload, ...extraCss].filter(Boolean).join('\n    ')
+
+  // O HTML já vem completo e utilizável sem JavaScript: o JavaScript das ilhas só é
+  // pedido depois do evento load, quando o navegador fica livre (requestIdleCallback),
+  // para não disputar a rede nem o processador com a imagem do hero e as fontes (LCP em
+  // telemóvel). O carregador é um script clássico mínimo.
+  const entryTag = template.match(/<script type="module" crossorigin src="([^"]+)"><\/script>/)
+  if (!entryTag?.[1]) fail('não encontrei o <script type="module"> de entrada no index.html gerado')
+  const loader =
+    `<script data-lmd-loader data-src="${entryTag[1]}" data-preload="${preloadUrls.join(' ')}">` +
+    '(function(){var s=document.currentScript;function go(){' +
+    "(s.dataset.preload||'').split(' ').forEach(function(h){if(!h)return;var l=document.createElement('link');l.rel='modulepreload';l.crossOrigin='';l.href=h;document.head.appendChild(l)});" +
+    "var m=document.createElement('script');m.type='module';m.crossOrigin='';m.src=s.dataset.src;document.head.appendChild(m)}" +
+    "function idle(){var r=window.requestIdleCallback;r?r(go,{timeout:2500}):setTimeout(go,200)}" +
+    "if(document.readyState==='complete')idle();else addEventListener('load',idle,{once:true})})()</script>"
 
   const out = template
     .replace('<!--app-head-->', headHtml)
     .replace('<!--app-html-->', html)
     .replace('<body>', `<body data-page="${page.id}">`)
+    .replace(entryTag[0], loader)
 
   if (out.includes('<!--app-')) fail(`marcadores por substituir na página ${page.id}`)
   const target = path.join(outDir, page.file)

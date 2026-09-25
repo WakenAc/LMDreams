@@ -48,6 +48,7 @@
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
     "cross-env": "^10.1.0",
+    "lighthouse": "^12.6.1",
     "node-html-parser": "^7.1.0",
     "oxlint": "^1.85.0",
     "prettier": "^3.9.9",

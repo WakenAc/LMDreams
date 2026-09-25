@@ -198,10 +198,6 @@
     text-wrap: balance;
   }
 
-  p {
-    text-wrap: pretty;
-  }
-
   ::selection {
     background-color: var(--color-ink);
     color: var(--color-bg);
@@ -298,3 +294,4 @@
 html:has(dialog[open]:modal) {
   overflow: hidden;
 }
+

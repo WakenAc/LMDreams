@@ -33,6 +33,7 @@ test('"Saltar para o conteúdo" é o primeiro elemento focável', async ({ page 
 test('menu móvel: abre, prende o foco, fecha com Esc e devolve o foco', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('./')
+  await page.waitForSelector('html[data-hydrated]')
   const button = page.getByRole('button', { name: 'Abrir menu' })
   await button.click()
   await expect(page.getByRole('button', { name: 'Fechar menu' }).first()).toBeVisible()
@@ -50,12 +51,14 @@ test('menu móvel: abre, prende o foco, fecha com Esc e devolve o foco', async (
 test('"Pedir orçamento" do cabeçalho leva ao formulário e foca o nome', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 })
   await page.goto('./')
+  await page.waitForSelector('html[data-hydrated]')
   await page.locator('header').getByRole('link', { name: 'Pedir orçamento' }).click()
   await expect(page.locator('#campo-nome')).toBeFocused({ timeout: 3000 })
 })
 
 test('diálogo de projeto: abre, fecha com Esc e devolve o foco', async ({ page }) => {
   await page.goto('./')
+  await page.waitForSelector('html[data-hydrated]')
   const open = page.locator('#projetos').getByRole('button', { name: /Ver antes e depois/ }).first()
   await open.click()
   const dialog = page.locator('dialog[open]')

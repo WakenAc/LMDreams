@@ -355,6 +355,11 @@ function htmlRefs(doc: HTMLElement, from: string, fromUrl: string, checker: Link
     if (tag === 'style') {
       for (const url of cssUrls(el.rawText)) if (!url.startsWith('#')) add('style', url, 'asset', false)
     }
+    // Carregador diferido das ilhas (scripts/prerender.ts): data-src e data-preload.
+    if (tag === 'script' && attrs['data-lmd-loader'] !== undefined) {
+      if (attrs['data-src']) add('script[data-src]', attrs['data-src'], 'asset', false)
+      for (const u of (attrs['data-preload'] ?? '').split(' ').filter(Boolean)) add('script[data-preload]', u, 'asset', false)
+    }
     if (tag === 'script' && (attrs.type ?? '').toLowerCase() === 'application/ld+json') {
       let data: unknown
       try {

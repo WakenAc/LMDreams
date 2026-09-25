@@ -5,6 +5,7 @@ import { expect, test } from '@playwright/test'
 
 test('validação: erros anunciados e foco no primeiro campo com erro', async ({ page }) => {
   await page.goto('./#contactos')
+  await page.waitForSelector('html[data-hydrated]')
   const form = page.locator('form[data-lead-form]')
   await form.locator('button[type="submit"]').click()
   await expect(page.locator('#campo-nome')).toBeFocused()
@@ -16,6 +17,7 @@ test('validação: erros anunciados e foco no primeiro campo com erro', async ({
 
 test('modo por e-mail: abre o rascunho, oferece "Copiar pedido" e nunca diz "Recebemos"', async ({ page }) => {
   await page.goto('./#contactos')
+  await page.waitForSelector('html[data-hydrated]')
   // O Chromium sem interface ignora o mailto: (não há programa de e-mail associado).
   const form = page.locator('form[data-lead-form]')
   await page.locator('#campo-nome').fill('Maria Teste')
