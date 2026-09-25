@@ -36,19 +36,53 @@ const LIMITS: Record<'telemovel' | 'computador', Limits> = {
 if (!onlyPreset && !onlyPage) fs.rmSync(OUT, { recursive: true, force: true })
 fs.mkdirSync(OUT, { recursive: true })
 
-const server = await startServer({ dir: process.env.OUT_DIR ?? 'dist', base: '/LMDreams/', port: 4174 })
+// Proveniência: o chunk de entrada do build medido (data-src do carregador em index.html).
+// Fica em cada linha do resumo, para confirmar que o Lighthouse, as capturas e os gates
+// vêm do mesmo build; se o Lighthouse carregar ficheiros que não existem no dist (outro
+// build), a recolha falha.
+const DIST = process.env.OUT_DIR ?? 'dist'
+const distIndex = path.join(DIST, 'index.html')
+const entryChunk = fs.existsSync(distIndex)
+  ? (fs.readFileSync(distIndex, 'utf8').match(/<script data-lmd-loader data-src="([^"]+)"/)?.[1] ?? '')
+  : ''
+const entryName = entryChunk.split('/').pop() ?? ''
+const distBuiltAt = fs.existsSync(distIndex) ? fs.statSync(distIndex).mtime.toISOString() : ''
+const distAssetsDir = path.join(DIST, 'assets')
+const distAssets = new Set(fs.existsSync(distAssetsDir) ? fs.readdirSync(distAssetsDir) : [])
+if (!entryName) console.warn(`lighthouse: não encontrei o chunk de entrada em ${distIndex} (data-lmd-loader)`)
+else console.log(`lighthouse: build de ${distBuiltAt}, entrada ${entryChunk}`)
+
+const server = await startServer({ dir: DIST, base: '/LMDreams/', port: 4174 })
 const base = server.url.endsWith('/') ? server.url : `${server.url}/`
 const browser = await chromium.launch({ args: [`--remote-debugging-port=${PORT_DEBUG}`] })
 
 type Row = {
   preset: string
   page: string
+  /** Chunk de entrada do dist medido e data do index.html (proveniência do build). */
+  entrada: string
+  buildEm: string
+  /** Ficheiros JavaScript de /assets/ que o Lighthouse carregou nesta recolha. */
+  jsCarregados: string[]
   scores: Record<string, number>
   lcp: number
   cls: number
   tbt: number
   fcp: number
   falhas: string[]
+}
+
+/** Nomes dos ficheiros .js de /assets/ pedidos durante a recolha (auditoria network-requests). */
+function loadedScripts(audit: { details?: unknown } | undefined): string[] {
+  const items = (audit?.details as { items?: { url?: unknown }[] } | undefined)?.items ?? []
+  const names: string[] = []
+  for (const item of items) {
+    if (typeof item.url !== 'string') continue
+    const pathname = item.url.split(/[?#]/)[0] ?? ''
+    if (!pathname.includes('/assets/') || !pathname.endsWith('.js')) continue
+    names.push(pathname.split('/').pop() ?? '')
+  }
+  return [...new Set(names.filter(Boolean))]
 }
 const rows: Row[] = []
 
@@ -77,6 +111,9 @@ try {
       const row: Row = {
         preset,
         page: name,
+        entrada: entryChunk,
+        buildEm: distBuiltAt,
+        jsCarregados: loadedScripts(lhr.audits['network-requests']),
         scores,
         lcp: metric('largest-contentful-paint'),
         cls: metric('cumulative-layout-shift'),
@@ -87,6 +124,11 @@ try {
       const limits = LIMITS[preset]
       for (const [cat, min] of Object.entries(limits)) {
         if ((scores[cat] ?? 0) < min * 100) row.falhas.push(`${cat} ${scores[cat]} < ${min * 100}`)
+      }
+      const foreign = row.jsCarregados.filter((f) => !distAssets.has(f))
+      if (foreign.length > 0) row.falhas.push(`JavaScript que não é do dist medido: ${foreign.join(', ')}`)
+      if (entryName && !row.jsCarregados.includes(entryName)) {
+        console.warn(`           aviso: ${name} sem pedido ao chunk de entrada ${entryName} nesta recolha`)
       }
       if (row.cls > 0.05) row.falhas.push(`CLS ${row.cls.toFixed(3)} > 0,05`)
       if (preset === 'telemovel' && row.lcp >= 2500) row.falhas.push(`LCP ${Math.round(row.lcp)} ms ≥ 2500 ms`)

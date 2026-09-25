@@ -37,6 +37,11 @@ export default defineConfig({
     manifest: true,
     assetsInlineLimit: 0,
     target: 'es2022',
+    // Sem o polyfill de <link rel="modulepreload"> (cerca de 270 B em gzip no JS inicial):
+    // o carregador da pré-renderização (scripts/prerender.ts) já cria as ligações, e um
+    // navegador sem modulepreload carrega os mesmos módulos pelo import(), só sem o
+    // pré-carregamento.
+    modulePreload: { polyfill: false },
   },
   define: {
     __BUILD_YEAR__: JSON.stringify(String(new Date().getFullYear())),
