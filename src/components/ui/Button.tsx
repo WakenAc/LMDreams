@@ -40,12 +40,15 @@ const SIZES: Record<ButtonSize, string> = {
   lg: 'min-h-12 px-6 py-3 text-base md:min-h-13',
 }
 
+// Contorno do secundário: borda real de 1 px (e não uma sombra interior), para continuar
+// visível em contraste forçado (Windows), onde as sombras desaparecem e a borda passa à
+// cor do sistema. Com box-sizing: border-box, a altura mínima não muda.
 function variantClass(variant: ButtonVariant, onDark: boolean): string {
   if (variant === 'primary') return 'bg-accent text-white hover:bg-accent-hover active:bg-accent-hover'
   if (variant === 'secondary') {
     return onDark
-      ? 'text-on-dark shadow-[inset_0_0_0_1px_var(--color-on-dark)] hover:bg-white/10 active:bg-white/15'
-      : 'text-ink shadow-[inset_0_0_0_1px_var(--color-ink)] hover:bg-surface active:bg-sand/60'
+      ? 'border border-on-dark text-on-dark hover:bg-white/10 active:bg-white/15'
+      : 'border border-ink text-ink hover:bg-surface active:bg-sand/60'
   }
   return [
     'underline-offset-4 decoration-1 hover:underline focus-visible:underline',

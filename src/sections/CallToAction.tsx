@@ -26,10 +26,9 @@ const PLACEHOLDER_LABEL_ON_TOP = '[&_[data-image-placeholder]>figcaption]:z-[1]'
 
 // Foco sobre a fotografia: o anel global (2 px `focus`, afastamento de 3 px) fica sobre
 // um halo `dark` sólido de 7 px, para ter sempre 3,40:1 com o que o rodeia; sobre o véu,
-// o anel sozinho pode descer a 1,4:1 num píxel claro. O secundário mantém o contorno.
+// o anel sozinho pode descer a 1,4:1 num píxel claro. O contorno do secundário é uma borda
+// (Button.tsx) e mantém-se com o halo.
 const FOCUS_HALO = 'w-full md:w-auto focus-visible:shadow-[0_0_0_7px_var(--color-dark)]'
-const FOCUS_HALO_SECONDARY =
-  'w-full md:w-auto focus-visible:shadow-[inset_0_0_0_1px_var(--color-on-dark),0_0_0_7px_var(--color-dark)]'
 
 export function CallToAction() {
   return (
@@ -50,10 +49,10 @@ export function CallToAction() {
             <Button href="#contactos" size="lg" className={FOCUS_HALO} {...quoteLinkProps}>
               {ui.labels.requestQuote}
             </Button>
-            <Button href={company.phone.href} size="lg" variant="secondary" onDark className={FOCUS_HALO_SECONDARY}>
+            <Button href={company.phone.href} size="lg" variant="secondary" onDark className={FOCUS_HALO}>
               {ui.labels.callPhone}
             </Button>
-            <Button href={whatsappHref()} size="lg" variant="secondary" onDark className={FOCUS_HALO_SECONDARY}>
+            <Button href={whatsappHref()} size="lg" variant="secondary" onDark className={FOCUS_HALO}>
               {ui.labels.whatsapp}
             </Button>
           </div>

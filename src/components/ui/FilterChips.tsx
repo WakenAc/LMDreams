@@ -25,6 +25,10 @@ const CHIP = [
   'border-muted text-ink',
   'aria-[pressed=false]:enabled:hover:bg-surface aria-[pressed=false]:enabled:active:bg-sand/60',
   'aria-pressed:border-ink aria-pressed:bg-ink aria-pressed:text-on-dark',
+  // Contraste forçado (Windows): as cores do sistema substituem o fundo e o texto e o filtro
+  // premido ficava igual aos outros; aí usa as cores de seleção do sistema.
+  'forced-colors:aria-pressed:border-[color:Highlight] forced-colors:aria-pressed:bg-[color:Highlight]',
+  'forced-colors:aria-pressed:text-[color:HighlightText] forced-colors:aria-pressed:forced-color-adjust-none',
   'disabled:cursor-not-allowed disabled:opacity-60',
 ].join(' ')
 
