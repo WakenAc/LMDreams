@@ -100,7 +100,9 @@ for (const width of [768, 1024]) {
 // WCAG 2.2, 1.4.12 (espaçamento de texto): com os valores do critério, todos os controlos
 // do cabeçalho ficam dentro do ecrã e sem se sobreporem, e "Pedir orçamento" continua
 // inteiro à vista (Parte 5.3). O cabeçalho passa ao modo compacto (useHeaderFit). Sem o
-// espaçamento, a partir de 1152 px a navegação completa continua no cabeçalho.
+// espaçamento, a partir de 1152 px a navegação completa continua no cabeçalho. A partir de
+// 1280 px, o modo compacto só tira a navegação: o número fica e o "Ligar" nunca aparece
+// (Parte 1.4, regra 12: "Ligar" no cabeçalho só entre 768 e 1279 px).
 const TEXT_SPACING =
   '* { line-height: 1.5 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important }' +
   ' p { margin-bottom: 2em !important }'
@@ -138,8 +140,47 @@ for (const width of [390, 1152, 1280, 1440, 1600]) {
       })
     await expect.poll(problems).toEqual([])
     await expect(header.getByRole('link', { name: 'Pedir orçamento' })).toBeInViewport({ ratio: 1 })
+
+    if (width >= 1280) {
+      // O cenário é mesmo o do modo compacto (senão o teste não provava nada).
+      await expect(page.locator('html[data-header-compacto]')).toHaveCount(1)
+      const shortCall = () =>
+        page.evaluate(
+          () =>
+            Array.from(document.querySelectorAll<HTMLElement>('header a, header button')).filter(
+              (el) =>
+                el.getClientRects().length > 0 &&
+                getComputedStyle(el).visibility !== 'hidden' &&
+                el.innerText.trim().replace(/\s+/g, ' ') === 'Ligar',
+            ).length,
+        )
+      expect(await shortCall(), '"Ligar" visível no cabeçalho a partir de 1280 px').toBe(0)
+      await expect(header.getByRole('link', { name: 'Ligar para a LMDreams' })).toBeHidden()
+      const number = header.locator('a[href^="tel:"]').filter({ hasText: '+351' })
+      await expect(number).toBeVisible()
+      await expect(number).toBeInViewport({ ratio: 1 })
+    }
   })
 }
+
+// Ecrãs baixos (direção visual, secção 8, ajuste): abaixo de 768 px de largura e com até
+// 480 px de altura (telemóvel na horizontal, zoom a 200%), a barra de contacto móvel fica
+// escondida. "Pedir orçamento" continua no cabeçalho, e o telefone e o WhatsApp no menu.
+test('ecrã baixo (740×360): sem barra móvel, "Pedir orçamento" no cabeçalho e contactos no menu', async ({ page }) => {
+  await page.setViewportSize({ width: 740, height: 360 })
+  await page.goto('./')
+  await page.waitForSelector('html[data-hydrated]')
+  const header = page.locator('header').first()
+  await expect(page.locator('nav[aria-label="Contactos rápidos"]')).toBeHidden()
+  await expect(header.getByRole('link', { name: 'Pedir orçamento' })).toBeInViewport({ ratio: 1 })
+  const toggle = header.getByRole('button', { name: 'Abrir menu' })
+  await expect(toggle).toBeInViewport({ ratio: 1 })
+  await toggle.click()
+  const panel = page.locator('[data-mobile-menu-panel]')
+  await expect(panel).toBeVisible()
+  await expect(panel.getByRole('link', { name: 'Contactar por telefone' })).toBeVisible()
+  await expect(panel.getByRole('link', { name: /^Falar por WhatsApp/ })).toBeVisible()
+})
 
 test('alvos de toque principais com pelo menos 44×44 px em telemóvel', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })

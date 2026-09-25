@@ -37,7 +37,8 @@ export function useScrolled(threshold = 4): boolean {
  * palavras (ou usar uma fonte mais larga), o conteúdo passa a margem direita e, como o
  * cabeçalho é fixo, o que fica de fora ("Pedir orçamento", o botão do menu) não se
  * alcança com scroll. Quando isso acontece, <html data-header-compacto> muda o cabeçalho:
- * - "navegacao": a navegação dá lugar ao botão do menu e o número ao botão "Ligar";
+ * - "navegacao": a navegação dá lugar ao botão do menu (o telefone fica como na largura
+ *   normal: "Ligar" só entre 768 e 1279 px, Parte 1.4, regra 12; o número a partir daí);
  * - "nome": além disso, o nome ao lado do logótipo fica só para as tecnologias de apoio
  *   (como abaixo de 380 px).
  *

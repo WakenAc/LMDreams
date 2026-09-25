@@ -16,7 +16,8 @@ import { MobileMenu } from './MobileMenu'
 // depois de fazer scroll (box-shadow: sem saltos de layout).
 //
 // Larguras (métricas das fontes reais, com margem para os pesos 500 e 600):
-//  < 768 px   placa, nome (escondido abaixo de 380 px), "Pedir orçamento" compacto, menu
+//  < 768 px   placa, nome (escondido abaixo de 380 px), "Pedir orçamento" compacto e
+//             secundário, menu
 //             (390 px: cerca de 339 px de 358 px; 320 px: cerca de 249 px de 288 px).
 //  768–1151   placa, nome, "Ligar", "Pedir orçamento", menu (768 px: cerca de 503 de 720).
 //  1152–1279  navegação completa + "Ligar" + "Pedir orçamento" (1152 px: cerca de 1035 de 1088).
@@ -25,8 +26,10 @@ import { MobileMenu } from './MobileMenu'
 //
 // A folga é pequena: com o espaçamento de texto da WCAG 1.4.12 (ou uma fonte mais larga)
 // o conteúdo deixa de caber, e o modo compacto (useHeaderFit, <html data-header-compacto>)
-// troca a navegação pelo menu e o número por "Ligar"; se ainda não couber, esconde o nome
-// ao lado do logótipo. "Pedir orçamento" fica sempre visível.
+// troca a navegação pelo botão do menu; se ainda não couber, esconde o nome ao lado do
+// logótipo. O resto fica como na largura normal: "Ligar" só entre 768 e 1279 px (Parte 1.4,
+// regra 12), o número a partir de 1280 px (Parte 5.3; sem a navegação, cabe com folga) e
+// "Pedir orçamento" sempre visível.
 
 // Classes do modo compacto (valores de data-header-compacto em hooks.ts).
 const COMPACT_HIDDEN = '[html[data-header-compacto]_&]:hidden'
@@ -117,11 +120,9 @@ export function Header() {
         </nav>
 
         <div className="ml-auto flex shrink-0 items-center gap-2 md:gap-3 xl:gap-6">
-          {/* A partir de 1280 px: número clicável com o tipo de chamada por baixo. */}
-          <a
-            href={company.phone.href}
-            className={`group hidden min-h-11 items-center gap-2.5 rounded-sm xl:flex ${COMPACT_HIDDEN}`}
-          >
+          {/* A partir de 1280 px: número clicável com o tipo de chamada por baixo (também
+              no modo compacto, que só tira a navegação). */}
+          <a href={company.phone.href} className="group hidden min-h-11 items-center gap-2.5 rounded-sm xl:flex">
             <Phone
               size={20}
               strokeWidth={1.5}
@@ -137,22 +138,28 @@ export function Header() {
             </span>
           </a>
 
-          {/* Entre 768 e 1279 px (e no modo compacto a partir de 768 px): botão compacto
-              "Ligar" (exceção da Parte 1.4, regra 12). */}
+          {/* Só entre 768 e 1279 px, com ou sem modo compacto: botão compacto "Ligar"
+              (exceção da Parte 1.4, regra 12). */}
           <Button
             variant="secondary"
             href={company.phone.href}
             aria-label={ui.a11y.callCompany}
             icon={<Phone size={20} strokeWidth={1.5} aria-hidden="true" focusable="false" />}
-            className="max-md:hidden xl:hidden md:[html[data-header-compacto]_&]:inline-flex"
+            className="max-md:hidden xl:hidden"
           >
             {ui.labels.callShort}
           </Button>
 
-          {/* "Pedir orçamento": visível em todas as larguras, fora do menu. */}
+          {/* "Pedir orçamento": visível em todas as larguras, fora do menu. Abaixo de 768 px
+              desenha-se como secundário: o primeiro ecrã já tem o primário do hero e o da
+              barra de contacto móvel, e o latão fica abaixo de 5% do ecrã (direção visual,
+              secção 11). O texto, o destino e o comportamento são os mesmos. */}
           <Button
             href={anchorHref('contactos', page)}
-            className="whitespace-nowrap max-md:px-3 max-md:text-[0.84375rem]"
+            className={[
+              'whitespace-nowrap max-md:px-3 max-md:text-[0.84375rem]',
+              'max-md:border max-md:border-ink max-md:bg-transparent max-md:text-ink max-md:hover:bg-surface max-md:active:bg-sand/60',
+            ].join(' ')}
             {...quoteLinkProps}
           >
             {ui.labels.requestQuote}
