@@ -98,10 +98,18 @@ interface RuledListProps {
   'aria-labelledby'?: string
 }
 
-/** Lista com régua (linhas `line`) e marcador em cruz de latão. Não numerada. */
+/**
+ * Lista com régua (linhas `line`) e marcador em cruz de latão. Não numerada. role="list"
+ * explícito: o Safari (VoiceOver) tira o papel de lista a <ul> com list-style: none.
+ */
 export function RuledList({ items, className, ...aria }: RuledListProps) {
   return (
-    <ul {...aria} className={cx('border-b border-line', className)}>
+    <ul
+      // oxlint-disable-next-line jsx-a11y/no-redundant-roles -- compatibilidade com o VoiceOver no Safari (list-style: none)
+      role="list"
+      {...aria}
+      className={cx('border-b border-line', className)}
+    >
       {items.map((item) => (
         <li
           key={item}

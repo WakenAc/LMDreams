@@ -83,11 +83,18 @@ interface StepsProps {
   className?: string
 }
 
-/** Linha temporal numerada e acessível (<ol>), sem scroll horizontal em nenhuma largura. */
+/**
+ * Linha temporal numerada e acessível (<ol>), sem scroll horizontal em nenhuma largura.
+ * role="list" explícito: o Safari (VoiceOver) tira o papel de lista a <ol> e <ul> com
+ * list-style: none (o preflight do Tailwind) fora de <nav>, e a Parte 3.10 pede que as
+ * etapas se anunciem como lista.
+ */
 export function Steps({ steps, className }: StepsProps) {
   const total = steps.length
   return (
     <ol
+      // oxlint-disable-next-line jsx-a11y/no-redundant-roles -- compatibilidade com o VoiceOver no Safari (list-style: none)
+      role="list"
       data-steps=""
       className={['lg:grid lg:grid-cols-4', ROW_GAP, className].filter(Boolean).join(' ')}
     >

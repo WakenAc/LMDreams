@@ -109,8 +109,12 @@ export function Services() {
           />
         </div>
 
-        {/* Seis serviços em destaque, com imagem 4:3. */}
+        {/* Seis serviços em destaque, com imagem 4:3. As duas listas têm role="list"
+            explícito: o Safari (VoiceOver) tira o papel de lista a <ul> com list-style: none
+            fora de <nav>. */}
         <ul
+          // oxlint-disable-next-line jsx-a11y/no-redundant-roles -- compatibilidade com o VoiceOver no Safari (list-style: none)
+          role="list"
           data-reveal=""
           aria-label={servicesSection.featuredLabel}
           className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 md:mt-12 lg:mt-16 lg:grid-cols-3 lg:gap-y-12"
@@ -140,7 +144,12 @@ export function Services() {
           <h3 id={OTHERS_HEADING_ID} className="text-h3 text-ink">
             <PlainText text={servicesSection.othersHeading} />
           </h3>
-          <ul aria-labelledby={OTHERS_HEADING_ID} className="mt-6 grid md:grid-cols-2 md:gap-x-6">
+          <ul
+            // oxlint-disable-next-line jsx-a11y/no-redundant-roles -- compatibilidade com o VoiceOver no Safari (list-style: none)
+            role="list"
+            aria-labelledby={OTHERS_HEADING_ID}
+            className="mt-6 grid md:grid-cols-2 md:gap-x-6"
+          >
             {OTHERS_ORDERED.map((service, index) => (
               <li
                 key={service.id}
