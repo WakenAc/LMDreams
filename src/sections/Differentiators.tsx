@@ -53,14 +53,14 @@ export function Differentiators() {
             className="lg:col-span-7 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-stretch"
             sizes={PICTURE_SIZES}
           />
-          <ul className="grid gap-4 md:grid-cols-2 md:gap-6 lg:pointer-events-none lg:col-span-12 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:grid-cols-subgrid lg:grid-rows-subgrid">
+          {/* Cartões estáticos: sem estado de hover (só os controlos reagem ao rato). */}
+          <ul className="grid gap-4 md:grid-cols-2 md:gap-6 lg:col-span-12 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:grid-cols-subgrid lg:grid-rows-subgrid">
             {cards.map((card, i) => (
               <Card
                 key={card.title}
                 as="li"
                 variant="differentiator"
                 className={[
-                  'transition-colors duration-150 ease-planta hover:border-muted-on-dark/50 lg:pointer-events-auto',
                   oddCount && i === cards.length - 1 ? 'md:col-span-2' : '',
                   CARD_PLACEMENT[i] ?? 'lg:col-span-4',
                 ]
