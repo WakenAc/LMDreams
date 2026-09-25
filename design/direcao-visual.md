@@ -105,7 +105,8 @@ Regras: texto pequeno em acento só sobre `bg`; sobre `surface` usa-se `accent-h
 | pequeno | `0.875rem` | 14 | 14 | 1,5 | 0,005em |
 | legenda | `0.75rem` | 12 | 12 | 1,35 | 0,02em |
 | etiqueta (maiúsculas, mono) | `0.75rem` | 12 | 12 | 1,35 | 0,08em |
-| número de etapa (mono) | `1rem` | 16 | 16 | 1 | 0,02em |
+| número de etapa (mono), páginas legais e listas | `1rem` | 16 | 16 | 1 | 0,02em |
+| número de etapa do Método (mono) **(ajuste)** | `clamp(1.75rem, 1.05rem + 2.5vw, 3.25rem)` (`text-step-lg`) | 28 | 52 | 1 | -0,01em |
 
 O texto grande desce a 15,5 px abaixo de 768 px para o subtítulo do hero caber em 3 linhas a 390 px (medido na maqueta). Largura máxima do texto corrido: 65 caracteres (`max-w-texto`, token `--container-texto: 30em`, cerca de 0,465em por carácter em IBM Plex Sans, medido no próprio parágrafo) **(ajuste: o `max-w-prose` do Tailwind dá 65ch, que em Plex Sans corresponde a mais de 65 caracteres)**. Abaixo de 380 px, o subtítulo do hero pode ocupar 4 linhas (o texto é fixo pelo brief); usa `text-wrap: pretty` só aí, para não deixar uma palavra isolada **(ajuste)**.
 
@@ -153,13 +154,15 @@ Regra de contenção: no máximo dois motivos por secção e nenhum atrás de pa
 - **Tablet (768 a 1023 px):** texto por cima, fotografia na proporção do ficheiro (≈ 16:9) a toda a largura por baixo, só com a cota horizontal; especialidades como etiquetas por baixo da fotografia.
 - **Telemóvel (< 768 px):** H1 a 36 px em até 3 linhas; subtítulo em 3 linhas; botões empilhados a toda a largura (48 px); linha de confiança; fotografia 4:5 a toda a largura com a legenda de IA no canto superior direito; etiquetas das especialidades por baixo; a barra de contacto móvel nunca tapa os botões nem a linha de confiança.
 - **Altura mínima:** `calc(100dvh - 72px)` com teto razoável; abaixo de 768 px, menos também a barra de contacto e a *safe area*.
+- **Ecrãs baixos (< 768 px de largura e altura até 480 px, por exemplo telemóvel na horizontal ou zoom a 200%) (ajuste):** a barra de contacto móvel fica escondida para não ocupar metade do ecrã; “Pedir orçamento” continua no cabeçalho, e o telefone e o WhatsApp no menu.
+- **Espaçamento de texto aumentado (WCAG 1.4.12) (ajuste):** se o cabeçalho deixar de caber, entra num modo compacto (navegação e número passam para o menu; depois, o nome passa a só acessível), sem esconder “Pedir orçamento”.
 
 ## 9. Aplicação às outras secções
 
 - **Sobre (bg):** separador de cota; fotografia 4:5 à esquerda (colunas 1 a 5), texto à direita (colunas 7 a 12); destaques em lista com régua e cruz.
 - **Diferenciação (faixa `dark`):** H2 em `on-dark`; grelha assimétrica com a imagem `diferenciacao` (3:2) e cinco cartões com contorno `line-on-dark`, ícones Lucide de traço 1,5 em `accent-on-dark`, títulos `on-dark`, texto `muted-on-dark`. Board: `design/boards/board-diferenciacao-C-v1.png`.
 - **Serviços (bg):** seis cartões com imagem 4:3 em grelha 3 × 2; os outros dez numa lista a duas colunas com ícone `muted` e régua; “Remodelações completas” e “Preparação e coordenação de obra” com peso 600; frase ao visitante e “Pedir orçamento”. Board: `design/boards/board-servicos-C-v1.png`.
-- **Método de trabalho (surface com papel de desenho):** oito etapas em `<ol>`, grelha 4 × 2 a partir de 1024 px, ligadas por uma cadeia de cotas; números 01 a 08 em Plex Mono latão (`accent-hover` sobre `surface`); vertical em telemóvel, com a cota à esquerda. Board: `design/boards/board-metodo-C-v1.png`.
+- **Método de trabalho (surface com papel de desenho):** oito etapas em `<ol>`, grelha 4 × 2 a partir de 1024 px, ligadas por uma cadeia de cotas; números 01 a 08 em Plex Mono latão (`accent-hover` sobre `surface`), de 28 a 52 px, o elemento mais forte de cada etapa, como no board **(ajuste: eram 16 px)**; vertical em telemóvel, com a cota à esquerda. Board: `design/boards/board-metodo-C-v1.png`.
 - **Projetos (bg):** filtros com contorno `muted` e raio de 2 px, estado premido em `ink` com texto `on-dark`; placeholders em `sand` tracejados com “Imagem a substituir”; diálogo com raio de 6 px.
 - **Transparência (bg):** lista “O que vai saber” com régua e cruz; imagem 3:2 à direita; parágrafo sobre imprevistos.
 - **Testemunhos (surface):** três cartões tracejados “Conteúdo a substituir”, sem estrelas nem nomes.
