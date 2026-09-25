@@ -42,9 +42,10 @@ function onRecoverableError(error: unknown) {
   console.error('Erro de hidratação', error)
 }
 
-async function hydrateIslands(page: PageId): Promise<void> {
+/** Hidrata cada ilha de forma independente: se uma falhar, as outras continuam. */
+async function hydrateIslands(page: PageId): Promise<boolean> {
   const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-island]'))
-  await Promise.all(
+  const results = await Promise.allSettled(
     elements.map(async (el) => {
       const id = el.dataset.island
       if (!isIslandId(id)) return
@@ -60,6 +61,9 @@ async function hydrateIslands(page: PageId): Promise<void> {
       )
     }),
   )
+  const failed = results.filter((r) => r.status === 'rejected').length
+  if (failed > 0) console.warn(`${failed} ilha(s) interativa(s) não carregaram; a página continua utilizável sem elas.`)
+  return failed === 0
 }
 
 async function start(): Promise<void> {
@@ -69,8 +73,9 @@ async function start(): Promise<void> {
   const prerendered = root.firstElementChild !== null
   const page: PageId = isPageId(declared) ? declared : pageFromPath(window.location.pathname)
 
+  let allHydrated = true
   if (prerendered) {
-    await hydrateIslands(page)
+    allHydrated = await hydrateIslands(page)
   } else {
     const { default: Page } = await pageLoaders[page]()
     if (import.meta.env.DEV) {
@@ -82,8 +87,9 @@ async function start(): Promise<void> {
   }
   initReveal()
   initQuoteLinks()
-  // Marca para os testes E2E (e para depuração): as ilhas já estão interativas.
-  document.documentElement.dataset.hydrated = 'true'
+  // Marca para os testes E2E (e para depuração): as ilhas já estão interativas. Se alguma
+  // falhou, a marca não é posta e os controlos que dependem dela continuam escondidos.
+  if (allHydrated) document.documentElement.dataset.hydrated = 'true'
 }
 
 void start()
