@@ -3,7 +3,6 @@
 // Nunca inventar denominação, NIPC, moradas, alvarás ou entidades.
 
 import { PH } from '../lib/placeholders'
-import { hasIllustrativeImages } from './images'
 
 export type LegalForm = 'sociedade' | 'eni'
 
@@ -122,8 +121,9 @@ export const company = {
 
   /** Legenda visível em cada imagem gerada por IA (Partes 4.8 e 5.6). */
   aiImageLabel: 'Imagem ilustrativa gerada por IA',
-  /** Nota do rodapé: só existe se houver pelo menos uma imagem com `ilustrativa: true`. */
-  showIllustrativeImagesNotice: hasIllustrativeImages(),
+  // A nota do rodapé sobre imagens de IA (Parte 4.8) é calculada a partir de
+  // src/content/images.ts, com hasIllustrativeImages(), no próprio rodapé. Não está aqui
+  // porque este módulo entra no JavaScript das ilhas e arrastaria o registo de imagens.
 } as const
 
 export type Company = typeof company
