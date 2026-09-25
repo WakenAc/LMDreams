@@ -107,8 +107,10 @@ export function LegalDocument({ content }: { content: LegalPageContent }) {
                   {content.title}
                 </h1>
                 <TitleCota />
-                <p className="mt-5 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-small text-muted">
-                  <span className="font-mono text-eyebrow font-medium uppercase">{content.updatedLabel}</span>
+                {/* Texto corrido (sem flex): o espaço entre o rótulo e a data é um espaço real,
+                    que se mantém ao copiar, no modo de leitura e nas tecnologias de apoio. */}
+                <p className="mt-5 text-small text-muted">
+                  <span className="mr-1 font-mono text-eyebrow font-medium uppercase">{content.updatedLabel}</span>{' '}
                   <span>
                     <PlainText text={company.legal.policiesUpdatedAt} />
                   </span>
