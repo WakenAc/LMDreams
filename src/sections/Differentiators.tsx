@@ -47,10 +47,15 @@ export function Differentiators() {
         </div>
 
         <div data-reveal="" className="mt-12 grid gap-4 md:mt-14 md:gap-6 lg:mt-16 lg:grid-cols-12">
+          {/* A partir de 1024 px, a largura vem das 7 colunas (lg:w-full) e a altura estica
+              até à dos cartões 1 e 2 (lg:self-stretch); a proporção 3:2 dá a altura mínima.
+              Sem a largura explícita, quando os cartões são mais altos do que a proporção
+              (1024 px, textos em 3 linhas), a largura era derivada da altura esticada e a
+              fotografia entrava na coluna dos cartões, por cima do texto. */}
           <Picture
             id="diferenciacao"
             frameClassName="aspect-[3/2]"
-            className="lg:col-span-7 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-stretch"
+            className="lg:col-span-7 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:w-full lg:self-stretch"
             sizes={PICTURE_SIZES}
           />
           {/* Cartões estáticos: sem estado de hover (só os controlos reagem ao rato). */}
