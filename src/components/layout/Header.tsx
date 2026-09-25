@@ -1,4 +1,5 @@
 import { Phone } from 'lucide-react'
+import { useRef } from 'react'
 import { company } from '../../content/company'
 import { ui } from '../../content/common'
 import { navigation } from '../../content/navigation'
@@ -7,7 +8,7 @@ import { anchorHref } from '../../lib/links'
 import { useCurrentPage } from '../../lib/page-context'
 import { quoteLinkProps } from '../../lib/quote-links'
 import { Button } from '../ui/Button'
-import { useActiveSection, useScrolled } from './hooks'
+import { useActiveSection, useHeaderFit, useScrolled } from './hooks'
 import { MobileMenu } from './MobileMenu'
 
 // Cabeçalho fixo (Partes 5.3 e 5.4 §1; design/direcao-visual.md, secções 5 e 10).
@@ -21,6 +22,15 @@ import { MobileMenu } from './MobileMenu'
 //  1152–1279  navegação completa + "Ligar" + "Pedir orçamento" (1152 px: cerca de 1035 de 1088).
 //  ≥ 1280     navegação + número com o tipo de chamada + "Pedir orçamento" (1280 px: cerca
 //             de 1170 de 1216); o ícone do telefone só entra a partir de 1440 px.
+//
+// A folga é pequena: com o espaçamento de texto da WCAG 1.4.12 (ou uma fonte mais larga)
+// o conteúdo deixa de caber, e o modo compacto (useHeaderFit, <html data-header-compacto>)
+// troca a navegação pelo menu e o número por "Ligar"; se ainda não couber, esconde o nome
+// ao lado do logótipo. "Pedir orçamento" fica sempre visível.
+
+// Classes do modo compacto (valores de data-header-compacto em hooks.ts).
+const COMPACT_HIDDEN = '[html[data-header-compacto]_&]:hidden'
+const COMPACT_NAME_HIDDEN = '[html[data-header-compacto=nome]_&]:sr-only'
 
 const LOGO_SIZES = '(min-width: 1024px) 83px, (min-width: 768px) 68px, 60px'
 
@@ -32,12 +42,18 @@ const NAV_LINK =
 
 // Barra de 2 px em latão no fundo do cabeçalho, sob o item da secção atual. A ligação não
 // é posicionada: a barra fica no fundo do <li> (relative), que ocupa a altura toda.
-const NAV_LINK_ACTIVE = 'after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-accent'
+// Em contraste forçado (Windows), o fundo da barra seria substituído pelo do sistema e a
+// barra desaparecia: aí usa a cor de destaque do sistema.
+const NAV_LINK_ACTIVE =
+  'after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-accent ' +
+  'forced-colors:after:bg-[color:Highlight] forced-colors:after:forced-color-adjust-none'
 
 export function Header() {
   const page = useCurrentPage()
   const scrolled = useScrolled()
   const active = useActiveSection(page)
+  const rowRef = useRef<HTMLDivElement>(null)
+  useHeaderFit(rowRef)
 
   return (
     <header
@@ -48,7 +64,7 @@ export function Header() {
         scrolled ? 'shadow-header' : '',
       ].join(' ')}
     >
-      <div className="container-site flex h-full items-center gap-2 md:gap-4">
+      <div ref={rowRef} className="container-site flex h-full items-center gap-2 md:gap-4">
         {/* Placa do logótipo e nome: uma só peça, ligação para o início. */}
         <a
           href={anchorHref('inicio', page)}
@@ -70,6 +86,7 @@ export function Header() {
               'font-display text-base leading-none font-[650] tracking-[-0.015em] text-dark',
               'decoration-1 underline-offset-4 group-hover:underline group-focus-visible:underline',
               'max-[380px]:sr-only md:text-[1.1875rem] lg:text-[1.3125rem]',
+              COMPACT_NAME_HIDDEN,
             ].join(' ')}
           >
             {company.name}
@@ -77,7 +94,10 @@ export function Header() {
         </a>
 
         {/* Navegação principal a partir de 1152 px. */}
-        <nav aria-label={navigation.ariaLabel} className="ml-6 hidden h-full nav:block min-[1440px]:ml-12">
+        <nav
+          aria-label={navigation.ariaLabel}
+          className={`ml-6 hidden h-full nav:block min-[1440px]:ml-12 ${COMPACT_HIDDEN}`}
+        >
           <ul className="flex h-full items-stretch gap-4 xl:gap-5 min-[1440px]:gap-7">
             {navigation.items.map((item) => {
               const current = active === item.anchor
@@ -100,7 +120,7 @@ export function Header() {
           {/* A partir de 1280 px: número clicável com o tipo de chamada por baixo. */}
           <a
             href={company.phone.href}
-            className="group hidden min-h-11 items-center gap-2.5 rounded-sm xl:flex"
+            className={`group hidden min-h-11 items-center gap-2.5 rounded-sm xl:flex ${COMPACT_HIDDEN}`}
           >
             <Phone
               size={20}
@@ -117,13 +137,14 @@ export function Header() {
             </span>
           </a>
 
-          {/* Entre 768 e 1279 px: botão compacto "Ligar" (exceção da Parte 1.4, regra 12). */}
+          {/* Entre 768 e 1279 px (e no modo compacto a partir de 768 px): botão compacto
+              "Ligar" (exceção da Parte 1.4, regra 12). */}
           <Button
             variant="secondary"
             href={company.phone.href}
             aria-label={ui.a11y.callCompany}
             icon={<Phone size={20} strokeWidth={1.5} aria-hidden="true" focusable="false" />}
-            className="max-md:hidden xl:hidden"
+            className="max-md:hidden xl:hidden md:[html[data-header-compacto]_&]:inline-flex"
           >
             {ui.labels.callShort}
           </Button>
@@ -137,7 +158,7 @@ export function Header() {
             {ui.labels.requestQuote}
           </Button>
 
-          <MobileMenu activeAnchor={active} className="nav:hidden" />
+          <MobileMenu activeAnchor={active} className="nav:hidden [html[data-header-compacto]_&]:contents" />
         </div>
       </div>
     </header>

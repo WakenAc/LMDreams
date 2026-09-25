@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type RefObject } from 'react'
 import { navigation } from '../../content/navigation'
 import type { AnchorId, PageId } from '../../lib/pages'
 
@@ -27,6 +27,67 @@ export function useScrolled(threshold = 4): boolean {
   }, [threshold])
 
   return scrolled
+}
+
+/**
+ * Modo compacto do cabeçalho (WCAG 2.2, 1.4.12, espaçamento de texto).
+ *
+ * As larguras do cabeçalho estão contadas para as fontes do site (Header.tsx) e nada nele
+ * encolhe nem quebra de linha. Se o visitante aumentar o espaçamento entre letras e
+ * palavras (ou usar uma fonte mais larga), o conteúdo passa a margem direita e, como o
+ * cabeçalho é fixo, o que fica de fora ("Pedir orçamento", o botão do menu) não se
+ * alcança com scroll. Quando isso acontece, <html data-header-compacto> muda o cabeçalho:
+ * - "navegacao": a navegação dá lugar ao botão do menu e o número ao botão "Ligar";
+ * - "nome": além disso, o nome ao lado do logótipo fica só para as tecnologias de apoio
+ *   (como abaixo de 380 px).
+ *
+ * Cada medição parte do cabeçalho completo e decide na mesma tarefa, sem pintura pelo
+ * meio: o resultado depende só do espaço disponível, por isso não oscila, e o cabeçalho
+ * completo volta assim que voltar a caber. O ResizeObserver segue a largura da linha
+ * (janela) e a de cada bloco (texto, fontes, espaçamento). Sem JavaScript, ou antes da
+ * hidratação, fica o cabeçalho completo do HTML pré-renderizado.
+ */
+export function useHeaderFit(rowRef: RefObject<HTMLElement | null>): void {
+  useEffect(() => {
+    const row = rowRef.current
+    if (!row || typeof ResizeObserver === 'undefined') return
+    const html = document.documentElement
+
+    // O último bloco (à direita, com ml-auto) passa o limite do conteúdo quando não cabe.
+    const overflows = () => {
+      const last = row.lastElementChild
+      if (!last) return false
+      const limit = row.getBoundingClientRect().right - (Number.parseFloat(getComputedStyle(row).paddingRight) || 0)
+      return last.getBoundingClientRect().right > limit + 0.5
+    }
+
+    const fit = () => {
+      delete html.dataset.headerCompacto
+      for (const level of ['navegacao', 'nome']) {
+        if (!overflows()) return
+        html.dataset.headerCompacto = level
+      }
+    }
+
+    let frame = 0
+    const schedule = () => {
+      if (frame !== 0) return
+      frame = window.requestAnimationFrame(() => {
+        frame = 0
+        fit()
+      })
+    }
+    const observer = new ResizeObserver(schedule)
+    observer.observe(row)
+    for (const child of Array.from(row.children)) observer.observe(child)
+    fit()
+
+    return () => {
+      observer.disconnect()
+      if (frame !== 0) window.cancelAnimationFrame(frame)
+      delete html.dataset.headerCompacto
+    }
+  }, [rowRef])
 }
 
 const NAV_ANCHORS: readonly string[] = navigation.items.map((item) => item.anchor)

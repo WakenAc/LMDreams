@@ -13,6 +13,3 @@ export const MOBILE_MENU_ID = 'menu-movel'
  * saltarem; nas classes Tailwind aparece escrita por extenso: `var(--lmd-sbw,0px)`.
  */
 export const SCROLLBAR_VAR = '--lmd-sbw'
-
-/** Breakpoint `nav:` (1152 px): a partir daqui a navegação completa substitui o menu. */
-export const NAV_MEDIA_QUERY = '(min-width: 72rem)'

@@ -17,9 +17,10 @@ import { quoteLinkProps } from '../../lib/quote-links'
 import { whatsappHref } from '../../lib/whatsapp'
 import { Button } from '../ui/Button'
 import { VisuallyHidden } from '../ui/VisuallyHidden'
-import { FOOTER_NAV_ID, MOBILE_MENU_ID, NAV_MEDIA_QUERY, SCROLLBAR_VAR } from './ids'
+import { FOOTER_NAV_ID, MOBILE_MENU_ID, SCROLLBAR_VAR } from './ids'
 
-// Menu móvel (Partes 3.10 e 5.3), abaixo de 1152 px.
+// Menu móvel (Partes 3.10 e 5.3), abaixo de 1152 px e no modo compacto do cabeçalho
+// (espaçamento de texto aumentado, useHeaderFit em hooks.ts).
 //
 // Sem JavaScript: o HTML pré-renderizado tem, no lugar do botão, uma ligação com o mesmo
 // aspeto para a navegação do rodapé (#navegacao-rodape), que tem as seis âncoras. Não há
@@ -33,19 +34,22 @@ import { FOOTER_NAV_ID, MOBILE_MENU_ID, NAV_MEDIA_QUERY, SCROLLBAR_VAR } from '.
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])'
 
+// Contorno em borda real (como o botão secundário): continua visível em contraste forçado.
 const TOGGLE =
-  'inline-flex size-11 shrink-0 items-center justify-center rounded-sm text-ink ' +
-  'shadow-[inset_0_0_0_1px_var(--color-ink)] transition-colors duration-150 ease-planta hover:bg-surface ' +
+  'inline-flex size-11 shrink-0 items-center justify-center rounded-sm border border-ink text-ink ' +
+  'transition-colors duration-150 ease-planta hover:bg-surface ' +
   '[&>svg]:pointer-events-none'
 
 // < 768 px: ecrã inteiro abaixo do cabeçalho. ≥ 768 px: painel de 24rem alinhado à margem
-// direita do contentor, logo abaixo do cabeçalho. Entrada com @starting-style (sem
+// direita do contentor, logo abaixo do cabeçalho. A partir de 1024 px, a margem é a maior
+// de duas: 32 px da janela, ou a margem do contentor centrado quando a janela passa a sua
+// largura máxima (o botão do modo compacto fica lá). Entrada com @starting-style (sem
 // animação com movimento reduzido: a regra global anula as transições).
 const PANEL = [
   'fixed inset-x-0 top-[var(--header-h)] bottom-0 z-10 overflow-y-auto overscroll-contain border-t border-line bg-bg',
   'md:left-auto md:right-[calc(1.5rem_+_var(--lmd-sbw,0px))] md:bottom-auto md:mt-2 md:w-[24rem]',
   'md:max-h-[calc(100dvh_-_var(--header-h)_-_1.5rem)] md:rounded-lg md:border md:shadow-dialog',
-  'lg:right-[calc(2rem_+_var(--lmd-sbw,0px))]',
+  'lg:right-[max(calc(32px_+_var(--lmd-sbw,0px)),calc((100%_-_var(--container-site)_-_64px_+_var(--lmd-sbw,0px))/2_+_32px))]',
   'transition-[opacity,translate] duration-250 ease-planta starting:-translate-y-2 starting:opacity-0',
 ].join(' ')
 
@@ -166,20 +170,24 @@ export function MobileMenu({ activeAnchor, className }: MobileMenuProps) {
       close(false)
     }
 
-    // Janela alargada até à navegação completa: o botão desaparece, o menu fecha.
-    const media = window.matchMedia(NAV_MEDIA_QUERY)
-    const onMedia = () => {
-      if (media.matches) close(false)
-    }
+    // O botão deixou de estar à vista (janela alargada até à navegação completa, ou fim do
+    // modo compacto do cabeçalho): o menu fecha. O ResizeObserver avisa quando o botão
+    // passa a não ter caixa (display: none num antepassado).
+    const toggleWatcher =
+      toggle && typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(() => {
+            if (toggle.getClientRects().length === 0) close(false)
+          })
+        : null
+    if (toggle) toggleWatcher?.observe(toggle)
 
     document.addEventListener('keydown', onKeyDown)
     document.addEventListener('click', onDocumentClick)
-    media.addEventListener('change', onMedia)
 
     return () => {
       document.removeEventListener('keydown', onKeyDown)
       document.removeEventListener('click', onDocumentClick)
-      media.removeEventListener('change', onMedia)
+      toggleWatcher?.disconnect()
       html.style.overflow = previous.htmlOverflow
       body.style.overflow = previous.bodyOverflow
       body.style.paddingRight = previous.bodyPadding

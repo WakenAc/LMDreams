@@ -97,6 +97,50 @@ for (const width of [768, 1024]) {
   })
 }
 
+// WCAG 2.2, 1.4.12 (espaçamento de texto): com os valores do critério, todos os controlos
+// do cabeçalho ficam dentro do ecrã e sem se sobreporem, e "Pedir orçamento" continua
+// inteiro à vista (Parte 5.3). O cabeçalho passa ao modo compacto (useHeaderFit). Sem o
+// espaçamento, a partir de 1152 px a navegação completa continua no cabeçalho.
+const TEXT_SPACING =
+  '* { line-height: 1.5 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important }' +
+  ' p { margin-bottom: 2em !important }'
+
+for (const width of [390, 1152, 1280, 1440, 1600]) {
+  test(`espaçamento de texto (WCAG 1.4.12) a ${width} px: cabeçalho inteiro dentro do ecrã`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 })
+    await page.goto('./')
+    await page.waitForSelector('html[data-hydrated]')
+    const header = page.locator('header').first()
+    if (width >= 1152) await expect(header.getByRole('navigation')).toBeVisible()
+
+    await page.addStyleTag({ content: TEXT_SPACING })
+    const problems = () =>
+      page.evaluate(() => {
+        const controls = Array.from(document.querySelectorAll<HTMLElement>('header a, header button'))
+          .filter((el) => el.getClientRects().length > 0 && getComputedStyle(el).visibility !== 'hidden')
+          .map((el) => ({
+            name: (el.getAttribute('aria-label') ?? el.textContent ?? '').trim().replace(/\s+/g, ' ').slice(0, 32),
+            r: el.getBoundingClientRect(),
+          }))
+        const vw = document.documentElement.clientWidth
+        const found: string[] = []
+        controls.forEach((a, i) => {
+          if (a.r.left < -0.5 || a.r.right > vw + 0.5) {
+            found.push(`"${a.name}" fora do ecrã (${Math.round(a.r.left)} a ${Math.round(a.r.right)} de ${vw})`)
+          }
+          for (const b of controls.slice(i + 1)) {
+            const overlap =
+              a.r.left < b.r.right - 0.5 && b.r.left < a.r.right - 0.5 && a.r.top < b.r.bottom - 0.5 && b.r.top < a.r.bottom - 0.5
+            if (overlap) found.push(`"${a.name}" sobrepõe "${b.name}"`)
+          }
+        })
+        return found
+      })
+    await expect.poll(problems).toEqual([])
+    await expect(header.getByRole('link', { name: 'Pedir orçamento' })).toBeInViewport({ ratio: 1 })
+  })
+}
+
 test('alvos de toque principais com pelo menos 44×44 px em telemóvel', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('./')
