@@ -240,7 +240,7 @@
    o JavaScript está ativo e o utilizador aceita movimento (Parte 5.3).
    ------------------------------------------------------------------------ */
 @media (prefers-reduced-motion: no-preference) {
-  .reveal-on [data-reveal]:not([data-revealed]) {
+  .reveal-on [data-reveal][data-reveal-armed]:not([data-revealed]) {
     opacity: 0;
     transform: translateY(10px);
   }
