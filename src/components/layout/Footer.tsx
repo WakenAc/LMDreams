@@ -97,7 +97,10 @@ export function Footer() {
         <div className="grid gap-x-6 gap-y-12 md:grid-cols-2 lg:grid-cols-12">
           <div className="md:col-span-2 lg:col-span-3 xl:col-span-4">
             {/* O ficheiro tem o fundo igual a `dark`: sem placa visível. O símbolo não tem
-                texto, por isso o nome segue-o, como no cabeçalho. */}
+                texto, por isso o nome segue-o, como no cabeçalho. A margem esquerda do
+                ficheiro (48 de 352 px, invisível sobre `dark`) é compensada na imagem, sem a
+                recortar: 12 px com 48 px de altura e 14 px com 56 px. O desenho alinha com a
+                descrição e a ligação (e o anel de foco) continua no contentor. */}
             <a
               href={anchorHref('inicio', page)}
               aria-label={navigation.logoLabel}
@@ -112,7 +115,7 @@ export function Footer() {
                 alt=""
                 loading="lazy"
                 decoding="async"
-                className="h-12 w-auto md:h-14"
+                className="-ml-3 h-12 w-auto md:-ml-3.5 md:h-14"
               />
               <span className="font-display text-[1.1875rem] leading-none font-[650] tracking-[-0.015em] text-on-dark decoration-1 underline-offset-4 group-hover:underline group-focus-visible:underline xl:text-[1.3125rem]">
                 {company.name}

@@ -3,6 +3,7 @@ import { ui } from '../../content/common'
 import { projectsSection } from '../../content/projects'
 import type { ProjectPhoto } from '../../content/tipos'
 import { withBase } from '../../lib/links'
+import { PLACEHOLDER_LABEL } from './Placeholder'
 import { PlaceholderArt, type PlaceholderVariant } from './PlaceholderArt'
 
 // Galeria antes e depois dos projetos (Partes 3.10 e 5.4 §7). Com fotografias reais dos
@@ -117,9 +118,7 @@ export function PhotoPlaceholder({ drawing = 'plan', variant, label, className, 
         {label ? (
           <span className="rounded-sm bg-bg px-2 py-0.5 text-small font-semibold text-ink">{label}</span>
         ) : null}
-        <span className="mt-auto max-w-full self-center rounded-sm border border-dashed border-muted bg-bg/90 px-2.5 py-1 text-center font-mono text-caption text-ink">
-          {ui.placeholders.image}
-        </span>
+        <span className={`mt-auto max-w-full self-center text-center ${PLACEHOLDER_LABEL}`}>{ui.placeholders.image}</span>
       </figcaption>
     </figure>
   )

@@ -8,6 +8,7 @@ import { Card } from '../components/ui/Card'
 import { Container } from '../components/ui/Container'
 import { Dialog } from '../components/ui/Dialog'
 import { FilterChips, type FilterChipOption } from '../components/ui/FilterChips'
+import { PLACEHOLDER_LABEL } from '../components/ui/Placeholder'
 import type { PlaceholderVariant } from '../components/ui/PlaceholderArt'
 import { PlainText } from '../components/ui/RichText'
 import { Section } from '../components/ui/Section'
@@ -151,7 +152,7 @@ function ProjectCard({ project: p, span, interactive, onOpen }: ProjectCardProps
           </h3>
           <p className="order-first flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 font-mono text-caption">
             <span className="text-accent">{projectsSection.categories[p.categoria]}</span>
-            {p.placeholder ? <span className="text-muted">{ui.placeholders.content}</span> : null}
+            {p.placeholder ? <span className={PLACEHOLDER_LABEL}>{ui.placeholders.content}</span> : null}
           </p>
         </div>
         <p className="max-w-texto text-small text-muted">
@@ -260,7 +261,13 @@ export function Projects() {
           </div>
         </div>
         <div data-reveal="" className="mt-8">
-          <ul className="@container grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {/* role="list" explícito: o Safari (VoiceOver) tira o papel de lista a <ul> com
+              list-style: none. */}
+          <ul
+            // oxlint-disable-next-line jsx-a11y/no-redundant-roles -- compatibilidade com o VoiceOver no Safari (list-style: none)
+            role="list"
+            className="@container grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          >
             {visible.map((p, i) => (
               <ProjectCard
                 key={p.id}

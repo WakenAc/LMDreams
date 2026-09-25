@@ -2,6 +2,18 @@ import type { ReactNode } from 'react'
 import { ui } from '../../content/common'
 
 /**
+ * Pastilha da etiqueta "Conteúdo a substituir" / "Imagem a substituir" (Parte 5.3): um só
+ * estilo em todos os placeholders (imagens, cartões, projetos), tracejado, em Plex Mono a
+ * 12 px e sem maiúsculas (direção visual, secção 11).
+ */
+export const PLACEHOLDER_LABEL =
+  'rounded-sm border border-dashed border-muted bg-bg/90 px-2.5 py-1 font-mono text-caption text-ink'
+
+/** A mesma pastilha nas faixas escuras. */
+export const PLACEHOLDER_LABEL_ON_DARK =
+  'rounded-sm border border-dashed border-muted-on-dark bg-white/10 px-2.5 py-1 font-mono text-caption text-on-dark'
+
+/**
  * Valor em falta dentro de um texto (marcador criado por PH), com contorno tracejado
  * e tons neutros (Parte 5.3). Nunca parte o layout: quebra como texto normal.
  */
@@ -40,9 +52,7 @@ export function PlaceholderBox({ children, label = ui.placeholders.content, clas
         .filter(Boolean)
         .join(' ')}
     >
-      <p className={['font-mono text-caption uppercase', onDark ? 'text-muted-on-dark' : 'text-muted'].join(' ')}>
-        {label}
-      </p>
+      <p className={['w-fit max-w-full', onDark ? PLACEHOLDER_LABEL_ON_DARK : PLACEHOLDER_LABEL].join(' ')}>{label}</p>
       {children ? <div className="mt-3">{children}</div> : null}
     </div>
   )

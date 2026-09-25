@@ -3,6 +3,7 @@ import { company } from '../../content/company'
 import { ui } from '../../content/common'
 import { getImage, type PictureAsset } from '../../content/images'
 import type { ImageId } from '../../content/tipos'
+import { PLACEHOLDER_LABEL } from './Placeholder'
 import { PlaceholderArt, type PlaceholderVariant } from './PlaceholderArt'
 
 // Imagem otimizada do registo (Partes 3.7 e 4.8): <picture> com AVIF e WebP, `img`
@@ -106,7 +107,9 @@ export function Picture({
   if (!entry.picture) {
     return (
       <figure data-image-placeholder={id} className={frame} style={frameStyle}>
-        <PlaceholderArt variant={PLACEHOLDER_VARIANT[id]} />
+        {/* O fundo do CTA (`fill`) fica numa faixa escura, sob o véu: desenho em `dark`, para a
+            faixa não passar a um gradiente cinzento enquanto a fotografia não existir. */}
+        <PlaceholderArt variant={PLACEHOLDER_VARIANT[id]} tone={fill ? 'dark' : 'light'} />
         {/* Contorno tracejado de 1 px `muted` (Parte 5.3). Não no fundo do CTA, que fica sob o véu. */}
         {fill ? null : (
           <span
@@ -115,9 +118,7 @@ export function Picture({
           />
         )}
         <figcaption className="absolute inset-x-0 bottom-0 flex justify-center p-4">
-          <span className="rounded-sm border border-dashed border-muted bg-bg/90 px-2.5 py-1 font-mono text-caption text-ink">
-            {ui.placeholders.image}
-          </span>
+          <span className={PLACEHOLDER_LABEL}>{ui.placeholders.image}</span>
         </figcaption>
       </figure>
     )
