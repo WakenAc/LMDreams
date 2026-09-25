@@ -7,8 +7,8 @@ import { company } from './company'
 export const about = {
   heading: 'Uma empresa de construção civil organizada por especialidades',
   paragraphs: [
-    `A ${company.name} é uma empresa de obras que reúne profissionais de vários ofícios da construção, com ${company.experienceText} de experiência. Com eles, fazemos desde pequenas reparações a obras completas.`,
-    'Um trabalho bem feito começa pela pessoa certa, e isso nota-se no acabamento e na forma como a obra resiste ao tempo. Acompanhamos de perto quem nos confia a obra, seja uma família ou um arquiteto.',
+    `A ${company.name} é uma empresa de obras que reúne profissionais de construção com ${company.experienceText} de experiência, cada um no seu ofício. Com eles, fazemos desde pequenas reparações a obras completas.`,
+    'Um trabalho bem feito começa pela pessoa certa, e isso nota-se no acabamento e na forma como a obra resiste ao tempo. Acompanhamos de perto quem nos confia a obra, seja uma família ou um arquiteto, e dizemos com clareza, fase a fase, o que foi feito e o que falta fazer.',
   ],
   // Factos concretos que não repetem os itens do hero nem os títulos da Diferenciação.
   highlights: [
