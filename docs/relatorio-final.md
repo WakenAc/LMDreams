@@ -4,9 +4,9 @@
 
 | Fase | Estado | Notas |
 |---|---|---|
-| Fase 0: Reconhecimento e pré-voo | em curso | Pré-voo feito; a aguardar as respostas do Andre (créditos, GitHub Pages, logótipo). |
-| Fase 1: Direção visual | pendente | |
-| Fase 2: Fundações e conteúdos | pendente | |
+| Fase 0: Reconhecimento e pré-voo | concluída | Créditos aprovados (teto de 65); conta GitHub gratuita, o Andre torna o repositório público no fim; logótipo atual sem versão melhor. |
+| Fase 1: Direção visual | concluída | Direção C (Planta e Latão) escolhida pelo Andre; 7 boards gerados (14 créditos); `design/direcao-visual.md`. |
+| Fase 2: Fundações e conteúdos | em curso | |
 | Fase 3: Imagens | pendente | |
 | Fase 4: Secções e páginas | pendente | |
 | Fase 5: Integração e revisão editorial | pendente | |
@@ -15,6 +15,13 @@
 | Fase 8: Entrega | pendente | |
 
 Última atualização: 25 de setembro de 2026.
+
+## Respostas do Andre na Fase 0
+
+- **Créditos da Higgsfield:** plano aprovado (19 imagens: 7 boards com `nano_banana_pro` a 2 créditos e 12 fotografias com `gpt_image_2_5` high 2k a 2,75 créditos; estimativa de 61,1 créditos com 30% de margem; **teto de 65 créditos**).
+- **GitHub Pages:** conta gratuita; o Andre torna o repositório público antes do merge (Parte 0.6, passo 6). O Claude Code não muda a visibilidade.
+- **Logótipo:** não há versão melhor; segue-se com o ficheiro atual, assinalado como de baixa resolução.
+- **Direção visual (Fase 1):** C · Planta e Latão (recomendação do painel).
 
 ## Resultados do pré-voo (Fase 0)
 
@@ -70,6 +77,10 @@
 |---|---|
 | Commit inicial em `main` com `.gitignore` e `README.md` | Repositório vazio; exceção prevista na Parte 1.4, regra 8, e na Parte 2.2. |
 | `.gitattributes` com `eol=lf` | Evitar diferenças de fins de linha entre o Windows e o CI em Linux. |
+| Latão `#80632B` (Parte 5.1) em vez do `#7A6226` da proposta C | O `#7A6226` lia-se como azeitona ao lado do amarelo-lima do logótipo (dois juízes); o valor do brief tem contrastes já verificados. |
+| Token `dark` = `#292929` | É o fundo exato do logótipo (medido nas margens, sem desvio): a placa funde-se nas faixas escuras. |
+| Boards comprimidos (PNG com paleta, 1920 ou 1440 px de largura) | Os originais tinham 5 a 7 MB cada; os originais ficam fora do Git. |
+| Ronda 2 com 4 boards em 16:9 e 3:4 | Serviços e Contactos precisam de altura para mostrar a secção inteira; o custo é o mesmo. |
 
 ## Resultados dos gates
 
