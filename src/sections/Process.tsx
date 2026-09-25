@@ -2,22 +2,26 @@ import { method } from '../content/process'
 import { Container } from '../components/ui/Container'
 import { Section } from '../components/ui/Section'
 import { SectionHeading } from '../components/ui/SectionHeading'
+import { Steps } from '../components/ui/Steps'
 
-// Provisório (Fase 2). Versão final: pacote WP4 (linha temporal com Steps).
+// Método de trabalho (Parte 5.4 §6; direção visual, secção 9): faixa `surface` com papel de
+// desenho em opacidade baixa e as oito etapas numa linha temporal ligada por uma cadeia de
+// cotas (os dois motivos da secção). O papel de desenho esbate-se do canto superior direito
+// para o inferior esquerdo, para quase não passar por trás do texto.
 export function Process() {
   return (
     <Section id="metodo" tone="surface">
-      <Container>
-        <SectionHeading sectionId="metodo" title={method.heading} intro={method.intro} />
-        <ol className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {method.steps.map((s) => (
-            <li key={s.number}>
-              <p className="font-mono text-step text-accent-hover">{s.number}</p>
-              <h3 className="mt-3 text-h3">{s.title}</h3>
-              <p className="mt-2 text-muted">{s.text}</p>
-            </li>
-          ))}
-        </ol>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-planta opacity-50 lg:opacity-70 [mask-image:linear-gradient(to_bottom_left,var(--color-ink),transparent_72%)]"
+      />
+      <Container className="relative">
+        <div data-reveal="">
+          <SectionHeading sectionId="metodo" title={method.heading} intro={method.intro} />
+        </div>
+        <div data-reveal="" className="mt-12 md:mt-14 lg:mt-16">
+          <Steps steps={method.steps} />
+        </div>
       </Container>
     </Section>
   )

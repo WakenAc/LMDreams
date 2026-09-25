@@ -1,9 +1,11 @@
 // Pré-renderização (Parte 3.4): usado por scripts/prerender.ts depois do build SSR.
-import type { ComponentType } from 'react'
+import type { ComponentType, ReactNode } from 'react'
 import { renderToString } from 'react-dom/server'
 import { App } from './App'
-import { buildHead } from './lib/seo'
+import { IslandRendererContext } from './components/Island'
+import { ISLAND_SOURCES } from './lib/islands'
 import type { PageId } from './lib/pages'
+import { buildHead } from './lib/seo'
 import CookiesPage from './pages/CookiesPage'
 import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/NotFoundPage'
@@ -18,17 +20,18 @@ const PAGES: Record<PageId, ComponentType> = {
   notFound: NotFoundPage,
 }
 
-/** Ficheiro-fonte de cada página, para o prerender encontrar o chunk no manifest do Vite. */
-export const PAGE_SOURCES: Record<PageId, string> = {
-  home: 'src/pages/HomePage.tsx',
-  privacy: 'src/pages/PrivacyPage.tsx',
-  cookies: 'src/pages/CookiesPage.tsx',
-  terms: 'src/pages/TermsPage.tsx',
-  notFound: 'src/pages/NotFoundPage.tsx',
-}
+/** Ficheiro-fonte de cada ilha, para o prerender pré-carregar o seu chunk (manifest do Vite). */
+export { ISLAND_SOURCES }
+
+// Cada ilha é uma raiz própria, com o mesmo prefixo de ids que o cliente usa.
+const renderIsland = (node: ReactNode, identifierPrefix: string) => renderToString(node, { identifierPrefix })
 
 export function render(page: PageId): { html: string; head: string } {
   const Page = PAGES[page]
-  const html = renderToString(<App page={page} Page={Page} />)
+  const html = renderToString(
+    <IslandRendererContext value={renderIsland}>
+      <App page={page} Page={Page} />
+    </IslandRendererContext>,
+  )
   return { html, head: buildHead(page) }
 }

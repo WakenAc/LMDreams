@@ -14,7 +14,7 @@ const COLS = 4
 const files = fs
   .readdirSync(DIR)
   .filter((f) => /\.(png|jpe?g|webp)$/i.test(f) && !/-v\d+\./.test(f))
-  .sort()
+  .toSorted()
 
 if (files.length === 0) {
   console.error('contact-sheet: não há imagens escolhidas em assets-src/ilustrativas/')

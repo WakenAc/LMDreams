@@ -400,6 +400,7 @@ export interface FooterContent {
     licenseIssuer: string // "emitido pelo IMPIC, I.P."
     eniSuffix: string // "empresário em nome individual"
     nif: string // "NIF"
+    professionalAddress: string // "Morada profissional"
   }
   /** Informação RAL (Lei n.º 144/2015, art. 18.º). */
   ral: Rich
@@ -432,6 +433,7 @@ export interface LegalPageContent {
   intro?: Rich
   updatedLabel: string // "Última atualização:"
   tocHeading: string // "Índice"
+  backToIndex: string // "Voltar ao índice"
   sections: readonly LegalSection[]
 }
 

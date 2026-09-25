@@ -17,7 +17,10 @@ for (const p of PAGES) {
     const external: string[] = []
     const origin = new URL(baseURL ?? 'http://localhost').origin
     page.on('console', (msg) => {
-      if (msg.type() === 'error' || msg.type() === 'warning') errors.push(`${msg.type()}: ${msg.text()}`)
+      if (msg.type() !== 'error' && msg.type() !== 'warning') return
+      // A própria 404 responde com o estado 404 de propósito (o Chrome regista-o na consola).
+      if (p.name === '404' && msg.location().url.endsWith(p.path) && /status of 404/.test(msg.text())) return
+      errors.push(`${msg.type()}: ${msg.text()}`)
     })
     page.on('pageerror', (err) => errors.push(`pageerror: ${err.message}`))
     page.on('request', (req) => {

@@ -12,6 +12,7 @@ export const cookiesPage = {
   intro: 'Resumo: este site não usa cookies nem guarda informação no seu dispositivo.',
   updatedLabel: 'Última atualização:',
   tocHeading: 'Índice',
+  backToIndex: 'Voltar ao índice',
   sections: [
     {
       id: 'o-que-sao-cookies',

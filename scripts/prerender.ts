@@ -16,7 +16,7 @@ type Manifest = Record<string, ManifestChunk>
 
 interface ServerModule {
   render: (page: PageId) => { html: string; head: string }
-  PAGE_SOURCES: Record<PageId, string>
+  ISLAND_SOURCES: Record<string, string>
 }
 
 const outDir = path.resolve(process.env.OUT_DIR ?? 'dist')
@@ -74,11 +74,15 @@ for (const css of new Set(cssFiles)) {
 let count = 0
 for (const page of PAGES) {
   const { html, head } = server.render(page.id)
-  const source = server.PAGE_SOURCES[page.id]
-  const preloads = collectImports(source)
+  // Só as ilhas presentes nesta página são hidratadas: pré-carregar os seus chunks.
+  const islands = [...new Set([...html.matchAll(/data-island="([\w-]+)"/g)].map((m) => m[1] as string))]
+  const sources = islands.map((id) => server.ISLAND_SOURCES[id]).filter((s): s is string => Boolean(s))
+  const seen = new Set<string>()
+  const files = sources.flatMap((s) => collectImports(s, seen))
+  const preloads = [...new Set(files)]
     .filter((f) => !entryImports.has(f))
     .map((f) => `<link rel="modulepreload" crossorigin href="${base}${f}">`)
-  const extraCss = (manifest[source]?.css ?? []).map(
+  const extraCss = [...new Set(sources.flatMap((s) => manifest[s]?.css ?? []))].map(
     (f) => `<link rel="stylesheet" crossorigin href="${base}${f}">`,
   )
   const headHtml = [head, fontPreload, ...preloads, ...extraCss].filter(Boolean).join('\n    ')

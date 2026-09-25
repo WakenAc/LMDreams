@@ -27,6 +27,7 @@ export const privacyPage = {
     'Esta política explica como tratamos os dados pessoais de quem nos contacta através deste site, em especial nos pedidos de orçamento, nos termos do Regulamento (UE) 2016/679 (Regulamento Geral sobre a Proteção de Dados, RGPD) e da Lei n.º 58/2019, de 8 de agosto.',
   updatedLabel: 'Última atualização:',
   tocHeading: 'Índice',
+  backToIndex: 'Voltar ao índice',
   sections: [
     {
       id: 'responsavel-pelo-tratamento',

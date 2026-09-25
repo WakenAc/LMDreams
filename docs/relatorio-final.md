@@ -6,9 +6,9 @@
 |---|---|---|
 | Fase 0: Reconhecimento e pré-voo | concluída | Créditos aprovados (teto de 65); conta GitHub gratuita, o Andre torna o repositório público no fim; logótipo atual sem versão melhor. |
 | Fase 1: Direção visual | concluída | Direção C (Planta e Latão) escolhida pelo Andre; 7 boards gerados (14 créditos); `design/direcao-visual.md`. |
-| Fase 2: Fundações e conteúdos | em curso | |
-| Fase 3: Imagens | pendente | |
-| Fase 4: Secções e páginas | pendente | |
+| Fase 2: Fundações e conteúdos | concluída | Build, pré-renderização, SEO, scripts de verificação e CI a funcionar; textos escritos, revistos (25 achados, 15 aplicados, 2 refutados) e corrigidos. Commit `4fed3d8`. |
+| Fase 3: Imagens | em curso | Hero gerado e otimizado (recorte 4:5, imagem OG). Higgsfield com limite diário do período de tolerância: restantes imagens por gerar (plano B entretanto). |
+| Fase 4: Secções e páginas | concluída | 8 pacotes entregues; integração: ilhas de hidratação (JS inicial 96,3 KB gzip), correção do menu móvel, 66/66 testes E2E. |
 | Fase 5: Integração e revisão editorial | pendente | |
 | Fase 6: Verificação adversarial | pendente | |
 | Fase 7: Documentação | pendente | |

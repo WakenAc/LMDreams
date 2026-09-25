@@ -293,3 +293,8 @@
 @utility tabular {
   font-variant-numeric: tabular-nums;
 }
+
+/* Diálogo modal aberto (detalhe de projeto): a página por trás não desloca. */
+html:has(dialog[open]:modal) {
+  overflow: hidden;
+}

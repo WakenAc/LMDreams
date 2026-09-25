@@ -96,8 +96,7 @@ export function Picture({
   const frameStyle: CSSProperties | undefined =
     fill || frameClassName ? undefined : { aspectRatio: `${rw} / ${rh}` }
   const frame = [
-    'relative overflow-hidden',
-    fill ? 'absolute inset-0 h-full w-full' : 'rounded-sm',
+    fill ? 'absolute inset-0 h-full w-full overflow-hidden' : 'relative overflow-hidden rounded-sm',
     frameClassName,
     className,
   ]
@@ -158,6 +157,7 @@ export function Picture({
           decoding="async"
           fetchPriority={priority ? 'high' : undefined}
           data-ilustrativa={entry.ilustrativa ? 'true' : undefined}
+          data-image-id={id}
           className={['h-full w-full object-cover', imgClassName].filter(Boolean).join(' ')}
           style={imgStyle}
         />

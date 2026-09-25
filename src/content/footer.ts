@@ -34,6 +34,7 @@ export const footer = {
     licenseIssuer: 'emitido pelo IMPIC, I.P.',
     eniSuffix: 'empresário em nome individual',
     nif: 'NIF',
+    professionalAddress: 'Morada profissional',
   },
   // Lei n.º 144/2015, art. 18.º. Sem a antiga plataforma europeia de litígios em linha
   // (encerrada em julho de 2025).

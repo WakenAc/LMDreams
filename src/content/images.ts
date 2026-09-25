@@ -43,7 +43,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
     alt: 'Profissional a verificar com um nível o revestimento de pedra natural de um interior contemporâneo.',
     ratio: [2560, 1448],
     ilustrativa: true,
-    sizes: '(min-width: 1272px) 732px, (min-width: 1024px) 58vw, 100vw',
+    sizes: '(min-width: 1336px) 624px, (min-width: 1024px) 47vw, 100vw',
     hotspots: [
       { number: '01', x: 58, y: 27 }, // revestimento de pedra
       { number: '02', x: 15, y: 67 }, // painel de carvalho com puxador
@@ -56,7 +56,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
     alt: 'Planta de arquitetura com amostras de betão, pedra, madeira e latão sobre uma mesa de obra.',
     ratio: [4, 5],
     ilustrativa: true,
-    sizes: '(min-width: 1272px) 516px, (min-width: 1024px) 40vw, 100vw',
+    sizes: '(min-width: 1336px) 516px, (min-width: 1024px) 39vw, (min-width: 640px) 47vw, calc(100vw - 32px)',
   },
   diferenciacao: {
     id: 'diferenciacao',
@@ -64,7 +64,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
     alt: 'Ferramentas de várias especialidades organizadas lado a lado sobre uma superfície de betão.',
     ratio: [3, 2],
     ilustrativa: true,
-    sizes: '(min-width: 1272px) 516px, (min-width: 1024px) 40vw, 100vw',
+    sizes: '(min-width: 1336px) 732px, (min-width: 1024px) 55vw, 100vw',
   },
   'servico-construcao': {
     id: 'servico-construcao',
@@ -72,7 +72,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
     alt: 'Cofragem e armaduras de aço numa obra de construção ao fim da tarde.',
     ratio: [4, 3],
     ilustrativa: true,
-    sizes: '(min-width: 1272px) 408px, (min-width: 640px) 33vw, 100vw',
+    sizes: '(min-width: 1336px) 408px, (min-width: 1024px) calc((100vw - 112px) / 3), (min-width: 640px) calc((100vw - 72px) / 2), calc(100vw - 32px)',
   },
   'servico-cozinhas': {
     id: 'servico-cozinhas',
@@ -80,7 +80,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
     alt: 'Profissional a ajustar uma bancada de pedra numa cozinha em remodelação.',
     ratio: [4, 3],
     ilustrativa: true,
-    sizes: '(min-width: 1272px) 408px, (min-width: 640px) 33vw, 100vw',
+    sizes: '(min-width: 1336px) 408px, (min-width: 1024px) calc((100vw - 112px) / 3), (min-width: 640px) calc((100vw - 72px) / 2), calc(100vw - 32px)',
   },
   'servico-casas-de-banho': {
     id: 'servico-casas-de-banho',
@@ -88,7 +88,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
     alt: 'Assentamento de revestimento cerâmico numa casa de banho em remodelação.',
     ratio: [4, 3],
     ilustrativa: true,
-    sizes: '(min-width: 1272px) 408px, (min-width: 640px) 33vw, 100vw',
+    sizes: '(min-width: 1336px) 408px, (min-width: 1024px) calc((100vw - 112px) / 3), (min-width: 640px) calc((100vw - 72px) / 2), calc(100vw - 32px)',
   },
   'servico-pavimentos': {
     id: 'servico-pavimentos',
@@ -96,7 +96,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
     alt: 'Mãos de um profissional a aplicar um pavimento de madeira em espinha.',
     ratio: [4, 3],
     ilustrativa: true,
-    sizes: '(min-width: 1272px) 408px, (min-width: 640px) 33vw, 100vw',
+    sizes: '(min-width: 1336px) 408px, (min-width: 1024px) calc((100vw - 112px) / 3), (min-width: 640px) calc((100vw - 72px) / 2), calc(100vw - 32px)',
   },
   'servico-recuperacao': {
     id: 'servico-recuperacao',
@@ -104,7 +104,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
     alt: 'Recuperação de fachada tradicional com reboco de cal e cantarias restauradas.',
     ratio: [4, 3],
     ilustrativa: true,
-    sizes: '(min-width: 1272px) 408px, (min-width: 640px) 33vw, 100vw',
+    sizes: '(min-width: 1336px) 408px, (min-width: 1024px) calc((100vw - 112px) / 3), (min-width: 640px) calc((100vw - 72px) / 2), calc(100vw - 32px)',
   },
   'servico-exteriores': {
     id: 'servico-exteriores',
@@ -112,7 +112,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
     alt: 'Assentamento de pavimento em pedra natural num terraço exterior.',
     ratio: [4, 3],
     ilustrativa: true,
-    sizes: '(min-width: 1272px) 408px, (min-width: 640px) 33vw, 100vw',
+    sizes: '(min-width: 1336px) 408px, (min-width: 1024px) calc((100vw - 112px) / 3), (min-width: 640px) calc((100vw - 72px) / 2), calc(100vw - 32px)',
   },
   transparencia: {
     id: 'transparencia',
@@ -120,7 +120,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
     alt: 'Reunião em obra sobre o planeamento impresso dos trabalhos.',
     ratio: [3, 2],
     ilustrativa: true,
-    sizes: '(min-width: 1272px) 516px, (min-width: 1024px) 40vw, 100vw',
+    sizes: '(min-width: 1336px) 516px, (min-width: 1024px) 39vw, (min-width: 640px) 47vw, calc(100vw - 32px)',
   },
   cta: {
     id: 'cta',

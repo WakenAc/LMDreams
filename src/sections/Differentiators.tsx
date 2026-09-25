@@ -3,30 +3,79 @@ import { Card } from '../components/ui/Card'
 import { Container } from '../components/ui/Container'
 import { Icon } from '../components/ui/Icon'
 import { Picture } from '../components/ui/Picture'
+import { PlainText } from '../components/ui/RichText'
 import { Section } from '../components/ui/Section'
 import { SectionHeading } from '../components/ui/SectionHeading'
 
-// Provisório (Fase 2). Versão final: pacote WP4.
+// Diferenciação (Parte 5.4 §4; direção visual, secção 9): faixa escura com uma grelha
+// assimétrica, sem motivos da planta. A partir de 1024 px, numa grelha de 12 colunas:
+//
+//   [ fotografia 3:2 (7 colunas, 2 linhas) ][ cartão 1 (5 colunas) ]
+//   [                                       ][ cartão 2 (5 colunas) ]
+//   [ cartão 3 (4) ][ cartão 4 (4) ][ cartão 5 (4) ]
+//
+// A lista dos cinco cartões é uma só <ul> em subgrelha (subgrid) que ocupa a grelha inteira,
+// para os cartões se alinharem com a fotografia sem partir a semântica da lista.
+// Tablet (768 a 1023 px): fotografia a toda a largura e cartões em 2 colunas, o último largo.
+// Telemóvel: tudo empilhado, cartões a toda a largura.
+
+/** Posição de cada cartão a partir de 1024 px (pela ordem do conteúdo). */
+const CARD_PLACEMENT: readonly string[] = [
+  'lg:col-span-5 lg:col-start-8 lg:row-start-1',
+  'lg:col-span-5 lg:col-start-8 lg:row-start-2',
+  'lg:col-span-4 lg:col-start-1 lg:row-start-3',
+  'lg:col-span-4 lg:col-start-5 lg:row-start-3',
+  'lg:col-span-4 lg:col-start-9 lg:row-start-3',
+]
+
+/** Largura da fotografia: 7 de 12 colunas (732 px no contentor máximo de 1272 px). */
+const PICTURE_SIZES = '(min-width: 1336px) 732px, (min-width: 1024px) 55vw, 100vw'
+
 export function Differentiators() {
+  const { cards } = differentiators
+  const oddCount = cards.length % 2 === 1
   return (
     <Section id="diferenciacao" tone="dark">
       <Container>
-        <SectionHeading
-          sectionId="diferenciacao"
-          title={differentiators.heading}
-          intro={differentiators.intro}
-          onDark
-        />
-        <div className="mt-12 grid gap-6 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <Picture id="diferenciacao" />
-          </div>
-          <ul className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
-            {differentiators.cards.map((c) => (
-              <Card key={c.title} as="li" variant="differentiator">
-                <Icon name={c.icon} className="text-accent-on-dark" />
-                <h3 className="text-h3">{c.title}</h3>
-                <p className="text-muted-on-dark">{c.text}</p>
+        <div data-reveal="">
+          <SectionHeading
+            sectionId="diferenciacao"
+            title={differentiators.heading}
+            intro={differentiators.intro}
+            onDark
+          />
+        </div>
+
+        <div data-reveal="" className="mt-12 grid gap-4 md:mt-14 md:gap-6 lg:mt-16 lg:grid-cols-12">
+          <Picture
+            id="diferenciacao"
+            frameClassName="aspect-[3/2]"
+            className="lg:col-span-7 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-stretch"
+            sizes={PICTURE_SIZES}
+          />
+          <ul className="grid gap-4 md:grid-cols-2 md:gap-6 lg:pointer-events-none lg:col-span-12 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:grid-cols-subgrid lg:grid-rows-subgrid">
+            {cards.map((card, i) => (
+              <Card
+                key={card.title}
+                as="li"
+                variant="differentiator"
+                className={[
+                  'transition-colors duration-150 ease-planta hover:border-muted-on-dark/50 lg:pointer-events-auto',
+                  oddCount && i === cards.length - 1 ? 'md:col-span-2' : '',
+                  CARD_PLACEMENT[i] ?? 'lg:col-span-4',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+              >
+                <Icon name={card.icon} className="shrink-0 text-accent-on-dark" />
+                <div className="mt-2">
+                  <h3 className="text-h3 text-on-dark">
+                    <PlainText text={card.title} onDark />
+                  </h3>
+                  <p className="mt-2 max-w-prose text-muted-on-dark">
+                    <PlainText text={card.text} onDark />
+                  </p>
+                </div>
               </Card>
             ))}
           </ul>

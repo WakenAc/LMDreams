@@ -27,7 +27,7 @@ function meta(attr: 'name' | 'property', key: string, content: string): string {
 /** Dados estruturados da página principal (GeneralContractor). */
 export function buildJsonLd(): Record<string, unknown> {
   const confirmed = services.filter((s) => s.confirmado).map((s) => s.name)
-  const sameAs = company.social.map((s) => s.url).filter((u) => /^https:\/\//.test(u))
+  const sameAs = company.social.map((s) => s.url).filter((u) => u.startsWith('https://'))
   const legalName = realOrUndefined(company.legal.name)
   const vatID = realOrUndefined(company.legal.nipc)
   const address = company.publicAddress ? realOrUndefined(company.publicAddress) : undefined

@@ -1,3 +1,4 @@
+import { Island } from '../components/Island'
 import { SiteLayout } from '../components/layout/SiteLayout'
 import { About } from '../sections/About'
 import { CallToAction } from '../sections/CallToAction'
@@ -11,6 +12,7 @@ import { Testimonials } from '../sections/Testimonials'
 import { Transparency } from '../sections/Transparency'
 
 // Montagem da página principal (orquestrador). Ordem das secções: Anexo A e Parte 5.3.
+// Projetos e Contactos são ilhas hidratadas (filtros, diálogo e formulário).
 export default function HomePage() {
   return (
     <SiteLayout>
@@ -19,11 +21,15 @@ export default function HomePage() {
       <Differentiators />
       <Services />
       <Process />
-      <Projects />
+      <Island id="projects">
+        <Projects />
+      </Island>
       <Transparency />
       <Testimonials />
       <CallToAction />
-      <Contact />
+      <Island id="contact">
+        <Contact />
+      </Island>
     </SiteLayout>
   )
 }

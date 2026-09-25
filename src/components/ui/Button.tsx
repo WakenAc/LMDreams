@@ -33,7 +33,7 @@ export type ButtonProps = AnchorProps | NativeButtonProps
 const BASE =
   'inline-flex items-center justify-center gap-2 rounded-sm font-body font-semibold text-center leading-tight ' +
   'transition-[background-color,color,box-shadow] duration-150 ease-planta ' +
-  'disabled:cursor-not-allowed disabled:opacity-60 aria-disabled:cursor-not-allowed aria-disabled:opacity-60'
+  'disabled:pointer-events-none disabled:opacity-60 aria-disabled:cursor-not-allowed aria-disabled:opacity-60'
 
 const SIZES: Record<ButtonSize, string> = {
   md: 'min-h-11 px-5 py-2 text-[0.9375rem]',
