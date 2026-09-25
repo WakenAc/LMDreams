@@ -153,9 +153,12 @@ export const privacyPage = {
               ligacaoEmail,
               ', no Gmail, serviço da Google.',
             ],
-            'Envio por e-mail: se o formulário abrir o seu programa de e-mail, o site não envia nem guarda os dados. O pedido segue pelo seu próprio serviço de e-mail até à nossa caixa no Gmail.',
             'Alojamento do site: GitHub Pages, serviço da GitHub, que regista os endereços IP dos visitantes por motivos de segurança.',
           ],
+        },
+        {
+          type: 'p',
+          text: 'Quando o formulário abre o seu programa de e-mail, o site não envia nem guarda os dados: o pedido segue pelo seu próprio serviço de e-mail até à nossa caixa no Gmail.',
         },
         {
           type: 'p',

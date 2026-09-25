@@ -295,7 +295,7 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 
 Só para informação: estas chaves não têm pendentes no código. É normal, porque são dados já preenchidos, opcionais ou tratados fora do código.
 
-- `experiencia`: Base da alegação “mais de 30 anos” (percurso dos profissionais; ou data de constituição, se a empresa quiser dizer que existe há mais de 30 anos). A experiência de mais de 30 anos é de cada profissional ou do conjunto?
+- `experiencia`: Base da alegação “mais de 30 anos” (percurso dos profissionais; ou data de constituição, se a empresa quiser dizer que existe há mais de 30 anos). A experiência de mais de 30 anos é de cada profissional ou do conjunto? (até lá, o site não diz que é de cada um)
   - Onde aparece: Hero, Sobre, SEO
   - Ficheiro e campo: src/content/company.ts → experienceYears
 - `condicoes-orcamento`: O orçamento e a visita são gratuitos? Há algum prazo de resposta que a empresa queira assumir? (até lá, nada disto aparece no site)

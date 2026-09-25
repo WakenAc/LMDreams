@@ -1,9 +1,10 @@
 // Método de trabalho (Anexo A §6; Parte 5.4 §6): oito etapas, numeradas 01 a 08.
+// O H2 repete o rótulo da navegação (navigation.ts), como em Serviços, Projetos e Contactos.
 
 import type { ProcessContent } from './tipos'
 
 export const method = {
-  heading: 'Como trabalhamos',
+  heading: 'Método de trabalho',
   intro:
     'Uma obra corre melhor quando todos sabem o que vem a seguir. Estas são as oito etapas que seguimos, do primeiro contacto à entrega.',
   steps: [

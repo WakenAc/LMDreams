@@ -5,7 +5,7 @@ import type { DifferentiatorsContent } from './tipos'
 export const differentiators = {
   heading: 'Não acreditamos no “faz-tudo”. Acreditamos em especialistas.',
   intro:
-    'Numa obra há trabalhos muito diferentes, e cada um pede o seu ofício. Por isso, cada especialidade é executada por um profissional com experiência nessa área: o eletricista trata da eletricidade, o canalizador da canalização, e nós coordenamos o conjunto.',
+    'Cada especialidade é executada por um profissional com experiência nessa área: o eletricista trata da eletricidade, o canalizador da canalização, e nós coordenamos o conjunto.',
   cards: [
     {
       icon: 'UserCheck',

@@ -1,5 +1,6 @@
 // Sobre a LMDreams (Anexo A §3; Parte 5.4 §3). Sem números, certificações nem clientes
-// inventados; a experiência é a dos profissionais.
+// inventados; a experiência é a dos profissionais, sem dizer que é de cada um enquanto a
+// empresa não responder à chave `experiencia`. Parágrafos de 2 a 4 linhas (Parte 5.3).
 
 import type { AboutContent } from './tipos'
 import { company } from './company'
@@ -7,8 +8,8 @@ import { company } from './company'
 export const about = {
   heading: 'Uma empresa de construção civil organizada por especialidades',
   paragraphs: [
-    `A ${company.name} é uma empresa de obras que reúne profissionais de construção com ${company.experienceText} de experiência, cada um no seu ofício. Com eles, fazemos desde pequenas reparações a obras completas.`,
-    'Um trabalho bem feito começa pela pessoa certa, e isso nota-se no acabamento e na forma como a obra resiste ao tempo. Acompanhamos de perto quem nos confia a obra, seja uma família ou um arquiteto, e dizemos com clareza, fase a fase, o que foi feito e o que falta fazer.',
+    `A ${company.name} é uma empresa de obras que reúne profissionais de construção com ${company.experienceText} de experiência. Com eles, fazemos desde pequenas reparações a obras completas.`,
+    'Um trabalho bem feito começa pela pessoa certa e nota-se no acabamento e na durabilidade. Acompanhamos de perto quem nos confia a obra, seja uma família ou um arquiteto, e dizemos com clareza o que foi feito e o que falta.',
   ],
   // Factos concretos que não repetem os itens do hero nem os títulos da Diferenciação.
   highlights: [

@@ -151,7 +151,7 @@ export const REGISTO_PLACEHOLDERS = [
     ondeAparece: 'Hero, Sobre, SEO',
     ficheiroCampo: 'src/content/company.ts → experienceYears',
     oQueFornecer:
-      'Base da alegação “mais de 30 anos” (percurso dos profissionais; ou data de constituição, se a empresa quiser dizer que existe há mais de 30 anos). A experiência de mais de 30 anos é de cada profissional ou do conjunto?',
+      'Base da alegação “mais de 30 anos” (percurso dos profissionais; ou data de constituição, se a empresa quiser dizer que existe há mais de 30 anos). A experiência de mais de 30 anos é de cada profissional ou do conjunto? (até lá, o site não diz que é de cada um)',
     bloqueia: 'nao',
     bloqueiaTexto: 'Não',
   },
