@@ -1,4 +1,7 @@
 // Lighthouse CI (Parte 3.12): telemóvel e computador, página principal e páginas legais.
+// Nota: `npm run lighthouse` usa scripts/lighthouse.ts (API do Lighthouse com o Chromium do
+// Playwright), porque no Windows o chrome-launcher do LHCI falha a apagar a pasta temporária.
+// Esta configuração fica como alternativa: LHCI_PRESET=desktop npx lhci autorun (Linux, macOS).
 // Serve a pasta de saída com o base path (scripts/serve-dist.ts); nunca `staticDistDir`.
 // Sem Google Chrome instalado, defina CHROME_PATH para o Chromium do Playwright.
 const PORT = 4174
