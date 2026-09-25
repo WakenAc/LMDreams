@@ -4,14 +4,23 @@
 // Proveniência das imagens geradas: assets-src/ilustrativas/manifest.json.
 // Para trocar por uma fotografia real: substituir o ficheiro importado e pôr `ilustrativa: false`.
 
-import heroMobile from '@ilustrativas/hero-telemovel.jpg?w=480;640;800;1024;1216&format=avif;webp;jpg&quality=56&as=picture'
-import hero from '@ilustrativas/hero.jpg?w=640;960;1280;1600;1920&format=avif;webp;jpg&quality=60&as=picture'
+// Qualidade por formato: o AVIF a 50 fica abaixo do WebP a 64 com o mesmo detalhe (medido
+// com o sharp); por isso cada formato tem o seu import.
+import heroMobileAvif from '@ilustrativas/hero-telemovel.jpg?w=480;640;720;800;1024;1216&format=avif&quality=50&as=picture'
+import heroMobileRest from '@ilustrativas/hero-telemovel.jpg?w=480;640;720;800;1024;1216&format=webp;jpg&quality=64&as=picture'
+import heroAvif from '@ilustrativas/hero.jpg?w=640;960;1280;1600;1920&format=avif&quality=50&as=picture'
+import heroRest from '@ilustrativas/hero.jpg?w=640;960;1280;1600;1920&format=webp;jpg&quality=64&as=picture'
 import type { ImageId } from './tipos'
 
 /** Resultado de um import `?…&as=picture` do vite-imagetools. */
 export interface PictureAsset {
   sources: Record<string, string>
   img: { src: string; w: number; h: number }
+}
+
+/** Junta um import só com AVIF a outro com WebP e JPEG (o JPEG é a imagem de recurso). */
+function withAvif(avif: PictureAsset, rest: PictureAsset): PictureAsset {
+  return { sources: { ...avif.sources, ...rest.sources }, img: rest.img }
 }
 
 export interface ImageEntry {
@@ -32,7 +41,7 @@ export interface ImageEntry {
    * Pontos das anotações do hero, em percentagem da imagem inteira (0 a 100), pelo número
    * da anotação em src/content/hero.ts. Só se usam com a imagem na proporção do ficheiro.
    */
-  hotspots?: readonly { number: string; x: number; y: number }[]
+  hotspots?: readonly { number: string; x: number; y: number; side?: 'left' | 'right' }[]
   /**
    * Parte horizontal da imagem inteira (em percentagem) que o recorte de telemóvel mostra.
    * As anotações cujo ponto fica fora dele não aparecem abaixo de 768 px.
@@ -43,14 +52,14 @@ export interface ImageEntry {
 export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
   hero: {
     id: 'hero',
-    picture: hero,
-    mobile: heroMobile,
+    picture: withAvif(heroAvif, heroRest),
+    mobile: withAvif(heroMobileAvif, heroMobileRest),
     alt: 'Profissional a verificar com um nível o revestimento de pedra natural de um interior contemporâneo.',
     ratio: [2560, 1448],
     ilustrativa: true,
     sizes: '(min-width: 1336px) 624px, (min-width: 1024px) 47vw, 100vw',
     hotspots: [
-      { number: '01', x: 58, y: 27 }, // revestimento de pedra
+      { number: '01', x: 58, y: 27, side: 'right' }, // revestimento de pedra (etiqueta à direita, longe da 03)
       { number: '02', x: 15, y: 67 }, // painel de carvalho com puxador
       { number: '03', x: 40, y: 18.5 }, // foco embutido no teto
     ],

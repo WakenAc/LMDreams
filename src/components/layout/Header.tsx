@@ -24,11 +24,14 @@ import { MobileMenu } from './MobileMenu'
 
 const LOGO_SIZES = '(min-width: 1024px) 83px, (min-width: 768px) 68px, 60px'
 
+// A ligação tem 44 px de altura, centrada nos 72 px do cabeçalho: o anel de foco global
+// (2 px com afastamento de 3 px) cabe inteiro dentro do cabeçalho (Parte 5.3).
 const NAV_LINK =
-  'relative flex items-center whitespace-nowrap text-[0.9375rem] font-medium text-ink ' +
+  'flex min-h-11 items-center whitespace-nowrap text-[0.9375rem] font-medium text-ink ' +
   'decoration-1 underline-offset-[6px] transition-colors duration-150 ease-planta hover:underline focus-visible:underline'
 
-// Barra de 2 px em latão no fundo do cabeçalho, sob o item da secção atual.
+// Barra de 2 px em latão no fundo do cabeçalho, sob o item da secção atual. A ligação não
+// é posicionada: a barra fica no fundo do <li> (relative), que ocupa a altura toda.
 const NAV_LINK_ACTIVE = 'after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-accent'
 
 export function Header() {
@@ -79,7 +82,7 @@ export function Header() {
             {navigation.items.map((item) => {
               const current = active === item.anchor
               return (
-                <li key={item.anchor} className="flex">
+                <li key={item.anchor} className="relative flex items-center">
                   <a
                     href={anchorHref(item.anchor, page)}
                     aria-current={current ? 'location' : undefined}

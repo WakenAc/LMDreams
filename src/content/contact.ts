@@ -66,6 +66,7 @@ export const contact = {
       before: 'Tomei conhecimento da ',
       link: 'Política de privacidade',
       after: '.',
+      required: '(obrigatório)',
     },
   },
   noFilesNote:

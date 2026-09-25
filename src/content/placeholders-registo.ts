@@ -33,7 +33,8 @@ export const REGISTO_PLACEHOLDERS = [
     chave: 'denominacao-social',
     ondeAparece: 'Informação legal, políticas',
     ficheiroCampo: 'src/content/company.ts → legal.name',
-    oQueFornecer: 'Firma (ou nome civil, se for empresário em nome individual)',
+    oQueFornecer:
+      'Firma (ou nome civil, se for empresário em nome individual). Depois de a confirmar, decidir se o aviso de direitos de autor do rodapé passa a nomear a firma (hoje nomeia só a marca: “© [ano] LMDreams. Todos os direitos reservados.”, como pede a Parte 5.4 do brief)',
     bloqueia: 'sim',
     bloqueiaTexto: 'Sim',
   },
@@ -150,7 +151,7 @@ export const REGISTO_PLACEHOLDERS = [
     ondeAparece: 'Hero, Sobre, SEO',
     ficheiroCampo: 'src/content/company.ts → experienceYears',
     oQueFornecer:
-      'Base da alegação “mais de 30 anos” (percurso dos profissionais; ou data de constituição, se a empresa quiser dizer que existe há mais de 30 anos)',
+      'Base da alegação “mais de 30 anos” (percurso dos profissionais; ou data de constituição, se a empresa quiser dizer que existe há mais de 30 anos). A experiência de mais de 30 anos é de cada profissional ou do conjunto?',
     bloqueia: 'nao',
     bloqueiaTexto: 'Não',
   },

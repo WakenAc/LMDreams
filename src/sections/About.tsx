@@ -152,12 +152,12 @@ export function About() {
           >
             <SectionHeading sectionId="sobre" title={about.heading} />
             {lead ? (
-              <p className="mt-6 max-w-prose text-lead text-ink">
+              <p className="mt-6 max-w-texto text-lead text-ink">
                 <RichText value={lead} />
               </p>
             ) : null}
             {rest.map((paragraph, i) => (
-              <p key={i} className="mt-4 max-w-prose text-muted">
+              <p key={i} className="mt-4 max-w-texto text-muted">
                 <RichText value={paragraph} />
               </p>
             ))}
@@ -174,8 +174,8 @@ export function About() {
             data-reveal=""
             className="mt-8 sm:col-span-4 sm:col-start-5 sm:row-start-3 sm:self-end lg:col-span-6 lg:col-start-7 lg:row-start-2 lg:self-start"
           >
-            <RuledList aria-label={about.highlightsLabel} items={about.highlights} className="max-w-prose" />
-            <p data-impic-license="" className="mt-6 max-w-prose text-small text-muted">
+            <RuledList aria-label={about.highlightsLabel} items={about.highlights} className="max-w-texto" />
+            <p data-impic-license="" className="mt-6 max-w-texto text-small text-muted">
               <PlainText text={licenseLine} />
             </p>
           </div>

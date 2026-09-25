@@ -1,5 +1,12 @@
 import { Menu, MessageCircle, Phone, X } from 'lucide-react'
-import { useEffect, useRef, useState, useSyncExternalStore, type MouseEvent as ReactMouseEvent } from 'react'
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type MouseEvent as ReactMouseEvent,
+} from 'react'
 import { company } from '../../content/company'
 import { ui } from '../../content/common'
 import { navigation } from '../../content/navigation'
@@ -71,6 +78,22 @@ export function MobileMenu({ activeAnchor, className }: MobileMenuProps) {
   const [open, setOpen] = useState(false)
   const toggleRef = useRef<HTMLButtonElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
+  const fallbackRef = useRef<HTMLAnchorElement>(null)
+  const fallbackHadFocus = useRef(false)
+
+  // Hidratação: a ligação de recurso é substituída pelo botão (outro elemento). Se a
+  // ligação tinha o foco (teclado antes da hidratação), o foco passa para o botão em vez
+  // de se perder no <body>.
+  useLayoutEffect(() => {
+    if (!mounted) {
+      fallbackHadFocus.current = document.activeElement === fallbackRef.current
+      return
+    }
+    if (fallbackHadFocus.current) {
+      fallbackHadFocus.current = false
+      toggleRef.current?.focus({ preventScroll: true })
+    }
+  }, [mounted])
 
   useEffect(() => {
     if (!open) return
@@ -190,7 +213,7 @@ export function MobileMenu({ activeAnchor, className }: MobileMenuProps) {
           <VisuallyHidden>{open ? ui.a11y.closeMenu : ui.a11y.openMenu}</VisuallyHidden>
         </button>
       ) : (
-        <a href={`#${FOOTER_NAV_ID}`} className={TOGGLE}>
+        <a ref={fallbackRef} href={`#${FOOTER_NAV_ID}`} className={TOGGLE}>
           <Menu {...ICON} size={24} />
           <VisuallyHidden>{navigation.mobileMenuTitle}</VisuallyHidden>
         </a>

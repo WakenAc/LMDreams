@@ -56,6 +56,8 @@ function variantClass(variant: ButtonVariant, onDark: boolean): string {
 // A ligação com seta mantém o alvo de toque de 44 px, sem padding lateral.
 const LINK_SIZE = 'min-h-11 py-2 text-[0.9375rem]'
 
+/** Classes do sistema de botões, para elementos que não são <a> nem <button> (ex.: <summary>). */
+// oxlint-disable-next-line react/only-export-components -- função pura ao lado do componente que a usa; o aviso só afeta o Fast Refresh em desenvolvimento.
 export function buttonClassName({
   variant = 'primary',
   size = 'md',

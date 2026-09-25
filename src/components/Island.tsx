@@ -11,6 +11,7 @@ import { islandPrefix, type IslandId } from '../lib/islands'
 type IslandRenderer = (node: ReactNode, identifierPrefix: string) => string
 
 /** Fornecido só pelo entry-server: indica que se está a pré-renderizar. */
+// oxlint-disable-next-line react/only-export-components -- contexto só usado na pré-renderização (entry-server); o aviso só afeta o Fast Refresh em desenvolvimento.
 export const IslandRendererContext = createContext<IslandRenderer | null>(null)
 
 interface IslandProps {

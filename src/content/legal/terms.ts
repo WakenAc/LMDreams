@@ -15,7 +15,7 @@ const ligacaoTelefone = { text: company.phone.display, href: company.phone.href 
 const titular =
   legal.form === 'eni'
     ? `${legal.name}, empresário em nome individual, com o NIF ${legal.nipc} e morada profissional em ${legal.address}`
-    : `${legal.name}, ${legal.companyType}, com sede em ${legal.address} e o NIPC ${legal.nipc}`
+    : `${legal.name}, ${legal.companyType}, com sede em ${legal.address} e NIPC ${legal.nipc}`
 
 const garantiaComercial =
   legal.commercialWarranty === null

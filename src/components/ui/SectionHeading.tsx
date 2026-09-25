@@ -47,7 +47,7 @@ export function SectionHeading({
       {intro ? (
         <p
           className={[
-            'mt-5 max-w-prose text-lead',
+            'mt-5 max-w-texto text-lead',
             onDark ? 'text-muted-on-dark' : 'text-muted',
           ].join(' ')}
         >

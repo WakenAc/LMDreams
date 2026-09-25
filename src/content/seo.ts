@@ -36,5 +36,5 @@ export const seo = {
       description: `A página que procura não existe ou mudou de endereço. Volte ao início do site da ${company.name} ou peça orçamento para a sua obra.`,
     },
   },
-  organizationDescription: `Empresa de construção civil e remodelações em ${company.areaServed}. Profissionais com ${company.experienceText} de experiência, cada um na sua especialidade.`,
+  organizationDescription: `Empresa de construção civil e remodelações em ${company.areaServed}, organizada por especialidades. Profissionais de construção com ${company.experienceText} de experiência.`,
 } satisfies SeoContent

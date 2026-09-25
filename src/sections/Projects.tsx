@@ -1,9 +1,9 @@
-import { useRef, useState, useSyncExternalStore, type MouseEvent } from 'react'
+import { useRef, useState, type MouseEvent } from 'react'
 import { ui } from '../content/common'
 import { projects, projectsSection } from '../content/projects'
 import type { Project, ProjectCategory } from '../content/tipos'
-import { BeforeAfter, PhotoImage, PhotoPlaceholder } from '../components/ui/BeforeAfter'
-import { Button } from '../components/ui/Button'
+import { BeforeAfter, BeforeAfterStatic, PhotoImage, PhotoPlaceholder } from '../components/ui/BeforeAfter'
+import { Button, buttonClassName } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { Container } from '../components/ui/Container'
 import { Dialog } from '../components/ui/Dialog'
@@ -11,12 +11,16 @@ import { FilterChips, type FilterChipOption } from '../components/ui/FilterChips
 import { PlainText } from '../components/ui/RichText'
 import { Section } from '../components/ui/Section'
 import { SectionHeading } from '../components/ui/SectionHeading'
+import { useHydrated } from '../lib/hydrated'
 
 // Projetos (Parte 5.4 §7): filtros por categoria com aria-pressed e anúncio do número de
 // resultados, cartões com capa (placeholder gerado em código enquanto não houver
 // fotografia autorizada) e detalhe num <dialog> nativo com a galeria antes e depois.
-// Sem JavaScript: todos os projetos visíveis, com a descrição e os campos no cartão;
-// os filtros e o botão do detalhe ficam desativados. O diálogo só existe no cliente.
+// Sem JavaScript: todos os projetos visíveis, com a descrição e os campos no cartão; as
+// fotografias antes e depois, quando existem, ficam no próprio cartão num <details> em
+// HTML estático (Parte 1.4, regra 10). Os filtros e o botão do detalhe não têm função sem
+// JavaScript: ficam desativados e escondidos por <noscript> (index.html). O diálogo só
+// existe no cliente.
 
 const ALL = 'todos'
 type Filter = typeof ALL | ProjectCategory
@@ -36,16 +40,11 @@ function resultsText(n: number): string {
   return template.replace('{n}', String(n))
 }
 
-const subscribeNothing = () => () => {}
-
-/** Falso no HTML pré-renderizado e durante a hidratação; verdadeiro depois (sem mismatch). */
-function useHydrated(): boolean {
-  return useSyncExternalStore(
-    subscribeNothing,
-    () => true,
-    () => false,
-  )
-}
+/** Resumo do <details> sem JavaScript: o mesmo aspeto do botão secundário. */
+const GALLERY_SUMMARY = buttonClassName({
+  variant: 'secondary',
+  className: 'w-full cursor-pointer list-none sm:w-auto [&::-webkit-details-marker]:hidden',
+})
 
 function Field({ label, value }: { label: string; value: string }) {
   return (
@@ -66,6 +65,8 @@ interface ProjectCardProps {
 
 function ProjectCard({ project: p, interactive, onOpen }: ProjectCardProps) {
   const nameId = `${p.id}-nome`
+  // Sem JavaScript (e até à hidratação), as fotografias antes e depois ficam no cartão.
+  const staticGallery = !interactive && p.antes.length + p.depois.length > 0
   const zoom = 'transition-transform duration-200 ease-planta motion-safe:group-hover:scale-[1.02]'
   return (
     <Card
@@ -91,7 +92,7 @@ function ProjectCard({ project: p, interactive, onOpen }: ProjectCardProps) {
             {p.placeholder ? <span className="text-muted">{ui.placeholders.content}</span> : null}
           </p>
         </div>
-        <p className="max-w-prose text-small text-muted">
+        <p className="max-w-texto text-small text-muted">
           <PlainText text={p.descricao} />
         </p>
         <dl className="grid gap-3 border-t border-line pt-4 text-small">
@@ -99,17 +100,26 @@ function ProjectCard({ project: p, interactive, onOpen }: ProjectCardProps) {
           <Field label={projectsSection.fieldLabels.locality} value={p.localidade} />
         </dl>
         <div className="mt-auto">
-          <Button
-            variant="secondary"
-            className="w-full sm:w-auto"
-            disabled={!interactive}
-            aria-haspopup="dialog"
-            aria-describedby={nameId}
-            data-project-open={p.id}
-            onClick={(event) => onOpen(p, event)}
-          >
-            {ui.labels.beforeAfter}
-          </Button>
+          {staticGallery ? (
+            <details data-project-gallery={p.id}>
+              <summary className={GALLERY_SUMMARY} aria-describedby={nameId}>
+                {ui.labels.beforeAfter}
+              </summary>
+              <BeforeAfterStatic className="mt-5" before={p.antes} after={p.depois} />
+            </details>
+          ) : (
+            <Button
+              variant="secondary"
+              className="w-full sm:w-auto"
+              disabled={!interactive}
+              aria-haspopup="dialog"
+              aria-describedby={nameId}
+              data-project-open={p.id}
+              onClick={(event) => onOpen(p, event)}
+            >
+              {ui.labels.beforeAfter}
+            </Button>
+          )}
         </div>
       </div>
     </Card>
@@ -120,7 +130,7 @@ function ProjectDetail({ project: p }: { project: Project }) {
   const f = projectsSection.fieldLabels
   return (
     <div className="flex flex-col gap-8">
-      <p className="max-w-prose text-body text-ink">
+      <p className="max-w-texto text-body text-ink">
         <PlainText text={p.descricao} />
       </p>
       <dl className="grid gap-4 border-y border-line py-5 text-small sm:grid-cols-3">

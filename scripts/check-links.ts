@@ -510,13 +510,23 @@ function checkOrphans(checker: LinkChecker, jsText: string): void {
   const pageFiles = new Set(PAGES.map((p) => p.file))
   for (const file of checker.files) {
     if (checker.referenced.has(file) || pageFiles.has(file) || ROOT_FILES.has(file)) continue
-    // Referências feitas só em JavaScript (por exemplo, imagens carregadas em tempo de execução).
-    if (jsText.includes(path.posix.basename(file))) continue
+    const inJs = jsText.includes(path.posix.basename(file))
+    // Imagens: têm de ser usadas por uma página, uma folha de estilos ou o manifesto. O
+    // registo de imagens também vai para o JavaScript, com todas as variantes; estar só lá
+    // quer dizer que nenhum HTML as pede (por exemplo, um srcset que perdeu larguras).
     if (IMAGE_EXT.has(path.posix.extname(file).toLowerCase())) {
-      checker.error(file, '', 'imagem publicada sem uso (Parte 4.8: nenhum ficheiro de imagem sem uso no build)')
-    } else {
-      checker.warn(file, '', 'ficheiro publicado sem referência')
+      checker.error(
+        file,
+        '',
+        inJs
+          ? 'imagem referida só no JavaScript: nenhum HTML, CSS ou manifesto a usa (Parte 4.8: nenhum ficheiro de imagem sem uso no build)'
+          : 'imagem publicada sem uso (Parte 4.8: nenhum ficheiro de imagem sem uso no build)',
+      )
+      continue
     }
+    // Outros ficheiros referidos só em JavaScript (por exemplo, chunks carregados a pedido).
+    if (inJs) continue
+    checker.warn(file, '', 'ficheiro publicado sem referência')
   }
 }
 

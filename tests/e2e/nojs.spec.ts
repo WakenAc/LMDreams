@@ -23,6 +23,9 @@ test('página principal sem JavaScript: todas as secções e o formulário', asy
     await expect(page.locator(`#${id}`)).toBeVisible()
   }
   await expect(page.locator('form[data-lead-form]')).toHaveCount(1)
+  // Sem JavaScript, o navegador valida os campos obrigatórios e a caixa da Política de
+  // privacidade antes de abrir o programa de e-mail.
+  await expect(page.locator('form[data-lead-form]')).toHaveJSProperty('noValidate', false)
   // Nada fica escondido à espera de JavaScript.
   const hidden = await page.evaluate(() =>
     Array.from(document.querySelectorAll('main *'))

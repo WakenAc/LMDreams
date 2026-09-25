@@ -176,6 +176,36 @@ interface BeforeAfterProps {
   className?: string
 }
 
+/**
+ * Galeria em HTML estático (pré-renderizado, sem JavaScript; Parte 1.4, regra 10): cada
+ * fotografia com o seu alt e a etiqueta "Antes" ou "Depois", o antes ao lado do depois.
+ * Depois da hidratação, o cartão volta ao botão e ao diálogo com o comparador.
+ */
+export function BeforeAfterStatic({ before, after, className }: BeforeAfterProps) {
+  const t = projectsSection.dialog
+  const items: { photo: ProjectPhoto; label: string; key: string }[] = []
+  for (let i = 0; i < Math.max(before.length, after.length); i++) {
+    const b = before[i]
+    const a = after[i]
+    if (b) items.push({ photo: b, label: t.beforeLabel, key: `antes-${i}-${b.src}` })
+    if (a) items.push({ photo: a, label: t.afterLabel, key: `depois-${i}-${a.src}` })
+  }
+  return (
+    <ul data-before-after="estatico" className={['grid grid-cols-2 gap-3', className].filter(Boolean).join(' ')}>
+      {items.map(({ photo, label, key }) => (
+        <li key={key}>
+          <figure className="flex flex-col gap-2">
+            <div className="overflow-hidden rounded-sm bg-sand">
+              <PhotoImage photo={photo} className="h-auto w-full" />
+            </div>
+            <figcaption className="text-small font-semibold text-ink">{label}</figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 export function BeforeAfter({ before, after, className }: BeforeAfterProps) {
   const t = projectsSection.dialog
 
@@ -186,7 +216,7 @@ export function BeforeAfter({ before, after, className }: BeforeAfterProps) {
           <PhotoPlaceholder drawing="before" label={t.beforeLabel} className="aspect-[4/3] rounded-sm" />
           <PhotoPlaceholder drawing="after" label={t.afterLabel} className="aspect-[4/3] rounded-sm" />
         </div>
-        <p className="mt-4 max-w-prose text-small text-muted">{t.noPhotos}</p>
+        <p className="mt-4 max-w-texto text-small text-muted">{t.noPhotos}</p>
       </div>
     )
   }

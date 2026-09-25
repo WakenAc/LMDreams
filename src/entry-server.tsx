@@ -26,6 +26,7 @@ export { ISLAND_SOURCES }
 // Cada ilha é uma raiz própria, com o mesmo prefixo de ids que o cliente usa.
 const renderIsland = (node: ReactNode, identifierPrefix: string) => renderToString(node, { identifierPrefix })
 
+// oxlint-disable-next-line react/only-export-components -- módulo do build SSR (não tem Fast Refresh).
 export function render(page: PageId): { html: string; head: string } {
   const Page = PAGES[page]
   const html = renderToString(

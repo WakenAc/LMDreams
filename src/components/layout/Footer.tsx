@@ -2,6 +2,7 @@ import { company } from '../../content/company'
 import { contact } from '../../content/contact'
 import { ui } from '../../content/common'
 import { footer } from '../../content/footer'
+import { hasIllustrativeImages } from '../../content/images'
 import { navigation } from '../../content/navigation'
 import { services } from '../../content/services'
 import { logo } from '../../lib/brand'
@@ -31,6 +32,13 @@ const LIST_LINK = `inline-flex min-h-11 items-center md:min-h-8 ${LINK}`
 const LABEL = 'text-small text-muted-on-dark'
 const RAL_LINK =
   'text-on-dark underline decoration-1 underline-offset-[3px] transition-colors duration-150 ease-planta hover:text-white hover:decoration-2'
+
+/**
+ * Nota das imagens ilustrativas: só se o site mostrar alguma (Parte 4.8). Calculada aqui,
+ * e não em company.ts (que todas as ilhas importam): o rodapé não é uma ilha, por isso o
+ * registo de imagens não precisa de ir para o JavaScript das ilhas.
+ */
+const SHOW_AI_NOTICE = hasIllustrativeImages()
 
 /** Os seis serviços principais são os que têm imagem (Parte 5.4 §5). */
 const FEATURED_SERVICES = services.filter((s) => 'imageId' in s)
@@ -88,8 +96,13 @@ export function Footer() {
         {/* 1. Marca, ligações rápidas, serviços e contactos */}
         <div className="grid gap-x-6 gap-y-12 md:grid-cols-2 lg:grid-cols-12">
           <div className="md:col-span-2 lg:col-span-3 xl:col-span-4">
-            {/* O ficheiro tem o fundo igual a `dark`: sem placa visível. */}
-            <a href={anchorHref('inicio', page)} aria-label={navigation.logoLabel} className="inline-flex rounded-sm">
+            {/* O ficheiro tem o fundo igual a `dark`: sem placa visível. O símbolo não tem
+                texto, por isso o nome segue-o, como no cabeçalho. */}
+            <a
+              href={anchorHref('inicio', page)}
+              aria-label={navigation.logoLabel}
+              className="group inline-flex items-center gap-3 rounded-sm"
+            >
               <img
                 src={logo.src}
                 srcSet={logo.srcSet}
@@ -101,6 +114,9 @@ export function Footer() {
                 decoding="async"
                 className="h-12 w-auto md:h-14"
               />
+              <span className="font-display text-[1.1875rem] leading-none font-[650] tracking-[-0.015em] text-on-dark decoration-1 underline-offset-4 group-hover:underline group-focus-visible:underline xl:text-[1.3125rem]">
+                {company.name}
+              </span>
             </a>
             <p className="mt-6 max-w-[38ch] text-muted-on-dark">{footer.description}</p>
           </div>
@@ -232,7 +248,7 @@ export function Footer() {
 
           <div className="flex flex-col gap-6 md:col-span-2 lg:col-span-8">
             <LegalInfo />
-            <p data-ral="" className="max-w-prose text-small text-muted-on-dark">
+            <p data-ral="" className="max-w-texto text-small text-muted-on-dark">
               <RichText value={footer.ral} onDark linkClassName={RAL_LINK} />
             </p>
           </div>
@@ -240,8 +256,8 @@ export function Footer() {
 
         {/* 3. Nota das imagens ilustrativas e © */}
         <div className="mt-12 flex flex-col gap-3 border-t border-line-on-dark pt-6 text-small text-muted-on-dark md:flex-row md:items-start md:gap-8">
-          {company.showIllustrativeImagesNotice ? (
-            <p data-ai-notice="" className="max-w-prose">
+          {SHOW_AI_NOTICE ? (
+            <p data-ai-notice="" className="max-w-texto">
               {footer.aiNotice}
             </p>
           ) : null}

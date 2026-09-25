@@ -42,7 +42,7 @@ export function Transparency() {
             <h3 id={LIST_TITLE_ID} className="mt-10 text-h3 text-ink">
               {transparency.listTitle}
             </h3>
-            <RuledList aria-labelledby={LIST_TITLE_ID} items={transparency.items} className="mt-5 max-w-prose" />
+            <RuledList aria-labelledby={LIST_TITLE_ID} items={transparency.items} className="mt-5 max-w-texto" />
           </div>
 
           <div
@@ -58,7 +58,7 @@ export function Transparency() {
             />
             <p
               data-unforeseen=""
-              className="max-w-prose border-l-2 border-accent py-1 pl-5 text-ink sm:col-span-4 sm:col-start-1 sm:row-start-1 lg:mt-10"
+              className="max-w-texto border-l-2 border-accent py-1 pl-5 text-ink sm:col-span-4 sm:col-start-1 sm:row-start-1 lg:mt-10"
             >
               <RichText value={transparency.unforeseen} />
             </p>

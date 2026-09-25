@@ -1,4 +1,4 @@
-import { useId, type CSSProperties } from 'react'
+import type { CSSProperties } from 'react'
 import { company } from '../../content/company'
 import { ui } from '../../content/common'
 import { getImage, type PictureAsset } from '../../content/images'
@@ -23,6 +23,8 @@ interface PictureProps {
   fill?: boolean
   objectPosition?: string
   sizes?: string
+  /** `sizes` da variante de telemóvel (< 768 px), quando existe. Por omissão, 100vw. */
+  mobileSizes?: string
 }
 
 const CAPTION: Record<CaptionPosition, string> = {
@@ -41,6 +43,16 @@ function fallbackFormat(asset: PictureAsset): string {
   return ext === 'jpeg' ? 'jpg' : ext
 }
 
+/**
+ * Srcset do formato de recurso, com as larguras todas. O vite-imagetools regista o JPEG
+ * com a chave 'jpeg' (e não 'jpg'): sem este alias, o <img> ficava só com o maior ficheiro
+ * e as outras larguras eram publicadas sem uso (Parte 4.8).
+ */
+function fallbackSrcset(asset: PictureAsset): string | undefined {
+  const fb = fallbackFormat(asset)
+  return asset.sources[fb] ?? (fb === 'jpg' ? asset.sources['jpeg'] : undefined)
+}
+
 function orderedSources(asset: PictureAsset): [string, string][] {
   const fb = fallbackFormat(asset)
   return Object.entries(asset.sources)
@@ -48,9 +60,12 @@ function orderedSources(asset: PictureAsset): [string, string][] {
     .toSorted(([a], [b]) => FORMAT_ORDER.indexOf(a) - FORMAT_ORDER.indexOf(b))
 }
 
-/** Placeholder SVG com linhas de planta sobre tons de pedra (plano B, Parte 4.2). */
+/**
+ * Placeholder SVG com linhas de planta sobre tons de pedra (plano B, Parte 4.2). Sem papel
+ * de desenho nem cotas: esses motivos ficam só no Hero e no Método (direção visual,
+ * secções 6 e 11).
+ */
 function PlaceholderArt() {
-  const gridId = `ph-grid-${useId().replace(/[^\w-]/g, '')}`
   return (
     <svg
       aria-hidden="true"
@@ -59,22 +74,12 @@ function PlaceholderArt() {
       preserveAspectRatio="xMidYMid slice"
       viewBox="0 0 400 300"
     >
-      <defs>
-        <pattern id={gridId} width="24" height="24" patternUnits="userSpaceOnUse">
-          <path d="M24 0H0V24" fill="none" stroke="#1a222c" strokeOpacity="0.07" strokeWidth="1" />
-        </pattern>
-      </defs>
       <rect width="400" height="300" fill="#d6d2c7" />
-      <rect width="400" height="300" fill={`url(#${gridId})`} />
       <g fill="none" stroke="#4a5361" strokeOpacity="0.45" strokeWidth="1.2">
         <path d="M60 60H340V240H60Z" />
         <path d="M60 150H190V240M190 60V120M250 150H340M250 150V240" />
         <path d="M190 120a30 30 0 0 1 30 30" />
         <path d="M110 240v-14h40v14" />
-      </g>
-      <g stroke="#80868e" strokeWidth="1">
-        <path d="M60 36H340M60 30v12M340 30v12" />
-        <path d="M56 40l8-8M336 40l8-8" stroke="#80632b" />
       </g>
     </svg>
   )
@@ -90,6 +95,7 @@ export function Picture({
   fill = false,
   objectPosition,
   sizes,
+  mobileSizes = '100vw',
 }: PictureProps) {
   const entry = getImage(id)
   const [rw, rh] = entry.ratio
@@ -107,6 +113,13 @@ export function Picture({
     return (
       <figure data-image-placeholder={id} className={frame} style={frameStyle}>
         <PlaceholderArt />
+        {/* Contorno tracejado de 1 px `muted` (Parte 5.3). Não no fundo do CTA, que fica sob o véu. */}
+        {fill ? null : (
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 rounded-sm border border-dashed border-muted"
+          />
+        )}
         <figcaption className="absolute inset-x-0 bottom-0 flex justify-center p-4">
           <span className="rounded-sm border border-dashed border-muted bg-bg/90 px-2.5 py-1 font-mono text-caption text-ink">
             {ui.placeholders.image}
@@ -117,7 +130,6 @@ export function Picture({
   }
 
   const asset = entry.picture
-  const fb = fallbackFormat(asset)
   const sizesAttr = sizes ?? entry.sizes
   const imgStyle: CSSProperties | undefined = objectPosition ? { objectPosition } : undefined
 
@@ -131,7 +143,7 @@ export function Picture({
                 media="(max-width: 767px)"
                 type={mime(format)}
                 srcSet={srcset}
-                sizes="100vw"
+                sizes={mobileSizes}
               />
             ))
           : null}
@@ -139,8 +151,8 @@ export function Picture({
           <source
             media="(max-width: 767px)"
             type={mime(fallbackFormat(entry.mobile))}
-            srcSet={entry.mobile.sources[fallbackFormat(entry.mobile)] ?? entry.mobile.img.src}
-            sizes="100vw"
+            srcSet={fallbackSrcset(entry.mobile) ?? entry.mobile.img.src}
+            sizes={mobileSizes}
           />
         ) : null}
         {orderedSources(asset).map(([format, srcset]) => (
@@ -148,7 +160,7 @@ export function Picture({
         ))}
         <img
           src={asset.img.src}
-          srcSet={asset.sources[fb]}
+          srcSet={fallbackSrcset(asset)}
           sizes={sizesAttr}
           width={asset.img.w}
           height={asset.img.h}

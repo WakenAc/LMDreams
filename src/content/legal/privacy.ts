@@ -19,7 +19,7 @@ const caixaPrivacidade = `${contact.fields.privacy.before}${contact.fields.priva
 const responsavel =
   legal.form === 'eni'
     ? `${legal.name}, empresário em nome individual, com o NIF ${legal.nipc} e morada profissional em ${legal.address}`
-    : `${legal.name}, ${legal.companyType}, com sede em ${legal.address} e o NIPC ${legal.nipc}`
+    : `${legal.name}, ${legal.companyType}, com sede em ${legal.address} e NIPC ${legal.nipc}`
 
 export const privacyPage = {
   title: footer.policyLinks.privacy,

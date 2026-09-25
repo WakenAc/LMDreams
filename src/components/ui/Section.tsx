@@ -19,6 +19,7 @@ interface SectionProps {
 }
 
 /** Id do título de uma secção, usado em `aria-labelledby`. */
+// oxlint-disable-next-line react/only-export-components -- função pura ao lado do componente que a usa; o aviso só afeta o Fast Refresh em desenvolvimento.
 export function headingId(sectionId: string): string {
   return `${sectionId}-titulo`
 }

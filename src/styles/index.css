@@ -136,7 +136,10 @@
 
   /* Contentor de 1272 px (12 colunas de 84 px + intervalos de 24 px). */
   --container-site: 79.5rem;
-  --container-prose: 36em;
+  /* Texto corrido (`max-w-texto`): até 65 caracteres por linha (Parte 5.3). Em IBM Plex
+     Sans, cada carácter de texto em português ocupa cerca de 0,465em; o em é o do próprio
+     parágrafo, por isso a conta vale para o texto, o texto grande e o pequeno. */
+  --container-texto: 30em;
 
   /* Navegação completa a partir de 1152 px. */
   --breakpoint-nav: 72rem;
@@ -177,8 +180,10 @@
     text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    /* Âncoras não ficam tapadas pelo cabeçalho fixo. */
+    /* Âncoras e foco não ficam tapados pelo cabeçalho fixo nem pela barra de contacto
+       móvel (WCAG 2.2, 2.4.11; a barra só existe abaixo de 768 px). */
     scroll-padding-top: calc(var(--header-h) + 8px);
+    scroll-padding-bottom: calc(var(--mobile-bar-h) + 8px);
   }
 
   body {

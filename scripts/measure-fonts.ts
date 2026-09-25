@@ -7,6 +7,7 @@ import { pathToFileURL } from 'node:url'
 import { chromium } from '@playwright/test'
 
 const url = (p: string) => pathToFileURL(path.resolve(p)).href
+const pct = (v: number) => `${(v * 100).toFixed(2)}%`
 const FONTS = [
   {
     family: 'Schibsted Grotesk Variable',
@@ -61,7 +62,6 @@ for (const f of FONTS) {
     { family: f.family, fallback: f.fallback, weight: f.weight, sample: SAMPLE },
   )
   const sizeAdjust = r.width / r.fbWidth
-  const pct = (v: number) => `${(v * 100).toFixed(2)}%`
   console.log(`\n${f.family} (recurso: ${f.fallback})`)
   console.log(`  size-adjust: ${pct(sizeAdjust)}`)
   console.log(`  ascent-override: ${pct(r.ascent / 100 / sizeAdjust)}`)

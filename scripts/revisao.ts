@@ -37,21 +37,30 @@ const medicoes: Record<string, unknown> = {}
 const axe: Record<string, unknown> = {}
 
 async function scrollThrough(page: Page) {
-  // Percorre a página para disparar as entradas suaves antes da captura inteira.
+  // Percorre a página até ao fim para disparar as entradas suaves (e as imagens lazy)
+  // antes da captura inteira. Scroll instantâneo: o html tem scroll-behavior: smooth e um
+  // scroll animado seria interrompido pelo passo seguinte. A espera final cobre a
+  // transição de 400 ms das entradas.
   await page.evaluate(async () => {
     const step = window.innerHeight * 0.8
-    for (let y = 0; y < document.documentElement.scrollHeight; y += step) {
-      window.scrollTo(0, y)
+    for (let y = 0; ; y += step) {
+      // A altura pode crescer com as imagens lazy: recalculada a cada passo.
+      const end = document.documentElement.scrollHeight - window.innerHeight
+      window.scrollTo({ top: Math.min(y, end), behavior: 'instant' })
       await new Promise((r) => setTimeout(r, 60))
+      if (y >= end) break
     }
-    window.scrollTo(0, 0)
+    window.scrollTo({ top: 0, behavior: 'instant' })
   })
-  await page.waitForTimeout(500)
+  await page.waitForTimeout(800)
 }
 
 async function measure(page: Page, width: number) {
   return page.evaluate((w) => {
+    // As funções do page.evaluate correm no navegador: não podem subir para o módulo.
+    // oxlint-disable-next-line unicorn/consistent-function-scoping -- corre no navegador (page.evaluate)
     const q = (s: string) => document.querySelector(s)
+    // oxlint-disable-next-line unicorn/consistent-function-scoping -- corre no navegador (page.evaluate)
     const box = (el: Element | null) => {
       if (!el) return null
       const r = el.getBoundingClientRect()

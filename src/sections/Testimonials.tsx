@@ -53,7 +53,7 @@ function RealTestimonial({ t }: { t: Testimonial }) {
   return (
     <Card variant="testimonial" as="div" className="h-full">
       <figure className="flex h-full flex-col gap-5">
-        <blockquote className="max-w-prose text-body text-ink">
+        <blockquote className="max-w-texto text-body text-ink">
           <p>
             <PlainText text={t.texto} />
           </p>

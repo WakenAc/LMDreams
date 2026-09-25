@@ -20,7 +20,7 @@ export function fieldIds(id: string): { help: string; error: string } {
 
 export const LABEL_CLASS = 'block font-medium text-ink'
 
-export const HELP_CLASS = 'mt-1 max-w-prose text-small text-muted'
+export const HELP_CLASS = 'mt-1 max-w-texto text-small text-muted'
 
 /** Base comum a campos de texto, áreas de texto e listas. */
 export const CONTROL_CLASS =

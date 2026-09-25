@@ -5,6 +5,7 @@ import { company } from '../content/company'
 import { ui } from '../content/common'
 import { budgetRanges, contact } from '../content/contact'
 import { services } from '../content/services'
+import type { ContactContent } from '../content/tipos'
 import { Button } from '../components/ui/Button'
 import { Container } from '../components/ui/Container'
 import { PlaceholderBox } from '../components/ui/Placeholder'
@@ -34,6 +35,7 @@ import {
   type LeadErrors,
   type LeadValues,
 } from '../lib/lead'
+import { useHydrated } from '../lib/hydrated'
 import { pageHref, withBase } from '../lib/links'
 import { FIRST_FIELD_ID } from '../lib/quote-links'
 import { whatsappHref } from '../lib/whatsapp'
@@ -68,6 +70,12 @@ const TRAP_NAME = 'campo_k7x'
 const NO_JS_ACTION = `mailto:${company.email}?subject=${encodeURIComponent(contact.emailDraft.subject)}`
 
 const SERVICE_OPTIONS: readonly string[] = [...services.map((s) => s.name), contact.fields.service.otherOption]
+
+/**
+ * Etiqueta da caixa da Política de privacidade. `required` é a obrigatoriedade escrita por
+ * extenso (Parte 3.8), mostrada depois da frase fixa, como nos outros campos obrigatórios.
+ */
+const PRIVACY_LABEL: ContactContent['fields']['privacy'] & { required?: string } = contact.fields.privacy
 
 const EMPTY: LeadValues = {
   name: '',
@@ -136,6 +144,9 @@ function focusField(id: string): void {
 // Formulário
 
 function LeadForm() {
+  // Sem JavaScript (e até à hidratação), o navegador valida os campos `required` antes de
+  // abrir o programa de e-mail; depois, a validação própria substitui a nativa.
+  const hydrated = useHydrated()
   const [values, setValues] = useState<LeadValues>(EMPTY)
   const [errors, setErrors] = useState<LeadErrors>({})
   const [submitted, setSubmitted] = useState(false)
@@ -260,7 +271,7 @@ function LeadForm() {
   return (
     <form
       data-lead-form=""
-      noValidate
+      noValidate={hydrated}
       action={NO_JS_ACTION}
       method="post"
       encType="text/plain"
@@ -442,7 +453,7 @@ function LeadForm() {
           </div>
         </div>
       ) : (
-        <p className="max-w-prose text-small text-muted">{contact.noFilesNote}</p>
+        <p className="max-w-texto text-small text-muted">{contact.noFilesNote}</p>
       )}
 
       <div>
@@ -455,11 +466,12 @@ function LeadForm() {
           aria-invalid={errors.privacy ? true : undefined}
           aria-describedby={joinIds(errors.privacy ? privacyErrorId : null)}
         >
-          {contact.fields.privacy.before}
+          {PRIVACY_LABEL.before}
           <a href={pageHref('privacy')} className={TEXT_LINK}>
-            {contact.fields.privacy.link}
+            {PRIVACY_LABEL.link}
           </a>
-          {contact.fields.privacy.after}
+          {PRIVACY_LABEL.after}
+          {PRIVACY_LABEL.required ? <span data-required=""> {PRIVACY_LABEL.required}</span> : null}
         </Checkbox>
         <div className="pl-9">
           <FieldError id={privacyErrorId} messages={errors.privacy} />
@@ -467,7 +479,7 @@ function LeadForm() {
       </div>
 
       {/* Aviso RGPD (primeira camada; Parte 5.6), antes do botão de envio. */}
-      <div data-rgpd-notice="" className="grid max-w-prose gap-2 text-small text-muted">
+      <div data-rgpd-notice="" className="grid max-w-texto gap-2 text-small text-muted">
         {contact.notice.map((bloco, i) => (
           <p key={i}>
             <RichText value={bloco} />

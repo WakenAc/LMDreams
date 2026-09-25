@@ -76,3 +76,71 @@ test('movimento reduzido: sem conteúdo escondido', async ({ page }) => {
   )
   expect(hidden).toBe(0)
 })
+
+// Parte 5.3: "tudo é visível numa captura de ecrã de página inteira", também depois de um
+// scroll. Com movimento normal, um scroll para baixo e o regresso ao topo não podem deixar
+// elementos armados (opacidade 0) fora do ecrã.
+test('movimento normal: depois de um scroll e do regresso ao topo, nada fica escondido', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' })
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('./')
+  await page.waitForSelector('html[data-hydrated]')
+  await expect(page.locator('html.reveal-on')).toHaveCount(1)
+  await page.mouse.move(195, 420)
+  await page.mouse.wheel(0, 1266)
+  await page.waitForTimeout(500)
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }))
+  // A transição de entrada dura 400 ms.
+  await page.waitForTimeout(900)
+  const state = await page.evaluate(() => ({
+    hidden: Array.from(document.querySelectorAll('[data-reveal]')).filter((el) => getComputedStyle(el).opacity === '0')
+      .length,
+    armed: document.querySelectorAll('[data-reveal-armed]:not([data-revealed])').length,
+  }))
+  expect(state).toEqual({ hidden: 0, armed: 0 })
+})
+
+// WCAG 2.2, 2.4.11: o elemento com foco nunca fica inteiramente tapado pela barra de
+// contacto móvel nem pelo cabeçalho fixo. 640 × 360 simula uma janela de 1280 × 720 com
+// zoom a 200% (Parte 3.10). Movimento reduzido: o scroll do foco é instantâneo.
+for (const [width, height] of [
+  [390, 844],
+  [640, 360],
+] as const) {
+  test(`foco nunca inteiramente tapado pela barra móvel nem pelo cabeçalho a ${width}×${height}`, async ({ page }) => {
+    test.setTimeout(90_000)
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.setViewportSize({ width, height })
+    await page.goto('./')
+    await page.waitForSelector('html[data-hydrated]')
+    const covered: string[] = []
+    let visited = 0
+    for (let i = 0; i < 400; i++) {
+      await page.keyboard.press('Tab')
+      const r = await page.evaluate(() => {
+        const el = document.activeElement
+        if (!(el instanceof HTMLElement) || el === document.body) return { end: true, covered: null }
+        // Elementos das camadas fixas e a ligação de salto (aparece por cima do cabeçalho).
+        if (el.closest('header, [data-mobile-contact-bar]') || el.matches('a[href="#conteudo"]')) {
+          return { end: false, covered: null }
+        }
+        const rect = el.getBoundingClientRect()
+        if (rect.width === 0 && rect.height === 0) return { end: false, covered: null }
+        const bar = document.querySelector('[data-mobile-contact-bar]')
+        const barVisible =
+          bar instanceof HTMLElement && !bar.hasAttribute('data-hidden') && getComputedStyle(bar).visibility === 'visible' &&
+          getComputedStyle(bar).display !== 'none'
+        const barTop = barVisible ? bar.getBoundingClientRect().top : window.innerHeight
+        const headerBottom = document.querySelector('header')?.getBoundingClientRect().bottom ?? 0
+        const hidden = rect.top >= barTop || rect.bottom <= headerBottom
+        const label = `${el.tagName.toLowerCase()} "${(el.textContent ?? '').trim().replace(/\s+/g, ' ').slice(0, 40)}" (${Math.round(rect.top)}–${Math.round(rect.bottom)}; cabeçalho ${Math.round(headerBottom)}, barra ${Math.round(barTop)})`
+        return { end: false, covered: hidden ? label : null }
+      })
+      if (r.end) break
+      visited++
+      if (r.covered) covered.push(r.covered)
+    }
+    expect(visited, 'elementos percorridos com Tab').toBeGreaterThan(20)
+    expect(covered).toEqual([])
+  })
+}

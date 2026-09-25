@@ -107,7 +107,7 @@ export function Steps({ steps, className }: StepsProps) {
               <h3 className="text-h3 text-ink">
                 <PlainText text={step.title} />
               </h3>
-              <p className="max-w-prose text-muted">
+              <p className="max-w-texto text-muted">
                 <PlainText text={step.text} />
               </p>
             </div>

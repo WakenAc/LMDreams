@@ -31,6 +31,24 @@ test('cabeçalho: 72 px em computador e 64 px em telemóvel', async ({ page }) =
   expect(mobile?.height).toBeLessThanOrEqual(64)
 })
 
+for (const [width, height, maxHeight] of [
+  [390, 844, 64],
+  [1440, 900, 72],
+] as const) {
+  test(`cabeçalho fixo a ${width} px: continua no topo e visível depois do scroll`, async ({ page }) => {
+    await page.setViewportSize({ width, height })
+    await page.goto('./')
+    await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight / 2, behavior: 'instant' }))
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0)
+    const header = page.locator('header').first()
+    await expect(header).toBeVisible()
+    await expect(header).toBeInViewport()
+    const box = await header.boundingBox()
+    expect(box?.y).toBe(0)
+    expect(box?.height).toBeLessThanOrEqual(maxHeight)
+  })
+}
+
 async function inFirstScreen(page: Page, selector: string, bottomLimit: number) {
   const box = await page.locator(selector).first().boundingBox()
   expect(box, selector).not.toBeNull()

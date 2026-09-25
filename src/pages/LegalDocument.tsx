@@ -82,7 +82,7 @@ function DocumentSection({ section, index }: { section: LegalSection; index: num
         </span>
         <span className="md:col-span-7">{section.heading}</span>
       </h2>
-      <div className="mt-4 max-w-prose space-y-4 text-[1.0625rem] leading-[1.7] break-words text-ink md:col-span-7 md:col-start-2 md:mt-5">
+      <div className="mt-4 max-w-texto space-y-4 text-[1.0625rem] leading-[1.7] break-words text-ink md:col-span-7 md:col-start-2 md:mt-5">
         {section.blocks.map((block, j) => (
           <Block key={j} block={block} />
         ))}
@@ -114,7 +114,7 @@ export function LegalDocument({ content }: { content: LegalPageContent }) {
                   </span>
                 </p>
                 {content.intro ? (
-                  <p className="mt-6 max-w-prose text-[1.0625rem] leading-[1.6] break-words text-muted md:text-lead">
+                  <p className="mt-6 max-w-texto text-[1.0625rem] leading-[1.6] break-words text-muted md:text-lead">
                     <RichText value={content.intro} linkClassName={TEXT_LINK} />
                   </p>
                 ) : null}

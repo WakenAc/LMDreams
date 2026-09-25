@@ -43,7 +43,7 @@ export function CallToAction() {
       <Container className="relative z-[2] pt-16 pb-20 md:pt-20 md:pb-24 lg:py-32">
         <div data-reveal className="max-w-[44rem]">
           <SectionHeading sectionId="orcamento" title={cta.heading} onDark />
-          <p className="mt-5 max-w-prose text-lead text-on-dark">
+          <p className="mt-5 max-w-texto text-lead text-on-dark">
             <RichText value={cta.text} onDark />
           </p>
           <div className="mt-8 flex flex-col gap-3 md:flex-row md:flex-wrap">

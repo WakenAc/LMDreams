@@ -127,7 +127,7 @@ export function Services() {
                 <h3 className="text-h3 text-ink">
                   <PlainText text={service.name} />
                 </h3>
-                <p className="mt-2 max-w-prose text-muted">
+                <p className="mt-2 max-w-texto text-muted">
                   <PlainText text={service.description} />
                 </p>
               </div>
@@ -160,7 +160,7 @@ export function Services() {
                   <p className={['text-ink', service.emphasis ? 'font-semibold' : 'font-medium'].join(' ')}>
                     <PlainText text={service.name} />
                   </p>
-                  <p className="mt-1 max-w-prose text-small text-muted">
+                  <p className="mt-1 max-w-texto text-small text-muted">
                     <PlainText text={service.description} />
                   </p>
                 </div>
@@ -174,7 +174,7 @@ export function Services() {
           data-reveal=""
           className="mt-10 flex flex-col items-start gap-6 md:mt-12 lg:mt-16 lg:items-center lg:text-center"
         >
-          <p className="max-w-prose text-lead text-ink">
+          <p className="max-w-texto text-lead text-ink">
             <PlainText text={servicesSection.visitorNote} />
           </p>
           <Button

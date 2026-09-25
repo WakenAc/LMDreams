@@ -36,7 +36,7 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 
 - Onde aparece: Informação legal, políticas
 - Ficheiro e campo: src/content/company.ts → legal.name
-- O que fornecer: Firma (ou nome civil, se for empresário em nome individual)
+- O que fornecer: Firma (ou nome civil, se for empresário em nome individual). Depois de a confirmar, decidir se o aviso de direitos de autor do rodapé passa a nomear a firma (hoje nomeia só a marca: “© [ano] LMDreams. Todos os direitos reservados.”, como pede a Parte 5.4 do brief)
 - Bloqueia publicação: Sim
 - Ocorrências:
   - `src/content/company.ts:81`, campo `legal.name`: denominação social
@@ -289,13 +289,13 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Rever os intervalos propostos
 - Bloqueia publicação: Não
 - Ocorrências:
-  - `src/content/contact.ts:130`, campo `budgetRanges.confirmado`: Intervalos propostos: "Até 10 000 €"; "10 000 € a 25 000 €"; "25 000 € a 50 000 €"; "50 000 € a 100 000 €"; "100 000 € a 250 000 €"; "Mais de 250 000 €"; "Prefiro não indicar"
+  - `src/content/contact.ts:131`, campo `budgetRanges.confirmado`: Intervalos propostos: "Até 10 000 €"; "10 000 € a 25 000 €"; "25 000 € a 50 000 €"; "50 000 € a 100 000 €"; "100 000 € a 250 000 €"; "Mais de 250 000 €"; "Prefiro não indicar"
 
 ## Chaves do registo sem ocorrências
 
 Só para informação: estas chaves não têm pendentes no código. É normal, porque são dados já preenchidos, opcionais ou tratados fora do código.
 
-- `experiencia`: Base da alegação “mais de 30 anos” (percurso dos profissionais; ou data de constituição, se a empresa quiser dizer que existe há mais de 30 anos)
+- `experiencia`: Base da alegação “mais de 30 anos” (percurso dos profissionais; ou data de constituição, se a empresa quiser dizer que existe há mais de 30 anos). A experiência de mais de 30 anos é de cada profissional ou do conjunto?
   - Onde aparece: Hero, Sobre, SEO
   - Ficheiro e campo: src/content/company.ts → experienceYears
 - `condicoes-orcamento`: O orçamento e a visita são gratuitos? Há algum prazo de resposta que a empresa queira assumir? (até lá, nada disto aparece no site)

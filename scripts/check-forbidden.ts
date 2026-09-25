@@ -66,7 +66,8 @@ const FORMULAS = [
   'mais do que uma empresa', 'parceiro de confiança', 'tudo o que precisa num só lugar',
   'sem complicações', 'fazer a diferença', 'paixão', 'qualidade inigualável', 'descubra',
   'explore', 'clique aqui', 'o melhor', 'a melhor', 'líder', 'garantimos', 'sem imprevistos',
-  'garantia total',
+  'garantia total', 'de ponta', 'elevar', 'eleva', 'potenciar', 'sinergias', 'otimizar processos',
+  'amiga do ambiente', 'verde',
 ]
 
 // ---------------------------------------------------------------------------

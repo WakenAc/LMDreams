@@ -1,6 +1,6 @@
 import { ui } from '../content/common'
 import { hero } from '../content/hero'
-import { getImage } from '../content/images'
+import { getImage, type ImageEntry } from '../content/images'
 import { Button } from '../components/ui/Button'
 import { Container } from '../components/ui/Container'
 import { Picture } from '../components/ui/Picture'
@@ -24,8 +24,16 @@ import { CotaEtiqueta, CotaHorizontal, CotaVertical, LinhaDeTerra, MarcaCruz } f
 // Em computador, os espaçamentos verticais encolhem com a altura da janela (vh) e, até
 // 680 px de altura, reduzem-se mais um pouco.
 
-// Tamanho real da fotografia: 6 colunas a partir de 1024 px (624 px no contentor máximo).
-const HERO_SIZES = '(min-width: 1336px) 624px, (min-width: 1024px) 47vw, 100vw'
+// Tamanho real da fotografia: 6 colunas a partir de 1024 px (624 px no contentor máximo);
+// abaixo disso, a largura do contentor (margens de 24 px a partir de 640 px e de 16 px antes).
+const HERO_SIZES = '(min-width: 1336px) 624px, (min-width: 1024px) 47vw, calc(100vw - 48px)'
+const HERO_MOBILE_SIZES = '(min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)'
+
+// Etiqueta: em telemóvel, a segunda parte passa para outra linha e o separador sai, para
+// não ficar pendurado no fim da primeira linha. O texto e o separador vêm do conteúdo.
+const [EYEBROW_LEAD = '', EYEBROW_SEPARATOR, ...EYEBROW_REST] = hero.eyebrow.split(/(\s·\s)/)
+
+type HeroHotspot = NonNullable<ImageEntry['hotspots']>[number] & { side?: HeroPin['side'] }
 
 // Papel de desenho na metade direita, esbatido para o lado do texto e para baixo. A grelha
 // de 24 px passa pelas arestas da fotografia a partir de 1336 px (a aresta esquerda da
@@ -42,10 +50,10 @@ const PLANTA_SM =
 export function Hero() {
   const image = getImage('hero')
   const pins: HeroPin[] = hero.annotations.map((a) => {
-    const spot = image.hotspots?.find((h) => h.number === a.number)
+    const spot: HeroHotspot | undefined = image.hotspots?.find((h) => h.number === a.number)
     const crop = image.mobileCrop
     const onMobile = !spot || !crop || (spot.x >= crop.x0 && spot.x <= crop.x1)
-    return { ...a, point: spot ? { x: spot.x, y: spot.y } : null, onMobile }
+    return { ...a, point: spot ? { x: spot.x, y: spot.y } : null, side: spot?.side, onMobile }
   })
   // Só sobre a fotografia real, na proporção do ficheiro, e com todos os pontos definidos.
   const overlay = image.picture !== null && pins.length > 0 && pins.every((p) => p.point !== null)
@@ -64,7 +72,11 @@ export function Hero() {
         <div data-reveal className="lg:col-span-12">
           <p className="mb-3 flex items-start gap-3 font-mono text-eyebrow font-medium text-ink uppercase md:mb-4 lg:mb-5">
             <CotaEtiqueta className="mt-[2.5px]" />
-            <span>{hero.eyebrow}</span>
+            <span>
+              {EYEBROW_LEAD}
+              {EYEBROW_SEPARATOR ? <span className="max-sm:hidden">{EYEBROW_SEPARATOR}</span> : null}
+              {EYEBROW_REST.length > 0 ? <span className="max-sm:block">{EYEBROW_REST.join('')}</span> : null}
+            </span>
           </p>
           <h1 id={headingId('inicio')} className="text-display font-[620] text-ink">
             <span className="lg:block">{hero.titleLines[0]}</span>{' '}
@@ -78,7 +90,7 @@ export function Hero() {
           data-reveal
           className="mt-4 md:mt-6 lg:col-span-6 lg:mt-0 lg:pt-5 xl:col-span-5 lg:[@media(max-height:42.5rem)]:pt-0"
         >
-          <p className="max-w-prose text-lead text-muted">{hero.subtitle}</p>
+          <p className="max-w-texto text-lead text-pretty text-muted">{hero.subtitle}</p>
           <div className="mt-6 flex flex-col gap-3 md:mt-8 md:flex-row md:flex-wrap lg:[@media(max-height:42.5rem)]:mt-6">
             <Button href="#contactos" size="lg" className="w-full md:w-auto" {...quoteLinkProps}>
               {ui.labels.requestQuote}
@@ -113,6 +125,7 @@ export function Hero() {
               priority
               frameClassName="aspect-[4/5] md:aspect-[2560/1448]"
               sizes={HERO_SIZES}
+              mobileSizes={HERO_MOBILE_SIZES}
             />
             <CotaVertical className="hidden min-[86.5rem]:block" />
             {overlay ? <HeroAnnotations label={hero.annotationsLabel} pins={pins} overlay /> : null}

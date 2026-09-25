@@ -312,7 +312,7 @@ export interface ContactContent {
     budget: { label: string; help: string; emptyOption: string }
     photos: { label: string; help: string; remove: string; selected: string }
     /** "Tomei conhecimento da [Política de privacidade]." */
-    privacy: { before: string; link: string; after: string }
+    privacy: { before: string; link: string; after: string; required: string }
   }
   /** Frase quando o serviço de formulários não aceita ficheiros. */
   noFilesNote: string

@@ -72,7 +72,7 @@ export function Differentiators() {
                   <h3 className="text-h3 text-on-dark">
                     <PlainText text={card.title} onDark />
                   </h3>
-                  <p className="mt-2 max-w-prose text-muted-on-dark">
+                  <p className="mt-2 max-w-texto text-muted-on-dark">
                     <PlainText text={card.text} onDark />
                   </p>
                 </div>

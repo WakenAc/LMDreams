@@ -35,4 +35,30 @@ test.describe('sem JavaScript', () => {
     await expect(page.locator('#projetos li[data-project]')).toHaveCount(7)
     await expect(page.locator('dialog')).toHaveCount(0)
   })
+
+  test('filtros e botões do detalhe, sem função sem JavaScript, não aparecem', async ({ page }) => {
+    await page.goto('./')
+    await expect(page.locator('#projetos [data-filter-group]')).toBeHidden()
+    const openers = page.locator('#projetos [data-project-open]')
+    for (let i = 0; i < (await openers.count()); i++) await expect(openers.nth(i)).toBeHidden()
+  })
+
+  // Com fotografias antes e depois publicadas, ficam no próprio cartão (<details>), com o
+  // alt de cada uma. Enquanto nenhum projeto as tiver, não há nada a verificar.
+  test('fotografias antes e depois acessíveis no cartão', async ({ page }) => {
+    await page.goto('./')
+    const galleries = page.locator('#projetos details[data-project-gallery]')
+    const n = await galleries.count()
+    test.skip(n === 0, 'nenhum projeto com fotografias antes e depois')
+    for (let i = 0; i < n; i++) {
+      const gallery = galleries.nth(i)
+      await gallery.locator('summary').click()
+      const photos = gallery.locator('img')
+      expect(await photos.count()).toBeGreaterThan(0)
+      await expect(photos.first()).toBeVisible()
+      for (let j = 0; j < (await photos.count()); j++) {
+        expect((await photos.nth(j).getAttribute('alt'))?.trim()).toBeTruthy()
+      }
+    }
+  })
 })

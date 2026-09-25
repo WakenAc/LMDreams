@@ -11,6 +11,11 @@ export interface HeroPin extends HeroAnnotation {
   point: { x: number; y: number } | null
   /** Falso se o ponto fica fora do recorte de telemóvel: o item esconde-se abaixo de 768 px. */
   onMobile?: boolean
+  /**
+   * Lado da etiqueta em relação ao ponto, quando o registo de imagens o define (por exemplo,
+   * para afastar duas etiquetas próximas). Sem ele, decide LEFT_MIN_X.
+   */
+  side?: 'left' | 'right'
 }
 
 interface HeroAnnotationsProps {
@@ -45,7 +50,7 @@ export function HeroAnnotations({ label, pins, overlay }: HeroAnnotationsProps) 
     >
       {pins.map((pin) => {
         const point = overlay ? pin.point : null
-        const toLeft = point !== null && point.x >= LEFT_MIN_X
+        const toLeft = point !== null && (pin.side ? pin.side === 'left' : point.x >= LEFT_MIN_X)
         return (
           <li
             key={pin.number}

@@ -90,7 +90,7 @@ export default function NotFoundPage() {
             <h1 id={TITLE_ID} className="text-h1 text-ink">
               {notFound.title}
             </h1>
-            <p className="mt-5 max-w-prose text-[1.0625rem] leading-[1.6] text-muted md:mt-6 md:text-lead">
+            <p className="mt-5 max-w-texto text-[1.0625rem] leading-[1.6] text-muted md:mt-6 md:text-lead">
               {notFound.text}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-10">

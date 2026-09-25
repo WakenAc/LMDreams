@@ -1,12 +1,20 @@
-import { expect, test } from '@playwright/test'
+import { expect, test, type Page } from '@playwright/test'
 
 // Formulário sobre um build com VITE_FORM_ENDPOINT vazio (Parte 3.8): validação,
 // foco no primeiro erro e alternativa por e-mail, que nunca mostra "Recebemos".
 
-test('validação: erros anunciados e foco no primeiro campo com erro', async ({ page }) => {
-  await page.goto('./#contactos')
+// Sem JavaScript (e até à hidratação), a validação é a nativa; a própria só assume quando
+// o formulário passa a ter `novalidate`.
+async function hydratedForm(page: Page) {
   await page.waitForSelector('html[data-hydrated]')
   const form = page.locator('form[data-lead-form]')
+  await expect(form).toHaveJSProperty('noValidate', true)
+  return form
+}
+
+test('validação: erros anunciados e foco no primeiro campo com erro', async ({ page }) => {
+  await page.goto('./#contactos')
+  const form = await hydratedForm(page)
   await form.locator('button[type="submit"]').click()
   await expect(page.locator('#campo-nome')).toBeFocused()
   await expect(page.locator('#campo-nome')).toHaveAttribute('aria-invalid', 'true')
@@ -17,9 +25,8 @@ test('validação: erros anunciados e foco no primeiro campo com erro', async ({
 
 test('modo por e-mail: abre o rascunho, oferece "Copiar pedido" e nunca diz "Recebemos"', async ({ page }) => {
   await page.goto('./#contactos')
-  await page.waitForSelector('html[data-hydrated]')
   // O Chromium sem interface ignora o mailto: (não há programa de e-mail associado).
-  const form = page.locator('form[data-lead-form]')
+  const form = await hydratedForm(page)
   await page.locator('#campo-nome').fill('Maria Teste')
   await form.locator('input[type="email"]').fill('maria@exemplo.pt')
   await form.locator('input[autocomplete="address-level2"]').fill('Leiria')
