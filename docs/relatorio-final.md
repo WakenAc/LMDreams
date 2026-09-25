@@ -12,7 +12,7 @@
 | Fase 5: Integração e revisão editorial | concluída | Revisão editorial sobre o HTML gerado, matriz de rastreabilidade preenchida, desempenho em telemóvel (LCP de 3,1 s para cerca de 2 s), `build:root` a passar. |
 | Fase 6: Verificação adversarial | concluída | 3 rondas (87 achados; 22 confirmados de severidade média ou superior, todos corrigidos ou documentados). |
 | Fase 7: Documentação | concluída | README, `CONTEUDO-A-SUBSTITUIR.md`, matriz fechada, este relatório e `CLAUDE.md`; comandos locais do README testados tal como estão escritos. |
-| Fase 8: Entrega | em curso | `npm run check`, `npm run build:pages` e `npm run lighthouse` a verde; envio do branch e abertura da PR a seguir. |
+| Fase 8: Entrega | concluída | `npm run check`, `npm run build:pages` e `npm run lighthouse` a verde; branch enviado; [PR n.º 1](https://github.com/WakenAc/LMDreams/pull/1) aberta para `main` (não rascunho), com o `ci.yml` a correr e o Auto-fix da app ligado para falhas do CI. Sem merge, sem publicação. |
 
 Última atualização: 25 de setembro de 2026.
 
@@ -98,6 +98,15 @@ Os dados da empresa que faltam estão marcados com `[A CONFIRMAR: …]` e listad
 - **Fase 6 (verificação adversarial):** três rondas, cada uma com cinco lentes, dois céticos e dois agentes de correção (secção "Rondas de verificação").
 - **Fase 7 (documentação):** `README.md` com as dez secções da Parte 2.9, `CONTEUDO-A-SUBSTITUIR.md` gerado, matriz de rastreabilidade fechada, `design/direcao-visual.md` com os ajustes da ronda 3, este relatório e `CLAUDE.md`. Comandos locais do README corridos tal como estão escritos (secção "Comandos locais do README").
 - **Fase 8 (entrega):** `npm run check`, `npm run build:pages` e `npm run lighthouse` com os resultados abaixo; envio do branch e PR para `main` (secção "Entrega").
+
+### Entrega (Fase 8)
+
+- Branch `feat/site-institucional` enviado com `git push -u origin feat/site-institucional`, depois de verificar que nenhum ficheiro seguido pelo Git tem segredos (tokens, chaves ou o ficheiro de permissões local).
+- [PR n.º 1, "Site institucional LMDreams"](https://github.com/WakenAc/LMDreams/pull/1), de `feat/site-institucional` para `main`, com a descrição da Parte 6.6. Abre como PR normal (secção "Pendentes").
+- CI: o `ci.yml` arrancou com a PR (evento `pull_request`). A app do Claude acompanha a PR com o Auto-fix ligado: se o CI falhar (por exemplo, binários nativos opcionais em falta no `package-lock.json` gerado no Windows), a correção é feita e enviada no mesmo branch.
+- GitHub Pages: não ativado, porque o repositório é privado num plano gratuito (Parte 3.15). A visibilidade não foi mudada.
+- Sem merge e sem publicação: o merge é do Andre.
+- Saldo final da Higgsfield confirmado com `balance`: 238,75 créditos.
 
 ### Rondas de verificação (Fase 6)
 
