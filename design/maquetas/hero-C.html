@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LMDreams · Maqueta do hero · Direção C, Planta e Latão</title>
+<meta name="robots" content="noindex">
+<!--
+  Maqueta estática da Direção C (Fase 1, plano B dos boards). Artefacto de design: não entra no site.
+  Fontes: só nesta maqueta vêm do jsDelivr (pacotes @fontsource confirmados com npm view, versão 5.3.0).
+  No site, as mesmas fontes são autoalojadas e importadas no CSS (Parte 3.6); nenhuma CDN em runtime.
+  Se o jsDelivr falhar, as pilhas de recurso usam fontes do sistema com carácter semelhante.
+  A fotografia do hero é representada por um bloco SVG com tons de betão, pedra e carvalho e linhas de planta.
+  Captura prevista: 1440x900 (primeiro ecrã) e 1440x1200 (inclui o início da secção Sobre).
+-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/schibsted-grotesk@5.3.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/ibm-plex-sans@5.3.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/500.css">
+<style>
+  :root {
+    /* Tokens da Direção C (ver design/propostas/direcao-C.md) */
+    --bg: #F6F5F1;
+    --surface: #E8E7E1;
+    --sand: #D6D2C7;
+    --ink: #1A222C;
+    --muted: #4A5361;
+    --line: #D2D2CC;
+    --accent: #7A6226;
+    --accent-hover: #614E1E;
+    --dark: #292928;
+    --on-dark: #F2F1EC;
+    --accent-on-dark: #D0B47C;
+    --focus: #3D7DC2;
+    /* derivados */
+    --muted-on-dark: #B7B5AE;
+    --cota: #80868E;
+    --grid-minor: rgba(26, 34, 44, 0.055);
+    --grid-major: rgba(26, 34, 44, 0.1);
+
+    --font-display: "Schibsted Grotesk Variable", "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --font-body: "IBM Plex Sans Variable", "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+    --text-display: clamp(2.25rem, 1.2rem + 3.75vw, 4.5rem);
+    --text-h2: clamp(1.75rem, 1.2rem + 1.9vw, 2.75rem);
+    --text-h3: clamp(1.1875rem, 1.05rem + 0.45vw, 1.5rem);
+    --text-lead: clamp(0.96875rem, 0.83rem + 0.55vw, 1.25rem);
+    --text-body: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+
+    --radius: 2px;
+    --radius-card: 4px;
+    --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --dur-1: 150ms;
+    --dur-2: 250ms;
+    --dur-3: 400ms;
+
+    --header-h: 72px;
+    --gutter: 32px;
+    --col-gap: 24px;
+    --container: 1272px;
+    --section-pad: clamp(4rem, 8vw, 8rem);
+
+    /* marca de cota: traço a 45 graus, usada nas extremidades das linhas de cota */
+    --tick: linear-gradient(135deg, transparent calc(50% - 0.75px), var(--accent) calc(50% - 0.75px), var(--accent) calc(50% + 0.75px), transparent calc(50% + 0.75px));
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: var(--radius); }
+
+  .container { width: min(100% - 2 * var(--gutter), var(--container)); margin-inline: auto; }
+
+  .saltar {
+    position: absolute; left: var(--gutter); top: -100px; z-index: 50;
+    background: var(--ink); color: var(--on-dark); padding: 10px 14px; border-radius: var(--radius);
+    font-weight: 500; text-decoration: none;
+  }
+  .saltar:focus-visible { top: 12px; }
+
+  /* ---------- Botões ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    border-radius: var(--radius);
+    font-family: var(--font-body); font-weight: 600; letter-spacing: 0.005em; line-height: 1;
+    text-decoration: none; white-space: nowrap;
+    transition: background-color var(--dur-1) var(--ease), box-shadow var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+  }
+  .btn-md { height: 44px; padding: 0 20px; font-size: 0.9375rem; }
+  .btn-lg { height: 52px; padding: 0 24px; font-size: 1rem; }
+  .btn-primary { background: var(--accent); color: #FFFFFF; }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-secondary { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+  .btn-secondary:hover { background: var(--surface); }
+
+  /* ---------- Cabeçalho ---------- */
+  .site-header {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner { height: var(--header-h); display: flex; align-items: center; }
+  .marca { display: flex; align-items: center; gap: 12px; text-decoration: none; flex: none; }
+  .marca img { height: 44px; width: auto; border-radius: var(--radius); }
+  .marca-nome {
+    font-family: var(--font-display); font-weight: 650; font-size: 1.3125rem;
+    letter-spacing: -0.015em; line-height: 1; color: var(--ink);
+  }
+  .nav { margin-left: 48px; }
+  .nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 26px; }
+  .nav a {
+    position: relative; display: block; padding: 24px 0;
+    font-size: 0.9375rem; font-weight: 500; line-height: 24px;
+    text-decoration: none; color: var(--ink); white-space: nowrap;
+  }
+  .nav a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+  .nav a[aria-current]::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--accent);
+  }
+  .header-fim { margin-left: auto; display: flex; align-items: center; gap: 28px; }
+  .contacto { position: relative; padding-left: 26px; line-height: 1.2; }
+  .contacto svg { position: absolute; left: 0; top: 1px; width: 18px; height: 18px; color: var(--muted); }
+  .contacto a {
+    display: block; font-size: 0.9375rem; font-weight: 500; text-decoration: none;
+    font-variant-numeric: tabular-nums; letter-spacing: 0.01em;
+  }
+  .contacto a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .contacto small { display: block; margin-top: 3px; font-size: 0.6875rem; color: var(--muted); white-space: nowrap; }
+  .btn-ligar, .btn-menu { display: none; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; isolation: isolate; overflow: hidden;
+    min-height: clamp(560px, calc(100vh - var(--header-h)), 920px);
+    min-height: clamp(560px, calc(100dvh - var(--header-h)), 920px);
+    display: flex; flex-direction: column;
+  }
+  .hero-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: auto 1fr;
+    column-gap: var(--col-gap);
+    row-gap: clamp(2rem, 5.2vh, 3rem);
+    padding-block: clamp(1.75rem, 5.4vh, 3.5rem);
+  }
+  .hero-cabeca { grid-column: 1 / 12; grid-row: 1; }
+
+  .etiqueta {
+    display: flex; align-items: center; gap: 14px;
+    margin: 0 0 clamp(1rem, 3.1vh, 1.75rem);
+    font-family: var(--font-mono); font-weight: 500; font-size: 0.75rem; line-height: 1.35;
+    letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink);
+    text-wrap: balance;
+  }
+  .etiqueta::before {
+    content: ""; flex: none; width: 36px; height: 11px;
+    background:
+      var(--tick) left center / 11px 11px no-repeat,
+      var(--tick) right center / 11px 11px no-repeat,
+      linear-gradient(var(--accent), var(--accent)) center / calc(100% - 10px) 1px no-repeat;
+  }
+
+  .hero h1 {
+    margin: 0; max-width: 16em;
+    font-family: var(--font-display); font-weight: 620; font-size: var(--text-display);
+    line-height: 1.02; letter-spacing: -0.03em; color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .hero-texto { grid-column: 1 / 6; grid-row: 2; display: flex; flex-direction: column; padding-top: 14px; }
+  .lead {
+    margin: 0; max-width: 34em;
+    font-size: var(--text-lead); line-height: 1.5; color: var(--muted);
+    text-wrap: pretty;
+  }
+  .acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(1.5rem, 3.6vh, 2rem); }
+
+  /* lista com régua: linhas finas e marca de referência em cruz (também usada na secção Sobre) */
+  .lista-regua { list-style: none; margin: 0; padding: 0; }
+  .lista-regua li {
+    display: flex; align-items: center; gap: 12px;
+    padding: 8px 0; border-top: 1px solid var(--line);
+    font-size: 0.9375rem; font-weight: 500; line-height: 1.35; color: var(--ink);
+  }
+  .lista-regua li:last-child { border-bottom: 1px solid var(--line); }
+  .lista-regua li::before {
+    content: ""; flex: none; width: 9px; height: 9px;
+    background:
+      linear-gradient(var(--accent), var(--accent)) center / 1px 100% no-repeat,
+      linear-gradient(var(--accent), var(--accent)) center / 100% 1px no-repeat;
+  }
+  .confianca { margin-top: auto; padding-top: 24px; }
+
+  .hero-visual { grid-column: 7 / 13; grid-row: 2; position: relative; display: flex; flex-direction: column; padding-top: 24px; }
+  /* papel de desenho: a grelha de 24 px passa pelas arestas da fotografia (contentor de 1272 px) */
+  .hero-visual::before {
+    content: ""; position: absolute; z-index: -1;
+    top: -288px; left: -192px; right: -240px; bottom: -96px;
+    background-image:
+      linear-gradient(to right, var(--grid-major) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px),
+      linear-gradient(to right, var(--grid-minor) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-minor) 1px, transparent 1px);
+    background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+    -webkit-mask-image: linear-gradient(100deg, transparent 16%, #000 50%), linear-gradient(to bottom, #000 72%, transparent 96%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(100deg, transparent 16%, #000 50%), linear-gradient(to bottom, #000 72%, transparent 96%);
+    mask-composite: intersect;
+  }
+
+  /* linhas de cota */
+  .cota-h {
+    position: absolute; top: 0; left: 0; right: 0; height: 24px;
+    background:
+      linear-gradient(var(--cota), var(--cota)) 0 10px / 100% 1px no-repeat,
+      linear-gradient(var(--cota), var(--cota)) 0 4px / 1px 16px no-repeat,
+      linear-gradient(var(--cota), var(--cota)) 100% 4px / 1px 16px no-repeat;
+  }
+  .cota-h::before, .cota-h::after {
+    content: ""; position: absolute; top: 4.5px; width: 11px; height: 11px; background: var(--tick);
+  }
+  .cota-h::before { left: -5px; }
+  .cota-h::after { right: -6px; }
+
+  .cota-v {
+    position: absolute; top: 24px; bottom: 0; right: -44px; width: 38px;
+    background:
+      linear-gradient(var(--cota), var(--cota)) 26px 0 / 1px 100% no-repeat,
+      linear-gradient(var(--cota), var(--cota)) 0 0 / 32px 1px no-repeat,
+      linear-gradient(var(--cota), var(--cota)) 0 100% / 32px 1px no-repeat;
+  }
+  .cota-v::before, .cota-v::after {
+    content: ""; position: absolute; left: 21px; width: 11px; height: 11px; background: var(--tick);
+  }
+  .cota-v::before { top: -5px; }
+  .cota-v::after { bottom: -6px; }
+
+  .foto {
+    position: relative; flex: 1; min-height: 280px; margin: 0;
+    border-radius: var(--radius); overflow: hidden; background: #B8B0A2;
+  }
+  .foto > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .legenda-ia {
+    position: absolute; top: 12px; right: 12px; margin: 0;
+    padding: 6px 9px; border-radius: var(--radius);
+    background: rgba(41, 41, 40, 0.86); color: var(--on-dark);
+    font-family: var(--font-mono); font-weight: 500; font-size: 0.75rem; line-height: 1.2; letter-spacing: 0.02em;
+  }
+
+  /* anotações numeradas: cada especialidade presente na imagem */
+  .anotacoes { list-style: none; margin: 0; padding: 0; }
+  .anota {
+    position: absolute; left: var(--x); top: var(--y);
+    display: flex; align-items: center;
+    transform: translate(-6px, -50%);
+    font-family: var(--font-mono); font-size: 0.75rem; line-height: 1;
+  }
+  .anota.esq { flex-direction: row-reverse; transform: translate(calc(-100% + 6px), -50%); }
+  .anota .alvo {
+    flex: none; width: 12px; height: 12px; border-radius: 50%;
+    border: 1.5px solid #FFFFFF;
+    background: radial-gradient(circle, #FFFFFF 0 1.5px, rgba(26, 34, 44, 0.35) 2px);
+    box-shadow: 0 0 0 1px rgba(26, 34, 44, 0.3);
+  }
+  .anota .guia { flex: none; width: 32px; height: 1px; background: rgba(255, 255, 255, 0.92); box-shadow: 0 1px 0 rgba(26, 34, 44, 0.18); }
+  .anota .rotulo {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 9px 6px 8px; border-radius: var(--radius);
+    background: rgba(246, 245, 241, 0.95); color: var(--ink);
+    font-weight: 500; letter-spacing: 0.02em; white-space: nowrap;
+  }
+  .anota .num { color: var(--accent); font-variant-numeric: tabular-nums; }
+
+  /* ---------- Sobre (excerto, para mostrar o ritmo) ---------- */
+  .sobre { padding-bottom: var(--section-pad); }
+  .cota-secao {
+    position: relative; height: 11px; margin-bottom: calc(var(--section-pad) - 11px);
+    background:
+      linear-gradient(var(--line), var(--line)) center / 100% 1px no-repeat,
+      linear-gradient(var(--cota), var(--cota)) 0 0 / 1px 100% no-repeat,
+      linear-gradient(var(--cota), var(--cota)) 100% 0 / 1px 100% no-repeat;
+  }
+  .cota-secao::before, .cota-secao::after { content: ""; position: absolute; top: 0; width: 11px; height: 11px; background: var(--tick); }
+  .cota-secao::before { left: -5px; }
+  .cota-secao::after { right: -6px; }
+
+  .sobre-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); align-items: start; }
+  .sobre-figura {
+    grid-column: 1 / 6; position: relative; margin: 0;
+    aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; background: #A39E95;
+  }
+  .sobre-figura > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .sobre-texto { grid-column: 7 / 13; padding-top: 4px; }
+  .sobre-texto h2 {
+    margin: 0 0 28px; max-width: 13em;
+    font-family: var(--font-display); font-weight: 600; font-size: var(--text-h2);
+    line-height: 1.08; letter-spacing: -0.022em; text-wrap: balance;
+  }
+  .sobre-texto .lead { color: var(--ink); max-width: 30em; }
+  .sobre-texto p + p { margin-top: 18px; }
+  .sobre-texto p:not(.lead) { margin-bottom: 0; color: var(--muted); max-width: 36em; }
+  .sobre-texto .lista-regua { margin-top: 32px; max-width: 30em; }
+
+  /* ---------- Barra de contacto móvel (só abaixo de 768 px) ---------- */
+  .barra-movel { display: none; }
+
+  /* ---------- Larguras menores (a captura oficial é a 1440 px) ---------- */
+  @media (max-width: 1399px) {
+    .cota-v { display: none; }
+  }
+  @media (max-width: 1279px) {
+    .nav ul { gap: 18px; }
+    .nav a { font-size: 0.875rem; }
+    .nav { margin-left: 32px; }
+    .header-fim { gap: 12px; }
+    .contacto { display: none; }
+    .btn-ligar { display: inline-flex; }
+    .btn-ligar svg { width: 18px; height: 18px; }
+  }
+  @media (max-width: 1151px) {
+    .nav { display: none; }
+    .btn-menu { display: inline-flex; }
+  }
+  @media (max-width: 1023px) {
+    :root { --gutter: 24px; }
+    .hero-grid { grid-template-rows: auto auto auto; row-gap: 32px; }
+    .hero-cabeca, .hero-texto, .hero-visual { grid-column: 1 / -1; }
+    .hero-texto { grid-row: 2; padding-top: 0; }
+    .hero-visual { grid-row: 3; }
+    .foto { flex: none; aspect-ratio: 4 / 3; }
+    .anotacoes { display: none; }
+    .confianca { margin-top: 24px; padding-top: 0; }
+    .sobre-figura, .sobre-texto { grid-column: 1 / -1; }
+    .sobre-texto { margin-top: 32px; }
+  }
+  @media (max-width: 767px) {
+    :root { --gutter: 16px; --header-h: 64px; }
+    .marca img { height: 32px; }
+    .marca-nome { font-size: 1.0625rem; }
+    .marca { gap: 8px; }
+    .btn-ligar { display: none; }
+    .header-fim .btn-md { height: 40px; padding: 0 12px; font-size: 0.84375rem; }
+    .btn-menu { width: 44px; padding: 0; }
+    .hero { min-height: auto; }
+    .hero-grid { padding-block: 20px 24px; row-gap: 24px; }
+    .etiqueta { font-size: 0.6875rem; letter-spacing: 0.07em; gap: 10px; margin-bottom: 14px; }
+    .etiqueta::before { width: 24px; }
+    .acoes { flex-direction: column; }
+    .acoes .btn { width: 100%; height: 48px; }
+    .foto { aspect-ratio: 4 / 5; }
+    .barra-movel {
+      display: grid; grid-template-columns: 1fr 1fr 1.4fr; gap: 8px;
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+      padding: 8px 16px calc(8px + env(safe-area-inset-bottom));
+      background: var(--bg); border-top: 1px solid var(--line);
+    }
+    .barra-movel .btn { height: 44px; padding: 0 8px; font-size: 0.875rem; }
+    body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
+  }
+  @media (max-width: 379px) {
+    .marca-nome { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<a class="saltar" href="#conteudo">Saltar para o conteúdo</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="marca" href="#inicio" aria-label="LMDreams, voltar ao início">
+      <img src="../../logo-lmdreams.png" width="352" height="188" alt="">
+      <span class="marca-nome">LMDreams</span>
+    </a>
+
+    <nav class="nav" aria-label="Navegação principal">
+      <ul>
+        <li><a href="#inicio" aria-current="location">Início</a></li>
+        <li><a href="#sobre">Sobre nós</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#metodo">Método de trabalho</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#contactos">Contactos</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-fim">
+      <div class="contacto">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <a href="tel:+351919233372">+351 919 233 372</a>
+        <small>(chamada para a rede móvel nacional)</small>
+      </div>
+      <a class="btn btn-secondary btn-md btn-ligar" href="tel:+351919233372" aria-label="Ligar para a LMDreams">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Ligar
+      </a>
+      <a class="btn btn-primary btn-md" href="#contactos">Pedir orçamento</a>
+      <a class="btn btn-secondary btn-md btn-menu" href="#menu" aria-label="Abrir o menu">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="conteudo">
+  <section id="inicio" class="hero" aria-labelledby="hero-titulo">
+    <div class="container hero-grid">
+
+      <div class="hero-cabeca">
+        <p class="etiqueta">Construção civil e remodelações · Portugal continental</p>
+        <h1 id="hero-titulo">Cada especialidade nas mãos de quem realmente sabe.</h1>
+      </div>
+
+      <div class="hero-texto">
+        <p class="lead">Profissionais com mais de 30 anos de experiência, reunidos para cada etapa da obra, com qualidade, rigor e transparência do início ao fim.</p>
+        <div class="acoes">
+          <a class="btn btn-primary btn-lg" href="#contactos">Pedir orçamento</a>
+          <a class="btn btn-secondary btn-lg" href="#servicos">Conhecer os serviços</a>
+        </div>
+        <ul class="lista-regua confianca">
+          <li>Mais de 30 anos de experiência</li>
+          <li>Profissionais especializados</li>
+          <li>Acompanhamento transparente</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <span class="cota-h" aria-hidden="true"></span>
+        <span class="cota-v" aria-hidden="true"></span>
+        <figure class="foto">
+          <!-- Representação da fotografia "hero" (16:9 no original, recorte 4:3 aqui e 4:5 em telemóvel) -->
+          <svg viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Mãos de um profissional a nivelar um revestimento de pedra natural num interior contemporâneo.">
+            <defs>
+              <linearGradient id="h-teto" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#74716B"/><stop offset="1" stop-color="#9B978F"/></linearGradient>
+              <linearGradient id="h-pedra" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E6DECF"/><stop offset=".5" stop-color="#C8BCA7"/><stop offset="1" stop-color="#A09380"/></linearGradient>
+              <linearGradient id="h-sombra-painel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3A2F22" stop-opacity="0"/><stop offset="1" stop-color="#3A2F22" stop-opacity=".3"/></linearGradient>
+              <linearGradient id="h-reflexo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9E1D2" stop-opacity=".35"/><stop offset=".6" stop-color="#E9E1D2" stop-opacity="0"/></linearGradient>
+              <linearGradient id="h-carvalho" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#76593F"/><stop offset=".3" stop-color="#9A7955"/><stop offset=".75" stop-color="#8E6F4E"/><stop offset="1" stop-color="#7A5E43"/></linearGradient>
+              <linearGradient id="h-chao" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#928C83"/><stop offset="1" stop-color="#6C6861"/></linearGradient>
+              <linearGradient id="h-latao" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7E6533"/><stop offset=".5" stop-color="#C2A266"/><stop offset="1" stop-color="#866C38"/></linearGradient>
+              <linearGradient id="h-rasante" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF3DD" stop-opacity=".42"/><stop offset=".55" stop-color="#FFF3DD" stop-opacity="0"/></linearGradient>
+              <radialGradient id="h-foco" cx=".5" cy=".5" r=".5" fx=".5" fy=".1"><stop offset="0" stop-color="#FFF1D6" stop-opacity=".6"/><stop offset=".55" stop-color="#FFF1D6" stop-opacity=".16"/><stop offset="1" stop-color="#FFF1D6" stop-opacity="0"/></radialGradient>
+              <radialGradient id="h-vinheta" cx=".42" cy=".45" r=".8"><stop offset=".55" stop-color="#1A1A18" stop-opacity="0"/><stop offset="1" stop-color="#1A1A18" stop-opacity=".3"/></radialGradient>
+              <filter id="h-grao" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .42  0 0 0 0 .40  0 0 0 0 .37  0 0 0 1.1 0"/></filter>
+              <filter id="h-suave" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="22"/></filter>
+              <filter id="h-sombra" x="-10%" y="-50%" width="120%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+            </defs>
+
+            <rect width="1200" height="900" fill="#B8B0A2"/>
+
+            <!-- teto em betão aparente, cofragem de tábuas -->
+            <rect width="1200" height="172" fill="url(#h-teto)"/>
+            <path d="M0 43H1200M0 86H1200M0 129H1200" stroke="#2A2926" stroke-opacity=".1" stroke-width="2"/>
+            <g fill="#34322E" fill-opacity=".28"><circle cx="130" cy="64" r="4"/><circle cx="370" cy="64" r="4"/><circle cx="850" cy="64" r="4"/><circle cx="1090" cy="64" r="4"/><circle cx="130" cy="130" r="4"/><circle cx="370" cy="130" r="4"/><circle cx="850" cy="130" r="4"/><circle cx="1090" cy="130" r="4"/></g>
+            <rect y="166" width="1200" height="8" fill="#23221F" opacity=".22"/>
+
+            <!-- foco embutido (eletricidade) -->
+            <ellipse cx="560" cy="340" rx="250" ry="200" fill="url(#h-foco)"/>
+            <ellipse cx="560" cy="168" rx="30" ry="5" fill="#FBF4E4"/>
+
+            <!-- parede em pedra natural, grande formato -->
+            <rect y="172" width="880" height="588" fill="url(#h-pedra)"/>
+            <g opacity=".11">
+              <rect x="0" y="172" width="220" height="294" fill="#FFFFFF"/>
+              <rect x="440" y="172" width="220" height="294" fill="#5E4E36"/>
+              <rect x="220" y="466" width="220" height="294" fill="#FFFFFF"/>
+              <rect x="660" y="466" width="220" height="294" fill="#5E4E36"/>
+            </g>
+            <g fill="none" stroke="#FFFFFF" stroke-opacity=".24" stroke-width="1.4">
+              <path d="M16 252c60-18 122 10 192-22"/><path d="M236 338c44 12 92-6 176 22"/><path d="M468 226c52 30 110 10 182 42"/>
+              <path d="M34 612c72-20 112 14 172-6"/><path d="M688 560c62 18 104-10 176 12"/><path d="M250 690c50-16 96 8 168-10"/>
+            </g>
+            <g fill="none" stroke="#7D6F58" stroke-opacity=".16" stroke-width="1.2">
+              <path d="M60 380c40-10 90 16 150-4"/><path d="M500 360c46 8 90-12 150 6"/><path d="M700 300c44 14 100 0 160 18"/>
+            </g>
+            <!-- peça a ser assente: junta ainda aberta -->
+            <rect x="440" y="466" width="220" height="294" fill="#D7CDBB"/>
+            <rect x="440" y="466" width="220" height="7" fill="#5A5040" opacity=".35"/>
+            <rect x="440" y="466" width="6" height="294" fill="#5A5040" opacity=".22"/>
+            <!-- juntas -->
+            <path d="M220 172V760M440 172V760M660 172V760M0 466H880" stroke="#9A8F7C" stroke-width="3"/>
+            <!-- cruzetas de junta -->
+            <path d="M212 466h16M220 458v16M432 466h16M440 458v16M652 466h16M660 458v16" stroke="#F1ECE2" stroke-width="3"/>
+            <!-- sombra projetada pelo painel de carvalho sobre a pedra -->
+            <rect x="730" y="172" width="150" height="588" fill="url(#h-sombra-painel)"/>
+
+            <!-- nível de bolha -->
+            <rect x="352" y="452" width="400" height="14" fill="#1A1A18" opacity=".22" filter="url(#h-sombra)"/>
+            <g transform="translate(350 424)">
+              <rect width="400" height="30" rx="3" fill="#2E3032"/>
+              <rect width="400" height="5" rx="2" fill="#4D5053"/>
+              <rect width="16" height="30" rx="3" fill="#1C1D1F"/>
+              <rect x="384" width="16" height="30" rx="3" fill="#1C1D1F"/>
+              <rect x="178" y="7" width="44" height="16" rx="3" fill="#D8D4C0"/>
+              <ellipse cx="200" cy="15" rx="9" ry="5" fill="#F6F3E8"/>
+              <path d="M189 7v16M211 7v16" stroke="#2E3032" stroke-width="1.5"/>
+            </g>
+
+            <!-- carpintaria em carvalho, com puxador em latão -->
+            <rect x="880" y="172" width="320" height="728" fill="url(#h-carvalho)"/>
+            <rect x="880" y="172" width="12" height="728" fill="#1F1A14" opacity=".38"/>
+            <path d="M1000 172V900M1110 172V900" stroke="#4F3C2B" stroke-opacity=".45" stroke-width="2"/>
+            <rect x="880" y="461" width="320" height="10" fill="#3E2F22" opacity=".55"/>
+            <g fill="none" stroke="#5E4631" stroke-opacity=".2" stroke-width="1.2">
+              <path d="M918 190c10 120-8 220 6 260"/><path d="M952 200c-6 110 10 170 0 250"/><path d="M1040 500c8 120-6 250 6 380"/><path d="M1150 490c-8 140 8 250-2 390"/><path d="M1060 190c6 100-6 180 4 260"/>
+            </g>
+            <rect x="1082" y="540" width="7" height="120" rx="3.5" fill="url(#h-latao)"/>
+
+            <!-- pavimento em betão afagado -->
+            <rect y="760" width="880" height="140" fill="url(#h-chao)"/>
+            <rect y="760" width="880" height="6" fill="#23221F" opacity=".28"/>
+            <rect y="766" width="880" height="134" fill="url(#h-reflexo)"/>
+
+            <!-- luz rasante do fim de tarde -->
+            <polygon points="40,200 390,200 250,760 -120,760" fill="#FFF4DF" opacity=".32" filter="url(#h-suave)"/>
+            <rect width="1200" height="900" fill="url(#h-rasante)"/>
+
+            <!-- linhas de planta: nível laser alinhado com a junta e o friso da carpintaria, e prumo -->
+            <g fill="none" stroke="#FFFFFF" stroke-opacity=".72" stroke-width="1.5" stroke-dasharray="12 9">
+              <path d="M0 466H1200"/><path d="M660 172V760"/>
+            </g>
+            <circle cx="660" cy="466" r="12" fill="none" stroke="#FFFFFF" stroke-opacity=".85" stroke-width="1.5"/>
+
+            <rect width="1200" height="900" fill="url(#h-vinheta)"/>
+            <rect width="1200" height="900" filter="url(#h-grao)" opacity=".11"/>
+          </svg>
+
+          <ol class="anotacoes" aria-hidden="true">
+            <li class="anota esq" style="--x: 45.8%; --y: 68%;"><span class="alvo"></span><span class="guia"></span><span class="rotulo"><span class="num">01</span>Revestimentos</span></li>
+            <li class="anota esq" style="--x: 86.7%; --y: 84.5%;"><span class="alvo"></span><span class="guia"></span><span class="rotulo"><span class="num">02</span>Carpintaria</span></li>
+            <li class="anota" style="--x: 46.7%; --y: 18.7%;"><span class="alvo"></span><span class="guia"></span><span class="rotulo"><span class="num">03</span>Eletricidade</span></li>
+          </ol>
+
+          <figcaption class="legenda-ia">Imagem ilustrativa gerada por IA</figcaption>
+        </figure>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="sobre" class="sobre" aria-labelledby="sobre-titulo">
+    <div class="container">
+      <div class="cota-secao" aria-hidden="true"></div>
+      <div class="sobre-grid">
+        <figure class="sobre-figura">
+          <!-- Representação da fotografia "sobre" (4:5): planta de arquitetura sobre uma mesa de obra, com amostras de materiais -->
+          <svg viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Planta de arquitetura com amostras de betão, pedra, madeira e latão sobre uma mesa de obra.">
+            <defs>
+              <linearGradient id="s-mesa" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B0AAA0"/><stop offset="1" stop-color="#8A857C"/></linearGradient>
+              <linearGradient id="s-latao" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#836A37"/><stop offset=".5" stop-color="#C4A66B"/><stop offset="1" stop-color="#8A7040"/></linearGradient>
+              <linearGradient id="s-luz" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3DD" stop-opacity=".38"/><stop offset=".6" stop-color="#FFF3DD" stop-opacity="0"/></linearGradient>
+              <radialGradient id="s-vinheta" cx=".5" cy=".45" r=".8"><stop offset=".55" stop-color="#1A1A18" stop-opacity="0"/><stop offset="1" stop-color="#1A1A18" stop-opacity=".28"/></radialGradient>
+              <pattern id="s-tracado" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V10" stroke="#3B4450" stroke-opacity=".35" stroke-width="1"/></pattern>
+              <filter id="s-grao" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .42  0 0 0 0 .40  0 0 0 0 .37  0 0 0 1.1 0"/></filter>
+              <filter id="s-sombra" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="14"/></filter>
+            </defs>
+            <rect width="800" height="1000" fill="url(#s-mesa)"/>
+            <rect width="800" height="1000" filter="url(#s-grao)" opacity=".16"/>
+
+            <g transform="rotate(-4 400 480)">
+              <rect x="124" y="126" width="580" height="740" fill="#1A1A18" opacity=".28" filter="url(#s-sombra)"/>
+              <rect x="110" y="110" width="580" height="740" fill="#EFECE4"/>
+              <!-- cota superior -->
+              <g stroke="#3B4450" stroke-width="1.2" fill="none">
+                <path d="M170 164H630M170 152V180M400 152V180M630 152V180"/>
+                <path d="M164 170l12-12M394 170l12-12M624 170l12-12" stroke="#7A6226" stroke-width="2"/>
+              </g>
+              <!-- eixos -->
+              <g fill="none" stroke="#3B4450" stroke-width="1.2"><circle cx="170" cy="130" r="11"/><circle cx="400" cy="130" r="11"/><circle cx="630" cy="130" r="11"/></g>
+              <!-- paredes -->
+              <rect x="220" y="440" width="180" height="140" fill="url(#s-tracado)"/>
+              <g fill="none" stroke="#2F3742" stroke-linecap="square">
+                <rect x="170" y="200" width="460" height="560" stroke-width="9"/>
+                <path d="M400 200V420M400 480V560M170 580H250M320 580H630M330 580V760" stroke-width="5"/>
+              </g>
+              <!-- portas e janelas -->
+              <g fill="none" stroke="#3B4450" stroke-width="1.3">
+                <path d="M400 420a60 60 0 0 1 60 60"/><path d="M400 420H460"/>
+                <path d="M250 580a70 70 0 0 0 70 -70"/><path d="M250 580V510"/>
+                <path d="M250 196H350M250 204H350M480 756H590M480 764H590"/>
+              </g>
+            </g>
+
+            <!-- amostras de materiais -->
+            <g transform="rotate(7 600 770)"><rect x="530" y="700" width="150" height="150" rx="2" fill="#8F8B84"/><g fill="#6E6A63"><circle cx="560" cy="730" r="2.5"/><circle cx="610" cy="790" r="2"/><circle cx="650" cy="740" r="1.8"/><circle cx="580" cy="820" r="2.2"/></g></g>
+            <g transform="rotate(-9 480 860)"><rect x="410" y="790" width="140" height="140" rx="2" fill="#D6CAB3"/><path d="M420 830c40-10 80 12 120-4M430 890c30 8 70-6 110 6" stroke="#FFFFFF" stroke-opacity=".5" fill="none"/></g>
+            <g transform="rotate(12 690 880)"><rect x="628" y="800" width="120" height="160" rx="2" fill="#A7825A"/><path d="M640 810c6 50-6 90 4 140M670 810c-4 40 6 100-2 140M705 810c6 60-4 90 4 140" stroke="#6E5236" stroke-opacity=".35" fill="none"/></g>
+            <g transform="rotate(-3 610 950)"><rect x="560" y="918" width="120" height="64" rx="2" fill="url(#s-latao)"/></g>
+            <!-- lápis de carpinteiro -->
+            <g transform="rotate(28 250 900)"><rect x="150" y="890" width="200" height="16" rx="2" fill="#4A4F55"/><path d="M350 890l24 8-24 8z" fill="#D8BE92"/></g>
+
+            <rect width="800" height="1000" fill="url(#s-luz)"/>
+            <rect width="800" height="1000" fill="url(#s-vinheta)"/>
+          </svg>
+          <figcaption class="legenda-ia">Imagem ilustrativa gerada por IA</figcaption>
+        </figure>
+
+        <div class="sobre-texto">
+          <h2 id="sobre-titulo">A sua obra executada por especialistas.</h2>
+          <p class="lead">Reunimos profissionais com mais de 30 anos de experiência, cada um na sua especialidade. O eletricista trata da eletricidade, o canalizador da canalização, e nós coordenamos o conjunto.</p>
+          <p>Da primeira visita à entrega, explicamos quem faz o quê e em que ponto está a obra, com atenção à qualidade e à durabilidade de cada trabalho.</p>
+          <ul class="lista-regua">
+            <li>Profissionais especializados em cada área</li>
+            <li>Coordenação de todos os trabalhos</li>
+            <li>Informação clara em cada fase</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<nav class="barra-movel" aria-label="Contacto rápido">
+  <a class="btn btn-secondary" href="tel:+351919233372" aria-label="Ligar para a LMDreams">Ligar</a>
+  <a class="btn btn-secondary" href="https://wa.me/351919233372" target="_blank" rel="noopener" aria-label="WhatsApp da LMDreams (abre numa nova janela)">WhatsApp</a>
+  <a class="btn btn-primary" href="#contactos">Pedir orçamento</a>
+</nav>
+</body>
+</html>

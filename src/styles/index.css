@@ -1,0 +1,318 @@
+/* Estilos globais do site LMDreams (Parte 3.6). Tokens: design/direcao-visual.md (direção C). */
+@import "tailwindcss" source("../");
+
+/* ------------------------------------------------------------------------
+   Fontes autoalojadas, só o subconjunto latin (cobre o português).
+   As fontes de recurso têm métricas ajustadas para evitar saltos de layout;
+   valores medidos com `npx tsx scripts/measure-fonts.ts` (Chromium, 25/09/2026).
+   ------------------------------------------------------------------------ */
+@font-face {
+  font-family: "Schibsted Grotesk Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 900;
+  src: url("../../node_modules/@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2")
+    format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 700;
+  src: url("../../node_modules/@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-wght-normal.woff2")
+    format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url("../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2")
+    format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Fontes de recurso (Arial / Courier New) com métricas próximas das reais. */
+@font-face {
+  font-family: "Schibsted Grotesk Fallback";
+  src: local("Arial");
+  size-adjust: 99.91%;
+  ascent-override: 98.09%;
+  descent-override: 26.02%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans Fallback";
+  src: local("Arial");
+  size-adjust: 99.58%;
+  ascent-override: 103.43%;
+  descent-override: 28.12%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono Fallback";
+  src: local("Courier New");
+  size-adjust: 99.98%;
+  ascent-override: 103.02%;
+  descent-override: 28%;
+  line-gap-override: 0%;
+}
+
+/* ------------------------------------------------------------------------
+   Tokens (Tailwind CSS v4)
+   ------------------------------------------------------------------------ */
+@theme {
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --color-bg: #f6f5f1;
+  --color-surface: #e8e7e1;
+  --color-sand: #d6d2c7;
+  --color-ink: #1a222c;
+  --color-muted: #4a5361;
+  --color-line: #d2d2cc;
+  --color-accent: #80632b;
+  --color-accent-hover: #674f22;
+  --color-dark: #292929;
+  --color-on-dark: #f2f1ec;
+  --color-accent-on-dark: #d0b47c;
+  --color-focus: #3d7dc2;
+  --color-muted-on-dark: #b7b5ae;
+  --color-error: #a3322a;
+  --color-cota: #80868e;
+  --color-line-on-dark: #494947;
+
+  --font-*: initial;
+  --font-display: "Schibsted Grotesk Variable", "Schibsted Grotesk Fallback", Arial, sans-serif;
+  --font-body: "IBM Plex Sans Variable", "IBM Plex Sans Fallback", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", "IBM Plex Mono Fallback", ui-monospace, Consolas, monospace;
+
+  /* Escala tipográfica fluida (design/direcao-visual.md, secção 4). */
+  --text-display: clamp(2.25rem, 1.2rem + 3.75vw, 4.5rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.03em;
+  --text-h1: clamp(2rem, 1.3rem + 2.4vw, 3.25rem);
+  --text-h1--line-height: 1.06;
+  --text-h1--letter-spacing: -0.026em;
+  --text-h2: clamp(1.75rem, 1.2rem + 1.9vw, 2.75rem);
+  --text-h2--line-height: 1.08;
+  --text-h2--letter-spacing: -0.022em;
+  --text-h3: clamp(1.1875rem, 1.05rem + 0.45vw, 1.5rem);
+  --text-h3--line-height: 1.22;
+  --text-h3--letter-spacing: -0.012em;
+  --text-lead: clamp(0.96875rem, 0.83rem + 0.55vw, 1.25rem);
+  --text-lead--line-height: 1.5;
+  --text-body: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+  --text-body--line-height: 1.6;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.35;
+  --text-caption--letter-spacing: 0.02em;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.35;
+  --text-eyebrow--letter-spacing: 0.08em;
+  --text-step: 1rem;
+  --text-step--line-height: 1;
+  --text-step--letter-spacing: 0.02em;
+  /* Número de etapa do Método (01 a 08): o elemento mais forte de cada etapa, como no
+     board (design/boards/board-metodo-C-v1.png). 28 px a 390, 36 a 768, 42,4 a 1024,
+     48,8 a 1280 e 52 a partir de 1408 px. O text-step fica para as páginas legais. */
+  --text-step-lg: clamp(1.75rem, 1.05rem + 2.5vw, 3.25rem);
+  --text-step-lg--line-height: 1;
+  --text-step-lg--letter-spacing: -0.01em;
+
+  /* Raios: uma única escala. */
+  --radius-*: initial;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-full: 9999px;
+
+  /* Contentor de 1272 px (12 colunas de 84 px + intervalos de 24 px). */
+  --container-site: 79.5rem;
+  /* Texto corrido (`max-w-texto`): até 65 caracteres por linha (Parte 5.3). Em IBM Plex
+     Sans, cada carácter de texto em português ocupa cerca de 0,465em; o em é o do próprio
+     parágrafo, por isso a conta vale para o texto, o texto grande e o pequeno. */
+  --container-texto: 30em;
+
+  /* Navegação completa a partir de 1152 px. */
+  --breakpoint-nav: 72rem;
+
+  --ease-planta: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --default-transition-duration: 150ms;
+  --default-transition-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --shadow-*: initial;
+  --shadow-header: 0 1px 0 var(--color-line), 0 8px 24px -16px rgb(26 34 44 / 0.28);
+  --shadow-dialog: 0 24px 64px -24px rgb(26 34 44 / 0.35);
+}
+
+/* ------------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------------ */
+@layer base {
+  :root {
+    --header-h: 64px;
+    /* Barra de contacto móvel: 61 px + safe area (só abaixo de 768 px). */
+    --mobile-bar-h: calc(61px + env(safe-area-inset-bottom, 0px));
+    color-scheme: light;
+  }
+
+  @media (min-width: 48rem) {
+    :root {
+      --header-h: 72px;
+      --mobile-bar-h: 0px;
+    }
+  }
+
+  /* Janela baixa abaixo de 768 px (telemóvel na horizontal, zoom a 200%): a barra de
+     contacto móvel esconde-se (MobileContactBar.tsx) para o cabeçalho e a barra não taparem
+     um terço da altura; "Pedir orçamento" fica no cabeçalho e o telefone e o WhatsApp no
+     menu. */
+  @media (max-width: 47.99rem) and (max-height: 30rem) {
+    :root {
+      --mobile-bar-h: 0px;
+    }
+  }
+
+  html {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    /* Âncoras e foco não ficam tapados pelo cabeçalho fixo nem pela barra de contacto
+       móvel (WCAG 2.2, 2.4.11; a barra só existe abaixo de 768 px). */
+    scroll-padding-top: calc(var(--header-h) + 8px);
+    scroll-padding-bottom: calc(var(--mobile-bar-h) + 8px);
+  }
+
+  body {
+    min-height: 100dvh;
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    font-weight: 400;
+    /* Espaço para a barra de contacto móvel: o rodapé nunca fica tapado. */
+    padding-bottom: var(--mobile-bar-h);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background-color: var(--color-ink);
+    color: var(--color-bg);
+  }
+
+  /* Foco sempre visível no teclado: anel de 2 px com afastamento (Parte 3.10). */
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+  }
+
+  [id] {
+    scroll-margin-top: calc(var(--header-h) + 8px);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------------
+   Entrada suave (src/lib/reveal.ts). O estado "escondido" só existe quando
+   o JavaScript está ativo e o utilizador aceita movimento (Parte 5.3).
+   ------------------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-on [data-reveal][data-reveal-armed]:not([data-revealed]) {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .reveal-on [data-reveal] {
+    transition:
+      opacity 400ms var(--ease-planta),
+      transform 400ms var(--ease-planta);
+  }
+}
+
+/* ------------------------------------------------------------------------
+   Utilitários do sistema
+   ------------------------------------------------------------------------ */
+@utility container-site {
+  width: 100%;
+  max-width: calc(var(--container-site) + 2 * 16px);
+  margin-inline: auto;
+  padding-inline: 16px;
+
+  @media (min-width: 40rem) {
+    max-width: calc(var(--container-site) + 2 * 24px);
+    padding-inline: 24px;
+  }
+
+  @media (min-width: 64rem) {
+    max-width: calc(var(--container-site) + 2 * 32px);
+    padding-inline: 32px;
+  }
+}
+
+@utility section-y {
+  padding-block: clamp(4rem, 8vw, 8rem);
+}
+
+/* Papel de desenho: grelha de 24 px com linha maior a cada 96 px. */
+@utility bg-planta {
+  background-image:
+    linear-gradient(to right, rgb(26 34 44 / 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(26 34 44 / 0.1) 1px, transparent 1px),
+    linear-gradient(to right, rgb(26 34 44 / 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(26 34 44 / 0.055) 1px, transparent 1px);
+  background-size:
+    96px 96px,
+    96px 96px,
+    24px 24px,
+    24px 24px;
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Diálogo modal aberto (detalhe de projeto): a página por trás não desloca. */
+html:has(dialog[open]:modal) {
+  overflow: hidden;
+}
+

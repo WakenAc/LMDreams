@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LMDreams · Maqueta do hero · Direção B (Pedra e Terracota)</title>
+<!--
+  Maqueta estática de design (Fase 1). Não entra no site nem no build.
+  Fontes: só nesta maqueta vêm do jsDelivr. No site são autoalojadas:
+    @fontsource-variable/newsreader 5.3.0 (opsz.css: eixos opsz 6 a 72 e wght 200 a 800, subconjunto latin)
+    @fontsource-variable/public-sans 5.3.0 (wght.css: eixo wght 100 a 900, subconjunto latin)
+  Sem rede, a pilha de recurso (Iowan Old Style, Charter, Georgia / Segoe UI, Arial) mantém o carácter geral.
+  A zona da fotografia é um bloco com gradiente de betão e pedra e linhas de planta em SVG (imagem ainda não gerada).
+-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/newsreader@5.3.0/opsz.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/public-sans@5.3.0/wght.css">
+<style>
+  :root {
+    /* Cor (direção B, valores finais de design/propostas/direcao-B.md) */
+    --bg: #F3EFE9;            /* calcário claro */
+    --surface: #E6E0D7;       /* pedra */
+    --sand: #D1C8BB;          /* areia, só decorativo */
+    --ink: #292929;           /* o carvão do logótipo (fundo do PNG, amostrado) */
+    --muted: #57504A;
+    --line: #CEC5B8;          /* linhas de planta, decorativas */
+    --accent: #A2472A;        /* telha envelhecida */
+    --accent-hover: #853A22;
+    --dark: #292929;
+    --on-dark: #F3EFE9;
+    --accent-on-dark: #E08B67;
+    --focus: #C4572F;
+
+    /* Tipografia */
+    --font-display: "Newsreader Variable", "Iowan Old Style", "Charter", Georgia, serif;
+    --font-body: "Public Sans Variable", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+    --text-display: clamp(2.5rem, 1.35rem + 3.1vw, 4.125rem);
+    --text-h2: clamp(2rem, 1.45rem + 1.7vw, 3rem);
+    --text-h3: clamp(1.25rem, 1.1rem + 0.45vw, 1.5rem);
+    --text-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.3125rem);
+    --text-base: clamp(1rem, 0.97rem + 0.12vw, 1.0625rem);
+    --text-small: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
+    --text-caption: 0.75rem;
+
+    /* Espaço, raios, movimento */
+    --container: 80rem;
+    --margin: 32px;
+    --gap: 32px;
+    --header-h: 72px;
+    --radius-xs: 2px;
+    --radius-sm: 3px;
+    --radius-md: 5px;
+    --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --dur-fast: 150ms;
+    --dur: 250ms;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.6;
+    font-kerning: normal;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  ul { margin: 0; padding: 0; list-style: none; }
+  h1, h2, h3, p { margin: 0; }
+  ::selection { background: var(--accent); color: #fff; }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
+
+  .visually-hidden {
+    position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+  .skip-link {
+    position: absolute; left: 16px; top: -60px; z-index: 50;
+    background: var(--dark); color: var(--on-dark); padding: 10px 16px; border-radius: var(--radius-sm);
+    font-weight: 600; text-decoration: none;
+  }
+  .skip-link:focus { top: 12px; }
+
+  .container {
+    width: min(100% - 2 * var(--margin), var(--container));
+    margin-inline: auto;
+  }
+
+  /* ---------- Botões (um só sistema) ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    font: 600 1rem/1 var(--font-body);
+    letter-spacing: 0.005em;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    white-space: nowrap;
+    transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+  }
+  .btn-md { height: 44px; padding: 0 20px; font-size: 0.9375rem; }
+  .btn-lg { height: 52px; padding: 0 28px; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-secondary { background: transparent; color: var(--ink); border-color: var(--ink); }
+  .btn-secondary:hover { background: var(--surface); }
+  .btn:active { transform: translateY(1px); }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+
+  /* ---------- Cabeçalho ---------- */
+  .site-header {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner {
+    height: calc(var(--header-h) - 1px);
+    display: flex; align-items: center; gap: 28px;
+  }
+  .brand {
+    display: inline-flex; align-items: center; gap: 12px;
+    text-decoration: none; flex: none;
+  }
+  .brand img {
+    height: 44px; width: auto;
+    border-radius: var(--radius-sm);
+  }
+  .brand-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+  }
+  .nav-desktop { margin-left: auto; }
+  .nav-desktop ul { display: flex; gap: 28px; }
+  .nav-desktop a {
+    position: relative;
+    display: inline-block; padding: 8px 0;
+    font-size: 0.9375rem; font-weight: 500; letter-spacing: 0.002em;
+    text-decoration: none; color: var(--ink);
+  }
+  .nav-desktop a:hover { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
+  .nav-desktop a[aria-current="location"]::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+    height: 2px; background: var(--accent);
+  }
+  .header-actions { display: flex; align-items: center; gap: 24px; margin-left: 12px; }
+  .phone {
+    display: grid; grid-template-columns: auto auto; column-gap: 10px; align-items: center;
+    text-decoration: none; color: var(--ink);
+  }
+  .phone svg { grid-row: 1 / span 2; width: 18px; height: 18px; color: var(--muted); }
+  .phone-number {
+    font-weight: 600; font-size: 0.9375rem; line-height: 1.2;
+    font-variant-numeric: tabular-nums; letter-spacing: 0.01em;
+  }
+  .phone-note { font-size: var(--text-caption); line-height: 1.35; color: var(--muted); }
+  .phone:hover .phone-number { text-decoration: underline; text-underline-offset: 3px; }
+  .btn-call, .menu-btn { display: none; }
+  .menu-btn {
+    width: 44px; height: 44px; align-items: center; justify-content: center;
+    background: transparent; border: 1px solid var(--ink); border-radius: var(--radius-sm); color: var(--ink);
+    cursor: pointer;
+  }
+  .menu-btn svg { width: 20px; height: 20px; }
+
+  /* ---------- Marcas "a planta da obra" ---------- */
+  .cota { position: relative; height: 1px; background: var(--line); }
+  .cota::before, .cota::after {
+    content: ""; position: absolute; top: -5px; width: 1px; height: 11px;
+    background: var(--muted); transform: rotate(45deg);
+  }
+  .cota::before { left: 0; }
+  .cota::after { right: 0; }
+  .trust .cota::after { display: none; } /* a ponta direita encontra a cruz de registo do soco */
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    min-height: clamp(36rem, calc(100dvh - var(--header-h)), 56rem);
+    display: grid;
+    z-index: 2;
+    /* 100cqw = largura útil real (sem a barra de deslocamento), para a fotografia sangrar até à margem exata */
+    container-type: inline-size;
+  }
+  .hero-grid {
+    --top: clamp(3rem, 22vh - 4rem, 10rem);
+    --plinth: clamp(160px, 42vh - 110px, 280px);
+    --overhang: 64px;
+    --trust-h: 60px;
+    --bleed: max(var(--margin), calc((100cqw - var(--container)) / 2));
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gap);
+    align-items: start;
+  }
+  .hero-copy {
+    grid-column: 1 / span 8;
+    grid-row: 1;
+    padding-block: var(--top) 72px;
+    position: relative; z-index: 4;
+  }
+  .eyebrow {
+    display: flex; align-items: center; gap: 14px;
+    font-size: var(--text-caption); font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .eyebrow svg { width: 28px; height: 11px; flex: none; color: var(--accent); }
+  .hero h1 {
+    margin-top: 28px;
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 480;
+    font-size: var(--text-display);
+    line-height: 1.04;
+    letter-spacing: -0.021em;
+    text-wrap: balance;
+  }
+  /* A partir de 1024 px, a quebra fica entre "mãos" e "de quem" (duas linhas) */
+  @media (min-width: 1024px) {
+    .hero h1 .h1-line { display: inline-block; }
+  }
+  .lead {
+    margin-top: 28px;
+    max-width: 34rem;
+    font-size: var(--text-lead);
+    line-height: 1.5;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .actions { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 12px; }
+  /* Linha de confiança: a sua linha de cota fica à altura do topo do soco (linha de terra) */
+  .trust {
+    grid-column: 1 / span 7;
+    grid-row: 1;
+    align-self: end;
+    height: var(--trust-h);
+    margin: 0 calc(-1 * var(--gap)) calc(var(--plinth) - var(--overhang) - var(--trust-h)) 0;
+    position: relative; z-index: 4;
+  }
+  .trust ul {
+    display: flex; flex-wrap: wrap; align-items: center; row-gap: 6px;
+    padding-top: 20px;
+    font-size: var(--text-small); font-weight: 500; line-height: 1.4; color: var(--ink);
+  }
+  .trust li + li::before {
+    content: "·"; display: inline-block; margin-inline: 12px; color: var(--muted);
+  }
+
+  /* Soco de pedra (areia) na base da fotografia: atravessa a fronteira com a secção seguinte */
+  .slab {
+    grid-column: 8 / -1;
+    grid-row: 1;
+    align-self: end;
+    height: var(--plinth);
+    margin: 0 calc(-1 * var(--bleed)) calc(-1 * var(--overhang)) 0;
+    position: relative; z-index: 1;
+    background-color: var(--sand);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .16 0 0 0 0 .15 0 0 0 0 .14 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+  }
+  /* Marca de registo (cruz de planta) no canto do soco */
+  .slab::before, .slab::after {
+    content: ""; position: absolute; background: var(--muted);
+  }
+  .slab::before { left: -8px; top: -1px; width: 17px; height: 1px; }
+  .slab::after { left: -1px; top: -8px; width: 1px; height: 17px; }
+
+  .hero-figure {
+    grid-column: 9 / -1;
+    grid-row: 1;
+    align-self: stretch;
+    /* sangra até à margem direita; em ecrãs muito largos fica com 36rem no máximo para manter o formato vertical */
+    justify-self: end;
+    width: min(100% + var(--bleed), 36rem);
+    display: flex; flex-direction: column;
+    margin: var(--top) calc(-1 * var(--bleed)) calc(-1 * var(--overhang)) 0;
+    position: relative; z-index: 3;
+  }
+  /* Linha de extensão: prolonga a aresta esquerda da fotografia até ao cabeçalho */
+  .hero-figure::before {
+    content: ""; position: absolute; left: 0; bottom: 100%;
+    width: 1px; height: 100vh; background: var(--line);
+  }
+  .photo {
+    position: relative;
+    flex: 1;
+    min-height: 420px;
+    overflow: hidden;
+    background:
+      radial-gradient(90% 60% at 22% 18%, rgba(255, 236, 212, 0.62) 0%, rgba(255, 236, 212, 0) 60%),
+      linear-gradient(122deg, rgba(255, 240, 222, 0) 30%, rgba(255, 236, 214, 0.26) 44%, rgba(255, 240, 222, 0) 58%),
+      linear-gradient(180deg, #B4AA9D 0%, #C3B8A9 30%, #A69D91 58%, #837C73 82%, #6A655E 100%);
+  }
+  .photo::after {
+    content: ""; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.16'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+  .photo svg.scene {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+  }
+  .ai-caption {
+    position: absolute; top: 16px; right: 16px; z-index: 2;
+    padding: 6px 10px;
+    background: rgba(41, 41, 41, 0.88);
+    color: var(--on-dark);
+    border-radius: var(--radius-xs);
+    font-size: var(--text-caption); font-weight: 500; line-height: 1.3; letter-spacing: 0.01em;
+  }
+  /* Cota vertical ao longo da fotografia, na calha entre o texto e a imagem */
+  .cota-v {
+    position: absolute; top: 0; bottom: var(--plinth); left: -17px; width: 1px;
+    background: var(--line);
+  }
+  .cota-v::before, .cota-v::after {
+    content: ""; position: absolute; left: -5px; width: 11px; height: 1px;
+    background: var(--muted); transform: rotate(-45deg);
+  }
+  .cota-v::before { top: 0; }
+  .cota-v::after { bottom: 0; }
+
+  /* ---------- Excerto da secção Sobre (ritmo) ---------- */
+  .section { padding-block: clamp(4rem, 8vw, 8rem); }
+  .sobre {
+    position: relative;
+    background: var(--surface);
+    /* recebe a sobreposição da fotografia: soma-a ao padding normal */
+    padding-top: calc(clamp(4rem, 8vw, 8rem) + 32px);
+  }
+  .sobre-boundary {
+    position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--line);
+  }
+  .sobre-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gap);
+    row-gap: 64px;
+  }
+  .sobre h2 {
+    grid-column: 1 / span 6;
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 480;
+    font-size: var(--text-h2);
+    line-height: 1.1;
+    letter-spacing: -0.016em;
+    text-wrap: balance;
+  }
+  .sobre-text {
+    grid-column: 7 / -1;
+    max-width: 36rem;
+    padding-top: 10px;
+  }
+  .sobre-text p + p { margin-top: 16px; }
+  .sobre-text .lead-sm { font-size: var(--text-lead); line-height: 1.5; color: var(--ink); }
+  .sobre-text p:not(.lead-sm) { color: var(--muted); }
+  .highlights {
+    grid-column: 1 / -1;
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--gap);
+  }
+  .highlights li { position: relative; padding-top: 24px; border-top: 1px solid var(--line); }
+  .highlights li::before {
+    content: ""; position: absolute; left: 0; top: -1px; width: 32px; height: 1px; background: var(--ink);
+  }
+  .highlights h3 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 560;
+    font-size: var(--text-h3);
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+  .highlights p { margin-top: 8px; max-width: 26rem; font-size: var(--text-small); line-height: 1.55; color: var(--muted); }
+
+  /* ---------- Barra de contacto móvel (< 768 px) ---------- */
+  .mobile-bar { display: none; }
+
+  /* ---------- 1280 a 1439 px ---------- */
+  .nav-desktop a, .phone-number, .phone-note { white-space: nowrap; }
+  @media (max-width: 1439px) {
+    .header-inner { gap: 20px; }
+    .nav-desktop ul { gap: 18px; }
+    .nav-desktop a { font-size: 0.90625rem; }
+    .header-actions { gap: 18px; margin-left: 0; }
+  }
+
+  /* ---------- Menos de 1280 px: navegação no menu, botão compacto "Ligar" ---------- */
+  @media (max-width: 1279px) {
+    .nav-desktop, .phone { display: none; }
+    .header-actions { margin-left: auto; gap: 10px; }
+    .btn-call, .menu-btn { display: inline-flex; }
+    .btn-call { background: transparent; color: var(--ink); border-color: var(--ink); }
+    .hero h1 { font-size: min(var(--text-display), 4.6vw); }
+  }
+
+  @media (max-width: 1023px) {
+    :root { --margin: 24px; --gap: 24px; }
+    .hero-copy { grid-column: 1 / span 7; }
+    .hero h1 { font-size: clamp(2.5rem, 1rem + 4.2vw, 3.5rem); }
+  }
+
+  /* ---------- Telemóvel ---------- */
+  @media (max-width: 767px) {
+    :root { --margin: 16px; --gap: 16px; --header-h: 64px; }
+    .header-inner { gap: 10px; }
+    .brand { gap: 8px; }
+    .brand img { height: 28px; }
+    .brand-name { font-size: 1.125rem; }
+    .btn-call { display: none; }
+    .header-actions .btn-md { height: 40px; padding: 0 12px; font-size: 0.875rem; }
+    .header-actions { gap: 8px; }
+    .menu-btn { width: 40px; height: 40px; }
+
+    .hero {
+      min-height: calc(100dvh - var(--header-h) - 68px - env(safe-area-inset-bottom));
+      padding-bottom: 0;
+    }
+    .hero-grid { grid-template-columns: minmax(0, 1fr); column-gap: 0; }
+    .hero-copy { grid-column: 1; grid-row: 1; padding-block: 24px 0; }
+    .eyebrow { align-items: flex-start; font-size: 0.6875rem; letter-spacing: 0.1em; line-height: 1.5; }
+    .eyebrow svg { margin-top: 2px; }
+    .hero h1 { margin-top: 16px; font-size: 2.5rem; line-height: 1.06; letter-spacing: -0.018em; }
+    .lead { margin-top: 16px; font-size: 1rem; line-height: 1.55; }
+    .actions { margin-top: 24px; display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .actions .btn-lg { height: 48px; }
+    .trust { grid-column: 1; grid-row: 2; align-self: start; height: auto; margin: 22px 0 0; }
+    .trust ul { display: grid; row-gap: 6px; padding-top: 14px; font-size: 0.875rem; }
+    .trust li { display: flex; align-items: center; gap: 10px; }
+    .trust li::before, .trust li + li::before {
+      content: ""; display: block; flex: none; width: 5px; height: 5px; margin: 0; background: var(--muted);
+    }
+    .slab { display: none; }
+    .hero-figure {
+      grid-column: 1; grid-row: 3;
+      justify-self: stretch; width: auto;
+      margin: 28px calc(-1 * var(--margin)) 0;
+    }
+    .hero-figure::before { display: none; }
+    .photo { flex: none; min-height: 0; aspect-ratio: 4 / 5; }
+    .cota-v { display: none; }
+    .ai-caption { top: 12px; right: 12px; }
+
+    .sobre-grid { grid-template-columns: minmax(0, 1fr); row-gap: 32px; }
+    .sobre h2, .sobre-text, .highlights { grid-column: 1; }
+    .sobre-text { padding-top: 0; }
+    .highlights { grid-template-columns: minmax(0, 1fr); row-gap: 24px; }
+
+    body { padding-bottom: calc(68px + env(safe-area-inset-bottom)); }
+    .mobile-bar {
+      display: grid; grid-template-columns: 60px 76px minmax(0, 1fr); gap: 8px;
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      background: var(--bg);
+      border-top: 1px solid var(--line);
+    }
+    .mobile-bar .btn { height: 48px; padding: 0 12px; font-size: 0.9375rem; }
+    .mobile-bar .btn-secondary {
+      flex-direction: column; gap: 3px; padding: 0 4px;
+      font-size: 0.75rem; letter-spacing: 0.01em;
+    }
+    .mobile-bar .btn-secondary svg { width: 18px; height: 18px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#conteudo">Saltar para o conteúdo</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#inicio" aria-label="LMDreams, voltar ao início">
+      <img src="../../logo-lmdreams.png" alt="" width="352" height="188">
+      <span class="brand-name">LMDreams</span>
+    </a>
+
+    <nav class="nav-desktop" aria-label="Principal">
+      <ul>
+        <li><a href="#inicio" aria-current="location">Início</a></li>
+        <li><a href="#sobre">Sobre nós</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#metodo">Método de trabalho</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#contactos">Contactos</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a class="phone" href="tel:+351919233372">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span class="phone-number">+351 919 233 372</span>
+        <span class="phone-note">(chamada para a rede móvel nacional)</span>
+      </a>
+      <a class="btn btn-md btn-call" href="tel:+351919233372" aria-label="Ligar para a LMDreams">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Ligar
+      </a>
+      <a class="btn btn-md btn-primary" href="#contactos">Pedir orçamento</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-movel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <span class="visually-hidden">Abrir menu</span>
+      </button>
+    </div>
+  </div>
+  <nav id="menu-movel" aria-label="Menu" hidden>
+    <ul>
+      <li><a href="#inicio">Início</a></li>
+      <li><a href="#sobre">Sobre nós</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#metodo">Método de trabalho</a></li>
+      <li><a href="#projetos">Projetos</a></li>
+      <li><a href="#contactos">Contactos</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="conteudo">
+  <section class="hero" id="inicio" aria-labelledby="hero-title">
+    <div class="container hero-grid">
+      <div class="slab" aria-hidden="true"></div>
+
+      <div class="hero-copy">
+        <p class="eyebrow">
+          <svg viewBox="0 0 28 11" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 5.5h26M3.5 1.5l-4 8M28.5 1.5l-4 8" stroke-linecap="square"/></svg>
+          <span>Construção civil e remodelações · Portugal continental</span>
+        </p>
+        <h1 id="hero-title"><span class="h1-line">Cada especialidade nas mãos</span> <span class="h1-line">de quem realmente sabe.</span></h1>
+        <p class="lead">Profissionais com mais de 30 anos de experiência, reunidos para cada etapa da obra, com qualidade, rigor e transparência do início ao fim.</p>
+        <div class="actions">
+          <a class="btn btn-lg btn-primary" href="#contactos">Pedir orçamento</a>
+          <a class="btn btn-lg btn-secondary" href="#servicos">Conhecer os serviços</a>
+        </div>
+      </div>
+
+      <div class="trust">
+        <div class="cota" aria-hidden="true"></div>
+        <ul aria-label="Em resumo">
+          <li>Mais de 30 anos de experiência</li>
+          <li>Profissionais especializados</li>
+          <li>Acompanhamento transparente</li>
+        </ul>
+      </div>
+
+      <figure class="hero-figure">
+        <span class="cota-v" aria-hidden="true"></span>
+        <div class="photo" role="img" aria-label="Mãos de um profissional a nivelar um revestimento de pedra natural num interior contemporâneo.">
+          <!-- Cena de substituição: teto de betão, parede em revestimento de pedra de grande formato a meio da aplicação,
+               nível sobre a junta, luz rasante de fim de tarde e cotas de estereotomia alinhadas com as juntas. -->
+          <svg class="scene" viewBox="0 0 480 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs>
+              <linearGradient id="betao" x1="0" y1="0" x2="0.3" y2="1">
+                <stop offset="0" stop-color="#8F8A83"/><stop offset="1" stop-color="#ABA59D"/>
+              </linearGradient>
+              <linearGradient id="pedra" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#D6CAB8"/><stop offset="0.5" stop-color="#C4B6A1"/><stop offset="1" stop-color="#9C8F7F"/>
+              </linearGradient>
+              <radialGradient id="sol" cx="0.18" cy="0.34" r="0.75">
+                <stop offset="0" stop-color="#FFE9CC" stop-opacity="0.55"/><stop offset="1" stop-color="#FFE9CC" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="rasante" x1="0" y1="0" x2="1" y2="0.62">
+                <stop offset="0.28" stop-color="#FFF1DE" stop-opacity="0"/>
+                <stop offset="0.44" stop-color="#FFF1DE" stop-opacity="0.28"/>
+                <stop offset="0.6" stop-color="#FFF1DE" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="vinheta" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0.5" stop-color="#292929" stop-opacity="0"/><stop offset="1" stop-color="#292929" stop-opacity="0.42"/>
+              </linearGradient>
+            </defs>
+            <!-- teto de betão com marcas de cofragem -->
+            <rect width="480" height="232" fill="url(#betao)"/>
+            <path d="M0 29H480M0 58H480M0 87H480M0 116H480M0 145H480M0 174H480M0 203H480" stroke="#292929" stroke-opacity="0.07"/>
+            <rect y="226" width="480" height="10" fill="#6F6A63" opacity="0.55"/>
+            <!-- parede em pedra natural, placas de grande formato -->
+            <rect y="236" width="480" height="484" fill="url(#pedra)"/>
+            <rect x="160" y="236" width="160" height="150" fill="#FFFFFF" opacity="0.05"/>
+            <rect x="0" y="386" width="160" height="150" fill="#292929" opacity="0.04"/>
+            <rect x="320" y="386" width="160" height="150" fill="#FFFFFF" opacity="0.06"/>
+            <rect x="160" y="536" width="160" height="184" fill="#292929" opacity="0.05"/>
+            <!-- zona ainda por revestir: reboco com marcas da talocha dentada -->
+            <rect x="321" y="537" width="159" height="183" fill="#A29C93"/>
+            <path d="M330 560H470M330 572H470M330 584H470M330 596H470M330 608H470M330 620H470M330 632H470M330 644H470M330 656H470M330 668H470M330 680H470M330 692H470M330 704H470" stroke="#292929" stroke-opacity="0.12"/>
+            <!-- juntas -->
+            <path d="M0 386H480M0 536H321M160 236V720M320 236V537" stroke="#292929" stroke-opacity="0.28" stroke-width="1.5"/>
+            <!-- nível de bolha pousado sobre a junta -->
+            <rect x="96" y="520" width="232" height="15" rx="2" fill="#5B5A56"/>
+            <rect x="96" y="520" width="232" height="3" rx="1.5" fill="#FFFFFF" opacity="0.18"/>
+            <rect x="200" y="523" width="26" height="9" rx="3" fill="#E7E1D6"/>
+            <path d="M213 523V532" stroke="#5B5A56" stroke-opacity="0.6"/>
+            <!-- luz -->
+            <rect width="480" height="720" fill="url(#sol)"/>
+            <rect width="480" height="720" fill="url(#rasante)"/>
+            <rect width="480" height="720" fill="url(#vinheta)"/>
+            <!-- cotas de estereotomia, alinhadas com as juntas -->
+            <g stroke="#F3EFE9" stroke-opacity="0.6" fill="none">
+              <path d="M0 186H480M160 176V220M320 176V220M1 176V220M479 176V220"/>
+              <path d="M155 191L165 181M315 191L325 181M-4 191L6 181M474 191L484 181"/>
+              <path d="M36 386V536M26 386H46M26 536H46"/>
+              <path d="M31 391L41 381M31 541L41 531"/>
+            </g>
+          </svg>
+        </div>
+        <figcaption class="ai-caption">Imagem ilustrativa gerada por IA</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section sobre" id="sobre" aria-labelledby="sobre-title">
+    <div class="sobre-boundary" aria-hidden="true"></div>
+    <div class="container sobre-grid">
+      <h2 id="sobre-title">A sua obra executada por especialistas.</h2>
+      <div class="sobre-text">
+        <p class="lead-sm">Reunimos profissionais com mais de 30 anos de experiência, cada um na sua especialidade.</p>
+        <p>Cada fase da obra fica a cargo de quem a domina. O eletricista trata da eletricidade, o canalizador da canalização, e nós coordenamos o conjunto, da primeira visita à entrega.</p>
+      </div>
+      <ul class="highlights">
+        <li>
+          <h3>Profissionais especializados em cada área</h3>
+          <p>Cada trabalho fica com quem tem experiência nessa especialidade.</p>
+        </li>
+        <li>
+          <h3>Coordenação de todos os trabalhos</h3>
+          <p>Organizamos a sequência das especialidades para a obra avançar com ordem.</p>
+        </li>
+        <li>
+          <h3>Informação clara em cada fase</h3>
+          <p>Explicamos o que vai ser feito, por quem e em que ponto está a obra.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<nav class="mobile-bar" aria-label="Contacto rápido">
+  <a class="btn btn-secondary" href="tel:+351919233372" aria-label="Ligar para a LMDreams">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    Ligar
+  </a>
+  <a class="btn btn-secondary" href="https://wa.me/351919233372?text=Ol%C3%A1%2C%20gostaria%20de%20pedir%20um%20or%C3%A7amento%20para%20uma%20obra." target="_blank" rel="noopener" aria-label="WhatsApp da LMDreams (abre numa nova janela)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+    WhatsApp
+  </a>
+  <a class="btn btn-primary" href="#contactos">Pedir orçamento</a>
+</nav>
+
+</body>
+</html>
