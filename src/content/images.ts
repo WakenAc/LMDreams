@@ -10,6 +10,20 @@ import heroMobileAvif from '@ilustrativas/hero-telemovel.jpg?w=480;640;720;800;1
 import heroMobileRest from '@ilustrativas/hero-telemovel.jpg?w=480;640;720;800;1024;1216&format=webp;jpg&quality=64&as=picture'
 import heroAvif from '@ilustrativas/hero.jpg?w=640;960;1280;1600;1920&format=avif&quality=50&as=picture'
 import heroRest from '@ilustrativas/hero.jpg?w=640;960;1280;1600;1920&format=webp;jpg&quality=64&as=picture'
+// Larguras até 2× o maior tamanho em que cada imagem aparece (Parte 4.8): cerca de 607 px
+// no Sobre e nos cartões de serviço (telemóvel, abaixo de 640 px); a toda a largura no CTA.
+// Nos cartões de serviço, o AVIF vai a 56: a 50 comprimia tanto que o JPEG de recurso
+// passava do dobro do AVIF (Parte 4.8).
+import sobreAvif from '@ilustrativas/sobre.jpg?w=480;640;800;1024;1216&format=avif&quality=50&as=picture'
+import sobreRest from '@ilustrativas/sobre.jpg?w=480;640;800;1024;1216&format=webp;jpg&quality=64&as=picture'
+import cozinhasAvif from '@ilustrativas/servico-cozinhas.jpg?w=480;640;816;1024;1216&format=avif&quality=56&as=picture'
+import cozinhasRest from '@ilustrativas/servico-cozinhas.jpg?w=480;640;816;1024;1216&format=webp;jpg&quality=64&as=picture'
+import recuperacaoAvif from '@ilustrativas/servico-recuperacao.jpg?w=480;640;816;1024;1216&format=avif&quality=56&as=picture'
+import recuperacaoRest from '@ilustrativas/servico-recuperacao.jpg?w=480;640;816;1024;1216&format=webp;jpg&quality=64&as=picture'
+import exterioresAvif from '@ilustrativas/servico-exteriores.jpg?w=480;640;816;1024;1216&format=avif&quality=56&as=picture'
+import exterioresRest from '@ilustrativas/servico-exteriores.jpg?w=480;640;816;1024;1216&format=webp;jpg&quality=64&as=picture'
+import ctaAvif from '@ilustrativas/cta.jpg?w=640;960;1280;1600;1920;2560&format=avif&quality=50&as=picture'
+import ctaRest from '@ilustrativas/cta.jpg?w=640;960;1280;1600;1920;2560&format=webp;jpg&quality=64&as=picture'
 import type { ImageId } from './tipos'
 
 /** Resultado de um import `?…&as=picture` do vite-imagetools. */
@@ -69,8 +83,8 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
   },
   sobre: {
     id: 'sobre',
-    picture: null,
-    alt: 'Planta de arquitetura com amostras de betão, pedra, madeira e latão sobre uma mesa de obra.',
+    picture: withAvif(sobreAvif, sobreRest),
+    alt: 'Profissional aponta para uma planta de arquitetura, junto a amostras de pedra, madeira e latão.',
     ratio: [4, 5],
     ilustrativa: true,
     sizes: '(min-width: 1336px) 516px, (min-width: 1024px) 39vw, (min-width: 640px) 47vw, calc(100vw - 32px)',
@@ -93,8 +107,8 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
   },
   'servico-cozinhas': {
     id: 'servico-cozinhas',
-    picture: null,
-    alt: 'Profissional a ajustar uma bancada de pedra numa cozinha em remodelação.',
+    picture: withAvif(cozinhasAvif, cozinhasRest),
+    alt: 'Profissional a verificar com um nível o alinhamento de uma bancada de pedra numa cozinha.',
     ratio: [4, 3],
     ilustrativa: true,
     sizes: '(min-width: 1336px) 408px, (min-width: 1024px) calc((100vw - 112px) / 3), (min-width: 640px) calc((100vw - 72px) / 2), calc(100vw - 32px)',
@@ -117,15 +131,15 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
   },
   'servico-recuperacao': {
     id: 'servico-recuperacao',
-    picture: null,
-    alt: 'Recuperação de fachada tradicional com reboco de cal e cantarias restauradas.',
+    picture: withAvif(recuperacaoAvif, recuperacaoRest),
+    alt: 'Fachada tradicional em recuperação, com andaime, reboco de cal e cantarias de pedra.',
     ratio: [4, 3],
     ilustrativa: true,
     sizes: '(min-width: 1336px) 408px, (min-width: 1024px) calc((100vw - 112px) / 3), (min-width: 640px) calc((100vw - 72px) / 2), calc(100vw - 32px)',
   },
   'servico-exteriores': {
     id: 'servico-exteriores',
-    picture: null,
+    picture: withAvif(exterioresAvif, exterioresRest),
     alt: 'Assentamento de pavimento em pedra natural num terraço exterior.',
     ratio: [4, 3],
     ilustrativa: true,
@@ -141,7 +155,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
   },
   cta: {
     id: 'cta',
-    picture: null,
+    picture: withAvif(ctaAvif, ctaRest),
     // Decorativa: alt vazio, mas com a legenda de IA visível (Parte 4.8).
     alt: '',
     ratio: [21, 9],

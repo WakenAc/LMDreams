@@ -31,6 +31,86 @@
       ],
       "alt": "Profissional a verificar com um nível o revestimento de pedra natural de um interior contemporâneo.",
       "ilustrativa": true
+    },
+    {
+      "id": "sobre",
+      "ficheiro": "assets-src/ilustrativas/sobre.jpg",
+      "origem": "Higgsfield",
+      "modelo": "gpt_image_2_5 (variant flare, quality high, resolution 2k), com o hero (job 555c2906-3954-4aaf-8ffd-6d9f31f39366) como referência de estilo (image_references)",
+      "prompt": "Overhead view of an architectural floor plan drawing lying on a timber site table, the plan drawn only with clean ink lines and light hatching (no labels, no dimensions, no lettering of any kind), material samples arranged beside it: a small raw concrete block, a honed travertine tile, an oak offcut and a small brushed aged-brass plate, a flat carpenter's pencil, one hand gently pointing at a room on the plan, warm late-afternoon light raking across the table with long soft shadows, calm and orderly mood, main subject slightly right of centre. Use the reference image only for colour grading, light and film grain; do not copy its composition, subject or objects. Palette: warm off-white #F6F5F1, pale concrete #E8E7E1, stone sand #D6D2C7, deep blue-black shadows #1A222C, a restrained aged brass #80632B accent. Editorial architectural photography, true-to-life materials, soft warm natural light, muted palette of charcoal, warm concrete grey, sand and natural stone with a restrained aged brass accent, very subtle film grain, realistic proportions and perspective, 35 mm lens, shallow depth of field. Photorealistic, not CGI. No yellow-green tones. No text, no letters, no numbers, no logos, no signage, no watermarks, no identifiable faces.",
+      "proporcao": "4:5 (1792 × 2240)",
+      "job_id": "15d1d76a-2735-422b-84e3-1684a46104f4",
+      "data": "2026-09-26",
+      "tratamento_local": "nenhum",
+      "usada_em": [
+        "Sobre a LMDreams (secção Sobre nós)"
+      ],
+      "alt": "Profissional aponta para uma planta de arquitetura, junto a amostras de pedra, madeira e latão.",
+      "ilustrativa": true
+    },
+    {
+      "id": "servico-cozinhas",
+      "ficheiro": "assets-src/ilustrativas/servico-cozinhas.jpg",
+      "origem": "Higgsfield",
+      "modelo": "gpt_image_2_5 (variant flare, quality high, resolution 2k), com o hero (job 555c2906-3954-4aaf-8ffd-6d9f31f39366) como referência de estilo (image_references)",
+      "prompt": "A professional's hands and forearms fitting a honed natural stone countertop onto oak kitchen cabinets in a contemporary kitchen under renovation, checking the joint with a small spirit level, warm late-afternoon light from a side window, tidy work area with a few tools neatly placed, only hands and forearms visible, subject slightly right of centre. Use the reference image only for colour grading, light and film grain; do not copy its composition, subject or objects. Palette: warm off-white #F6F5F1, pale concrete #E8E7E1, stone sand #D6D2C7, deep blue-black shadows #1A222C, a restrained aged brass #80632B accent. Editorial architectural photography, true-to-life materials, soft warm natural light, muted palette of charcoal, warm concrete grey, sand and natural stone with a restrained aged brass accent, very subtle film grain, realistic proportions and perspective, 35 mm lens, shallow depth of field. Photorealistic, not CGI. No yellow-green tones. No text, no letters, no numbers, no logos, no signage, no watermarks, no identifiable faces.",
+      "proporcao": "4:3 (2336 × 1744)",
+      "job_id": "3ee15704-275e-4f3f-9dd2-5067ec0abf20",
+      "data": "2026-09-26",
+      "tratamento_local": "saturação a 92% (sharp), para ficar mais próxima do hero",
+      "usada_em": [
+        "Serviços: cartão \"Remodelação de cozinhas\""
+      ],
+      "alt": "Profissional a verificar com um nível o alinhamento de uma bancada de pedra numa cozinha.",
+      "ilustrativa": true
+    },
+    {
+      "id": "servico-recuperacao",
+      "ficheiro": "assets-src/ilustrativas/servico-recuperacao.jpg",
+      "origem": "Higgsfield",
+      "modelo": "gpt_image_2_5 (variant flare, quality high, resolution 2k), com o hero (job 555c2906-3954-4aaf-8ffd-6d9f31f39366) como referência de estilo (image_references)",
+      "prompt": "Restoration of a traditional Portuguese townhouse facade: fresh white lime plaster, restored pale limestone window surrounds, painted wooden shutters in a muted slate grey, one side with part of a tidy, properly assembled scaffold with guardrails, no people, no azulejo tiles, soft warm late-afternoon light, calm three-quarter view from street level, subject slightly right of centre. Use the reference image only for colour grading, light and film grain; do not copy its composition, subject or objects. Palette: warm off-white #F6F5F1, pale concrete #E8E7E1, stone sand #D6D2C7, deep blue-black shadows #1A222C, a restrained aged brass #80632B accent. Editorial architectural photography, true-to-life materials, soft warm natural light, muted palette of charcoal, warm concrete grey, sand and natural stone with a restrained aged brass accent, very subtle film grain, realistic proportions and perspective, 35 mm lens, shallow depth of field. Photorealistic, not CGI. No yellow-green tones. No text, no letters, no numbers, no logos, no signage, no watermarks, no identifiable faces.",
+      "proporcao": "4:3 (2336 × 1744)",
+      "job_id": "cc54df83-81c4-445b-b2e4-8dfbdf35fe45",
+      "data": "2026-09-26",
+      "tratamento_local": "luminosidade a 90% e saturação a 95% (sharp), por ser a mais clara da série",
+      "usada_em": [
+        "Serviços: cartão \"Recuperação de imóveis\""
+      ],
+      "alt": "Fachada tradicional em recuperação, com andaime, reboco de cal e cantarias de pedra.",
+      "ilustrativa": true
+    },
+    {
+      "id": "servico-exteriores",
+      "ficheiro": "assets-src/ilustrativas/servico-exteriores.jpg",
+      "origem": "Higgsfield",
+      "modelo": "gpt_image_2_5 (variant flare, quality high, resolution 2k), com o hero (job 555c2906-3954-4aaf-8ffd-6d9f31f39366) como referência de estilo (image_references)",
+      "prompt": "Outdoor terrace works at a contemporary Portuguese home: large natural limestone paving slabs being laid on a level mortar bed, several slabs already set with straight even joints, a spirit level and a rubber mallet resting on a slab, a low garden wall in board-formed concrete, a few muted olive-grey plants, no lawn, warm evening light with long shadows, tidy site, no people, subject slightly right of centre. Use the reference image only for colour grading, light and film grain; do not copy its composition, subject or objects. Palette: warm off-white #F6F5F1, pale concrete #E8E7E1, stone sand #D6D2C7, deep blue-black shadows #1A222C, a restrained aged brass #80632B accent. Editorial architectural photography, true-to-life materials, soft warm natural light, muted palette of charcoal, warm concrete grey, sand and natural stone with a restrained aged brass accent, very subtle film grain, realistic proportions and perspective, 35 mm lens, shallow depth of field. Photorealistic, not CGI. No yellow-green tones. No text, no letters, no numbers, no logos, no signage, no watermarks, no identifiable faces.",
+      "proporcao": "4:3 (2336 × 1744)",
+      "job_id": "1ed6086e-e816-4b56-adb8-dcf41692c2f4",
+      "data": "2026-09-26",
+      "tratamento_local": "nenhum",
+      "usada_em": [
+        "Serviços: cartão \"Trabalhos exteriores\""
+      ],
+      "alt": "Assentamento de pavimento em pedra natural num terraço exterior.",
+      "ilustrativa": true
+    },
+    {
+      "id": "cta",
+      "ficheiro": "assets-src/ilustrativas/cta.jpg",
+      "origem": "Higgsfield",
+      "modelo": "gpt_image_2_5 (variant flare, quality high, resolution 2k), com o hero (job 555c2906-3954-4aaf-8ffd-6d9f31f39366) como referência de estilo (image_references)",
+      "prompt": "Minimal architectural detail: a smooth warm-grey concrete wall meeting a honed natural stone plinth, warm low sunlight casting long diagonal shadow lines across the wall, the left half of the frame calm and nearly empty for a text overlay, the stone plinth detail and the strongest shadows toward the right side, quiet and precise mood, no people. Use the reference image only for colour grading, light and film grain; do not copy its composition, subject or objects. Palette: warm off-white #F6F5F1, pale concrete #E8E7E1, stone sand #D6D2C7, deep blue-black shadows #1A222C, a restrained aged brass #80632B accent. Editorial architectural photography, true-to-life materials, soft warm natural light, muted palette of charcoal, warm concrete grey, sand and natural stone with a restrained aged brass accent, very subtle film grain, realistic proportions and perspective, 35 mm lens. Photorealistic, not CGI. No yellow-green tones. No text, no letters, no numbers, no logos, no signage, no watermarks, no identifiable faces.",
+      "proporcao": "21:9 (2688 × 1152, reduzida para 2560 × 1097)",
+      "job_id": "59e9106b-bbb0-42a2-8c12-7bf1e0d300d9",
+      "data": "2026-09-26",
+      "tratamento_local": "nenhum",
+      "usada_em": [
+        "Chamada para ação (secção Pedir orçamento), fundo sob o véu escuro"
+      ],
+      "alt": "",
+      "ilustrativa": true
     }
   ]
 }

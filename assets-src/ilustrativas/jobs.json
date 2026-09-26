@@ -18,6 +18,106 @@
       "modelo": "gpt_image_2_5",
       "proporcao": "16:9",
       "estado": "submission_failed: limite diário de gerações do período de tolerância"
+    },
+    {
+      "index": 2,
+      "asset": "sobre",
+      "versao": "v1",
+      "job_id": "15d1d76a-2735-422b-84e3-1684a46104f4",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:5",
+      "estado": "completed",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 5,
+      "asset": "servico-cozinhas",
+      "versao": "v1",
+      "job_id": "3ee15704-275e-4f3f-9dd2-5067ec0abf20",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "completed",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 8,
+      "asset": "servico-recuperacao",
+      "versao": "v1",
+      "job_id": "cc54df83-81c4-445b-b2e4-8dfbdf35fe45",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "completed",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 9,
+      "asset": "servico-exteriores",
+      "versao": "v1",
+      "job_id": "1ed6086e-e816-4b56-adb8-dcf41692c2f4",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "completed",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 11,
+      "asset": "cta",
+      "versao": "v1",
+      "job_id": "59e9106b-bbb0-42a2-8c12-7bf1e0d300d9",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "21:9",
+      "estado": "completed",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 3,
+      "asset": "diferenciacao",
+      "versao": "v1",
+      "job_id": null,
+      "modelo": "gpt_image_2_5",
+      "proporcao": "3:2",
+      "estado": "submission_failed: limite diário de gerações do período de tolerância (sem custo)",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 4,
+      "asset": "servico-construcao",
+      "versao": "v1",
+      "job_id": null,
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "submission_failed: limite diário de gerações do período de tolerância (sem custo)",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 6,
+      "asset": "servico-casas-de-banho",
+      "versao": "v1",
+      "job_id": null,
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "submission_failed: limite diário de gerações do período de tolerância (sem custo)",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 7,
+      "asset": "servico-pavimentos",
+      "versao": "v1",
+      "job_id": null,
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "submission_failed: limite diário de gerações do período de tolerância (sem custo)",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 10,
+      "asset": "transparencia",
+      "versao": "v1",
+      "job_id": null,
+      "modelo": "gpt_image_2_5",
+      "proporcao": "3:2",
+      "estado": "submission_failed: limite diário de gerações do período de tolerância (sem custo)",
+      "data": "2026-09-26"
     }
   ]
 }
