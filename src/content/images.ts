@@ -12,7 +12,7 @@ import heroAvif from '@ilustrativas/hero.jpg?w=640;960;1280;1600;1920&format=avi
 import heroRest from '@ilustrativas/hero.jpg?w=640;960;1280;1600;1920&format=webp;jpg&quality=64&as=picture'
 // Larguras até 2× o maior tamanho em que cada imagem aparece (Parte 4.8): cerca de 607 px
 // no Sobre e nos cartões de serviço (telemóvel, abaixo de 640 px); a toda a largura no CTA.
-// Nos cartões de serviço, o AVIF vai a 56: a 50 comprimia tanto que o JPEG de recurso
+// Nos cartões de serviço e na transparência, o AVIF vai a 56: a 50 comprimia tanto que o JPEG de recurso
 // passava do dobro do AVIF (Parte 4.8).
 import sobreAvif from '@ilustrativas/sobre.jpg?w=480;640;800;1024;1216&format=avif&quality=50&as=picture'
 import sobreRest from '@ilustrativas/sobre.jpg?w=480;640;800;1024;1216&format=webp;jpg&quality=64&as=picture'
@@ -22,6 +22,12 @@ import recuperacaoAvif from '@ilustrativas/servico-recuperacao.jpg?w=480;640;816
 import recuperacaoRest from '@ilustrativas/servico-recuperacao.jpg?w=480;640;816;1024;1216&format=webp;jpg&quality=64&as=picture'
 import exterioresAvif from '@ilustrativas/servico-exteriores.jpg?w=480;640;816;1024;1216&format=avif&quality=56&as=picture'
 import exterioresRest from '@ilustrativas/servico-exteriores.jpg?w=480;640;816;1024;1216&format=webp;jpg&quality=64&as=picture'
+import construcaoAvif from '@ilustrativas/servico-construcao.jpg?w=480;640;816;1024;1216&format=avif&quality=56&as=picture'
+import construcaoRest from '@ilustrativas/servico-construcao.jpg?w=480;640;816;1024;1216&format=webp;jpg&quality=64&as=picture'
+import pavimentosAvif from '@ilustrativas/servico-pavimentos.jpg?w=480;640;816;1024;1216&format=avif&quality=56&as=picture'
+import pavimentosRest from '@ilustrativas/servico-pavimentos.jpg?w=480;640;816;1024;1216&format=webp;jpg&quality=64&as=picture'
+import transparenciaAvif from '@ilustrativas/transparencia.jpg?w=480;640;800;1024;1216&format=avif&quality=56&as=picture'
+import transparenciaRest from '@ilustrativas/transparencia.jpg?w=480;640;800;1024;1216&format=webp;jpg&quality=64&as=picture'
 import ctaAvif from '@ilustrativas/cta.jpg?w=640;960;1280;1600;1920;2560&format=avif&quality=50&as=picture'
 import ctaRest from '@ilustrativas/cta.jpg?w=640;960;1280;1600;1920;2560&format=webp;jpg&quality=64&as=picture'
 import type { ImageId } from './tipos'
@@ -99,7 +105,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
   },
   'servico-construcao': {
     id: 'servico-construcao',
-    picture: null,
+    picture: withAvif(construcaoAvif, construcaoRest),
     alt: 'Cofragem e armaduras de aço numa obra de construção ao fim da tarde.',
     ratio: [4, 3],
     ilustrativa: true,
@@ -123,7 +129,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
   },
   'servico-pavimentos': {
     id: 'servico-pavimentos',
-    picture: null,
+    picture: withAvif(pavimentosAvif, pavimentosRest),
     alt: 'Mãos de um profissional a aplicar um pavimento de madeira em espinha.',
     ratio: [4, 3],
     ilustrativa: true,
@@ -147,7 +153,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
   },
   transparencia: {
     id: 'transparencia',
-    picture: null,
+    picture: withAvif(transparenciaAvif, transparenciaRest),
     alt: 'Reunião em obra sobre o planeamento impresso dos trabalhos.',
     ratio: [3, 2],
     ilustrativa: true,

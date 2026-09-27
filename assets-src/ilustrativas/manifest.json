@@ -111,6 +111,54 @@
       ],
       "alt": "",
       "ilustrativa": true
+    },
+    {
+      "id": "servico-construcao",
+      "ficheiro": "assets-src/ilustrativas/servico-construcao.jpg",
+      "origem": "Higgsfield",
+      "modelo": "gpt_image_2_5 (variant flare, quality high, resolution 2k), com o hero (job 555c2906-3954-4aaf-8ffd-6d9f31f39366) como referência de estilo (image_references)",
+      "prompt": "Close-up of clean timber formwork and neatly tied steel rebar on a tidy, well-organised residential construction site at golden hour, straight lines and orderly stacked materials, no people, warm low sunlight raking across the rebar, shallow depth of field, subject slightly right of centre. Use the reference image only for colour grading, light and film grain; do not copy its composition, subject or objects. Palette: warm off-white #F6F5F1, pale concrete #E8E7E1, stone sand #D6D2C7, deep blue-black shadows #1A222C, a restrained aged brass #80632B accent. Editorial architectural photography, true-to-life materials, soft warm natural light, muted palette of charcoal, warm concrete grey, sand and natural stone with a restrained aged brass accent, very subtle film grain, realistic proportions and perspective, 35 mm lens, shallow depth of field. Photorealistic, not CGI. No yellow-green tones. No text, no letters, no numbers, no logos, no signage, no watermarks, no identifiable faces.",
+      "proporcao": "4:3 (2336 × 1744)",
+      "job_id": "c319655c-808e-473c-8724-8e7df196c39a",
+      "data": "2026-09-27",
+      "tratamento_local": "nenhum",
+      "usada_em": [
+        "Serviços: cartão \"Construção civil\""
+      ],
+      "alt": "Cofragem e armaduras de aço numa obra de construção ao fim da tarde.",
+      "ilustrativa": true
+    },
+    {
+      "id": "servico-pavimentos",
+      "ficheiro": "assets-src/ilustrativas/servico-pavimentos.jpg",
+      "origem": "Higgsfield",
+      "modelo": "gpt_image_2_5 (variant flare, quality high, resolution 2k), com o hero (job 555c2906-3954-4aaf-8ffd-6d9f31f39366) como referência de estilo (image_references)",
+      "prompt": "Oak herringbone parquet floor being installed: a kneeling craftsman's hands tapping a board into place with a rubber mallet, perfectly aligned herringbone pattern, clean swept surface, warm late-afternoon light raking low across the wood, only hands and forearms visible, subject slightly right of centre. Use the reference image only for colour grading, light and film grain; do not copy its composition, subject or objects. Palette: warm off-white #F6F5F1, pale concrete #E8E7E1, stone sand #D6D2C7, deep blue-black shadows #1A222C, a restrained aged brass #80632B accent. Editorial architectural photography, true-to-life materials, soft warm natural light, muted palette of charcoal, warm concrete grey, sand and natural stone with a restrained aged brass accent, very subtle film grain, realistic proportions and perspective, 35 mm lens, shallow depth of field. Photorealistic, not CGI. No yellow-green tones. No text, no letters, no numbers, no logos, no signage, no watermarks, no identifiable faces.",
+      "proporcao": "4:3 (2336 × 1744)",
+      "job_id": "7b164f34-321f-491c-bc9a-25d2f654c9fc",
+      "data": "2026-09-27",
+      "tratamento_local": "nenhum",
+      "usada_em": [
+        "Serviços: cartão \"Aplicação de pavimentos e revestimentos\""
+      ],
+      "alt": "Mãos de um profissional a aplicar um pavimento de madeira em espinha.",
+      "ilustrativa": true
+    },
+    {
+      "id": "transparencia",
+      "ficheiro": "assets-src/ilustrativas/transparencia.jpg",
+      "origem": "Higgsfield",
+      "modelo": "gpt_image_2_5 (variant flare, quality high, resolution 2k), com o hero (job 555c2906-3954-4aaf-8ffd-6d9f31f39366) como referência de estilo (image_references)",
+      "prompt": "Site meeting at a timber workbench inside a home under renovation: a printed construction schedule shown only as simple horizontal bars and grid lines, with no legible writing or figures, lying next to a floor plan drawn only in lines, two people seen only as hands and forearms, one finger pointing at a stage bar on the schedule, a carpenter's pencil nearby, natural late-afternoon daylight, honest, calm and orderly mood, subject slightly right of centre. Use the reference image only for colour grading, light and film grain; do not copy its composition, subject or objects. Palette: warm off-white #F6F5F1, pale concrete #E8E7E1, stone sand #D6D2C7, deep blue-black shadows #1A222C, a restrained aged brass #80632B accent. Editorial architectural photography, true-to-life materials, soft warm natural light, muted palette of charcoal, warm concrete grey, sand and natural stone with a restrained aged brass accent, very subtle film grain, realistic proportions and perspective, 35 mm lens, shallow depth of field. Photorealistic, not CGI. No yellow-green tones. No text, no letters, no numbers, no logos, no signage, no watermarks, no identifiable faces.",
+      "proporcao": "3:2 (2048 × 1360)",
+      "job_id": "407ffb42-1f1d-4e36-adc6-615ef0bdaf1d",
+      "data": "2026-09-27",
+      "tratamento_local": "nenhum",
+      "usada_em": [
+        "Transparência (secção 8 da página principal)"
+      ],
+      "alt": "Reunião em obra sobre o planeamento impresso dos trabalhos.",
+      "ilustrativa": true
     }
   ]
 }
