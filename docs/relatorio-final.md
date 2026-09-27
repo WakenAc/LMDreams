@@ -7,12 +7,12 @@
 | Fase 0: Reconhecimento e pré-voo | concluída | Créditos aprovados (teto de 65); conta GitHub gratuita, o Andre torna o repositório público no fim; logótipo atual sem versão melhor. |
 | Fase 1: Direção visual | concluída | Direção C (Planta e Latão) escolhida pelo Andre; 7 boards gerados (14 créditos); `design/direcao-visual.md`. |
 | Fase 2: Fundações e conteúdos | concluída | Build, pré-renderização, SEO, scripts de verificação e CI a funcionar; textos escritos, revistos (25 achados, 15 aplicados, 2 refutados) e corrigidos. |
-| Fase 3: Imagens | concluída com plano B parcial | Hero gerado e otimizado (com recorte 4:5 para telemóvel), favicons e imagem OG. As outras dez imagens ficaram no plano B: a Higgsfield recusou todas as gerações seguintes pelo limite diário do período de tolerância da conta. |
+| Fase 3: Imagens | 9 de 11 imagens; 2 em plano B | Hero gerado e otimizado (com recorte 4:5 para telemóvel), favicons e imagem OG a 25 de setembro. A pedido do Andre, mais 5 imagens a 26 de setembro (Sobre, três serviços e CTA) e 3 a 27 de setembro (construção civil, pavimentos e Transparência). A Diferenciação e a casa de banho foram geradas a 27 de setembro mas rejeitadas no controlo de qualidade; ficam em plano B até nova geração (o plano da conta Higgsfield, em período de tolerância, só permite 5 por dia). |
 | Fase 4: Secções e páginas | concluída | 8 pacotes entregues; integração com ilhas de hidratação e testes E2E. |
 | Fase 5: Integração e revisão editorial | concluída | Revisão editorial sobre o HTML gerado, matriz de rastreabilidade preenchida, desempenho em telemóvel (LCP de 3,1 s para cerca de 2 s), `build:root` a passar. |
 | Fase 6: Verificação adversarial | concluída | 3 rondas (87 achados; 22 confirmados de severidade média ou superior, todos corrigidos ou documentados). |
 | Fase 7: Documentação | concluída | README, `CONTEUDO-A-SUBSTITUIR.md`, matriz fechada, este relatório e `CLAUDE.md`; comandos locais do README testados tal como estão escritos. |
-| Fase 8: Entrega | concluída | `npm run check`, `npm run build:pages` e `npm run lighthouse` a verde; branch enviado; [PR n.º 1](https://github.com/WakenAc/LMDreams/pull/1) aberta para `main` (não rascunho), com o `ci.yml` a correr e o Auto-fix da app ligado para falhas do CI. Sem merge, sem publicação. |
+| Fase 8: Entrega | concluída | `npm run check`, `npm run build:pages` e `npm run lighthouse` a verde; branch enviado; [PR n.º 1](https://github.com/WakenAc/LMDreams/pull/1) aberta para `main` (não rascunho), com o `ci.yml` a verde; integrada pelo Andre a 26 de setembro. Imagens de 26 e 27 de setembro numa PR nova. Site retirado do ar a 27 de setembro, com autorização do Andre (secção "Entrega"). |
 
 Última atualização: 25 de setembro de 2026.
 
@@ -83,16 +83,16 @@
 
 Website institucional estático da LMDreams (React 19, Vite 8, TypeScript 6 e Tailwind CSS v4), em português de Portugal, pré-renderizado e pronto para o GitHub Pages em `https://wakenac.github.io/LMDreams/`. Tem a página principal com as 12 secções do Anexo A, as três páginas legais e a página 404. O HTML de cada página é completo sem JavaScript; só as partes interativas (cabeçalho e menu, barra de contacto móvel, projetos e formulário) são hidratadas no cliente, e o seu JavaScript só é pedido depois de a página carregar. A direção visual é a C, "Planta e Latão", escolhida pelo Andre.
 
-Todos os gates da Parte 6.1 passam: `npm run check` inteiro (97 testes E2E, 96 a passar e 1 saltado enquanto não houver fotografias de projetos), axe sem violações graves (também antes da hidratação) e Lighthouse dentro dos limites nas oito recolhas (página principal em telemóvel: desempenho 99, LCP de 1,96 s).
+Todos os gates da Parte 6.1 passam: `npm run check` inteiro (97 testes E2E, 96 a passar e 1 saltado enquanto não houver fotografias de projetos), axe sem violações graves (também antes da hidratação) e Lighthouse dentro dos limites nas oito recolhas (página principal em telemóvel: desempenho 99, LCP de 2,11 s).
 
-Os dados da empresa que faltam estão marcados com `[A CONFIRMAR: …]` e listados em `CONTEUDO-A-SUBSTITUIR.md`: 90 pendentes, dos quais 18 (em 13 chaves) bloqueiam a publicação de propósito, porque são dados legais obrigatórios. Das onze fotografias ilustrativas previstas, só o hero foi gerado: a conta da Higgsfield atingiu o limite diário de gerações do período de tolerância logo a seguir, e as outras dez ficaram com os placeholders do plano B (Parte 4.2, ponto 8). Foram gastos 16,75 dos 65 créditos aprovados.
+Os dados da empresa que faltam estão marcados com `[A CONFIRMAR: …]` e listados em `CONTEUDO-A-SUBSTITUIR.md`: 90 pendentes, dos quais 18 (em 13 chaves) bloqueiam a publicação de propósito, porque são dados legais obrigatórios. Das onze fotografias ilustrativas previstas existem nove (hero, Sobre, Transparência, CTA e cinco dos seis cartões de serviço); a Diferenciação e o cartão das casas de banho continuam com os placeholders do plano B (Parte 4.2, ponto 8): as versões geradas a 27 de setembro foram rejeitadas no controlo de qualidade e o plano da conta Higgsfield só permite 5 gerações por dia. Foram gastos 44,25 dos 65 créditos aprovados.
 
 ## O que foi feito por fase
 
 - **Fase 0 (pré-voo):** permissões em `.claude/settings.local.json`; repositório vazio, com o commit inicial autorizado em `main`; branch `feat/site-institucional`; ferramentas verificadas; GitHub Pages por ativar (repositório privado, conta gratuita); logótipo analisado (352 × 188 px, sem transparência); plano de créditos aprovado (teto de 65).
 - **Fase 1 (direção visual):** três propostas (A, B e C) com tokens, contrastes calculados e maquetas HTML; três boards do hero e quatro boards de secção na Higgsfield; painel de três juízes (C venceu com 24 pontos contra 20,5 e 19,5); `design/direcao-visual.md` com as ideias enxertadas das outras direções.
 - **Fase 2 (fundações e conteúdos):** esqueleto do Vite, TypeScript estrito, oxlint, Prettier, Tailwind v4 com os tokens, fontes autoalojadas com fontes de recurso medidas, pré-renderização das cinco páginas, SEO e JSON-LD, registo de placeholders e `PH()`, primitivas de interface, scripts de verificação, GitHub Actions, `CLAUDE.md`, favicons e imagem OG; textos de `src/content/` escritos por um redator, revistos por dois revisores (25 achados: 15 aplicados, 2 refutados) e corrigidos.
-- **Fase 3 (imagens):** hero gerado com `gpt_image_2_5` (high, 2k), aprovado no controlo de qualidade, com recorte 4:5 para telemóvel e imagem OG composta localmente. A partir daí a Higgsfield recusou todas as gerações ("daily generation limit for your grace period"), sem custo; mais tarde, os modelos previstos (`gpt_image_2_5` e `nano_banana_pro`) deixaram de aparecer no catálogo. As outras dez imagens ficaram em plano B.
+- **Fase 3 (imagens):** hero gerado com `gpt_image_2_5` (high, 2k), aprovado no controlo de qualidade, com recorte 4:5 para telemóvel e imagem OG composta localmente. A partir daí a Higgsfield recusou todas as gerações ("daily generation limit for your grace period"), sem custo; mais tarde, os modelos previstos (`gpt_image_2_5` e `nano_banana_pro`) deixaram de aparecer no catálogo. As outras dez imagens ficaram em plano B nesse dia. A 26 de setembro, com o `gpt_image_2_5` de volta ao catálogo e a pedido do Andre, foi gerada a imagem de teste (`sobre`, com o hero como referência de estilo) e submetido o lote: 4 passaram e 5 foram recusadas pelo mesmo limite (5 gerações por dia). As 5 imagens novas passaram no controlo de qualidade. A 27 de setembro foram geradas as 5 recusadas na véspera: 3 passaram (construção civil, pavimentos e Transparência) e 2 foram rejeitadas (Diferenciação e casa de banho). Ver a secção "Imagens geradas".
 - **Fase 4 (secções e páginas):** oito pacotes em paralelo (layout, hero e CTA, sobre e transparência, diferenciação e método, serviços, projetos, testemunhos e contactos, páginas legais e 404). Integração pelo orquestrador: ilhas de hidratação, correção do menu móvel (fechava no próprio clique) e testes E2E.
 - **Fase 5 (integração e revisão editorial):** editor sobre o texto do HTML gerado (cinco alterações), matriz de rastreabilidade preenchida, entrada suave que nunca esconde conteúdo numa captura, desempenho em telemóvel (LCP de 3,1 s para cerca de 2 s), palavras-chave do Anexo A em falta, `build:root` a passar.
 - **Fase 6 (verificação adversarial):** três rondas, cada uma com cinco lentes, dois céticos e dois agentes de correção (secção "Rondas de verificação").
@@ -103,10 +103,16 @@ Os dados da empresa que faltam estão marcados com `[A CONFIRMAR: …]` e listad
 
 - Branch `feat/site-institucional` enviado com `git push -u origin feat/site-institucional`, depois de verificar que nenhum ficheiro seguido pelo Git tem segredos (tokens, chaves ou o ficheiro de permissões local).
 - [PR n.º 1, "Site institucional LMDreams"](https://github.com/WakenAc/LMDreams/pull/1), de `feat/site-institucional` para `main`, com a descrição da Parte 6.6. Abre como PR normal (secção "Pendentes").
-- CI: o `ci.yml` arrancou com a PR (evento `pull_request`). A app do Claude acompanha a PR com o Auto-fix ligado: se o CI falhar (por exemplo, binários nativos opcionais em falta no `package-lock.json` gerado no Windows), a correção é feita e enviada no mesmo branch.
-- GitHub Pages: não ativado, porque o repositório é privado num plano gratuito (Parte 3.15). A visibilidade não foi mudada.
-- Sem merge e sem publicação: o merge é do Andre.
-- Saldo final da Higgsfield confirmado com `balance`: 238,75 créditos.
+- CI: o `ci.yml` passou nas duas execuções da PR (25 de setembro), à primeira, sem precisar de regenerar o `package-lock.json`.
+- GitHub Pages: não ativado na Fase 8, porque o repositório era privado num plano gratuito (Parte 3.15). O Claude Code não mudou a visibilidade nem fez o merge.
+
+#### Depois da entrega (26 e 27 de setembro)
+
+- **26 de setembro, 21:37 UTC:** o Andre tornou o repositório público e fez o merge da PR n.º 1 (commit 3ff15c9 em `main`). O `deploy.yml` arrancou logo e falhou no passo "Configure GitHub Pages" ("Get Pages site failed… Not Found"), porque o Pages ainda não estava ativo; não chegou ao `check:placeholders --strict`.
+- **26 de setembro, 21:38 UTC:** o Pages foi ativado primeiro com a origem "Deploy from a branch" (`main`, raiz). Isso correu a publicação clássica do GitHub (`pages-build-deployment`), que publicou os ficheiros-fonte do repositório sem build: a página principal ficou em branco (o `index.html` de desenvolvimento, com `/src/entry-client.tsx`) e os documentos internos ficaram acessíveis no endereço do site (por exemplo `BRIEF-LMDREAMS.html`, `CONTEUDO-A-SUBSTITUIR.html` e `docs/relatorio-final.html`, todos com resposta 200). Esta via contorna o bloqueio por dados legais. Mais tarde, a origem passou a "GitHub Actions", mas a publicação clássica continuou no ar.
+- **27 de setembro:** o Claude Code detetou a situação ao atualizar a documentação, confirmou-a no GitHub e perguntou ao Andre o que fazer. Com a autorização dele, apagou a publicação do Pages (`gh api -X DELETE repos/WakenAc/LMDreams/pages`): o repositório, o código e os ramos ficaram intactos, e o endereço do site e os documentos passaram a responder 404. O `README.md` (secção 6) tem agora um aviso para nunca escolher "Deploy from a branch".
+- As imagens de 26 e 27 de setembro vão numa PR nova, do ramo `feat/imagens-ilustrativas` para `main`. O merge continua a ser do Andre.
+- Saldo da Higgsfield confirmado com `balance`: 238,75 créditos no fim da entrega de 25 de setembro; 225 depois das imagens de 26 de setembro e 211,25 depois das de 27 de setembro (secção "Imagens geradas").
 
 ### Rondas de verificação (Fase 6)
 
@@ -116,7 +122,7 @@ Os dados da empresa que faltam estão marcados com `[A CONFIRMAR: …]` e listad
 | 2 | 26 | 5 | 1 | 20 | Experiência atribuída aos profissionais no Sobre; modo compacto do cabeçalho para a WCAG 1.4.12; números do Método com a hierarquia do board; R-8 documentado. |
 | 3 | 23 | 6 | 0 | 17 | "Ligar" só entre 768 e 1279 px também no modo compacto; texto do formulário preservado na hidratação; Diferenciação entre 1024 e 1180 px; proveniência do build no Lighthouse e nas capturas; `company.ts` fora do JS das ilhas; evidência da matriz fora de `.revisao/`. |
 
-Ficam dois achados confirmados que não se corrigem só com código: as dez imagens em plano B (depende da conta Higgsfield do Andre) e a regra de commits pequenos (R-8), parcial por causa dos commits por fase até à ronda 1, que só se corrigiam reescrevendo o histórico (proibido pela mesma regra). Os dois estão na secção "Pendentes".
+Ficam dois achados confirmados que não se corrigem só com código: as imagens em plano B (hoje 2 de 11; depende da conta Higgsfield do Andre) e a regra de commits pequenos (R-8), parcial por causa dos commits por fase até à ronda 1, que só se corrigiam reescrevendo o histórico (proibido pela mesma regra). Os dois estão na secção "Pendentes".
 
 ## Decisões e desvios ao brief
 
@@ -150,7 +156,11 @@ Ficam dois achados confirmados que não se corrigem só com código: as dez imag
 | Evidência da matriz em testes, comandos, HTML gerado e `docs/capturas/` | `.revisao/` é ignorada pelo Git (Parte 2.8): fica como artefacto local, regenerável com `npx tsx scripts/revisao.ts --ronda <n>`. |
 | Qualidade por formato no hero (AVIF 50, WebP e JPEG 64) | Com a mesma qualidade, o AVIF saía mais pesado do que o WebP; assim fica abaixo, com o mesmo detalhe, e o JPEG de recurso fica dentro do dobro do AVIF (Parte 4.8). |
 | Um só candidato do hero (em vez de dois) | O segundo pedido foi recusado pelo limite diário da Higgsfield; o primeiro passou no controlo de qualidade da Parte 4.7. |
-| Dez imagens no plano B | Limite diário do período de tolerância da conta Higgsfield em todas as tentativas; depois, os modelos aprovados saíram do catálogo. Um modelo diferente (`gpt_image_2`) precisa de nova aprovação do Andre. |
+| Duas imagens no plano B (Diferenciação e casa de banho) | Geradas a 27 de setembro e rejeitadas no controlo de qualidade, com os céticos a confirmar: pseudoletras em relevo no cabo da chave de tubos (parece marca de fabricante) e ferramentas vermelhas e amarelas fora da paleta; um espaçador em cruz a meio de uma junta contínua. Não foram retocadas: geram-se de novo com os prompts corrigidos. O plano da conta Higgsfield, em período de tolerância, só permite 5 gerações por dia (confirmado no registo de transações a 25, 26 e 27 de setembro); as recusas não custam créditos. |
+| Acerto de cor local em duas imagens (cozinha: saturação a 92%; fachada: luminosidade a 90% e saturação a 95%) | A lente de estilo do controlo de qualidade mediu-as como as mais saturada e mais clara da série; o acerto aproxima-as do hero sem nova geração. Registado em `manifest.json` (`tratamento_local`). |
+| Fachada da recuperação aceite apesar da rejeição da lente de estilo | A lente achou-a pouco portuguesa (portadas exteriores, candeeiro); o cético refutou com evidência (portadas pedidas no prompt do brief, cunhal, soco de cantaria, telha de canudo e calçada; os pormenores estrangeiros quase desaparecem a 408 px). Candidata a refazer quando houver gerações livres. |
+| AVIF a 56 nos cartões de serviço e na Transparência (50 no hero, no Sobre e no CTA) | A 50, o AVIF destas imagens comprimia tanto que o JPEG de recurso passava do dobro do AVIF (Parte 4.8). |
+| Textos alternativos do Sobre, da cozinha e da fachada ajustados ao que as imagens mostram | O controlo de qualidade confirmou que as amostras do Sobre são pedra (não betão), que a cozinha mostra a verificação com um nível e que a fachada tem andaime. |
 | Favicons: recorte do grafismo do próprio logótipo, completado em quadrado com a cor de fundo do logótipo (`#292929`) | O ficheiro não é quadrado nem vetorial; sem redesenho. **A aprovar pelo Andre** (Parte 4.9). |
 | Linha do título do IMPIC também na secção Sobre, com placeholders | A Parte 5.6 prevê-a "se fizer sentido"; mostra três `[A CONFIRMAR]` até haver dados. |
 | Galeria antes e depois também em `<details>` sem JavaScript | O diálogo só existe no cliente; assim o requisito A7-15 funciona sem JavaScript quando houver fotografias. |
@@ -164,7 +174,7 @@ Ficam dois achados confirmados que não se corrigem só com código: as dez imag
 
 ## Resultados dos gates
 
-Medidos na Fase 8, a 25 de setembro de 2026, sobre o build final (`npm ci` seguido de `npm run check`, e `npm run build:pages` seguido de `npm run lighthouse`).
+Medidos na Fase 8, a 25 de setembro de 2026, sobre o build final (`npm ci` seguido de `npm run check`, e `npm run build:pages` seguido de `npm run lighthouse`), e medidos de novo a 26 e a 27 de setembro depois de integradas as imagens novas, com os mesmos resultados salvo onde a tabela indica.
 
 | Gate | Comando | Resultado |
 |---|---|---|
@@ -178,7 +188,7 @@ Medidos na Fase 8, a 25 de setembro de 2026, sobre o build final (`npm ci` segui
 | SEO e HTML pré-renderizado | `npm run check:seo` | OK nas cinco páginas |
 | Proibições e conformidade | `npm run check:forbidden` | 0 ocorrências |
 | Antes e depois | `npm run check:before-after` | Comparador e galeria estática renderizados com fotografias de teste |
-| Peso | `npm run check:budget` | JavaScript inicial 96,2 KiB gzip de 100 KiB (98 510 B de 102 400 B; aviso a partir de 95%); CSS 12,8 KiB de 30 KiB; hero dentro dos objetivos da Parte 4.8; total aproximado 273,7 KiB |
+| Peso | `npm run check:budget` | JavaScript inicial 96,2 KiB gzip de 100 KiB (98 510 B de 102 400 B; aviso a partir de 95%); CSS 12,8 KiB de 30 KiB; as 9 imagens dentro dos objetivos da Parte 4.8 na variante que o navegador escolhe (maior AVIF: Sobre, 102,1 KiB a 1216 px); total aproximado do primeiro carregamento em telemóvel 274,8 KiB |
 | Testes E2E e acessibilidade | `npm run test:e2e` | 97 testes: 96 passam, 1 saltado (fotografias antes e depois sem JavaScript, enquanto não houver fotografias de projetos) |
 | axe | `tests/e2e/a11y.spec.ts`, `smoke.spec.ts`, `nojs.spec.ts`, `projects.spec.ts` | 0 violações "serious" ou "critical" nas cinco páginas a 390, 768 e 1440 px, depois e antes da hidratação, e com o diálogo de projeto aberto |
 | Pedidos externos e consola | `tests/e2e/smoke.spec.ts` | 0 pedidos a outros domínios; 0 erros e 0 avisos de hidratação (o 404 da própria página 404 é o estado esperado) |
@@ -187,16 +197,16 @@ Medidos na Fase 8, a 25 de setembro de 2026, sobre o build final (`npm ci` segui
 
 | Perfil | Página | Desempenho | Acessibilidade | Boas práticas | SEO | LCP | CLS | TBT |
 |---|---|---|---|---|---|---|---|---|
-| Telemóvel | Principal | 99 | 100 | 100 | 100 | 1956 ms | 0,001 | 0 ms |
-| Telemóvel | Política de privacidade | 100 | 100 | 100 | 100 | 1579 ms | 0,000 | 0 ms |
+| Telemóvel | Principal | 99 | 100 | 100 | 100 | 2106 ms | 0,000 | 0 ms |
+| Telemóvel | Política de privacidade | 100 | 100 | 100 | 100 | 1582 ms | 0,000 | 0 ms |
 | Telemóvel | Política de cookies | 100 | 100 | 100 | 100 | 1581 ms | 0,000 | 0 ms |
-| Telemóvel | Termos e condições | 100 | 100 | 100 | 100 | 1581 ms | 0,000 | 0 ms |
-| Computador | Principal | 100 | 100 | 100 | 100 | 428 ms | 0,000 | 0 ms |
-| Computador | Política de privacidade | 100 | 100 | 100 | 100 | 485 ms | 0,000 | 0 ms |
-| Computador | Política de cookies | 100 | 100 | 100 | 100 | 485 ms | 0,000 | 0 ms |
-| Computador | Termos e condições | 100 | 100 | 100 | 100 | 485 ms | 0,000 | 0 ms |
+| Telemóvel | Termos e condições | 100 | 100 | 100 | 100 | 1580 ms | 0,000 | 0 ms |
+| Computador | Principal | 100 | 100 | 100 | 100 | 447 ms | 0,000 | 0 ms |
+| Computador | Política de privacidade | 100 | 100 | 100 | 100 | 486 ms | 0,000 | 0 ms |
+| Computador | Política de cookies | 100 | 100 | 100 | 100 | 386 ms | 0,000 | 0 ms |
+| Computador | Termos e condições | 100 | 100 | 100 | 100 | 425 ms | 0,000 | 0 ms |
 
-As oito recolhas estão dentro dos limites da Parte 6.1 (desempenho ≥ 90 em telemóvel e ≥ 95 em computador; acessibilidade 100; boas práticas ≥ 95; SEO 100; CLS ≤ 0,05; LCP < 2,5 s em telemóvel). No CI, o passo do Lighthouse fica como aviso (`continue-on-error`, Parte 3.13).
+As oito recolhas estão dentro dos limites da Parte 6.1 (desempenho ≥ 90 em telemóvel e ≥ 95 em computador; acessibilidade 100; boas práticas ≥ 95; SEO 100; CLS ≤ 0,05; LCP < 2,5 s em telemóvel). Valores medidos a 27 de setembro, com as 9 imagens integradas (a 26 de setembro, com 6 imagens, o LCP em telemóvel foi de 2104 ms). O LCP da página principal em telemóvel subiu de 1956 ms (só com o hero) para 2106 ms: as imagens com `loading="lazy"` logo abaixo do hero começam a descarregar mais cedo. No CI, o passo do Lighthouse fica como aviso (`continue-on-error`, Parte 3.13).
 
 ### Comandos locais do README
 
@@ -212,7 +222,7 @@ Corridos na Fase 7 tal como estão escritos no README:
 
 ## Imagens geradas
 
-Saldo da Higgsfield: **255,5 créditos antes** e **238,75 depois** (16,75 gastos, dentro do teto de 65). Registo em `assets-src/ilustrativas/manifest.json` (imagens publicadas) e `assets-src/ilustrativas/jobs.json`.
+Saldo da Higgsfield: **255,5 créditos antes** e **211,25 depois** (44,25 gastos, dentro do teto de 65; confirmado com `balance` e com o registo de transações). Sobram 20,75 créditos no teto aprovado. Registo em `assets-src/ilustrativas/manifest.json` (imagens publicadas) e `assets-src/ilustrativas/jobs.json`.
 
 | Imagem | Modelo | Créditos | Uso |
 |---|---|---|---|
@@ -220,8 +230,17 @@ Saldo da Higgsfield: **255,5 créditos antes** e **238,75 depois** (16,75 gastos
 | `board-diferenciacao-C-v1`, `board-servicos-C-v1`, `board-metodo-C-v1`, `board-contactos-C-v1` | `nano_banana_pro` (2k) | 8 | Ronda 2 de boards (`design/boards/`) |
 | `hero` (e o recorte 4:5 para telemóvel, feito localmente) | `gpt_image_2_5` (high, 2k) | 2,75 | Hero e imagem OG, com a legenda "Imagem ilustrativa gerada por IA" |
 | `hero-v2` (segundo candidato) | `gpt_image_2_5` | 0 | Recusado pelo limite diário, sem custo |
+| `sobre` (imagem de teste com o hero como referência de estilo) | `gpt_image_2_5` (flare, high, 2k) | 2,75 | Sobre nós |
+| `servico-cozinhas`, `servico-recuperacao`, `servico-exteriores` | `gpt_image_2_5` (flare, high, 2k), referência de estilo do hero | 8,25 | Cartões de serviço |
+| `cta` | `gpt_image_2_5` (flare, high, 2k), referência de estilo do hero | 2,75 | Fundo da chamada para ação, sob o véu |
+| `diferenciacao`, `servico-construcao`, `servico-casas-de-banho`, `servico-pavimentos`, `transparencia` (26 de setembro) | `gpt_image_2_5` | 0 | Recusadas pelo limite de 5 gerações por dia, sem custo |
+| `servico-construcao`, `servico-pavimentos` (27 de setembro) | `gpt_image_2_5` (flare, high, 2k), referência de estilo do hero | 5,5 | Cartões de serviço |
+| `transparencia` (27 de setembro) | `gpt_image_2_5` (flare, high, 2k), referência de estilo do hero | 2,75 | Transparência |
+| `diferenciacao`, `servico-casas-de-banho` (27 de setembro) | `gpt_image_2_5` (flare, high, 2k), referência de estilo do hero | 5,5 | Rejeitadas no controlo de qualidade (originais em `assets-src/ilustrativas/_rejeitadas/`, fora do Git) |
 
-Imagens em plano B (placeholder "Imagem a substituir" em SVG, com linhas de planta sobre tons de pedra, e sem legenda de IA): `sobre`, `diferenciacao`, `servico-construcao`, `servico-cozinhas`, `servico-casas-de-banho`, `servico-pavimentos`, `servico-recuperacao`, `servico-exteriores`, `transparencia` e `cta`. Os assuntos e os prompts de cada uma estão na tabela de imagens da Parte 4 do brief (`BRIEF-LMDREAMS.md`), e o `alt` já está em `src/content/images.ts`; o hero serve de referência de estilo (`job_id` em `assets-src/ilustrativas/jobs.json`). No catálogo atual da Higgsfield, o `gpt_image_2_5` e o `nano_banana_pro` já não aparecem; o `gpt_image_2` (medium, 2k) custa cerca de 2 créditos por imagem (cerca de 20 para as dez), mas é um modelo diferente do aprovado e precisa de aprovação do Andre.
+Controlo de qualidade de cada lote (Parte 4.7), a 26 e a 27 de setembro: três lentes independentes, cada uma com recortes a 100% (anatomia e física; texto, marcas, rostos e resolução; coerência de estilo com folha de contacto ao lado do hero) e um cético para as rejeições. A 26 de setembro, as 5 foram aceites. A 27 de setembro, foram aceites 3 e rejeitadas 2, com os céticos a confirmar as rejeições. Nas aceites, os defeitos encontrados só se veem a 100% e desaparecem no tamanho de apresentação (andaime com um prumo incompleto, microtextura nas cantarias, estribos da armadura atados em vez de dobrados, grampo da cofragem com cor de latão). Pessoas só de costas ou só mãos e antebraços; sem texto, marcas nem rostos. A folha de contacto final (`npm run contact-sheet`, com as 9 imagens e o recorte do hero) confirma a mesma sessão fotográfica. Os prompts completos estão no `manifest.json`.
+
+Imagens ainda em plano B (placeholder "Imagem a substituir" em SVG, com linhas de planta sobre tons de pedra, e sem legenda de IA): `diferenciacao` e `servico-casas-de-banho`. Correções aos prompts para a próxima geração, propostas pelos céticos: na Diferenciação, alicate com punhos pretos mate e chave de tubos em aço forjado escuro sem pintura, com o cabo liso e nenhuma letra, marca ou número em relevo em nenhuma ferramenta; na casa de banho, um só espaçador, assente exatamente num cruzamento de juntas, e nenhum ao longo de juntas contínuas. Custo: 2,75 créditos cada (5,5 no total, dentro dos 20,75 que sobram no teto).
 
 Feitos localmente, sem Higgsfield: favicons (`scripts/favicons.ts`, a partir do logótipo), imagem OG 1200 × 630 (`scripts/og-image.ts`, cartão HTML com o recorte do hero, véu, logótipo, frase e legenda de IA) e folha de contacto (`scripts/contact-sheet.ts`).
 
@@ -256,7 +275,7 @@ O YAML de `.github/workflows/ci.yml` e `.github/workflows/deploy.yml` foi valida
 A PR abre como PR normal: não há gates vermelhos nem achados confirmados que dependam só de código. Ficam registados:
 
 1. **Dados da empresa** (dependem do Andre): os 18 pendentes que bloqueiam a publicação e os outros 72 (secção "Conteúdos a substituir").
-2. **Dez imagens ilustrativas no plano B** (dependem da conta Higgsfield do Andre): linhas A5-01, AD-07 e AV-11 da matriz em parcial; AR-03 depende disto e dos dados legais.
+2. **Duas imagens ilustrativas no plano B** (`diferenciacao` e `servico-casas-de-banho`): geradas e rejeitadas no controlo de qualidade; nova geração com os prompts corrigidos no próximo dia com gerações disponíveis. Ver as linhas parciais da matriz.
 3. **Regra de commits pequenos (R-8), parcial:** os commits por fase até à ronda 1 ficam como estão, porque dividi-los reescreveria o histórico.
 4. **Favicons por aprovar** (Parte 4.9).
 5. **Folga do JavaScript inicial:** 3 890 B em gzip. Qualquer ilha nova tem de ser medida com `npm run check:budget`.
@@ -267,6 +286,6 @@ A PR abre como PR normal: não há gates vermelhos nem achados confirmados que d
 2. Aderir ao Livro de Reclamações Eletrónico e confirmar a entidade RAL.
 3. Substituir os testemunhos e os projetos provisórios por reais (`placeholder: false`) e confirmar os serviços e os intervalos de orçamento (`confirmado: true`).
 4. Aprovar os favicons ou fornecer um logótipo vetorial.
-5. Quando a Higgsfield voltar a aceitar gerações, aprovar o modelo para as dez imagens em falta (por exemplo `gpt_image_2` medium, cerca de 2 créditos cada) ou fornecer fotografias reais.
-6. Tornar o repositório público (Settings → General → Danger Zone → Change visibility) e ativar o GitHub Pages com a origem "GitHub Actions" (Settings → Pages), como explica o README na secção 6.
-7. Rever a PR e fazer o merge em `main`; a publicação corre sozinha no merge e falha de propósito enquanto faltarem os dados legais.
+5. Deixar gerar de novo as duas imagens em falta (5,5 créditos, dentro do teto aprovado), regularizar o plano da Higgsfield para levantar o limite de 5 gerações por dia, ou fornecer fotografias reais. Quando houver fotografias de obras da LMDreams, substituir também as ilustrativas (README, secção 9).
+6. Com os dados legais preenchidos e o `npm run check:placeholders -- --strict` a passar, voltar a ativar o GitHub Pages com a origem **"GitHub Actions"** (Settings → Pages; nunca "Deploy from a branch"), como explica o README na secção 6. O repositório já é público.
+7. Rever a PR das imagens e fazer o merge em `main`. Se o Pages já estiver ativo com a origem "GitHub Actions", a publicação corre sozinha; se for ativado depois do merge, publicar com `npm run deploy` (ou *Actions → Deploy to GitHub Pages → Run workflow*).
