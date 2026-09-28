@@ -162,7 +162,8 @@ Ficam dois achados confirmados que não se corrigem só com código: as imagens 
 | Fachada da recuperação aceite apesar da rejeição da lente de estilo | A lente achou-a pouco portuguesa (portadas exteriores, candeeiro); o cético refutou com evidência (portadas pedidas no prompt do brief, cunhal, soco de cantaria, telha de canudo e calçada; os pormenores estrangeiros quase desaparecem a 408 px). Candidata a refazer quando houver gerações livres. |
 | AVIF a 56 nos cartões de serviço e na Transparência (50 no hero, no Sobre e no CTA; 48 na Diferenciação) | A 50, o AVIF destas imagens comprimia tanto que o JPEG de recurso passava do dobro do AVIF (Parte 4.8). |
 | Textos alternativos do Sobre, da cozinha e da fachada ajustados ao que as imagens mostram | O controlo de qualidade confirmou que as amostras do Sobre são pedra (não betão), que a cozinha mostra a verificação com um nível e que a fachada tem andaime. |
-| Favicons: recorte do grafismo do próprio logótipo, completado em quadrado com a cor de fundo do logótipo (`#292929`) | O ficheiro não é quadrado nem vetorial; sem redesenho. **A aprovar pelo Andre** (Parte 4.9). |
+| Favicons: recorte do grafismo do próprio logótipo, completado em quadrado com a cor de fundo do logótipo (`#292929`) | O ficheiro não é quadrado nem vetorial; sem redesenho (Parte 4.9). A 28 de setembro, a pedido do Andre, foram refeitos a partir do logótipo completo que o dono enviou (`assets-src/brand/logotipo-completo.jpeg`, 1284 × 1252, com o nome e o slogan): o grafismo da casa passa de 241 × 129 para 699 × 375 px, e só ele entra nos ícones (o texto fica de fora pela cor). O dono não tem versão vetorial. |
+| Slogan "O seu sonho, a nossa obra." no rodapé, junto ao logótipo | Pedido do Andre a 28 de setembro; o slogan vem do logótipo da empresa (`company.slogan`). Em `on-dark` e no tipo de letra dos títulos: a direção visual evita texto pequeno em latão sobre `dark`. O título principal do site não muda. |
 | Linha do título do IMPIC também na secção Sobre, com placeholders | A Parte 5.6 prevê-a "se fizer sentido"; mostra três `[A CONFIRMAR]` até haver dados. |
 | Galeria antes e depois também em `<details>` sem JavaScript | O diálogo só existe no cliente; assim o requisito A7-15 funciona sem JavaScript quando houver fotografias. |
 | Nome do campo-armadilha `campo_k7x` (e não o exemplo `empresa_url_x`) | O preenchimento automático reconhece "empresa" e podia preencher o campo, descartando um pedido real. |
@@ -280,7 +281,7 @@ A PR abre como PR normal: não há gates vermelhos nem achados confirmados que d
 1. **Dados da empresa** (dependem do Andre): os 18 pendentes que bloqueiam a publicação e os outros 72 (secção "Conteúdos a substituir").
 2. **Folga do LCP em telemóvel:** 2256 ms para um limite de 2500 ms, depois das 11 imagens. Qualquer imagem nova perto do topo deve ser medida com `npm run lighthouse`.
 3. **Regra de commits pequenos (R-8), parcial:** os commits por fase até à ronda 1 ficam como estão, porque dividi-los reescreveria o histórico.
-4. **Favicons por aprovar** (Parte 4.9).
+4. **Favicons:** refeitos a 28 de setembro com o logótipo completo enviado pelo dono, a pedido do Andre (não há versão vetorial).
 5. **Folga do JavaScript inicial:** 3 890 B em gzip. Qualquer ilha nova tem de ser medida com `npm run check:budget`.
 
 ## Próximos passos para o Andre
@@ -288,7 +289,7 @@ A PR abre como PR normal: não há gates vermelhos nem achados confirmados que d
 1. Preencher os campos "Bloqueia publicação" de `CONTEUDO-A-SUBSTITUIR.md` (sobretudo os dados legais em `src/content/company.ts`) e pedir a um jurista que valide as páginas legais; correr `npm run check:placeholders` para confirmar.
 2. Aderir ao Livro de Reclamações Eletrónico e confirmar a entidade RAL.
 3. Substituir os testemunhos e os projetos provisórios por reais (`placeholder: false`) e confirmar os serviços e os intervalos de orçamento (`confirmado: true`).
-4. Aprovar os favicons ou fornecer um logótipo vetorial.
+4. Rever os ícones refeitos com o logótipo completo (separador do navegador e ícone no telemóvel).
 5. Quando houver fotografias de obras da LMDreams (com autorização dos clientes), substituir as ilustrativas e preencher os projetos (README, secção 9). Para gerar mais imagens com IA, a pesquisa de 27 de setembro recomenda a API direta da OpenAI com o mesmo modelo (sem limite diário) ou regularizar o plano da Higgsfield.
 6. Com os dados legais preenchidos e o `npm run check:placeholders -- --strict` a passar, voltar a ativar o GitHub Pages com a origem **"GitHub Actions"** (Settings → Pages; nunca "Deploy from a branch"), como explica o README na secção 6. O repositório já é público.
 7. Rever a PR das imagens e fazer o merge em `main`. Se o Pages já estiver ativo com a origem "GitHub Actions", a publicação corre sozinha; se for ativado depois do merge, publicar com `npm run deploy` (ou *Actions → Deploy to GitHub Pages → Run workflow*).

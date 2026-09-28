@@ -175,7 +175,7 @@ Restantes scripts do `package.json`:
 | `npm run check:forbidden` | Palavras e fórmulas proibidas no texto, APIs de armazenamento no código e marcas de conformidade em todas as páginas. |
 | `npm run check:budget` | Peso do JavaScript, do CSS e das imagens da página principal. |
 | `npm run og:image` | Gera a imagem de partilha `public/og-image.jpg` (1200 × 630) com o Chromium do Playwright. |
-| `npm run favicons` | Gera os favicons, os ícones e o `site.webmanifest` em `public/` a partir de `assets-src/brand/logo-original.png`. |
+| `npm run favicons` | Gera os favicons, os ícones e o `site.webmanifest` em `public/`: os ícones saem do grafismo da casa do logótipo completo (`assets-src/brand/logotipo-completo.jpeg`) e o `public/logo-lmdreams.png` é uma cópia de `assets-src/brand/logo-original.png`. |
 | `npm run contact-sheet` | Folha de contacto das imagens ilustrativas, em `.tmp/folha-de-contacto.jpg`. |
 | `npm run deploy` | `gh workflow run deploy.yml --ref main`: volta a publicar o site a partir da `main` (secção 6). |
 
