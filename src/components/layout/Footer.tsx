@@ -121,7 +121,12 @@ export function Footer() {
                 {company.name}
               </span>
             </a>
-            <p className="mt-6 max-w-[38ch] text-muted-on-dark">{footer.description}</p>
+            {/* Slogan do logótipo, junto à marca; em `on-dark` (texto pequeno em latão sobre
+                `dark` fica de fora pela direção visual). */}
+            <p className="mt-3 font-display text-[1.0625rem] leading-snug font-medium text-on-dark">
+              {company.slogan}
+            </p>
+            <p className="mt-5 max-w-[38ch] text-muted-on-dark">{footer.description}</p>
           </div>
 
           <nav id={FOOTER_NAV_ID} aria-labelledby="rodape-ligacoes-titulo" className="lg:col-span-3 xl:col-span-2">
