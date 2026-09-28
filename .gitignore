@@ -5,6 +5,9 @@ dist-ssr/
 .revisao/
 .lighthouseci/
 assets-src/ilustrativas/_rejeitadas/
+# Fotografias originais do cliente (podem ter casas de clientes, pessoas e localização GPS):
+# ficam só no computador; as escolhidas entram no site tratadas e com autorização.
+fotos-originais/
 .claude/settings.local.json
 *.local
 *.log
