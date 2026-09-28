@@ -126,7 +126,7 @@
       "job_id": "e1ca3633-19da-4cd4-9e8d-7236f418c411",
       "modelo": "gpt_image_2_5",
       "proporcao": "3:2",
-      "estado": "completed (rejeitada no controlo de qualidade)",
+      "estado": "completed (rejeitada no controlo de qualidade: pseudoletras em relevo na chave de tubos; ferramentas vermelhas e amarelas fora da paleta)",
       "data": "2026-09-27"
     },
     {
@@ -146,7 +146,7 @@
       "job_id": "37064ec0-8ac2-4fff-ab36-14fc891424a4",
       "modelo": "gpt_image_2_5",
       "proporcao": "4:3",
-      "estado": "completed (rejeitada no controlo de qualidade)",
+      "estado": "completed (rejeitada no controlo de qualidade: espaçador em cruz a meio de uma junta contínua)",
       "data": "2026-09-27"
     },
     {
@@ -168,6 +168,46 @@
       "proporcao": "3:2",
       "estado": "completed",
       "data": "2026-09-27"
+    },
+    {
+      "index": 30,
+      "asset": "diferenciacao",
+      "versao": "v2",
+      "job_id": "80c5dcd0-f85a-4974-82b5-0a515a916303",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "3:2",
+      "estado": "completed (candidato não escolhido: talocha e chave de tubos menos credíveis do que na v3)",
+      "data": "2026-09-28"
+    },
+    {
+      "index": 31,
+      "asset": "diferenciacao",
+      "versao": "v3",
+      "job_id": "fc9609b1-6e1f-4e97-b467-329577851796",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "3:2",
+      "estado": "completed (escolhida)",
+      "data": "2026-09-28"
+    },
+    {
+      "index": 60,
+      "asset": "servico-casas-de-banho",
+      "versao": "v2",
+      "job_id": "cd36e871-b935-4226-80e3-10e561e7b08a",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "completed (rejeitada no controlo de qualidade: espaçador fora do cruzamento de juntas; manga cortada pela aresta da parede)",
+      "data": "2026-09-28"
+    },
+    {
+      "index": 61,
+      "asset": "servico-casas-de-banho",
+      "versao": "v3",
+      "job_id": "bce6611c-92ac-4c06-9ff9-a983a6193378",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "completed (escolhida)",
+      "data": "2026-09-28"
     }
   ]
 }

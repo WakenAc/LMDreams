@@ -12,10 +12,16 @@ import heroAvif from '@ilustrativas/hero.jpg?w=640;960;1280;1600;1920&format=avi
 import heroRest from '@ilustrativas/hero.jpg?w=640;960;1280;1600;1920&format=webp;jpg&quality=64&as=picture'
 // Larguras até 2× o maior tamanho em que cada imagem aparece (Parte 4.8): cerca de 607 px
 // no Sobre e nos cartões de serviço (telemóvel, abaixo de 640 px); a toda a largura no CTA.
+// Na Diferenciação, até 1600 px (mais do dobro dos 732 px em computador): a 2048 px, o AVIF
+// passava dos 120 KiB da Parte 4.8 por causa da textura do betão; com AVIF a 48 (ver manifest.json).
 // Nos cartões de serviço e na transparência, o AVIF vai a 56: a 50 comprimia tanto que o JPEG de recurso
 // passava do dobro do AVIF (Parte 4.8).
 import sobreAvif from '@ilustrativas/sobre.jpg?w=480;640;800;1024;1216&format=avif&quality=50&as=picture'
 import sobreRest from '@ilustrativas/sobre.jpg?w=480;640;800;1024;1216&format=webp;jpg&quality=64&as=picture'
+import diferenciacaoAvif from '@ilustrativas/diferenciacao.jpg?w=640;960;1280;1600&format=avif&quality=48&as=picture'
+import diferenciacaoRest from '@ilustrativas/diferenciacao.jpg?w=640;960;1280;1600&format=webp;jpg&quality=64&as=picture'
+import casasDeBanhoAvif from '@ilustrativas/servico-casas-de-banho.jpg?w=480;640;816;1024;1216&format=avif&quality=56&as=picture'
+import casasDeBanhoRest from '@ilustrativas/servico-casas-de-banho.jpg?w=480;640;816;1024;1216&format=webp;jpg&quality=64&as=picture'
 import cozinhasAvif from '@ilustrativas/servico-cozinhas.jpg?w=480;640;816;1024;1216&format=avif&quality=56&as=picture'
 import cozinhasRest from '@ilustrativas/servico-cozinhas.jpg?w=480;640;816;1024;1216&format=webp;jpg&quality=64&as=picture'
 import recuperacaoAvif from '@ilustrativas/servico-recuperacao.jpg?w=480;640;816;1024;1216&format=avif&quality=56&as=picture'
@@ -97,7 +103,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
   },
   diferenciacao: {
     id: 'diferenciacao',
-    picture: null,
+    picture: withAvif(diferenciacaoAvif, diferenciacaoRest),
     alt: 'Ferramentas de várias especialidades organizadas lado a lado sobre uma superfície de betão.',
     ratio: [3, 2],
     ilustrativa: true,
@@ -121,8 +127,8 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
   },
   'servico-casas-de-banho': {
     id: 'servico-casas-de-banho',
-    picture: null,
-    alt: 'Assentamento de revestimento cerâmico numa casa de banho em remodelação.',
+    picture: withAvif(casasDeBanhoAvif, casasDeBanhoRest),
+    alt: 'Profissional a verificar com um nível o prumo do revestimento cerâmico de uma casa de banho.',
     ratio: [4, 3],
     ilustrativa: true,
     sizes: '(min-width: 1336px) 408px, (min-width: 1024px) calc((100vw - 112px) / 3), (min-width: 640px) calc((100vw - 72px) / 2), calc(100vw - 32px)',
