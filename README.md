@@ -442,13 +442,12 @@ As imagens do site ainda não são fotografias de obras da empresa. As que exist
 | `hero` | Início, em computador e tablet; imagem de partilha (`public/og-image.jpg`) | Gerada por IA: `assets-src/ilustrativas/hero.jpg` |
 | `hero` (telemóvel) | Início, abaixo de 768 px | Recorte 4:5 do mesmo original: `assets-src/ilustrativas/hero-telemovel.jpg` |
 | `sobre` | Sobre nós | Gerada por IA: `assets-src/ilustrativas/sobre.jpg` |
-| `diferenciacao` | Diferenciação | Placeholder "Imagem a substituir" |
-| `servico-construcao`, `servico-cozinhas`, `servico-pavimentos`, `servico-recuperacao`, `servico-exteriores` | Cartões de cinco dos seis serviços em destaque | Gerada por IA: `assets-src/ilustrativas/servico-*.jpg` |
-| `servico-casas-de-banho` | Cartão "Remodelação de casas de banho" | Placeholder "Imagem a substituir" |
+| `diferenciacao` | Diferenciação | Gerada por IA: `assets-src/ilustrativas/diferenciacao.jpg` |
+| `servico-construcao`, `servico-cozinhas`, `servico-casas-de-banho`, `servico-pavimentos`, `servico-recuperacao`, `servico-exteriores` | Cartões dos seis serviços em destaque | Gerada por IA: `assets-src/ilustrativas/servico-*.jpg` |
 | `transparencia` | Transparência | Gerada por IA: `assets-src/ilustrativas/transparencia.jpg` |
 | `cta` | Fundo da chamada para ação | Gerada por IA: `assets-src/ilustrativas/cta.jpg` |
 
-Existem 9 das 11 imagens previstas. As outras duas (`diferenciacao` e `servico-casas-de-banho`) ficaram como placeholders gerados em código ("Imagem a substituir", com a proporção certa e sem saltos de layout): foram geradas, mas rejeitadas no controlo de qualidade (letras em relevo numa ferramenta; um espaçador de azulejo impossível), e o plano atual da conta da Higgsfield só permite 5 gerações por dia. As tentativas, as recusas e as rejeições estão registadas em `assets-src/ilustrativas/jobs.json`. Quando forem geradas, só muda o `src/content/images.ts` (import e `picture`) e o `manifest.json`: nenhuma secção precisa de mudar.
+Existem as 11 imagens previstas, todas ilustrativas e geradas por IA. As tentativas, as recusas e as rejeições do controlo de qualidade estão registadas em `assets-src/ilustrativas/jobs.json`; os originais rejeitados ficam em `assets-src/ilustrativas/_rejeitadas/`, fora do Git. Se uma imagem for retirada (`picture: null` no `src/content/images.ts`), o site volta a mostrar no lugar dela um placeholder gerado em código ("Imagem a substituir", com a proporção certa e sem saltos de layout).
 
 ### Legenda e nota do rodapé
 
