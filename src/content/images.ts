@@ -10,6 +10,32 @@ import heroMobileAvif from '@ilustrativas/hero-telemovel.jpg?w=480;640;720;800;1
 import heroMobileRest from '@ilustrativas/hero-telemovel.jpg?w=480;640;720;800;1024;1216&format=webp;jpg&quality=64&as=picture'
 import heroAvif from '@ilustrativas/hero.jpg?w=640;960;1280;1600;1920&format=avif&quality=50&as=picture'
 import heroRest from '@ilustrativas/hero.jpg?w=640;960;1280;1600;1920&format=webp;jpg&quality=64&as=picture'
+// Larguras até 2× o maior tamanho em que cada imagem aparece (Parte 4.8): cerca de 607 px
+// no Sobre e nos cartões de serviço (telemóvel, abaixo de 640 px); a toda a largura no CTA.
+// Na Diferenciação, até 1600 px (mais do dobro dos 732 px em computador): a 2048 px, o AVIF
+// passava dos 120 KiB da Parte 4.8 por causa da textura do betão; com AVIF a 48 (ver manifest.json).
+// Nos cartões de serviço e na transparência, o AVIF vai a 56: a 50 comprimia tanto que o JPEG de recurso
+// passava do dobro do AVIF (Parte 4.8).
+import sobreAvif from '@ilustrativas/sobre.jpg?w=480;640;800;1024;1216&format=avif&quality=50&as=picture'
+import sobreRest from '@ilustrativas/sobre.jpg?w=480;640;800;1024;1216&format=webp;jpg&quality=64&as=picture'
+import diferenciacaoAvif from '@ilustrativas/diferenciacao.jpg?w=640;960;1280;1600&format=avif&quality=48&as=picture'
+import diferenciacaoRest from '@ilustrativas/diferenciacao.jpg?w=640;960;1280;1600&format=webp;jpg&quality=64&as=picture'
+import casasDeBanhoAvif from '@ilustrativas/servico-casas-de-banho.jpg?w=480;640;816;1024;1216&format=avif&quality=56&as=picture'
+import casasDeBanhoRest from '@ilustrativas/servico-casas-de-banho.jpg?w=480;640;816;1024;1216&format=webp;jpg&quality=64&as=picture'
+import cozinhasAvif from '@ilustrativas/servico-cozinhas.jpg?w=480;640;816;1024;1216&format=avif&quality=56&as=picture'
+import cozinhasRest from '@ilustrativas/servico-cozinhas.jpg?w=480;640;816;1024;1216&format=webp;jpg&quality=64&as=picture'
+import recuperacaoAvif from '@ilustrativas/servico-recuperacao.jpg?w=480;640;816;1024;1216&format=avif&quality=56&as=picture'
+import recuperacaoRest from '@ilustrativas/servico-recuperacao.jpg?w=480;640;816;1024;1216&format=webp;jpg&quality=64&as=picture'
+import exterioresAvif from '@ilustrativas/servico-exteriores.jpg?w=480;640;816;1024;1216&format=avif&quality=56&as=picture'
+import exterioresRest from '@ilustrativas/servico-exteriores.jpg?w=480;640;816;1024;1216&format=webp;jpg&quality=64&as=picture'
+import construcaoAvif from '@ilustrativas/servico-construcao.jpg?w=480;640;816;1024;1216&format=avif&quality=56&as=picture'
+import construcaoRest from '@ilustrativas/servico-construcao.jpg?w=480;640;816;1024;1216&format=webp;jpg&quality=64&as=picture'
+import pavimentosAvif from '@ilustrativas/servico-pavimentos.jpg?w=480;640;816;1024;1216&format=avif&quality=56&as=picture'
+import pavimentosRest from '@ilustrativas/servico-pavimentos.jpg?w=480;640;816;1024;1216&format=webp;jpg&quality=64&as=picture'
+import transparenciaAvif from '@ilustrativas/transparencia.jpg?w=480;640;800;1024;1216&format=avif&quality=56&as=picture'
+import transparenciaRest from '@ilustrativas/transparencia.jpg?w=480;640;800;1024;1216&format=webp;jpg&quality=64&as=picture'
+import ctaAvif from '@ilustrativas/cta.jpg?w=640;960;1280;1600;1920;2560&format=avif&quality=50&as=picture'
+import ctaRest from '@ilustrativas/cta.jpg?w=640;960;1280;1600;1920;2560&format=webp;jpg&quality=64&as=picture'
 import type { ImageId } from './tipos'
 
 /** Resultado de um import `?…&as=picture` do vite-imagetools. */
@@ -69,15 +95,15 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
   },
   sobre: {
     id: 'sobre',
-    picture: null,
-    alt: 'Planta de arquitetura com amostras de betão, pedra, madeira e latão sobre uma mesa de obra.',
+    picture: withAvif(sobreAvif, sobreRest),
+    alt: 'Profissional aponta para uma planta de arquitetura, junto a amostras de pedra, madeira e latão.',
     ratio: [4, 5],
     ilustrativa: true,
     sizes: '(min-width: 1336px) 516px, (min-width: 1024px) 39vw, (min-width: 640px) 47vw, calc(100vw - 32px)',
   },
   diferenciacao: {
     id: 'diferenciacao',
-    picture: null,
+    picture: withAvif(diferenciacaoAvif, diferenciacaoRest),
     alt: 'Ferramentas de várias especialidades organizadas lado a lado sobre uma superfície de betão.',
     ratio: [3, 2],
     ilustrativa: true,
@@ -85,7 +111,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
   },
   'servico-construcao': {
     id: 'servico-construcao',
-    picture: null,
+    picture: withAvif(construcaoAvif, construcaoRest),
     alt: 'Cofragem e armaduras de aço numa obra de construção ao fim da tarde.',
     ratio: [4, 3],
     ilustrativa: true,
@@ -93,23 +119,23 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
   },
   'servico-cozinhas': {
     id: 'servico-cozinhas',
-    picture: null,
-    alt: 'Profissional a ajustar uma bancada de pedra numa cozinha em remodelação.',
+    picture: withAvif(cozinhasAvif, cozinhasRest),
+    alt: 'Profissional a verificar com um nível o alinhamento de uma bancada de pedra numa cozinha.',
     ratio: [4, 3],
     ilustrativa: true,
     sizes: '(min-width: 1336px) 408px, (min-width: 1024px) calc((100vw - 112px) / 3), (min-width: 640px) calc((100vw - 72px) / 2), calc(100vw - 32px)',
   },
   'servico-casas-de-banho': {
     id: 'servico-casas-de-banho',
-    picture: null,
-    alt: 'Assentamento de revestimento cerâmico numa casa de banho em remodelação.',
+    picture: withAvif(casasDeBanhoAvif, casasDeBanhoRest),
+    alt: 'Profissional a verificar com um nível o prumo do revestimento cerâmico de uma casa de banho.',
     ratio: [4, 3],
     ilustrativa: true,
     sizes: '(min-width: 1336px) 408px, (min-width: 1024px) calc((100vw - 112px) / 3), (min-width: 640px) calc((100vw - 72px) / 2), calc(100vw - 32px)',
   },
   'servico-pavimentos': {
     id: 'servico-pavimentos',
-    picture: null,
+    picture: withAvif(pavimentosAvif, pavimentosRest),
     alt: 'Mãos de um profissional a aplicar um pavimento de madeira em espinha.',
     ratio: [4, 3],
     ilustrativa: true,
@@ -117,15 +143,15 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
   },
   'servico-recuperacao': {
     id: 'servico-recuperacao',
-    picture: null,
-    alt: 'Recuperação de fachada tradicional com reboco de cal e cantarias restauradas.',
+    picture: withAvif(recuperacaoAvif, recuperacaoRest),
+    alt: 'Fachada tradicional em recuperação, com andaime, reboco de cal e cantarias de pedra.',
     ratio: [4, 3],
     ilustrativa: true,
     sizes: '(min-width: 1336px) 408px, (min-width: 1024px) calc((100vw - 112px) / 3), (min-width: 640px) calc((100vw - 72px) / 2), calc(100vw - 32px)',
   },
   'servico-exteriores': {
     id: 'servico-exteriores',
-    picture: null,
+    picture: withAvif(exterioresAvif, exterioresRest),
     alt: 'Assentamento de pavimento em pedra natural num terraço exterior.',
     ratio: [4, 3],
     ilustrativa: true,
@@ -133,7 +159,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
   },
   transparencia: {
     id: 'transparencia',
-    picture: null,
+    picture: withAvif(transparenciaAvif, transparenciaRest),
     alt: 'Reunião em obra sobre o planeamento impresso dos trabalhos.',
     ratio: [3, 2],
     ilustrativa: true,
@@ -141,7 +167,7 @@ export const IMAGES: Readonly<Record<ImageId, ImageEntry>> = {
   },
   cta: {
     id: 'cta',
-    picture: null,
+    picture: withAvif(ctaAvif, ctaRest),
     // Decorativa: alt vazio, mas com a legenda de IA visível (Parte 4.8).
     alt: '',
     ratio: [21, 9],

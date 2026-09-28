@@ -18,6 +18,196 @@
       "modelo": "gpt_image_2_5",
       "proporcao": "16:9",
       "estado": "submission_failed: limite diário de gerações do período de tolerância"
+    },
+    {
+      "index": 2,
+      "asset": "sobre",
+      "versao": "v1",
+      "job_id": "15d1d76a-2735-422b-84e3-1684a46104f4",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:5",
+      "estado": "completed",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 5,
+      "asset": "servico-cozinhas",
+      "versao": "v1",
+      "job_id": "3ee15704-275e-4f3f-9dd2-5067ec0abf20",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "completed",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 8,
+      "asset": "servico-recuperacao",
+      "versao": "v1",
+      "job_id": "cc54df83-81c4-445b-b2e4-8dfbdf35fe45",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "completed",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 9,
+      "asset": "servico-exteriores",
+      "versao": "v1",
+      "job_id": "1ed6086e-e816-4b56-adb8-dcf41692c2f4",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "completed",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 11,
+      "asset": "cta",
+      "versao": "v1",
+      "job_id": "59e9106b-bbb0-42a2-8c12-7bf1e0d300d9",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "21:9",
+      "estado": "completed",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 3,
+      "asset": "diferenciacao",
+      "versao": "v1",
+      "job_id": null,
+      "modelo": "gpt_image_2_5",
+      "proporcao": "3:2",
+      "estado": "submission_failed: limite diário de gerações do período de tolerância (sem custo)",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 4,
+      "asset": "servico-construcao",
+      "versao": "v1",
+      "job_id": null,
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "submission_failed: limite diário de gerações do período de tolerância (sem custo)",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 6,
+      "asset": "servico-casas-de-banho",
+      "versao": "v1",
+      "job_id": null,
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "submission_failed: limite diário de gerações do período de tolerância (sem custo)",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 7,
+      "asset": "servico-pavimentos",
+      "versao": "v1",
+      "job_id": null,
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "submission_failed: limite diário de gerações do período de tolerância (sem custo)",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 10,
+      "asset": "transparencia",
+      "versao": "v1",
+      "job_id": null,
+      "modelo": "gpt_image_2_5",
+      "proporcao": "3:2",
+      "estado": "submission_failed: limite diário de gerações do período de tolerância (sem custo)",
+      "data": "2026-09-26"
+    },
+    {
+      "index": 3,
+      "asset": "diferenciacao",
+      "versao": "v1",
+      "job_id": "e1ca3633-19da-4cd4-9e8d-7236f418c411",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "3:2",
+      "estado": "completed (rejeitada no controlo de qualidade: pseudoletras em relevo na chave de tubos; ferramentas vermelhas e amarelas fora da paleta)",
+      "data": "2026-09-27"
+    },
+    {
+      "index": 4,
+      "asset": "servico-construcao",
+      "versao": "v1",
+      "job_id": "c319655c-808e-473c-8724-8e7df196c39a",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "completed",
+      "data": "2026-09-27"
+    },
+    {
+      "index": 6,
+      "asset": "servico-casas-de-banho",
+      "versao": "v1",
+      "job_id": "37064ec0-8ac2-4fff-ab36-14fc891424a4",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "completed (rejeitada no controlo de qualidade: espaçador em cruz a meio de uma junta contínua)",
+      "data": "2026-09-27"
+    },
+    {
+      "index": 7,
+      "asset": "servico-pavimentos",
+      "versao": "v1",
+      "job_id": "7b164f34-321f-491c-bc9a-25d2f654c9fc",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "completed",
+      "data": "2026-09-27"
+    },
+    {
+      "index": 10,
+      "asset": "transparencia",
+      "versao": "v1",
+      "job_id": "407ffb42-1f1d-4e36-adc6-615ef0bdaf1d",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "3:2",
+      "estado": "completed",
+      "data": "2026-09-27"
+    },
+    {
+      "index": 30,
+      "asset": "diferenciacao",
+      "versao": "v2",
+      "job_id": "80c5dcd0-f85a-4974-82b5-0a515a916303",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "3:2",
+      "estado": "completed (candidato não escolhido: talocha e chave de tubos menos credíveis do que na v3)",
+      "data": "2026-09-28"
+    },
+    {
+      "index": 31,
+      "asset": "diferenciacao",
+      "versao": "v3",
+      "job_id": "fc9609b1-6e1f-4e97-b467-329577851796",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "3:2",
+      "estado": "completed (escolhida)",
+      "data": "2026-09-28"
+    },
+    {
+      "index": 60,
+      "asset": "servico-casas-de-banho",
+      "versao": "v2",
+      "job_id": "cd36e871-b935-4226-80e3-10e561e7b08a",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "completed (rejeitada no controlo de qualidade: espaçador fora do cruzamento de juntas; manga cortada pela aresta da parede)",
+      "data": "2026-09-28"
+    },
+    {
+      "index": 61,
+      "asset": "servico-casas-de-banho",
+      "versao": "v3",
+      "job_id": "bce6611c-92ac-4c06-9ff9-a983a6193378",
+      "modelo": "gpt_image_2_5",
+      "proporcao": "4:3",
+      "estado": "completed (escolhida)",
+      "data": "2026-09-28"
     }
   ]
 }

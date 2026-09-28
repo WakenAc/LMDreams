@@ -175,7 +175,7 @@ Restantes scripts do `package.json`:
 | `npm run check:forbidden` | Palavras e fórmulas proibidas no texto, APIs de armazenamento no código e marcas de conformidade em todas as páginas. |
 | `npm run check:budget` | Peso do JavaScript, do CSS e das imagens da página principal. |
 | `npm run og:image` | Gera a imagem de partilha `public/og-image.jpg` (1200 × 630) com o Chromium do Playwright. |
-| `npm run favicons` | Gera os favicons, os ícones e o `site.webmanifest` em `public/` a partir de `assets-src/brand/logo-original.png`. |
+| `npm run favicons` | Gera os favicons, os ícones e o `site.webmanifest` em `public/`: os ícones saem do grafismo da casa do logótipo completo (`assets-src/brand/logotipo-completo.jpeg`) e o `public/logo-lmdreams.png` é uma cópia de `assets-src/brand/logo-original.png`. |
 | `npm run contact-sheet` | Folha de contacto das imagens ilustrativas, em `.tmp/folha-de-contacto.jpg`. |
 | `npm run deploy` | `gh workflow run deploy.yml --ref main`: volta a publicar o site a partir da `main` (secção 6). |
 
@@ -300,7 +300,7 @@ A publicação é automática: cada merge na `main` corre o workflow `.github/wo
 ### Primeira publicação
 
 1. **Tornar o repositório público.** Numa conta gratuita do GitHub, o GitHub Pages só publica repositórios públicos. No GitHub, abra o repositório, *Settings → General* e, no fim da página, em *Danger Zone*, *Change visibility → Change to public* (tornar público). Confirme; o GitHub pode pedir que escreva o nome do repositório. Tudo o que está no repositório, incluindo o `BRIEF-LMDREAMS.md` e o histórico, passa a ser visível para qualquer pessoa. O projeto não tem segredos. (Com um plano pago, como o Pro, o Pages também publica a partir de um repositório privado, e o site fica público na mesma.)
-2. **Ativar a origem "GitHub Actions".** Em *Settings → Pages → Build and deployment → Source*, escolha *GitHub Actions*.
+2. **Ativar a origem "GitHub Actions", antes do merge.** Em *Settings → Pages → Build and deployment → Source*, escolha *GitHub Actions*. **Nunca escolha *Deploy from a branch*:** essa opção publica os ficheiros-fonte do repositório tal como estão, sem build e sem o bloqueio dos dados legais. O resultado é uma página em branco e os documentos internos (brief, relatório, conteúdos a substituir) visíveis no endereço do site. Aconteceu a 26 de setembro de 2026, e o site foi retirado do ar a 27. Se o merge acontecer antes de a origem estar ativa, o `deploy.yml` falha no passo "Configure GitHub Pages"; depois de ativar a origem, publique com `npm run deploy` (secção "Voltar a publicar").
 3. **Preencher os dados que bloqueiam a publicação.** O `deploy.yml` corre `npm run check:placeholders -- --strict` depois do build e **falha de propósito** enquanto faltarem os dados marcados "Bloqueia publicação" no `CONTEUDO-A-SUBSTITUIR.md` (forma jurídica, denominação social, NIPC, sede, conservatória e capital social, título do IMPIC, entidades de resolução de litígios e dados da Política de privacidade). Enquanto falhar, o site não fica público. Confirme no seu computador antes do merge:
 
    ```bash
@@ -441,13 +441,13 @@ As imagens do site ainda não são fotografias de obras da empresa. As que exist
 |---|---|---|
 | `hero` | Início, em computador e tablet; imagem de partilha (`public/og-image.jpg`) | Gerada por IA: `assets-src/ilustrativas/hero.jpg` |
 | `hero` (telemóvel) | Início, abaixo de 768 px | Recorte 4:5 do mesmo original: `assets-src/ilustrativas/hero-telemovel.jpg` |
-| `sobre` | Sobre nós | Placeholder "Imagem a substituir" |
-| `diferenciacao` | Diferenciação | Placeholder "Imagem a substituir" |
-| `servico-construcao`, `servico-cozinhas`, `servico-casas-de-banho`, `servico-pavimentos`, `servico-recuperacao`, `servico-exteriores` | Cartões dos seis serviços em destaque | Placeholder "Imagem a substituir" |
-| `transparencia` | Transparência | Placeholder "Imagem a substituir" |
-| `cta` | Fundo da chamada para ação | Placeholder "Imagem a substituir" |
+| `sobre` | Sobre nós | Gerada por IA: `assets-src/ilustrativas/sobre.jpg` |
+| `diferenciacao` | Diferenciação | Gerada por IA: `assets-src/ilustrativas/diferenciacao.jpg` |
+| `servico-construcao`, `servico-cozinhas`, `servico-casas-de-banho`, `servico-pavimentos`, `servico-recuperacao`, `servico-exteriores` | Cartões dos seis serviços em destaque | Gerada por IA: `assets-src/ilustrativas/servico-*.jpg` |
+| `transparencia` | Transparência | Gerada por IA: `assets-src/ilustrativas/transparencia.jpg` |
+| `cta` | Fundo da chamada para ação | Gerada por IA: `assets-src/ilustrativas/cta.jpg` |
 
-Só o hero existe. As outras dez imagens ficaram como placeholders gerados em código ("Imagem a substituir", com a proporção certa e sem saltos de layout) porque a conta da Higgsfield atingiu o limite diário de gerações durante o projeto; as tentativas estão registadas em `assets-src/ilustrativas/jobs.json`.
+Existem as 11 imagens previstas, todas ilustrativas e geradas por IA. As tentativas, as recusas e as rejeições do controlo de qualidade estão registadas em `assets-src/ilustrativas/jobs.json`; os originais rejeitados ficam em `assets-src/ilustrativas/_rejeitadas/`, fora do Git. Se uma imagem for retirada (`picture: null` no `src/content/images.ts`), o site volta a mostrar no lugar dela um placeholder gerado em código ("Imagem a substituir", com a proporção certa e sem saltos de layout).
 
 ### Legenda e nota do rodapé
 

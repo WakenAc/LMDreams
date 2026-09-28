@@ -2,18 +2,24 @@
 // Sem redesenho: recorta-se o grafismo do próprio ficheiro e completa-se o quadrado
 // com a cor de fundo do próprio logótipo (#292929). Corre-se uma vez (npm run favicons)
 // e os ficheiros gerados ficam em public/.
+//
+// Os ícones saem do logótipo completo enviado pelo dono (logotipo-completo.jpeg, 1284 × 1252,
+// com o nome e o slogan em baixo): o grafismo da casa tem cerca de 699 × 375 px, contra
+// 241 × 129 no ficheiro inicial. Só entra o grafismo amarelo-lima: o texto vermelho e o
+// slogan branco ficam de fora pela cor. O fundo medido é o mesmo #292929.
 import fs from 'node:fs'
 import path from 'node:path'
 import sharp from 'sharp'
 
 const SRC = path.resolve('assets-src/brand/logo-original.png')
+const ICON_SRC = path.resolve('assets-src/brand/logotipo-completo.jpeg')
 const OUT = path.resolve('public')
 const BG = { r: 41, g: 41, b: 41, alpha: 1 } // fundo medido do logótipo
 
 fs.mkdirSync(OUT, { recursive: true })
 
 // Caixa do grafismo amarelo-lima (medida nos píxeis do ficheiro).
-const { data, info } = await sharp(SRC).raw().toBuffer({ resolveWithObject: true })
+const { data, info } = await sharp(ICON_SRC).raw().toBuffer({ resolveWithObject: true })
 let x0 = info.width
 let y0 = info.height
 let x1 = 0
@@ -36,7 +42,7 @@ const gw = x1 - x0 + 1
 const gh = y1 - y0 + 1
 console.log(`favicons: grafismo ${gw}×${gh} px em (${x0}, ${y0})`)
 
-const graphic = await sharp(SRC).extract({ left: x0, top: y0, width: gw, height: gh }).png().toBuffer()
+const graphic = await sharp(ICON_SRC).extract({ left: x0, top: y0, width: gw, height: gh }).png().toBuffer()
 
 /** Quadrado com o grafismo centrado; `fill` = fração do lado ocupada pelo lado maior do grafismo. */
 async function square(size: number, fill: number): Promise<Buffer> {

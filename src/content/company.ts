@@ -28,6 +28,8 @@ const legalForm: LegalForm = 'sociedade'
 
 export const company = {
   name: 'LMDreams',
+  /** Slogan do logótipo da empresa; aparece no rodapé, junto ao logótipo. */
+  slogan: 'O seu sonho, a nossa obra.',
   experienceYears,
   /** Forma escrita da alegação, sempre atribuída aos profissionais. */
   experienceText: `mais de ${experienceYears} anos`,
