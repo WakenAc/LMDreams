@@ -14,156 +14,18 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 
 ## Resumo
 
-- Pendentes: 90, em 22 chaves
-- Bloqueiam a publicação: 18, em 13 chaves
-- Outros pendentes: 72, em 9 chaves
-- Chaves do registo sem ocorrências (só informação): 7
+- Pendentes: 16, em 2 chaves
+- Bloqueiam a publicação: 0, em 0 chaves
+- Outros pendentes: 16, em 2 chaves
+- Chaves do registo sem ocorrências (só informação): 27
 - Erros de estrutura: 0
 - Forma jurídica considerada: sociedade (`legalForm` em `src/content/company.ts`). As chaves "Sim, se for sociedade" e "Sim, se aplicável" só bloqueiam quando a forma jurídica é sociedade.
 
 ## Bloqueia publicação
 
-### `forma-juridica` (1)
-
-- Onde aparece: Informação legal
-- Ficheiro e campo: src/content/company.ts → legal.form, legal.companyType
-- O que fornecer: Sociedade (e tipo: Lda., Unipessoal Lda., S.A.) ou empresário em nome individual
-- Bloqueia publicação: Sim (a forma jurídica atual é sociedade, por isso bloqueia)
-- Ocorrências:
-  - `src/content/company.ts:78`, campo `legal.companyType`: tipo de sociedade (Lda., Unipessoal Lda. ou S.A.)
-
-### `denominacao-social` (1)
-
-- Onde aparece: Informação legal, políticas
-- Ficheiro e campo: src/content/company.ts → legal.name
-- O que fornecer: Firma (ou nome civil, se for empresário em nome individual). Depois de a confirmar, decidir se o aviso de direitos de autor do rodapé passa a nomear a firma (hoje nomeia só a marca: “© [ano] LMDreams. Todos os direitos reservados.”, como pede a Parte 5.4 do brief)
-- Bloqueia publicação: Sim
-- Ocorrências:
-  - `src/content/company.ts:82`, campo `legal.name`: denominação social
-
-### `nipc` (1)
-
-- Onde aparece: Informação legal, políticas
-- Ficheiro e campo: src/content/company.ts → legal.nipc
-- O que fornecer: NIPC ou NIF
-- Bloqueia publicação: Sim
-- Ocorrências:
-  - `src/content/company.ts:84`, campo `legal.nipc`: NIPC
-
-### `sede` (1)
-
-- Onde aparece: Informação legal, Política de privacidade
-- Ficheiro e campo: src/content/company.ts → legal.address
-- O que fornecer: Morada da sede (uso legal, não comercial)
-- Bloqueia publicação: Sim
-- Ocorrências:
-  - `src/content/company.ts:86`, campo `legal.address`: morada da sede
-
-### `titulo-impic` (2)
-
-- Onde aparece: Informação legal, Sobre
-- Ficheiro e campo: src/content/company.ts → legal.license
-- O que fornecer: Tipo (alvará ou certificado de empreiteiro) e número; classes e categorias opcionais
-- Bloqueia publicação: Sim
-- Ocorrências:
-  - `src/content/company.ts:99`, campo `legal.license.type`: alvará ou certificado
-  - `src/content/company.ts:100`, campo `legal.license.number`: número
-
-### `ral` (2)
-
-- Onde aparece: Informação legal, Termos
-- Ficheiro e campo: src/content/company.ts → legal.ral
-- O que fornecer: Entidade(s) de resolução alternativa de litígios a que a empresa aderiu ou que são competentes, com o site (o CNIACC já consta como entidade de competência genérica)
-- Bloqueia publicação: Sim
-- Ocorrências:
-  - `src/content/company.ts:103`, campo `legal.ral`: centros de arbitragem de conflitos de consumo competentes em Portugal continental, com os sites
-  - `src/content/company.ts:107`, campo `legal.ralMembership`: entidade RAL a que a empresa aderiu, se houver, com o site
-
-### `registo-comercial` (2)
-
-- Onde aparece: Informação legal (só se for sociedade)
-- Ficheiro e campo: src/content/company.ts → legal.registry, legal.shareCapital
-- O que fornecer: Conservatória e capital social
-- Bloqueia publicação: Sim, se for sociedade (a forma jurídica atual é sociedade, por isso bloqueia)
-- Ocorrências:
-  - `src/content/company.ts:87`, campo `legal.registry`: conservatória
-  - `src/content/company.ts:88`, campo `legal.shareCapital`: capital social
-
-### `responsavel-dados` (1)
-
-- Onde aparece: Política de privacidade
-- Ficheiro e campo: src/content/company.ts → legal.dataController
-- O que fornecer: Contacto para questões de dados pessoais
-- Bloqueia publicação: Sim
-- Ocorrências:
-  - `src/content/company.ts:110`, campo `legal.dataController`: e-mail para dados pessoais
-
-### `prazo-conservacao` (1)
-
-- Onde aparece: Política de privacidade
-- Ficheiro e campo: src/content/company.ts → legal.dataRetention
-- O que fornecer: Prazo de conservação dos pedidos que não dão origem a contrato
-- Bloqueia publicação: Sim
-- Ocorrências:
-  - `src/content/company.ts:111`, campo `legal.dataRetention`: prazo de conservação
-
-### `fornecedores-dados` (2)
-
-- Onde aparece: Política de privacidade
-- Ficheiro e campo: src/content/company.ts → legal.processors
-- O que fornecer: Serviço de formulários e serviço de e-mail usados (subcontratantes)
-- Bloqueia publicação: Sim
-- Ocorrências:
-  - `src/content/company.ts:112`, campo `legal.processors`: serviços de formulários e de e-mail
-  - `src/content/company.ts:114`, campo `legal.formService`: serviço de formulários
-
-### `data-politicas` (1)
-
-- Onde aparece: Páginas legais
-- Ficheiro e campo: src/content/company.ts → legal.policiesUpdatedAt
-- O que fornecer: Data da última revisão das políticas
-- Bloqueia publicação: Sim
-- Ocorrências:
-  - `src/content/company.ts:115`, campo `legal.policiesUpdatedAt`: data da última atualização
-
-### `capital-realizado-proprio` (2)
-
-- Onde aparece: Informação legal (só Lda. e S.A.)
-- Ficheiro e campo: src/content/company.ts → legal.paidUpCapital, legal.equityNote
-- O que fornecer: Capital realizado, se diferente do capital social; capital próprio, se for igual ou inferior a metade do capital social
-- Bloqueia publicação: Sim, se aplicável (a forma jurídica atual é sociedade, por isso bloqueia)
-- Ocorrências:
-  - `src/content/company.ts:90`, campo `legal.paidUpCapital`: capital realizado, se for diferente do capital social
-  - `src/content/company.ts:94`, campo `legal.equityNote`: capital próprio, se for igual ou inferior a metade do capital social
-
-### `epd` (1)
-
-- Onde aparece: Política de privacidade
-- Ficheiro e campo: src/content/company.ts → legal.dpo
-- O que fornecer: Encarregado de proteção de dados e contacto, ou confirmação de que não foi designado
-- Bloqueia publicação: Sim
-- Ocorrências:
-  - `src/content/company.ts:116`, campo `legal.dpo`: encarregado de proteção de dados ou confirmação de que não foi designado
+Nenhum pendente bloqueia a publicação.
 
 ## Outros pendentes
-
-### `validade-orcamento` (1)
-
-- Onde aparece: Termos e condições
-- Ficheiro e campo: src/content/company.ts → legal.quoteValidity
-- O que fornecer: Validade habitual dos orçamentos
-- Bloqueia publicação: Não
-- Ocorrências:
-  - `src/content/company.ts:120`, campo `legal.quoteValidity`: validade dos orçamentos
-
-### `garantia-comercial` (1)
-
-- Onde aparece: Termos e condições
-- Ficheiro e campo: src/content/company.ts → legal.commercialWarranty
-- O que fornecer: Existe garantia comercial? Com que condições escritas?
-- Bloqueia publicação: Não
-- Ocorrências:
-  - `src/content/company.ts:121`, campo `legal.commercialWarranty`: garantia comercial
 
 ### `icone-livro-reclamacoes` (1)
 
@@ -172,49 +34,7 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
 - O que fornecer: Ícone oficial descarregado da plataforma do Livro de Reclamações, depois de registar a empresa
 - Bloqueia publicação: Não (existe a ligação em texto)
 - Ocorrências:
-  - `src/content/company.ts:71`, campo `complaintsBookIcon`: ícone oficial do Livro de Reclamações Eletrónico
-
-### `horario` (1)
-
-- Onde aparece: Contactos, rodapé
-- Ficheiro e campo: src/content/company.ts → hours
-- O que fornecer: Horário de atendimento
-- Bloqueia publicação: Não
-- Ocorrências:
-  - `src/content/company.ts:54`, campo `hours`: horário de atendimento
-
-### `redes-sociais` (1)
-
-- Onde aparece: Contactos, rodapé
-- Ficheiro e campo: src/content/company.ts → social[]
-- O que fornecer: Endereços das redes sociais (os ícones só aparecem quando houver URL)
-- Bloqueia publicação: Não
-- Ocorrências:
-  - `src/content/company.ts:59`, campo `socialPending`: redes sociais
-
-### `servicos` (16)
-
-- Onde aparece: Serviços
-- Ficheiro e campo: src/content/services.ts → confirmado
-- O que fornecer: Confirmar a lista de serviços com a empresa (nome e descrição de cada um)
-- Bloqueia publicação: Não
-- Ocorrências:
-  - `src/content/services.ts:26`, campo `services[0].confirmado`: Serviço "Construção civil" por confirmar; descrição proposta: "Construção e ampliação de edifícios, com cada fase entregue à equipa da especialidade."
-  - `src/content/services.ts:35`, campo `services[1].confirmado`: Serviço "Remodelação de cozinhas" por confirmar; descrição proposta: "Canalização, eletricidade, revestimentos e montagem, cada trabalho feito por quem o domina."
-  - `src/content/services.ts:44`, campo `services[2].confirmado`: Serviço "Remodelação de casas de banho" por confirmar; descrição proposta: "Loiças sanitárias, canalização, impermeabilização e revestimentos, numa sequência de trabalhos planeada."
-  - `src/content/services.ts:52`, campo `services[3].confirmado`: Serviço "Aplicação de pavimentos e revestimentos" por confirmar; descrição proposta: "Cerâmica, pedra, madeira e vinílico, aplicados sobre bases bem preparadas e niveladas."
-  - `src/content/services.ts:61`, campo `services[4].confirmado`: Serviço "Recuperação de imóveis" por confirmar; descrição proposta: "Reabilitação de edifícios antigos, preservando o que tem valor e corrigindo o que já não serve."
-  - `src/content/services.ts:69`, campo `services[5].confirmado`: Serviço "Trabalhos exteriores" por confirmar; descrição proposta: "Muros, pavimentos exteriores, terraços e arranjos de logradouros."
-  - `src/content/services.ts:80`, campo `services[6].confirmado`: Serviço "Remodelações completas" por confirmar; descrição proposta: "Remodelação integral de casas e espaços comerciais, com todas as especialidades coordenadas por nós."
-  - `src/content/services.ts:88`, campo `services[7].confirmado`: Serviço "Canalização" por confirmar; descrição proposta: "Redes de águas e esgotos, substituição de tubagens e reparação de fugas por canalizadores experientes."
-  - `src/content/services.ts:96`, campo `services[8].confirmado`: Serviço "Eletricidade" por confirmar; descrição proposta: "Instalações elétricas novas e remodelação de quadros e circuitos, executadas por eletricistas."
-  - `src/content/services.ts:104`, campo `services[9].confirmado`: Serviço "Pintura" por confirmar; descrição proposta: "Pintura de interiores e exteriores, com as superfícies bem preparadas antes da primeira demão."
-  - `src/content/services.ts:111`, campo `services[10].confirmado`: Serviço "Carpintaria" por confirmar; descrição proposta: "Portas, roupeiros, rodapés e outros trabalhos em madeira, ajustados ao espaço."
-  - `src/content/services.ts:119`, campo `services[11].confirmado`: Serviço "Tetos falsos e divisórias" por confirmar; descrição proposta: "Tetos falsos e paredes em gesso cartonado, com isolamento e iluminação integrados quando fizer sentido."
-  - `src/content/services.ts:127`, campo `services[12].confirmado`: Serviço "Isolamentos" por confirmar; descrição proposta: "Isolamento térmico e acústico de paredes, coberturas e pavimentos, incluindo capoto (isolamento pelo exterior)."
-  - `src/content/services.ts:135`, campo `services[13].confirmado`: Serviço "Impermeabilizações" por confirmar; descrição proposta: "Impermeabilização de coberturas, terraços, varandas e zonas húmidas, para tratar as infiltrações na origem."
-  - `src/content/services.ts:142`, campo `services[14].confirmado`: Serviço "Reparações e manutenção" por confirmar; descrição proposta: "Reparações pontuais e manutenção de habitações, condomínios e espaços comerciais."
-  - `src/content/services.ts:151`, campo `services[15].confirmado`: Serviço "Preparação e coordenação de obra" por confirmar; descrição proposta: "Planeamento, sequência dos trabalhos e coordenação das várias especialidades ao longo da obra."
+  - `src/content/company.ts:76`, campo `complaintsBookIcon`: ícone oficial do Livro de Reclamações Eletrónico
 
 ### `testemunhos` (15)
 
@@ -239,62 +59,55 @@ Lista os dados que ainda faltam no site: os placeholders criados com `PH(chave, 
   - `src/content/testimonials.ts:43`, campo `testimonials[2].localidade`: localidade
   - `src/content/testimonials.ts:44`, campo `testimonials[2].tipoDeObra`: tipo de obra
 
-### `projetos` (35)
-
-- Onde aparece: Projetos
-- Ficheiro e campo: src/content/projects.ts
-- O que fornecer: Fotografias reais (antes e depois), nome, tipo de intervenção, localidade, descrição, autorização
-- Bloqueia publicação: Não
-- Ocorrências:
-  - `src/content/projects.ts:48`, campo `projects[0].nome`: nome de uma obra de remodelação
-  - `src/content/projects.ts:50`, campo `projects[0].tipoDeIntervencao`: tipo de intervenção
-  - `src/content/projects.ts:51`, campo `projects[0].localidade`: concelho ou localidade da obra
-  - `src/content/projects.ts:52`, campo `projects[0].descricao`: breve descrição da obra e do que foi feito
-  - `src/content/projects.ts:56`, campo `projects[0].placeholder`: Projeto provisório "projeto-remodelacoes"
-  - `src/content/projects.ts:60`, campo `projects[1].nome`: nome de uma obra de cozinha
-  - `src/content/projects.ts:62`, campo `projects[1].tipoDeIntervencao`: tipo de intervenção
-  - `src/content/projects.ts:63`, campo `projects[1].localidade`: concelho ou localidade da obra
-  - `src/content/projects.ts:64`, campo `projects[1].descricao`: breve descrição da obra e do que foi feito
-  - `src/content/projects.ts:68`, campo `projects[1].placeholder`: Projeto provisório "projeto-cozinhas"
-  - `src/content/projects.ts:72`, campo `projects[2].nome`: nome de uma obra de casa de banho
-  - `src/content/projects.ts:74`, campo `projects[2].tipoDeIntervencao`: tipo de intervenção
-  - `src/content/projects.ts:75`, campo `projects[2].localidade`: concelho ou localidade da obra
-  - `src/content/projects.ts:76`, campo `projects[2].descricao`: breve descrição da obra e do que foi feito
-  - `src/content/projects.ts:80`, campo `projects[2].placeholder`: Projeto provisório "projeto-casas-de-banho"
-  - `src/content/projects.ts:84`, campo `projects[3].nome`: nome de uma obra de interiores
-  - `src/content/projects.ts:86`, campo `projects[3].tipoDeIntervencao`: tipo de intervenção
-  - `src/content/projects.ts:87`, campo `projects[3].localidade`: concelho ou localidade da obra
-  - `src/content/projects.ts:88`, campo `projects[3].descricao`: breve descrição da obra e do que foi feito
-  - `src/content/projects.ts:92`, campo `projects[3].placeholder`: Projeto provisório "projeto-interiores"
-  - `src/content/projects.ts:96`, campo `projects[4].nome`: nome de uma obra de exteriores
-  - `src/content/projects.ts:98`, campo `projects[4].tipoDeIntervencao`: tipo de intervenção
-  - `src/content/projects.ts:99`, campo `projects[4].localidade`: concelho ou localidade da obra
-  - `src/content/projects.ts:100`, campo `projects[4].descricao`: breve descrição da obra e do que foi feito
-  - `src/content/projects.ts:104`, campo `projects[4].placeholder`: Projeto provisório "projeto-exteriores"
-  - `src/content/projects.ts:108`, campo `projects[5].nome`: nome de uma obra de construção
-  - `src/content/projects.ts:110`, campo `projects[5].tipoDeIntervencao`: tipo de intervenção
-  - `src/content/projects.ts:111`, campo `projects[5].localidade`: concelho ou localidade da obra
-  - `src/content/projects.ts:112`, campo `projects[5].descricao`: breve descrição da obra e do que foi feito
-  - `src/content/projects.ts:116`, campo `projects[5].placeholder`: Projeto provisório "projeto-construcao"
-  - `src/content/projects.ts:120`, campo `projects[6].nome`: nome de uma obra de recuperação de imóvel
-  - `src/content/projects.ts:122`, campo `projects[6].tipoDeIntervencao`: tipo de intervenção
-  - `src/content/projects.ts:123`, campo `projects[6].localidade`: concelho ou localidade da obra
-  - `src/content/projects.ts:124`, campo `projects[6].descricao`: breve descrição da obra e do que foi feito
-  - `src/content/projects.ts:128`, campo `projects[6].placeholder`: Projeto provisório "projeto-recuperacao"
-
-### `intervalos-orcamento` (1)
-
-- Onde aparece: Formulário
-- Ficheiro e campo: src/content/contact.ts → budgetRanges
-- O que fornecer: Rever os intervalos propostos
-- Bloqueia publicação: Não
-- Ocorrências:
-  - `src/content/contact.ts:131`, campo `budgetRanges.confirmado`: Intervalos propostos: "Até 10 000 €"; "10 000 € a 25 000 €"; "25 000 € a 50 000 €"; "50 000 € a 100 000 €"; "100 000 € a 250 000 €"; "Mais de 250 000 €"; "Prefiro não indicar"
-
 ## Chaves do registo sem ocorrências
 
 Só para informação: estas chaves não têm pendentes no código. É normal, porque são dados já preenchidos, opcionais ou tratados fora do código.
 
+- `forma-juridica`: Sociedade (e tipo: Lda., Unipessoal Lda., S.A.) ou empresário em nome individual
+  - Onde aparece: Informação legal
+  - Ficheiro e campo: src/content/company.ts → legal.form, legal.companyType
+- `denominacao-social`: Firma (ou nome civil, se for empresário em nome individual). Depois de a confirmar, decidir se o aviso de direitos de autor do rodapé passa a nomear a firma (hoje nomeia só a marca: “© [ano] LMDreams. Todos os direitos reservados.”, como pede a Parte 5.4 do brief)
+  - Onde aparece: Informação legal, políticas
+  - Ficheiro e campo: src/content/company.ts → legal.name
+- `nipc`: NIPC ou NIF
+  - Onde aparece: Informação legal, políticas
+  - Ficheiro e campo: src/content/company.ts → legal.nipc
+- `sede`: Morada da sede (uso legal, não comercial)
+  - Onde aparece: Informação legal, Política de privacidade
+  - Ficheiro e campo: src/content/company.ts → legal.address
+- `titulo-impic`: Tipo (alvará ou certificado de empreiteiro) e número; classes e categorias opcionais
+  - Onde aparece: Informação legal, Sobre
+  - Ficheiro e campo: src/content/company.ts → legal.license
+- `ral`: Entidade(s) de resolução alternativa de litígios a que a empresa aderiu ou que são competentes, com o site (o CNIACC já consta como entidade de competência genérica)
+  - Onde aparece: Informação legal, Termos
+  - Ficheiro e campo: src/content/company.ts → legal.ral
+- `registo-comercial`: Conservatória e capital social
+  - Onde aparece: Informação legal (só se for sociedade)
+  - Ficheiro e campo: src/content/company.ts → legal.registry, legal.shareCapital
+- `responsavel-dados`: Contacto para questões de dados pessoais
+  - Onde aparece: Política de privacidade
+  - Ficheiro e campo: src/content/company.ts → legal.dataController
+- `prazo-conservacao`: Prazo de conservação dos pedidos que não dão origem a contrato
+  - Onde aparece: Política de privacidade
+  - Ficheiro e campo: src/content/company.ts → legal.dataRetention
+- `fornecedores-dados`: Serviço de formulários e serviço de e-mail usados (subcontratantes)
+  - Onde aparece: Política de privacidade
+  - Ficheiro e campo: src/content/company.ts → legal.processors
+- `data-politicas`: Data da última revisão das políticas
+  - Onde aparece: Páginas legais
+  - Ficheiro e campo: src/content/company.ts → legal.policiesUpdatedAt
+- `capital-realizado-proprio`: Capital realizado, se diferente do capital social; capital próprio, se for igual ou inferior a metade do capital social
+  - Onde aparece: Informação legal (só Lda. e S.A.)
+  - Ficheiro e campo: src/content/company.ts → legal.paidUpCapital, legal.equityNote
+- `epd`: Encarregado de proteção de dados e contacto, ou confirmação de que não foi designado
+  - Onde aparece: Política de privacidade
+  - Ficheiro e campo: src/content/company.ts → legal.dpo
+- `validade-orcamento`: Validade habitual dos orçamentos
+  - Onde aparece: Termos e condições
+  - Ficheiro e campo: src/content/company.ts → legal.quoteValidity
+- `garantia-comercial`: Existe garantia comercial? Com que condições escritas?
+  - Onde aparece: Termos e condições
+  - Ficheiro e campo: src/content/company.ts → legal.commercialWarranty
 - `experiencia`: Base da alegação “mais de 30 anos” (percurso dos profissionais; ou data de constituição, se a empresa quiser dizer que existe há mais de 30 anos). A experiência de mais de 30 anos é de cada profissional ou do conjunto? (até lá, o site não diz que é de cada um)
   - Onde aparece: Hero, Sobre, SEO
   - Ficheiro e campo: src/content/company.ts → experienceYears
@@ -304,6 +117,21 @@ Só para informação: estas chaves não têm pendentes no código. É normal, p
 - `morada-publica`: Morada que a empresa autoriza mostrar ao público (pode não existir)
   - Onde aparece: JSON-LD, Contactos (opcional)
   - Ficheiro e campo: src/content/company.ts → publicAddress
+- `horario`: Horário de atendimento
+  - Onde aparece: Contactos, rodapé
+  - Ficheiro e campo: src/content/company.ts → hours
+- `redes-sociais`: Endereços das redes sociais (os ícones só aparecem quando houver URL)
+  - Onde aparece: Contactos, rodapé
+  - Ficheiro e campo: src/content/company.ts → social[]
+- `servicos`: Confirmar a lista de serviços com a empresa (nome e descrição de cada um)
+  - Onde aparece: Serviços
+  - Ficheiro e campo: src/content/services.ts → confirmado
+- `projetos`: Fotografias reais (antes e depois), nome, tipo de intervenção, localidade, descrição, autorização
+  - Onde aparece: Projetos
+  - Ficheiro e campo: src/content/projects.ts
+- `intervalos-orcamento`: Rever os intervalos propostos
+  - Onde aparece: Formulário
+  - Ficheiro e campo: src/content/contact.ts → budgetRanges
 - `endpoint-formulario`: Serviço de formulários escolhido (até lá, alternativa por e-mail)
   - Onde aparece: Formulário
   - Ficheiro e campo: Variáveis do repositório (Repository variables) VITE_FORM_ENDPOINT, VITE_FORM_ACCEPTS_FILES e, se o serviço exigir, VITE_FORM_ACCESS_KEY
