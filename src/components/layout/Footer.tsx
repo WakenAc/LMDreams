@@ -72,17 +72,13 @@ function ComplaintsBook() {
       </a>
     )
   }
-  // Enquanto o ícone oficial não existir: ligação em texto e placeholder do ícone.
+  // Enquanto o ícone oficial não existir: só a ligação em texto (a obrigação de dar acesso ao
+  // Livro de Reclamações cumpre-se na mesma). O pendente continua em CONTEUDO-A-SUBSTITUIR.md.
   return (
-    <>
-      <a href={url} target="_blank" rel="noopener" className={`${LIST_LINK} underline`}>
-        {label}
-        <VisuallyHidden> {ui.a11y.newWindow}</VisuallyHidden>
-      </a>
-      <span data-complaints-icon-placeholder="" className="text-small">
-        <PlainText onDark text={icon} />
-      </span>
-    </>
+    <a href={url} target="_blank" rel="noopener" className={`${LIST_LINK} underline`}>
+      {label}
+      <VisuallyHidden> {ui.a11y.newWindow}</VisuallyHidden>
+    </a>
   )
 }
 
@@ -189,6 +185,12 @@ export function Footer() {
                 <dt className={LABEL}>{details.areaLabel}</dt>
                 <dd className="mt-1">{company.areaServed}</dd>
               </div>
+              {company.publicAddress ? (
+                <div>
+                  <dt className={LABEL}>{details.addressLabel}</dt>
+                  <dd className="mt-1">{company.publicAddress}</dd>
+                </div>
+              ) : null}
               <div>
                 <dt className={LABEL}>{details.hoursLabel}</dt>
                 <dd className="mt-1">

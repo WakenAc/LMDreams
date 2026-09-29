@@ -29,6 +29,7 @@ export const footer = {
     seat: 'Sede',
     nipc: 'NIPC e matrícula',
     registry: 'Conservatória do Registo Comercial de',
+    registryUnnamed: 'número de matrícula na Conservatória do Registo Comercial',
     shareCapital: 'Capital social',
     license: 'de empreiteiro n.º',
     licenseIssuer: 'emitido pelo IMPIC, I.P.',

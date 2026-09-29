@@ -39,13 +39,23 @@ export const privacyPage = {
         },
         {
           type: 'p',
-          text: [
-            `Para questões sobre dados pessoais, contacte-nos através de ${legal.dataController}. Para outros assuntos, use o e-mail `,
-            ligacaoEmail,
-            ' ou o telefone ',
-            ligacaoTelefone,
-            ` (${company.phoneCallNote}).`,
-          ],
+          // Enquanto o e-mail para dados pessoais for o mesmo do contacto geral, numa só frase.
+          text:
+            legal.dataController === company.email
+              ? [
+                  'Para questões sobre dados pessoais ou qualquer outro assunto, contacte-nos através do e-mail ',
+                  ligacaoEmail,
+                  ' ou do telefone ',
+                  ligacaoTelefone,
+                  ` (${company.phoneCallNote}).`,
+                ]
+              : [
+                  `Para questões sobre dados pessoais, contacte-nos através de ${legal.dataController}. Para outros assuntos, use o e-mail `,
+                  ligacaoEmail,
+                  ' ou o telefone ',
+                  ligacaoTelefone,
+                  ` (${company.phoneCallNote}).`,
+                ],
         },
       ],
     },
