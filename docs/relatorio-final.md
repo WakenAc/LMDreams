@@ -83,9 +83,9 @@
 
 Website institucional estático da LMDreams (React 19, Vite 8, TypeScript 6 e Tailwind CSS v4), em português de Portugal, pré-renderizado e pronto para o GitHub Pages em `https://wakenac.github.io/LMDreams/`. Tem a página principal com as 12 secções do Anexo A, as três páginas legais e a página 404. O HTML de cada página é completo sem JavaScript; só as partes interativas (cabeçalho e menu, barra de contacto móvel, projetos e formulário) são hidratadas no cliente, e o seu JavaScript só é pedido depois de a página carregar. A direção visual é a C, "Planta e Latão", escolhida pelo Andre.
 
-Todos os gates da Parte 6.1 passam: `npm run check` inteiro (97 testes E2E, 96 a passar e 1 saltado enquanto não houver fotografias de projetos), axe sem violações graves (também antes da hidratação) e Lighthouse dentro dos limites nas oito recolhas (página principal em telemóvel: desempenho 98, LCP de 2,26 s).
+Todos os gates da Parte 6.1 passam: `npm run check` inteiro (97 testes E2E, todos a passar), axe sem violações graves (também antes da hidratação) e Lighthouse dentro dos limites nas oito recolhas (página principal em telemóvel: desempenho 98, LCP de 2,27 s).
 
-Os dados da empresa que faltam estão marcados com `[A CONFIRMAR: …]` e listados em `CONTEUDO-A-SUBSTITUIR.md`: 90 pendentes, dos quais 18 (em 13 chaves) bloqueiam a publicação de propósito, porque são dados legais obrigatórios. As onze fotografias ilustrativas previstas existem, todas com a legenda "Imagem ilustrativa gerada por IA" e com proveniência no `manifest.json`; nenhuma está nos projetos nem nos testemunhos. Foram gastos 55,25 dos 65 créditos aprovados.
+A 29 de setembro entraram os dados legais e da empresa enviados pelo cliente e oito projetos de cinco obras reais na secção Projetos: `npm run check:placeholders -- --strict` passa (nenhum dado a bloquear a publicação) e o site gerado não tem nenhum `[A CONFIRMAR]`. Ficam pendentes o ícone oficial do Livro de Reclamações e os testemunhos, que não bloqueiam (secção "Dados do cliente e projetos reais"). As onze fotografias ilustrativas previstas existem, todas com a legenda "Imagem ilustrativa gerada por IA" e com proveniência no `manifest.json`; nenhuma está nos projetos nem nos testemunhos. Foram gastos 55,25 dos 65 créditos aprovados.
 
 ## O que foi feito por fase
 
@@ -111,8 +111,31 @@ Os dados da empresa que faltam estão marcados com `[A CONFIRMAR: …]` e listad
 - **26 de setembro, 21:37 UTC:** o Andre tornou o repositório público e fez o merge da PR n.º 1 (commit 3ff15c9 em `main`). O `deploy.yml` arrancou logo e falhou no passo "Configure GitHub Pages" ("Get Pages site failed… Not Found"), porque o Pages ainda não estava ativo; não chegou ao `check:placeholders --strict`.
 - **26 de setembro, 21:38 UTC:** o Pages foi ativado primeiro com a origem "Deploy from a branch" (`main`, raiz). Isso correu a publicação clássica do GitHub (`pages-build-deployment`), que publicou os ficheiros-fonte do repositório sem build: a página principal ficou em branco (o `index.html` de desenvolvimento, com `/src/entry-client.tsx`) e os documentos internos ficaram acessíveis no endereço do site (por exemplo `BRIEF-LMDREAMS.html`, `CONTEUDO-A-SUBSTITUIR.html` e `docs/relatorio-final.html`, todos com resposta 200). Esta via contorna o bloqueio por dados legais. Mais tarde, a origem passou a "GitHub Actions", mas a publicação clássica continuou no ar.
 - **27 de setembro:** o Claude Code detetou a situação ao atualizar a documentação, confirmou-a no GitHub e perguntou ao Andre o que fazer. Com a autorização dele, apagou a publicação do Pages (`gh api -X DELETE repos/WakenAc/LMDreams/pages`): o repositório, o código e os ramos ficaram intactos, e o endereço do site e os documentos passaram a responder 404. O `README.md` (secção 6) tem agora um aviso para nunca escolher "Deploy from a branch".
-- As imagens de 26 e 27 de setembro vão numa PR nova, do ramo `feat/imagens-ilustrativas` para `main`. O merge continua a ser do Andre.
+- As imagens de 26, 27 e 28 de setembro, os ícones com o logótipo completo e o slogan no rodapé foram na PR n.º 2 (ramo `feat/imagens-ilustrativas`), integrada pelo Andre a 28 de setembro. O `deploy.yml` desse merge falhou de propósito no passo "Block publication while mandatory legal data is missing" (os dados legais ainda não existiam); o Pages já estava ativo com a origem "GitHub Actions".
 - Saldo da Higgsfield confirmado com `balance`: 238,75 créditos no fim da entrega de 25 de setembro; 225 depois das imagens de 26 de setembro, 211,25 depois das de 27 e 200,25 depois das de 28 de setembro (secção "Imagens geradas").
+
+### Dados do cliente e projetos reais (29 de setembro)
+
+Ramo `feat/dados-legais-e-projetos`, com as respostas do cliente ao questionário de dados (`Documentos/lmdreams/LMDreams-dados-para-lancar-o-site-v3.txt` no computador do Andre).
+
+- **Dados legais** (`src/content/company.ts`), confirmados em fontes públicas sempre que possível:
+  - firma "LMDreams, Unipessoal Lda.", sociedade unipessoal por quotas. O cliente escreveu "LM Dreams unipessoal lda", mas o IMPIC regista o radical numa só palavra ("LMDREAMS UNIP LDA"). A pontuação exata confirma-se na certidão permanente;
+  - NIPC 516383370;
+  - sede "Rua António Silva, Lote 2037 B, 2975-257 Quinta do Conde", igual à do IMPIC;
+  - capital social de 5000 €, todo realizado, com capital próprio superior a metade: não há menções adicionais;
+  - **alvará de empreiteiro de obras particulares n.º 101097-PAR, classe 2**, confirmado no IMPIC. O cliente escreveu "101097-par 2", sem o tipo;
+  - sem adesão a entidade de resolução alternativa de litígios. O rodapé indica o Centro de Arbitragem de Conflitos de Consumo de Lisboa (competente na Área Metropolitana de Lisboa, onde ficam a sede, o escritório e as obras), o CNIACC e o Portal do Consumidor;
+  - prazo de conservação de 12 meses, EPD não designado, subcontratante Google (Gmail), sem serviço de formulários, políticas atualizadas a 29 de setembro de 2026, orçamentos válidos 30 dias e só as garantias legais.
+- **Conservatória:** o cliente indicou "Quinta do Conde", mas a lista oficial do IRN não tem conservatória do registo comercial com esse nome (no concelho só existe a de Sesimbra). Em vez de publicar um nome provavelmente errado, o rodapé mostra "516383370 (número de matrícula na Conservatória do Registo Comercial)". Deve ser confirmada na certidão permanente.
+- **Contactos:** horário "8h00 às 19h00", Instagram e Facebook, morada pública do escritório (Amora) nos Contactos, no rodapé e no JSON-LD, e o prazo de resposta de 8 dias úteis na introdução dos Contactos. O orçamento e a visita não aparecem como gratuitos, porque o cliente não o confirmou. O e-mail `geral@lmdreams.pt` só entra quando o domínio estiver registado e o Google Workspace a funcionar.
+- **Serviços e formulário:** os 16 serviços e os intervalos de orçamento confirmados.
+- **Testemunhos:** o cliente não tem. A secção não aparece enquanto não houver pelo menos um testemunho real (decisão do Andre), para não publicar cartões com `[A CONFIRMAR]`.
+- **Livro de Reclamações:** a empresa está registada, mas falta o ícone oficial. Descarrega-se em https://www.livroreclamacoes.pt/Inicio/Manuais ("Imagens dos Logótipos"). Até lá fica só a ligação em texto, sem a caixa do placeholder.
+- **Projetos:** oito projetos de cinco obras reais, com fotografias autorizadas pelos donos de obra: remodelação de um prédio de três frações e a respetiva cozinha (Feijó, 2019), casa de banho e recuperação de uma casa de dois pisos (Casal de Cambra, 2026), livraria-café (Lisboa, 2017), arranjos exteriores com piscina e jardim e ampliação de moradia (Fernão Ferro, 2021) e pátio com pérgola (Seixal, 2016).
+  - Das 269 fotografias do dono, a análise escolheu 36. Foram recortadas e desfocadas para não mostrar números de porta, pessoas, marcos que identifiquem moradas nem objetos pessoais, e verificadas a 100% por um segundo agente.
+  - Registo completo em `docs/fotografias-projetos.md`.
+  - O teste das fotografias antes e depois sem JavaScript passou a correr (0 testes saltados).
+- **Peso:** os dados dos projetos entram no JavaScript da ilha dos Projetos. O JavaScript inicial subiu para 98,6 KiB de 100, com uma folga de 1 428 B.
 
 ### Rondas de verificação (Fase 6)
 
@@ -162,6 +185,9 @@ Ficam dois achados confirmados que não se corrigem só com código: as imagens 
 | Fachada da recuperação aceite apesar da rejeição da lente de estilo | A lente achou-a pouco portuguesa (portadas exteriores, candeeiro); o cético refutou com evidência (portadas pedidas no prompt do brief, cunhal, soco de cantaria, telha de canudo e calçada; os pormenores estrangeiros quase desaparecem a 408 px). Candidata a refazer quando houver gerações livres. |
 | AVIF a 56 nos cartões de serviço e na Transparência (50 no hero, no Sobre e no CTA; 48 na Diferenciação) | A 50, o AVIF destas imagens comprimia tanto que o JPEG de recurso passava do dobro do AVIF (Parte 4.8). |
 | Textos alternativos do Sobre, da cozinha e da fachada ajustados ao que as imagens mostram | O controlo de qualidade confirmou que as amostras do Sobre são pedra (não betão), que a cozinha mostra a verificação com um nível e que a fachada tem andaime. |
+| Secção Testemunhos escondida enquanto não houver testemunhos reais | Desvio à Parte 5.4, §9, por decisão do Andre a 29 de setembro: o cliente não tem testemunhos, e os cartões provisórios mostravam `[A CONFIRMAR]` no site publicado. A secção volta sozinha com o primeiro testemunho real (`placeholder: false`). |
+| Sem a caixa do placeholder do ícone do Livro de Reclamações | Desvio à Parte 5.6: enquanto o ícone oficial não existir, fica só a ligação em texto para o Livro de Reclamações Eletrónico (a obrigação de dar acesso cumpre-se), para não publicar `[A CONFIRMAR]`. O pendente continua em `CONTEUDO-A-SUBSTITUIR.md`. |
+| Conservatória do registo comercial não nomeada | A indicada pelo cliente ("Quinta do Conde") não existe na lista do IRN. O rodapé mostra a matrícula (516383370) sem nomear a conservatória até a certidão permanente a confirmar; a Parte 5.6 e o art. 171.º do Código das Sociedades Comerciais pedem-na, por isso é um pendente a fechar. |
 | Favicons: recorte do grafismo do próprio logótipo, completado em quadrado com a cor de fundo do logótipo (`#292929`) | O ficheiro não é quadrado nem vetorial; sem redesenho (Parte 4.9). A 28 de setembro, a pedido do Andre, foram refeitos a partir do logótipo completo que o dono enviou (`assets-src/brand/logotipo-completo.jpeg`, 1284 × 1252, com o nome e o slogan): o grafismo da casa passa de 241 × 129 para 699 × 375 px, e só ele entra nos ícones (o texto fica de fora pela cor). O dono não tem versão vetorial. |
 | Slogan "O seu sonho, a nossa obra." no rodapé, junto ao logótipo | Pedido do Andre a 28 de setembro; o slogan vem do logótipo da empresa (`company.slogan`). Em `on-dark` e no tipo de letra dos títulos: a direção visual evita texto pequeno em latão sobre `dark`. O título principal do site não muda. |
 | Linha do título do IMPIC também na secção Sobre, com placeholders | A Parte 5.6 prevê-a "se fizer sentido"; mostra três `[A CONFIRMAR]` até haver dados. |
@@ -186,12 +212,12 @@ Medidos na Fase 8, a 25 de setembro de 2026, sobre o build final (`npm ci` segui
 | Build (domínio próprio) | `npm run build:root` | OK; 0 ligações ou assets partidos em `.tmp/dist-root` com base `/` |
 | Ligações e assets | `npm run check:links` | 0 partidos (base `/LMDreams/`, `SITE_URL` `https://wakenac.github.io/LMDreams`) |
 | Contraste | `npm run check:contrast` | Todos os pares usados passam (texto ≥ 4,5:1; texto grande e componentes ≥ 3:1) |
-| Placeholders | `npm run check:placeholders` | 90 pendentes em 22 chaves; 18 bloqueiam a publicação, em 13 chaves; 0 erros de estrutura |
+| Placeholders | `npm run check:placeholders -- --strict` | Passa: 16 pendentes em 2 chaves (ícone do Livro de Reclamações e testemunhos), nenhum a bloquear a publicação; 0 erros de estrutura (29 de setembro) |
 | SEO e HTML pré-renderizado | `npm run check:seo` | OK nas cinco páginas |
 | Proibições e conformidade | `npm run check:forbidden` | 0 ocorrências |
 | Antes e depois | `npm run check:before-after` | Comparador e galeria estática renderizados com fotografias de teste |
-| Peso | `npm run check:budget` | JavaScript inicial 96,2 KiB gzip de 100 KiB (98 510 B de 102 400 B; aviso a partir de 95%); CSS 12,8 KiB de 30 KiB; as 11 imagens dentro dos objetivos da Parte 4.8 na variante que o navegador escolhe (maior AVIF: Diferenciação, 103,8 KiB a 1600 px); total aproximado do primeiro carregamento em telemóvel 274,8 KiB |
-| Testes E2E e acessibilidade | `npm run test:e2e` | 97 testes: 96 passam, 1 saltado (fotografias antes e depois sem JavaScript, enquanto não houver fotografias de projetos) |
+| Peso | `npm run check:budget` | JavaScript inicial 98,6 KiB gzip de 100 KiB (100 972 B de 102 400 B; folga de 1 428 B; aviso a partir de 95%); CSS 12,8 KiB de 30 KiB; as 11 imagens dentro dos objetivos da Parte 4.8 na variante que o navegador escolhe (maior AVIF: Diferenciação, 103,8 KiB a 1600 px); total aproximado do primeiro carregamento em telemóvel 274,8 KiB |
+| Testes E2E e acessibilidade | `npm run test:e2e` | 97 testes, todos a passar (29 de setembro), incluindo as fotografias antes e depois sem JavaScript |
 | axe | `tests/e2e/a11y.spec.ts`, `smoke.spec.ts`, `nojs.spec.ts`, `projects.spec.ts` | 0 violações "serious" ou "critical" nas cinco páginas a 390, 768 e 1440 px, depois e antes da hidratação, e com o diálogo de projeto aberto |
 | Pedidos externos e consola | `tests/e2e/smoke.spec.ts` | 0 pedidos a outros domínios; 0 erros e 0 avisos de hidratação (o 404 da própria página 404 é o estado esperado) |
 
@@ -199,16 +225,16 @@ Medidos na Fase 8, a 25 de setembro de 2026, sobre o build final (`npm ci` segui
 
 | Perfil | Página | Desempenho | Acessibilidade | Boas práticas | SEO | LCP | CLS | TBT |
 |---|---|---|---|---|---|---|---|---|
-| Telemóvel | Principal | 98 | 100 | 100 | 100 | 2256 ms | 0,000 | 0 ms |
-| Telemóvel | Política de privacidade | 100 | 100 | 100 | 100 | 1584 ms | 0,000 | 0 ms |
-| Telemóvel | Política de cookies | 100 | 100 | 100 | 100 | 1581 ms | 0,000 | 0 ms |
-| Telemóvel | Termos e condições | 100 | 100 | 100 | 100 | 1581 ms | 0,000 | 0 ms |
-| Computador | Principal | 100 | 100 | 100 | 100 | 467 ms | 0,000 | 0 ms |
-| Computador | Política de privacidade | 100 | 100 | 100 | 100 | 487 ms | 0,000 | 0 ms |
-| Computador | Política de cookies | 100 | 100 | 100 | 100 | 487 ms | 0,000 | 0 ms |
-| Computador | Termos e condições | 100 | 100 | 100 | 100 | 485 ms | 0,000 | 0 ms |
+| Telemóvel | Principal | 98 | 100 | 100 | 100 | 2270 ms | 0,001 | 3 ms |
+| Telemóvel | Política de privacidade | 100 | 100 | 100 | 100 | 1585 ms | 0,000 | 3 ms |
+| Telemóvel | Política de cookies | 100 | 100 | 100 | 100 | 1586 ms | 0,000 | 0 ms |
+| Telemóvel | Termos e condições | 99 | 100 | 100 | 100 | 1587 ms | 0,000 | 0 ms |
+| Computador | Principal | 100 | 100 | 100 | 100 | 474 ms | 0,000 | 0 ms |
+| Computador | Política de privacidade | 100 | 100 | 100 | 100 | 371 ms | 0,000 | 0 ms |
+| Computador | Política de cookies | 100 | 100 | 100 | 100 | 371 ms | 0,000 | 0 ms |
+| Computador | Termos e condições | 100 | 100 | 100 | 100 | 377 ms | 0,000 | 0 ms |
 
-As oito recolhas estão dentro dos limites da Parte 6.1 (desempenho ≥ 90 em telemóvel e ≥ 95 em computador; acessibilidade 100; boas práticas ≥ 95; SEO 100; CLS ≤ 0,05; LCP < 2,5 s em telemóvel). Valores medidos a 28 de setembro, com as 11 imagens integradas. O LCP da página principal em telemóvel foi subindo com as imagens: 1956 ms só com o hero, 2104 ms com 6 imagens (26 de setembro), 2106 ms com 9 (27) e 2256 ms com 11 (28). Na simulação de rede lenta, as imagens com `loading="lazy"` perto do topo começam a descarregar cedo e dividem a banda com o hero. Continua dentro do limite (2,5 s), mas a folga é de cerca de 240 ms: qualquer imagem nova perto do topo deve ser medida com `npm run lighthouse`. No CI, o passo do Lighthouse fica como aviso (`continue-on-error`, Parte 3.13).
+As oito recolhas estão dentro dos limites da Parte 6.1 (desempenho ≥ 90 em telemóvel e ≥ 95 em computador; acessibilidade 100; boas práticas ≥ 95; SEO 100; CLS ≤ 0,05; LCP < 2,5 s em telemóvel). Valores medidos a 29 de setembro, com as 11 imagens e os 8 projetos reais. (Numa primeira recolha, a página de cookies em computador teve 96 em boas práticas por um erro de rede local do Windows, `net::ERR_NO_BUFFER_SPACE`; a segunda recolha deu 100 em tudo.) O LCP da página principal em telemóvel foi subindo com as imagens: 1956 ms só com o hero, 2104 ms com 6 imagens (26 de setembro), 2106 ms com 9 (27) e 2256 ms com 11 (28). Na simulação de rede lenta, as imagens com `loading="lazy"` perto do topo começam a descarregar cedo e dividem a banda com o hero. Continua dentro do limite (2,5 s), mas a folga é de cerca de 240 ms: qualquer imagem nova perto do topo deve ser medida com `npm run lighthouse`. No CI, o passo do Lighthouse fica como aviso (`continue-on-error`, Parte 3.13).
 
 ### Comandos locais do README
 
@@ -250,7 +276,9 @@ Feitos localmente, sem Higgsfield: favicons (`scripts/favicons.ts`, a partir do 
 
 ## Conteúdos a substituir
 
-Resumo de `CONTEUDO-A-SUBSTITUIR.md` (gerado por `npm run check:placeholders`, coerente com o Anexo B): **90 pendentes em 22 chaves**.
+Resumo de `CONTEUDO-A-SUBSTITUIR.md` (gerado por `npm run check:placeholders`, coerente com o Anexo B), a 29 de setembro: **16 pendentes em 2 chaves, nenhum a bloquear a publicação**: `icone-livro-reclamacoes` (ícone oficial do Livro de Reclamações) e `testemunhos` (15 campos dos testemunhos provisórios, que não aparecem no site).
+
+Antes das respostas do cliente (25 a 28 de setembro), eram 90 pendentes em 22 chaves:
 
 **Bloqueiam a publicação (18 pendentes em 13 chaves):** `forma-juridica`, `denominacao-social`, `nipc`, `sede`, `titulo-impic`, `ral`, `registo-comercial`, `responsavel-dados`, `prazo-conservacao`, `fornecedores-dados`, `data-politicas`, `capital-realizado-proprio` e `epd`. Enquanto faltarem, o `deploy.yml` falha de propósito no passo `npm run check:placeholders -- --strict`.
 
@@ -278,18 +306,20 @@ O YAML de `.github/workflows/ci.yml` e `.github/workflows/deploy.yml` foi valida
 
 A PR abre como PR normal: não há gates vermelhos nem achados confirmados que dependam só de código. Ficam registados:
 
-1. **Dados da empresa** (dependem do Andre): os 18 pendentes que bloqueiam a publicação e os outros 72 (secção "Conteúdos a substituir").
-2. **Folga do LCP em telemóvel:** 2256 ms para um limite de 2500 ms, depois das 11 imagens. Qualquer imagem nova perto do topo deve ser medida com `npm run lighthouse`.
-3. **Regra de commits pequenos (R-8), parcial:** os commits por fase até à ronda 1 ficam como estão, porque dividi-los reescreveria o histórico.
-4. **Favicons:** refeitos a 28 de setembro com o logótipo completo enviado pelo dono, a pedido do Andre (não há versão vetorial).
-5. **Folga do JavaScript inicial:** 3 890 B em gzip. Qualquer ilha nova tem de ser medida com `npm run check:budget`.
+1. **Dados a confirmar na certidão permanente:** a conservatória do registo comercial (o rodapé indica a matrícula sem a nomear) e a pontuação exata da firma.
+2. **Ícone oficial do Livro de Reclamações** e **testemunhos reais** (a secção está escondida até haver o primeiro).
+3. **E-mail `geral@lmdreams.pt`:** entra no site quando o domínio estiver registado e o Google Workspace a funcionar (e passa a ser o contacto para dados pessoais).
+4. **Folga do LCP em telemóvel:** 2270 ms para um limite de 2500 ms, depois das 11 imagens e dos projetos reais. Qualquer imagem nova perto do topo deve ser medida com `npm run lighthouse`.
+5. **Regra de commits pequenos (R-8), parcial:** os commits por fase até à ronda 1 ficam como estão, porque dividi-los reescreveria o histórico.
+6. **Favicons:** refeitos a 28 de setembro com o logótipo completo enviado pelo dono, a pedido do Andre (não há versão vetorial).
+7. **Folga do JavaScript inicial:** 1 428 B em gzip, depois dos projetos reais. Mais projetos ou mais fotografias por projeto aumentam o JavaScript da ilha: medir sempre com `npm run check:budget`. Se passar do limite, a solução é passar os dados dos projetos para um bloco JSON no HTML, fora do JavaScript.
 
 ## Próximos passos para o Andre
 
-1. Preencher os campos "Bloqueia publicação" de `CONTEUDO-A-SUBSTITUIR.md` (sobretudo os dados legais em `src/content/company.ts`) e pedir a um jurista que valide as páginas legais; correr `npm run check:placeholders` para confirmar.
-2. Aderir ao Livro de Reclamações Eletrónico e confirmar a entidade RAL.
-3. Substituir os testemunhos e os projetos provisórios por reais (`placeholder: false`) e confirmar os serviços e os intervalos de orçamento (`confirmado: true`).
+1. Confirmar na certidão permanente a conservatória do registo comercial e a pontuação da firma, e pedir a um jurista ou ao contabilista que reveja as páginas legais.
+2. Descarregar o ícone oficial do Livro de Reclamações (https://www.livroreclamacoes.pt/Inicio/Manuais, "Imagens dos Logótipos") e colocá-lo em `public/livro-reclamacoes.svg` (ou .png).
+3. Quando houver testemunhos reais com autorização escrita, acrescentá-los em `src/content/testimonials.ts` com `placeholder: false`: a secção volta a aparecer sozinha.
 4. Rever os ícones refeitos com o logótipo completo (separador do navegador e ícone no telemóvel).
 5. Quando houver fotografias de obras da LMDreams (com autorização dos clientes), substituir as ilustrativas e preencher os projetos (README, secção 9). Para gerar mais imagens com IA, a pesquisa de 27 de setembro recomenda a API direta da OpenAI com o mesmo modelo (sem limite diário) ou regularizar o plano da Higgsfield.
-6. Com os dados legais preenchidos e o `npm run check:placeholders -- --strict` a passar, voltar a ativar o GitHub Pages com a origem **"GitHub Actions"** (Settings → Pages; nunca "Deploy from a branch"), como explica o README na secção 6. O repositório já é público.
-7. Rever a PR das imagens e fazer o merge em `main`. Se o Pages já estiver ativo com a origem "GitHub Actions", a publicação corre sozinha; se for ativado depois do merge, publicar com `npm run deploy` (ou *Actions → Deploy to GitHub Pages → Run workflow*).
+6. Manter o GitHub Pages com a origem **"GitHub Actions"** (Settings → Pages; nunca "Deploy from a branch"), como explica o README na secção 6.
+7. Rever a PR dos dados legais e dos projetos e fazer o merge em `main`. Com o Pages ativo com a origem "GitHub Actions" (já está), a publicação corre sozinha no merge e o site fica em https://wakenac.github.io/LMDreams/.
