@@ -37,7 +37,7 @@ const SECTIONS = [
   'metodo',
   'projetos',
   'transparencia',
-  'testemunhos',
+  // 'testemunhos' só aparece com pelo menos um testemunho real (src/sections/Testimonials.tsx).
   'orcamento',
   'contactos',
 ]
