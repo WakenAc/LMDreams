@@ -1,4 +1,4 @@
-import { BookOpen, Clock, Copy, Mail, MapPin, MessageCircle, Phone, Share2, type LucideIcon } from 'lucide-react'
+import { BookOpen, Building2, Clock, Copy, Mail, MapPin, MessageCircle, Phone, Share2, type LucideIcon } from 'lucide-react'
 import { useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { flushSync } from 'react-dom'
 import { company } from '../content/company'
@@ -8,7 +8,6 @@ import { services } from '../content/services'
 import type { ContactContent } from '../content/tipos'
 import { Button } from '../components/ui/Button'
 import { Container } from '../components/ui/Container'
-import { PlaceholderBox } from '../components/ui/Placeholder'
 import { PlainText, RichText } from '../components/ui/RichText'
 import { Section } from '../components/ui/Section'
 import { SectionHeading } from '../components/ui/SectionHeading'
@@ -668,6 +667,12 @@ function ContactDetails() {
           {company.areaServed}
         </DetailRow>
 
+        {company.publicAddress ? (
+          <DetailRow icon={Building2} label={d.addressLabel}>
+            {company.publicAddress}
+          </DetailRow>
+        ) : null}
+
         <DetailRow icon={Clock} label={d.hoursLabel}>
           <PlainText text={company.hours} />
         </DetailRow>
@@ -699,13 +704,7 @@ function ContactDetails() {
             <span>{ui.complaintsBook.label}</span>
             <VisuallyHidden> {ui.a11y.newWindow}</VisuallyHidden>
           </a>
-          {typeof icon === 'string' ? (
-            <PlaceholderBox label={ui.placeholders.image} className="mt-2">
-              <p className="text-small">
-                <PlainText text={icon} />
-              </p>
-            </PlaceholderBox>
-          ) : null}
+          {/* Sem o ícone oficial, fica só a ligação em texto (pendente em CONTEUDO-A-SUBSTITUIR.md). */}
         </DetailRow>
       </dl>
     </address>

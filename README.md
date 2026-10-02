@@ -264,10 +264,10 @@ Registo de todas as imagens em `src/content/images.ts`; os ficheiros originais f
 
 ### Projetos
 
-`src/content/projects.ts`, um projeto provisório por categoria. Para publicar uma obra real:
+`src/content/projects.ts`, com oito projetos de cinco obras reais desde 29 de setembro de 2026 (fotografias em `public/projetos/<obra>/`; origem, autorização e tratamentos de privacidade em `docs/fotografias-projetos.md`). Para acrescentar ou trocar uma obra:
 
-1. Preencha `nome`, `tipoDeIntervencao`, `localidade` e `descricao`.
-2. Junte **fotografias reais** do antes e do depois, **com autorização do cliente** (nunca imagens geradas por IA). Reduza-as antes (por exemplo, lado maior com 1600 px) e copie-as para uma pasta em `public/`, por exemplo `public/projetos/`.
+1. Preencha `nome`, `tipoDeIntervencao`, `localidade` e `descricao` (só com factos confirmados pela empresa).
+2. Junte **fotografias reais** do antes e do depois, **com autorização do cliente** (nunca imagens geradas por IA). Sem rostos, matrículas, números de porta nem nada que identifique a morada: recorte ou desfoque. Reduza-as (lado maior com 1200 px, WebP) e copie-as para uma pasta em `public/projetos/`. Cada par antes e depois tem de ter as mesmas dimensões e ficar pela mesma ordem nas duas listas.
 3. Indique cada fotografia em `capa`, `antes` e `depois` com `src` (caminho relativo, sem `/` no início: `'projetos/cozinha-antes.jpg'`; o site acrescenta o endereço base), `alt` (descrição em português), `width` e `height` (dimensões em píxeis).
 4. Mude `placeholder: true` para `placeholder: false` e corra `npm run check`.
 

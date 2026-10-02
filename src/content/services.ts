@@ -1,5 +1,5 @@
 // Serviços (Anexo A §5; Partes 5.2, 5.4 §5 e 5.5, "Serviços: frases de referência").
-// Todos com `confirmado: false` até a empresa validar o nome e a descrição (chave `servicos`).
+// Lista confirmada pela empresa a 29/09/2026 (`confirmado: true`; chave `servicos`).
 // Os seis primeiros são os serviços em destaque, com imagem.
 
 import type { Service, ServicesContent } from './tipos'
@@ -23,7 +23,7 @@ export const services = [
       'Construção e ampliação de edifícios, com cada fase entregue à equipa da especialidade.',
     icon: 'BrickWall',
     imageId: 'servico-construcao',
-    confirmado: false,
+    confirmado: true,
   },
   {
     id: 'remodelacao-de-cozinhas',
@@ -32,7 +32,7 @@ export const services = [
       'Canalização, eletricidade, revestimentos e montagem, cada trabalho feito por quem o domina.',
     icon: 'CookingPot',
     imageId: 'servico-cozinhas',
-    confirmado: false,
+    confirmado: true,
   },
   {
     id: 'remodelacao-de-casas-de-banho',
@@ -41,7 +41,7 @@ export const services = [
       'Loiças sanitárias, canalização, impermeabilização e revestimentos, numa sequência de trabalhos planeada.',
     icon: 'Bath',
     imageId: 'servico-casas-de-banho',
-    confirmado: false,
+    confirmado: true,
   },
   {
     id: 'aplicacao-de-pavimentos-e-revestimentos',
@@ -49,7 +49,7 @@ export const services = [
     description: 'Cerâmica, pedra, madeira e vinílico, aplicados sobre bases bem preparadas e niveladas.',
     icon: 'LayoutGrid',
     imageId: 'servico-pavimentos',
-    confirmado: false,
+    confirmado: true,
   },
   {
     id: 'recuperacao-de-imoveis',
@@ -58,7 +58,7 @@ export const services = [
       'Reabilitação de edifícios antigos, preservando o que tem valor e corrigindo o que já não serve.',
     icon: 'Landmark',
     imageId: 'servico-recuperacao',
-    confirmado: false,
+    confirmado: true,
   },
   {
     id: 'trabalhos-exteriores',
@@ -66,7 +66,7 @@ export const services = [
     description: 'Muros, pavimentos exteriores, terraços e arranjos de logradouros.',
     icon: 'Fence',
     imageId: 'servico-exteriores',
-    confirmado: false,
+    confirmado: true,
   },
 
   // Lista compacta (pela ordem do Anexo A §5)
@@ -77,7 +77,7 @@ export const services = [
       'Remodelação integral de casas e espaços comerciais, com todas as especialidades coordenadas por nós.',
     icon: 'Hammer',
     emphasis: true,
-    confirmado: false,
+    confirmado: true,
   },
   {
     id: 'canalizacao',
@@ -85,7 +85,7 @@ export const services = [
     description:
       'Redes de águas e esgotos, substituição de tubagens e reparação de fugas por canalizadores experientes.',
     icon: 'Droplets',
-    confirmado: false,
+    confirmado: true,
   },
   {
     id: 'eletricidade',
@@ -93,7 +93,7 @@ export const services = [
     description:
       'Instalações elétricas novas e remodelação de quadros e circuitos, executadas por eletricistas.',
     icon: 'Zap',
-    confirmado: false,
+    confirmado: true,
   },
   {
     id: 'pintura',
@@ -101,14 +101,14 @@ export const services = [
     description:
       'Pintura de interiores e exteriores, com as superfícies bem preparadas antes da primeira demão.',
     icon: 'PaintRoller',
-    confirmado: false,
+    confirmado: true,
   },
   {
     id: 'carpintaria',
     name: 'Carpintaria',
     description: 'Portas, roupeiros, rodapés e outros trabalhos em madeira, ajustados ao espaço.',
     icon: 'Ruler',
-    confirmado: false,
+    confirmado: true,
   },
   {
     id: 'tetos-falsos-e-divisorias',
@@ -116,7 +116,7 @@ export const services = [
     description:
       'Tetos falsos e paredes em gesso cartonado, com isolamento e iluminação integrados quando fizer sentido.',
     icon: 'Layers',
-    confirmado: false,
+    confirmado: true,
   },
   {
     id: 'isolamentos',
@@ -124,7 +124,7 @@ export const services = [
     description:
       'Isolamento térmico e acústico de paredes, coberturas e pavimentos, incluindo capoto (isolamento pelo exterior).',
     icon: 'Thermometer',
-    confirmado: false,
+    confirmado: true,
   },
   {
     id: 'impermeabilizacoes',
@@ -132,14 +132,14 @@ export const services = [
     description:
       'Impermeabilização de coberturas, terraços, varandas e zonas húmidas, para tratar as infiltrações na origem.',
     icon: 'Umbrella',
-    confirmado: false,
+    confirmado: true,
   },
   {
     id: 'reparacoes-e-manutencao',
     name: 'Reparações e manutenção',
     description: 'Reparações pontuais e manutenção de habitações, condomínios e espaços comerciais.',
     icon: 'Wrench',
-    confirmado: false,
+    confirmado: true,
   },
   {
     id: 'preparacao-e-coordenacao-de-obra',
@@ -148,6 +148,6 @@ export const services = [
       'Planeamento, sequência dos trabalhos e coordenação das várias especialidades ao longo da obra.',
     icon: 'ClipboardList',
     emphasis: true,
-    confirmado: false,
+    confirmado: true,
   },
 ] as const satisfies readonly Service[]

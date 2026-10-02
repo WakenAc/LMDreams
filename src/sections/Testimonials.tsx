@@ -67,6 +67,9 @@ function RealTestimonial({ t }: { t: Testimonial }) {
 }
 
 export function Testimonials() {
+  // Sem nenhum testemunho real, a secção não aparece (decisão do Andre a 29/09/2026): nada de
+  // cartões com "[A CONFIRMAR]" no site publicado. Volta sozinha com o primeiro testemunho real.
+  if (allPlaceholders) return null
   const impar = testimonials.length % 2 === 1
   return (
     <Section id="testemunhos" tone="surface">

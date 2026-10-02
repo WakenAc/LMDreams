@@ -70,7 +70,14 @@ export function LegalInfo() {
               <PlainText onDark text={l.address} />
             </Cell>
             <Cell label={labels.nipc}>
-              <PlainText onDark text={`${l.nipc}, ${labels.registry} ${l.registry}`} />
+              <PlainText
+                onDark
+                text={
+                  l.registry === null
+                    ? `${l.nipc} (${labels.registryUnnamed})`
+                    : `${l.nipc}, ${labels.registry} ${l.registry}`
+                }
+              />
             </Cell>
           </div>
         )}

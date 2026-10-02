@@ -363,6 +363,7 @@ export interface ContactContent {
     whatsappLabel: string
     emailLabel: string
     areaLabel: string // "Área de atuação"
+    addressLabel: string // "Morada" (só com company.publicAddress)
     hoursLabel: string
     socialLabel: string
     complaintsLabel: string
@@ -395,6 +396,7 @@ export interface FooterContent {
     seat: string // "Sede"
     nipc: string // "NIPC e matrícula"
     registry: string // "Conservatória do Registo Comercial de"
+    registryUnnamed: string // quando a conservatória não está indicada (legal.registry null)
     shareCapital: string // "Capital social"
     license: string // "de empreiteiro n.º"
     licenseIssuer: string // "emitido pelo IMPIC, I.P."

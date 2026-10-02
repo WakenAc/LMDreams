@@ -14,7 +14,8 @@ const telefoneEscrito = `${company.phone.display} (${company.phoneCallNote})`
  * ler melhor no ponto de envio (cada bloco é um parágrafo).
  */
 export const avisoBlocos: readonly Rich[] = [
-  `Responsável pelo tratamento: ${company.legal.name}. Usamos estes dados apenas para analisar o seu pedido de orçamento e responder-lhe, antes de qualquer contrato (RGPD, art. 6.º, n.º 1, al. b)).`,
+  // Sem ponto duplo quando a firma já termina em "Lda.".
+  `Responsável pelo tratamento: ${company.legal.name.replace(/\.$/, '')}. Usamos estes dados apenas para analisar o seu pedido de orçamento e responder-lhe, antes de qualquer contrato (RGPD, art. 6.º, n.º 1, al. b)).`,
   `Conservamo-los durante ${company.legal.dataRetention} se não for celebrado contrato e só os partilhamos com prestadores técnicos (${company.legal.processors}).`,
   [
     `Pode exercer os seus direitos de acesso, retificação, apagamento, limitação, oposição e portabilidade através de ${company.legal.dataController} e apresentar reclamação à CNPD (`,
@@ -27,8 +28,9 @@ export const avisoBlocos: readonly Rich[] = [
 
 export const contact = {
   heading: 'Contactos e pedido de orçamento',
-  intro:
-    'Descreva a obra no formulário ou contacte-nos por telefone, WhatsApp ou e-mail. Quanto mais nos disser sobre o trabalho, mais útil será a primeira conversa.',
+  intro: `Descreva a obra no formulário ou contacte-nos por telefone, WhatsApp ou e-mail. Quanto mais nos disser sobre o trabalho, mais útil será a primeira conversa.${
+    company.quoteTerms?.responseTime ? ` Respondemos no prazo máximo de ${company.quoteTerms.responseTime}.` : ''
+  }`,
   formHeading: 'Pedido de orçamento',
   detailsHeading: 'Dados de contacto',
   fields: {
@@ -115,6 +117,7 @@ export const contact = {
     whatsappLabel: 'WhatsApp',
     emailLabel: 'E-mail',
     areaLabel: 'Área de atuação',
+    addressLabel: 'Morada',
     hoursLabel: 'Horário de atendimento',
     socialLabel: 'Redes sociais',
     complaintsLabel: 'Reclamações',
@@ -122,13 +125,13 @@ export const contact = {
 } satisfies ContactContent
 
 // ---------------------------------------------------------------------------
-// Intervalos do campo "Orçamento previsto" (proposta a rever pela empresa;
+// Intervalos do campo "Orçamento previsto" (confirmados pela empresa a 28/09/2026;
 // chave `intervalos-orcamento`). Formato PT-PT: espaço inseparável (U+00A0)
 // entre os milhares e antes do símbolo do euro, escrito como escape.
 // ---------------------------------------------------------------------------
 
 export const budgetRanges = {
-  confirmado: false,
+  confirmado: true,
   options: [
     'Até 10\u00A0000\u00A0€',
     '10\u00A0000\u00A0€ a 25\u00A0000\u00A0€',

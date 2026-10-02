@@ -1,5 +1,14 @@
 import { AxeBuilder } from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
+import fs from 'node:fs'
+import path from 'node:path'
+
+// Contagens lidas do próprio conteúdo (src/content/projects.ts), para os testes acompanharem
+// as obras publicadas sem número fixo. Lido como texto: os ficheiros de src/ não entram no
+// programa TypeScript dos testes (resolução nodenext).
+const PROJECTS_SRC = fs.readFileSync(path.resolve('src/content/projects.ts'), 'utf8')
+const PROJECT_COUNT = (PROJECTS_SRC.match(/^ {4}id: '/gm) ?? []).length
+const countCategory = (c: string) => (PROJECTS_SRC.match(new RegExp(`^ {4}categoria: '${c}'`, 'gm')) ?? []).length
 
 // Projetos (Parte 5.4 §7): filtros com aria-pressed e anúncio do número de resultados;
 // diálogo acessível; sem JavaScript, todos os projetos visíveis e nenhum <dialog>.
@@ -9,13 +18,15 @@ test('filtros: aria-pressed, grelha filtrada e anúncio dos resultados', async (
   await page.waitForSelector('html[data-hydrated]')
   const section = page.locator('#projetos')
   const total = await section.locator('li[data-project]').count()
-  expect(total).toBe(7)
+  expect(total).toBe(PROJECT_COUNT)
   const kitchens = section.getByRole('button', { name: 'Cozinhas', exact: true })
   await kitchens.click()
   await expect(kitchens).toHaveAttribute('aria-pressed', 'true')
   await expect(section.getByRole('button', { name: 'Todos', exact: true })).toHaveAttribute('aria-pressed', 'false')
-  await expect(section.locator('li[data-project]')).toHaveCount(1)
-  await expect(section.locator('[aria-live="polite"]')).toContainText('1')
+  const nKitchens = countCategory('cozinhas')
+  expect(nKitchens).toBeGreaterThan(0)
+  await expect(section.locator('li[data-project]')).toHaveCount(nKitchens)
+  await expect(section.locator('[aria-live="polite"]')).toContainText(String(nKitchens))
 })
 
 test('diálogo aberto sem violações graves do axe', async ({ page }) => {
@@ -32,7 +43,7 @@ test.describe('sem JavaScript', () => {
   test.use({ javaScriptEnabled: false })
   test('todos os projetos visíveis e nenhum diálogo no HTML', async ({ page }) => {
     await page.goto('./')
-    await expect(page.locator('#projetos li[data-project]')).toHaveCount(7)
+    await expect(page.locator('#projetos li[data-project]')).toHaveCount(PROJECT_COUNT)
     await expect(page.locator('dialog')).toHaveCount(0)
   })
 

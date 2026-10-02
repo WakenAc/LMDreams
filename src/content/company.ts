@@ -51,18 +51,23 @@ export const company = {
   email: 'mendes3pm@gmail.com',
   areaServed: 'Portugal continental',
 
-  hours: PH('horario', 'horário de atendimento'),
+  // Respostas do cliente a 29/09/2026 (questionário de dados; ver docs/relatorio-final.md).
+  hours: '8h00 às 19h00',
 
   /** Os ícones das redes só aparecem quando houver URL real. */
-  social: [] as readonly SocialLink[],
+  social: [
+    { network: 'instagram', label: 'Instagram', url: 'https://www.instagram.com/lmdreams_construcoes' },
+    { network: 'facebook', label: 'Facebook', url: 'https://www.facebook.com/LmDreamnsConstrucoes' },
+  ] as readonly SocialLink[],
   /** Passa a null quando `social` tiver endereços reais. */
-  socialPending: PH('redes-sociais', 'redes sociais') as string | null,
+  socialPending: null as string | null,
 
   /** Condições do orçamento e da visita: nada aparece no site até haver confirmação. */
-  quoteTerms: null as QuoteTerms | null,
+  // O cliente não confirmou que o orçamento e a visita são gratuitos: não aparecem como tal.
+  quoteTerms: { freeQuote: false, freeVisit: false, responseTime: '8 dias úteis' } as QuoteTerms | null,
 
   /** Morada que a empresa autoriza mostrar ao público (pode não existir). */
-  publicAddress: null as string | null,
+  publicAddress: 'Praceta Armando José Fernandes, n.º 12A, r/c esquerdo, 2845-611 Amora' as string | null,
 
   /**
    * Ícone oficial do Livro de Reclamações (public/livro-reclamacoes.svg), depois de
@@ -75,50 +80,48 @@ export const company = {
 
   legal: {
     form: legalForm as LegalForm,
-    companyType: PH('forma-juridica', 'tipo de sociedade (Lda., Unipessoal Lda. ou S.A.)'),
+    companyType: 'sociedade unipessoal por quotas',
     /** Firma (ou nome civil, se for empresário em nome individual). */
     // Se legal.form passar a 'eni': name = nome civil do empresário, nipc = NIF e
     // address = morada profissional (Parte 5.6); os rótulos do rodapé mudam sozinhos.
-    name: PH('denominacao-social', 'denominação social'),
+    // Radical "LMDREAMS" numa só palavra, como no IMPIC ("LMDREAMS UNIP LDA"). A pontuação exata
+    // confirma-se na certidão permanente (o cliente escreveu "LM Dreams unipessoal lda").
+    name: 'LMDreams, Unipessoal Lda.',
     /** NIPC (ou NIF, se for empresário em nome individual). */
-    nipc: PH('nipc', 'NIPC'),
+    nipc: '516383370',
     /** Morada da sede (ou morada profissional, se for empresário em nome individual). */
-    address: PH('sede', 'morada da sede'),
-    registry: PH('registo-comercial', 'conservatória'),
-    shareCapital: PH('registo-comercial', 'capital social'),
+    address: 'Rua António Silva, Lote 2037 B, 2975-257 Quinta do Conde',
+    // O cliente indicou "Quinta do Conde", mas não há conservatória do registo comercial com esse
+    // nome (lista do IRN). Até a certidão permanente a confirmar, o rodapé indica a matrícula sem
+    // nomear a conservatória (null).
+    registry: null as string | null,
+    shareCapital: '5000 €',
     /** Capital realizado, se for diferente do capital social; null se não se aplicar. */
-    paidUpCapital: PH('capital-realizado-proprio', 'capital realizado, se for diferente do capital social') as
-      | string
-      | null,
+    paidUpCapital: null as string | null, // capital social todo realizado
     /** Capital próprio, se for igual ou inferior a metade do capital social; null se não se aplicar. */
-    equityNote: PH(
-      'capital-realizado-proprio',
-      'capital próprio, se for igual ou inferior a metade do capital social',
-    ) as string | null,
+    equityNote: null as string | null, // capital próprio superior a metade do capital social
+    // Confirmado no IMPIC a 29/09/2026: alvará de empreiteiro de obras particulares, classe 2.
     license: {
-      type: PH('titulo-impic', 'alvará ou certificado'),
-      number: PH('titulo-impic', 'número'),
+      type: 'Alvará',
+      number: '101097-PAR (obras particulares, classe 2)',
     },
     /** Entidade RAL a que a empresa aderiu (se houver) e centros competentes. */
-    ral: PH(
-      'ral',
-      'centros de arbitragem de conflitos de consumo competentes em Portugal continental, com os sites',
-    ),
-    ralMembership: PH('ral', 'entidade RAL a que a empresa aderiu, se houver, com o site') as
-      | string
-      | null,
-    dataController: PH('responsavel-dados', 'e-mail para dados pessoais'),
-    dataRetention: PH('prazo-conservacao', 'prazo de conservação'),
-    processors: PH('fornecedores-dados', 'serviços de formulários e de e-mail'),
+    // Centro competente na Área Metropolitana de Lisboa (sede, escritório e obras); o rodapé já
+    // indica o CNIACC para as zonas sem centro regional e o Portal do Consumidor.
+    ral: 'na Área Metropolitana de Lisboa, o Centro de Arbitragem de Conflitos de Consumo de Lisboa, www.centroarbitragemlisboa.pt',
+    ralMembership: null as string | null, // a empresa não aderiu a nenhuma entidade
+    // Passa a geral@lmdreams.pt quando o domínio e o Google Workspace estiverem a funcionar.
+    dataController: 'mendes3pm@gmail.com',
+    dataRetention: '12 meses',
+    processors: 'a Google, que fornece o serviço de e-mail Gmail',
     /** Serviço de formulários (Política de privacidade, destinatários). */
-    formService: PH('fornecedores-dados', 'serviço de formulários'),
-    policiesUpdatedAt: PH('data-politicas', 'data da última atualização'),
-    dpo: PH(
-      'epd',
-      'encarregado de proteção de dados ou confirmação de que não foi designado',
-    ),
-    quoteValidity: PH('validade-orcamento', 'validade dos orçamentos'),
-    commercialWarranty: PH('garantia-comercial', 'garantia comercial') as string | null,
+    formService:
+      'nenhum; o formulário abre o programa de e-mail do visitante com o pedido preenchido, e o pedido segue pelo serviço de e-mail do próprio visitante',
+    policiesUpdatedAt: '29 de setembro de 2026',
+    dpo: 'não foi designado',
+    quoteValidity: '30 dias',
+    // Só as garantias previstas na lei (resposta do cliente): sem garantia comercial.
+    commercialWarranty: null as string | null,
   },
 
   /** Legenda visível em cada imagem gerada por IA (Partes 4.8 e 5.6). */
