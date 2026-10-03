@@ -12,9 +12,9 @@
 | Fase 5: Integração e revisão editorial | concluída | Revisão editorial sobre o HTML gerado, matriz de rastreabilidade preenchida, desempenho em telemóvel (LCP de 3,1 s para cerca de 2 s), `build:root` a passar. |
 | Fase 6: Verificação adversarial | concluída | 3 rondas (87 achados; 22 confirmados de severidade média ou superior, todos corrigidos ou documentados). |
 | Fase 7: Documentação | concluída | README, `CONTEUDO-A-SUBSTITUIR.md`, matriz fechada, este relatório e `CLAUDE.md`; comandos locais do README testados tal como estão escritos. |
-| Fase 8: Entrega | concluída | `npm run check`, `npm run build:pages` e `npm run lighthouse` a verde; branch enviado; [PR n.º 1](https://github.com/WakenAc/LMDreams/pull/1) aberta para `main` (não rascunho), com o `ci.yml` a verde; integrada pelo Andre a 26 de setembro. Imagens de 26 e 27 de setembro numa PR nova. Site retirado do ar a 27 de setembro, com autorização do Andre (secção "Entrega"). |
+| Fase 8: Entrega | concluída | `npm run check`, `npm run build:pages` e `npm run lighthouse` a verde; branch enviado; [PR n.º 1](https://github.com/WakenAc/LMDreams/pull/1) aberta para `main` (não rascunho), com o `ci.yml` a verde; integrada pelo Andre a 26 de setembro. Imagens de 26 e 27 de setembro numa PR nova. Site retirado do ar a 27 de setembro, com autorização do Andre (secção "Entrega"). Publicado a 2 de outubro (PR n.º 3) e, desde 3 de outubro, em https://www.lmdreams.pt (secção "Publicação no domínio próprio"). |
 
-Última atualização: 25 de setembro de 2026.
+Última atualização: 3 de outubro de 2026 (publicação no domínio próprio).
 
 ## Respostas do Andre na Fase 0
 
@@ -81,7 +81,7 @@
 
 ## Resumo
 
-Website institucional estático da LMDreams (React 19, Vite 8, TypeScript 6 e Tailwind CSS v4), em português de Portugal, pré-renderizado e pronto para o GitHub Pages em `https://wakenac.github.io/LMDreams/`. Tem a página principal com as 12 secções do Anexo A, as três páginas legais e a página 404. O HTML de cada página é completo sem JavaScript; só as partes interativas (cabeçalho e menu, barra de contacto móvel, projetos e formulário) são hidratadas no cliente, e o seu JavaScript só é pedido depois de a página carregar. A direção visual é a C, "Planta e Latão", escolhida pelo Andre.
+Website institucional estático da LMDreams (React 19, Vite 8, TypeScript 6 e Tailwind CSS v4), em português de Portugal, pré-renderizado e publicado no GitHub Pages em **https://www.lmdreams.pt** desde 3 de outubro de 2026. Tem a página principal com as 12 secções do Anexo A, as três páginas legais e a página 404. O HTML de cada página é completo sem JavaScript; só as partes interativas (cabeçalho e menu, barra de contacto móvel, projetos e formulário) são hidratadas no cliente, e o seu JavaScript só é pedido depois de a página carregar. A direção visual é a C, "Planta e Latão", escolhida pelo Andre.
 
 Todos os gates da Parte 6.1 passam: `npm run check` inteiro (97 testes E2E, todos a passar), axe sem violações graves (também antes da hidratação) e Lighthouse dentro dos limites nas oito recolhas (página principal em telemóvel: desempenho 98, LCP de 2,27 s).
 
@@ -104,7 +104,7 @@ A 29 de setembro entraram os dados legais e da empresa enviados pelo cliente e o
 - Branch `feat/site-institucional` enviado com `git push -u origin feat/site-institucional`, depois de verificar que nenhum ficheiro seguido pelo Git tem segredos (tokens, chaves ou o ficheiro de permissões local).
 - [PR n.º 1, "Site institucional LMDreams"](https://github.com/WakenAc/LMDreams/pull/1), de `feat/site-institucional` para `main`, com a descrição da Parte 6.6. Abre como PR normal (secção "Pendentes").
 - CI: o `ci.yml` passou nas duas execuções da PR (25 de setembro), à primeira, sem precisar de regenerar o `package-lock.json`.
-- GitHub Pages: não ativado na Fase 8, porque o repositório era privado num plano gratuito (Parte 3.15). O Claude Code não mudou a visibilidade nem fez o merge.
+- GitHub Pages: não ativado na Fase 8, porque o repositório era privado num plano gratuito (Parte 3.15). O Claude Code não mudou a visibilidade nem fez o merge. A ativação veio depois (secções seguintes): o site está em https://www.lmdreams.pt desde 3 de outubro.
 
 #### Depois da entrega (26 e 27 de setembro)
 
@@ -136,6 +136,15 @@ Ramo `feat/dados-legais-e-projetos`, com as respostas do cliente ao questionári
   - Registo completo em `docs/fotografias-projetos.md`.
   - O teste das fotografias antes e depois sem JavaScript passou a correr (0 testes saltados).
 - **Peso:** os dados dos projetos entram no JavaScript da ilha dos Projetos. O JavaScript inicial subiu para 98,6 KiB de 100, com uma folga de 1 428 B.
+
+### Publicação no domínio próprio (2 e 3 de outubro)
+
+- **2 de outubro, 11h54 UTC:** o Andre fez o merge da PR n.º 3. O `deploy.yml` passou o bloqueio dos dados legais e publicou o site em `https://wakenac.github.io/LMDreams/` (primeira publicação com sucesso).
+- **Registo do domínio:** o Andre registou o `lmdreams.pt` diretamente no registo.pt (o .PT), em nome próprio, por causa de falhas técnicas do registo.pt ao registar em nome da empresa. Recomenda-se passar a titularidade para a LMDreams. Para o titular empresa, os dados são o NIPC `PT516383370`, confirmado como válido no VIES a 30 de setembro, com o nome "LMDREAMS UNIPESSOAL LDA" e a sede da Quinta do Conde.
+- **DNS:** o registo.pt não aloja DNS. O domínio ficou em *Reserved* até haver servidores de nomes que respondessem por ele e até o Andre confirmar uns dados pessoais junto do suporte do .PT. A zona foi criada no deSEC, gratuito e capaz de servir uma zona antes da ativação; o Cloudflare só aceita domínios já delegados. No deSEC ficaram os quatro registos A e os quatro AAAA do GitHub Pages na raiz e o CNAME `www` → `wakenac.github.io.`. No registo.pt, os servidores de nomes `ns1.desec.io` e `ns2.desec.org`. Uma tarefa agendada para confirmar a ativação correu antes do tempo (o domínio ainda não estava ativo) e foi apagada; a verificação foi feita à mão no dia seguinte.
+- **3 de outubro:** com o domínio ativo e os registos confirmados nos DNS públicos (Cloudflare e Google), o Claude Code, com autorização do Andre ("publica o site"), ligou o domínio ao GitHub Pages (`gh api -X PUT repos/WakenAc/LMDreams/pages -f cname=www.lmdreams.pt`). Como a versão publicada ainda tinha o endereço base `/LMDreams/`, o Andre voltou a publicar (*Actions → Deploy to GitHub Pages → Run workflow*, às 9h15 UTC). O GitHub emitiu o certificado para `www.lmdreams.pt` e `lmdreams.pt` (válido até 1 de janeiro de 2027, renovado sozinho) e o Claude Code forçou o HTTPS (`gh api -X PUT repos/WakenAc/LMDreams/pages -F https_enforced=true`). O Andre publicou de novo (9h18 UTC), para os endereços internos passarem a `https://`.
+- **Verificação final:** `https://www.lmdreams.pt/`, as páginas legais, os ficheiros CSS e JavaScript, as fotografias dos projetos e a imagem de partilha respondem 200, e a página inexistente responde 404. `http://`, `lmdreams.pt` e `https://wakenac.github.io/LMDreams/` redirecionam (301) para `https://www.lmdreams.pt/`. O canónico, o `og:url`, o `og:image`, os dados estruturados, o `sitemap.xml` e o `robots.txt` usam `https://www.lmdreams.pt`. No navegador, a página principal hidrata sem erros na consola, a 1440 e a 390 px.
+- **Disparar a publicação** (`gh workflow run` e `npm run deploy`) e o merge continuam proibidos ao Claude Code pelas regras de permissões do projeto. Foi sempre o Andre a fazê-lo.
 
 ### Rondas de verificação (Fase 6)
 
@@ -292,7 +301,7 @@ O ficheiro explica como substituir cada campo e tem ainda as secções "Dados j�
 |---|---|---|---|
 | `npm run deploy` (`gh workflow run deploy.yml --ref main`) | README, secções 3, 6 e 7 | Dispara a publicação; negado na Parte 2.2 | Sintaxe confirmada com `gh help workflow run` |
 | `gh workflow run` | README, secção 6 | Idem | `gh help workflow run` |
-| `gh api -X PUT repos/WakenAc/LMDreams/pages -f cname=…` | README, secção 7 (domínio próprio) | Altera a configuração do GitHub Pages; pede autorização | Sintaxe confirmada com `gh help api` |
+| `gh api -X PUT repos/WakenAc/LMDreams/pages -f cname=…` | README, secção 7 (domínio próprio) | Altera a configuração do GitHub Pages; pede autorização | Sintaxe confirmada com `gh help api`. Executado a 3 de outubro, com autorização do Andre, para ligar o `www.lmdreams.pt` (e, também com autorização, `-F https_enforced=true`) |
 | `gh repo clone WakenAc/LMDreams` | README, secção 2 | Não é preciso (o repositório já está na máquina) | |
 | Ativação do GitHub Pages (Parte 3.15) | Fase 8 | Indisponível enquanto o repositório for privado num plano gratuito; a visibilidade é decisão do Andre | `gh api repos/WakenAc/LMDreams/pages` → 404 no pré-voo |
 
@@ -308,7 +317,8 @@ A PR abre como PR normal: não há gates vermelhos nem achados confirmados que d
 
 1. **Dados a confirmar na certidão permanente:** a conservatória do registo comercial (o rodapé indica a matrícula sem a nomear) e a pontuação exata da firma.
 2. **Ícone oficial do Livro de Reclamações** e **testemunhos reais** (a secção está escondida até haver o primeiro).
-3. **E-mail `geral@lmdreams.pt`:** entra no site quando o domínio estiver registado e o Google Workspace a funcionar (e passa a ser o contacto para dados pessoais).
+3. **E-mail `geral@lmdreams.pt`:** o domínio já está ativo; o e-mail entra no site quando o Google Workspace funcionar, com os registos MX no deSEC (e passa a ser o contacto para dados pessoais).
+8. **Domínio:** titularidade do `lmdreams.pt` em nome do Andre (passar para a empresa); verificação do domínio na conta do GitHub (registo TXT) por fazer; DNSSEC desligado (opcional).
 4. **Folga do LCP em telemóvel:** 2270 ms para um limite de 2500 ms, depois das 11 imagens e dos projetos reais. Qualquer imagem nova perto do topo deve ser medida com `npm run lighthouse`.
 5. **Regra de commits pequenos (R-8), parcial:** os commits por fase até à ronda 1 ficam como estão, porque dividi-los reescreveria o histórico.
 6. **Favicons:** refeitos a 28 de setembro com o logótipo completo enviado pelo dono, a pedido do Andre (não há versão vetorial).
@@ -321,5 +331,7 @@ A PR abre como PR normal: não há gates vermelhos nem achados confirmados que d
 3. Quando houver testemunhos reais com autorização escrita, acrescentá-los em `src/content/testimonials.ts` com `placeholder: false`: a secção volta a aparecer sozinha.
 4. Rever os ícones refeitos com o logótipo completo (separador do navegador e ícone no telemóvel).
 5. Quando houver fotografias de obras da LMDreams (com autorização dos clientes), substituir as ilustrativas e preencher os projetos (README, secção 9). Para gerar mais imagens com IA, a pesquisa de 27 de setembro recomenda a API direta da OpenAI com o mesmo modelo (sem limite diário) ou regularizar o plano da Higgsfield.
-6. Manter o GitHub Pages com a origem **"GitHub Actions"** (Settings → Pages; nunca "Deploy from a branch"), como explica o README na secção 6.
-7. Rever a PR dos dados legais e dos projetos e fazer o merge em `main`. Com o Pages ativo com a origem "GitHub Actions" (já está), a publicação corre sozinha no merge e o site fica em https://wakenac.github.io/LMDreams/.
+6. Manter o GitHub Pages com a origem **"GitHub Actions"** (Settings → Pages; nunca "Deploy from a branch"), como explica o README na secção 6. Cada merge em `main` publica o site em https://www.lmdreams.pt; para republicar sem alterações, *Actions → Deploy to GitHub Pages → Run workflow*.
+7. Passar a titularidade do domínio `lmdreams.pt` para a empresa, no registo.pt.
+8. Verificar o domínio na conta do GitHub (registo TXT no deSEC; README, secção 7) e submeter o sitemap (`https://www.lmdreams.pt/sitemap.xml`) no Google Search Console.
+9. Quando o Google Workspace estiver pronto, criar os registos MX no deSEC e pedir para acrescentar o `geral@lmdreams.pt` ao site (passa também a ser o contacto para dados pessoais).

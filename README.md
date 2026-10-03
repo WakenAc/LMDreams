@@ -2,7 +2,7 @@
 
 Website institucional da LMDreams, empresa de construção civil e remodelações que atua em Portugal continental.
 
-- Endereço público: <https://wakenac.github.io/LMDreams/>
+- Endereço público: <https://www.lmdreams.pt> (desde 3 de outubro de 2026; `lmdreams.pt` e o endereço antigo `https://wakenac.github.io/LMDreams/` redirecionam para aqui)
 - Repositório: `WakenAc/LMDreams` (GitHub)
 
 ## 1. O que é o projeto
@@ -143,7 +143,7 @@ Servidor de desenvolvimento: abra <http://localhost:5173/LMDreams/> no navegador
 npm run build:pages
 ```
 
-Gera o site tal como vai ser publicado, com o endereço base `/LMDreams/`, na pasta `dist/`.
+Gera o site na pasta `dist/` com o endereço de projeto do GitHub Pages (base `/LMDreams/`), para o testar no computador com o `npm run preview`. A publicação não usa este comando: o `deploy.yml` lê o endereço base e o domínio nas definições do GitHub Pages (hoje `/` e `https://www.lmdreams.pt`). O `npm run build:root`, incluído no `npm run check`, confirma que o site funciona na raiz de um domínio.
 
 ```bash
 npm run preview
@@ -295,7 +295,7 @@ Na data deste README há 90 pendentes em 22 chaves, dos quais 18 (em 13 chaves) 
 
 ## 6. Publicação no GitHub Pages
 
-A publicação é automática: cada merge na `main` corre o workflow `.github/workflows/deploy.yml`, que faz o build, confirma os dados legais e publica em <https://wakenac.github.io/LMDreams/>. Cada Pull Request corre antes o `.github/workflows/ci.yml` (`npm run check` e Lighthouse), com os relatórios guardados durante 14 dias no separador *Actions*.
+A publicação é automática: cada merge na `main` corre o workflow `.github/workflows/deploy.yml`, que faz o build, confirma os dados legais e publica em <https://www.lmdreams.pt>. Cada Pull Request corre antes o `.github/workflows/ci.yml` (`npm run check` e Lighthouse), com os relatórios guardados durante 14 dias no separador *Actions*.
 
 ### Primeira publicação
 
@@ -308,7 +308,7 @@ A publicação é automática: cada merge na `main` corre o workflow `.github/wo
    ```
 
    Tem de terminar com "Resultado: passou." e a primeira linha tem de mostrar `check:placeholders --strict`. Se no PowerShell a primeira linha não mostrar o `--strict`, escreva `npm.cmd` em vez de `npm`.
-4. **Fazer merge da Pull Request na `main`.** A publicação arranca sozinha. Acompanhe-a no separador *Actions* ("Deploy to GitHub Pages"); em poucos minutos o site fica em <https://wakenac.github.io/LMDreams/>.
+4. **Fazer merge da Pull Request na `main`.** A publicação arranca sozinha. Acompanhe-a no separador *Actions* ("Deploy to GitHub Pages"); em poucos minutos o site fica em <https://www.lmdreams.pt>.
 
 O ambiente `github-pages` só aceita publicações a partir do branch por omissão (`main`).
 
@@ -323,6 +323,23 @@ npm run deploy
 É o mesmo que `gh workflow run deploy.yml --ref main` e precisa do GitHub CLI com a sessão iniciada (`gh auth login`). Sem o GitHub CLI: no GitHub, *Actions → Deploy to GitHub Pages → Run workflow*, com o branch `main`.
 
 ## 7. Domínio próprio
+
+### Como está configurado o `lmdreams.pt`
+
+Desde 3 de outubro de 2026, o site está em **https://www.lmdreams.pt**.
+
+| Peça | Onde | Configuração |
+|---|---|---|
+| Registo do domínio | registo.pt (o próprio .PT, sem registador intermédio) | *Configuração técnica → Hosts do domínio*: `ns1.desec.io` e `ns2.desec.org`, sem IP |
+| DNS | deSEC (desec.io, gratuito) | A da raiz: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`; AAAA da raiz: `2606:50c0:8000::153` a `2606:50c0:8003::153`; CNAME `www` → `wakenac.github.io.` |
+| GitHub Pages | *Settings → Pages* do repositório | Origem "GitHub Actions"; *Custom domain* `www.lmdreams.pt`; *Enforce HTTPS* ativo (certificado para `www.lmdreams.pt` e `lmdreams.pt`, renovado pelo GitHub) |
+
+- `lmdreams.pt`, `http://` e `https://wakenac.github.io/LMDreams/` redirecionam para `https://www.lmdreams.pt`.
+- O registo.pt não aloja DNS: em *Hosts do domínio* indica-se só que servidores de nomes respondem pelo domínio. O domínio fica no estado *Reserved* (não aparece na Internet) enquanto essa configuração técnica não estiver validada.
+- O deSEC aceita criar a zona antes de o domínio estar ativo, o que o .PT exige (os servidores de nomes têm de responder pelo domínio antes da ativação). O Cloudflare não serve para este primeiro passo: só aceita domínios que já tenham servidores de nomes.
+- **Por fazer:** verificar o domínio na conta do GitHub (passo 2 abaixo, com o registo TXT no deSEC); registos MX do Google Workspace no deSEC, quando o e-mail `geral@lmdreams.pt` for configurado; DNSSEC, opcional (o deSEC mostra o registo DS, que se cola no registo.pt em *DNSSEC*; um DS errado deixa o domínio inacessível).
+
+### Como ligar um domínio (passo a passo)
 
 O site pode passar de `https://wakenac.github.io/LMDreams/` para um domínio próprio, por exemplo `www.dominio.pt`. Não é preciso alterar código nem criar um ficheiro `CNAME`: com a publicação por GitHub Actions, esse ficheiro é ignorado (o `CNAME.example` explica isto e não é publicado).
 
@@ -362,13 +379,13 @@ O site pode passar de `https://wakenac.github.io/LMDreams/` para um domínio pr�
    ```
 
 7. **Ativar o HTTPS:** quando o GitHub terminar de emitir o certificado (a propagação do DNS pode demorar até 24 horas), marque *Enforce HTTPS* (forçar HTTPS) na mesma página.
-8. **Voltar a publicar** para reconstruir o site com o novo endereço:
+8. **Voltar a publicar** para reconstruir o site com o novo endereço, logo a seguir ao passo 6 e outra vez depois do passo 7 (*Actions → Deploy to GitHub Pages → Run workflow*, ou):
 
    ```bash
    npm run deploy
    ```
 
-   O endereço base muda sozinho: o passo "Configure GitHub Pages" do `deploy.yml` passa a devolver o endereço base `/` e o novo endereço do site, e o build usa-os nos canónicos, no `sitemap.xml`, no `robots.txt`, no Open Graph e nos dados estruturados. O script `npm run build:root` já prova, em cada `npm run check`, que o site funciona na raiz de um domínio.
+   O endereço base muda sozinho: o passo "Configure GitHub Pages" do `deploy.yml` passa a devolver o endereço base `/` e o novo endereço do site, e o build usa-os nos canónicos, no `sitemap.xml`, no `robots.txt`, no Open Graph e nos dados estruturados. Entre o passo 6 e a nova publicação, o site aparece sem estilos no novo endereço (ainda pede os ficheiros em `/LMDreams/`); e só a publicação depois do passo 7 põe os endereços internos em `https://`. Foi o que aconteceu a 3 de outubro de 2026. O script `npm run build:root` já prova, em cada `npm run check`, que o site funciona na raiz de um domínio.
 
 ## 8. Formulário de contacto
 
@@ -478,8 +495,8 @@ Para acrescentar mais imagens geradas por IA: guarde-as em `assets-src/ilustrati
 ## 10. Limitações conhecidas
 
 - **Cache do GitHub Pages.** O GitHub Pages envia `Cache-Control: max-age=600` (10 minutos) em todos os ficheiros e não permite cabeçalhos próprios. No site publicado, o Lighthouse assinala a política de cache; é esperado e não se resolve no código. Uma alteração publicada pode demorar até 10 minutos a aparecer a quem já visitou o site.
-- **`robots.txt` no endereço de projeto.** O build gera sempre o `robots.txt`, mas os motores de busca só leem o da raiz do domínio (`https://wakenac.github.io/robots.txt`, que não pertence a este repositório). Em `https://wakenac.github.io/LMDreams/` o ficheiro não produz efeito; passa a produzir com um domínio próprio. Até lá, submeta o sitemap (`https://wakenac.github.io/LMDreams/sitemap.xml`) no Google Search Console, com uma propriedade do tipo "prefixo de URL" para `https://wakenac.github.io/LMDreams/`.
-- **Resultado enriquecido de empresa local.** O Google só considera o resultado enriquecido de empresa local quando os dados estruturados têm morada (`address`). O site só a inclui quando existir uma morada pública autorizada pela empresa (`src/content/company.ts` → `publicAddress`, chave `morada-publica`), nunca a da sede legal por arrasto. Até lá, esse resultado não aparece.
+- **`robots.txt` e Google Search Console.** Com o domínio próprio, o `robots.txt` está na raiz (`https://www.lmdreams.pt/robots.txt`) e produz efeito (no endereço de projeto `wakenac.github.io/LMDreams/` não produzia). Para o Google encontrar o site mais depressa, submeta o sitemap (`https://www.lmdreams.pt/sitemap.xml`) no Google Search Console, com uma propriedade de domínio `lmdreams.pt` (verificada com um registo TXT no deSEC) ou de prefixo de URL `https://www.lmdreams.pt/`.
+- **Resultado enriquecido de empresa local.** O Google só considera o resultado enriquecido de empresa local quando os dados estruturados têm morada (`address`). O site só a inclui quando existir uma morada pública autorizada pela empresa (`src/content/company.ts` → `publicAddress`, chave `morada-publica`), nunca a da sede legal por arrasto. Desde 29 de setembro de 2026 inclui a morada do escritório em Amora.
 - **E-mail Gmail.** O e-mail de contacto (`mendes3pm@gmail.com`) é uma conta Gmail pessoal; no modo por e-mail, os pedidos chegam por essa conta (serviço da Google). Para tratar pedidos de clientes, convém um e-mail profissional com contrato de subcontratação (RGPD, art. 28.º). É uma decisão da empresa: os contactos do site só mudam com essa decisão.
 - **Termos do GitHub Pages.** Os termos do GitHub Pages dizem que o serviço:
 
