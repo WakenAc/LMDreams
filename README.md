@@ -279,7 +279,7 @@ As páginas legais e o bloco "Informação legal" do rodapé são minutas: têm 
 
 ### Serviços
 
-`src/content/services.ts`. Os seis primeiros são os serviços em destaque, com imagem. Todos estão com `confirmado: false`: depois de a empresa validar o nome e a descrição de cada um, mude para `confirmado: true`. Só os serviços confirmados entram nos dados estruturados (JSON-LD) da página principal.
+`src/content/services.ts`. Os seis primeiros são os serviços em destaque, com imagem. Todos foram confirmados pela empresa a 29 de setembro de 2026 (`confirmado: true`). Um serviço novo ou alterado fica com `confirmado: false` até a empresa validar o nome e a descrição. Só os serviços confirmados entram nos dados estruturados (JSON-LD) da página principal.
 
 ### Dados em falta
 
@@ -291,7 +291,7 @@ A lista completa, com o ficheiro e a linha de cada ocorrência, está em **`CONT
 npm run check:placeholders
 ```
 
-Na data deste README há 90 pendentes em 22 chaves, dos quais 18 (em 13 chaves) bloqueiam a publicação.
+A 3 de outubro de 2026 há 16 pendentes em 2 chaves (`icone-livro-reclamacoes` e `testemunhos`); nenhum bloqueia a publicação.
 
 ## 6. Publicação no GitHub Pages
 
@@ -385,7 +385,7 @@ O site pode passar de `https://wakenac.github.io/LMDreams/` para um domínio pr�
    npm run deploy
    ```
 
-   O endereço base muda sozinho: o passo "Configure GitHub Pages" do `deploy.yml` passa a devolver o endereço base `/` e o novo endereço do site, e o build usa-os nos canónicos, no `sitemap.xml`, no `robots.txt`, no Open Graph e nos dados estruturados. Entre o passo 6 e a nova publicação, o site aparece sem estilos no novo endereço (ainda pede os ficheiros em `/LMDreams/`); e só a publicação depois do passo 7 põe os endereços internos em `https://`. Foi o que aconteceu a 3 de outubro de 2026. O script `npm run build:root` já prova, em cada `npm run check`, que o site funciona na raiz de um domínio.
+   O endereço base muda sozinho: o passo "Configure GitHub Pages" do `deploy.yml` passa a devolver um endereço base vazio (o `deploy.yml` acrescenta a `/`) e o novo endereço do site, e o build usa-os nos canónicos, no `sitemap.xml`, no `robots.txt`, no Open Graph e nos dados estruturados. Entre o passo 6 e a nova publicação, o site aparece sem estilos no novo endereço (ainda pede os ficheiros em `/LMDreams/`); e só a publicação depois do passo 7 põe os endereços internos em `https://`. Foi o que aconteceu a 3 de outubro de 2026. O script `npm run build:root` já prova, em cada `npm run check`, que o site funciona na raiz de um domínio.
 
 ## 8. Formulário de contacto
 
@@ -452,7 +452,7 @@ O visitante tem de indicar pelo menos um telefone ou um e-mail. A caixa "Tomei c
 
 ## 9. Imagens ilustrativas
 
-As imagens do site ainda não são fotografias de obras da empresa. As que existem foram **geradas por IA na Higgsfield** e são **ilustrativas**: não representam obras realizadas pela LMDreams. A proveniência (modelo, prompt, identificador do trabalho, data, texto alternativo) está em `assets-src/ilustrativas/manifest.json`.
+A secção Projetos usa fotografias reais de obras da empresa, autorizadas pelos donos de obra (`docs/fotografias-projetos.md`). As restantes imagens do site foram **geradas por IA na Higgsfield** e são **ilustrativas**: não representam obras realizadas pela LMDreams e nunca entram no portefólio. A proveniência (modelo, prompt, identificador do trabalho, data, texto alternativo) está em `assets-src/ilustrativas/manifest.json`.
 
 | Imagem (`id` em `images.ts`) | Onde aparece | Estado |
 |---|---|---|

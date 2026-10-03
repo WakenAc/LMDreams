@@ -1,7 +1,7 @@
 # LMDreams — regras do projeto
 
 - Site institucional estático (React + Vite + TypeScript + Tailwind CSS v4), publicado no GitHub Pages
-  (https://wakenac.github.io/LMDreams/, base /LMDreams/). Especificação original: BRIEF-LMDREAMS.md
+  (https://www.lmdreams.pt, base /; o build:pages local usa a base /LMDreams/). Especificação original: BRIEF-LMDREAMS.md
   (longo: ler por blocos).
 - Todo o texto visível em português de Portugal (AO90). Tom profissional, confiante, próximo, claro, honesto,
   direto e credível; sem exageros publicitários, promessas impossíveis ou linguagem excessivamente técnica
