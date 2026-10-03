@@ -41,8 +41,10 @@ import { whatsappHref } from '../lib/whatsapp'
 
 // Contactos (Anexo A §11; Partes 3.8, 5.4 §11, 5.5 e 5.6; design/direcao-visual.md, secção 9):
 // duas colunas em computador (formulário em 7 colunas, dados de contacto em 4), empilhadas
-// em tablet e telemóvel. Sem JavaScript, o formulário abre o programa de e-mail (mailto:) e
-// os dados de contacto ficam sempre em texto ao lado: o visitante nunca fica sem saída.
+// em tablet e telemóvel. Sem JavaScript, ou se a ilha do formulário não carregar, o botão
+// de envio dá lugar a uma nota com o e-mail, e os dados de contacto ficam sempre em texto
+// ao lado: o visitante nunca fica sem saída. O formulário não tem action="mailto:…": em HTTPS, o Chrome trata esse destino
+// como conteúdo misto (Lighthouse, Boas práticas).
 
 const FORM_HEADING_ID = 'contactos-formulario-titulo'
 const DETAILS_HEADING_ID = 'contactos-dados-titulo'
@@ -66,7 +68,7 @@ const IDS = {
 const TRAP_NAME = 'campo_k7x'
 
 /**
- * Atributo `name` de cada campo (é também o rótulo dos campos no e-mail sem JavaScript).
+ * Atributo `name` de cada campo.
  * Serve para ler o que já estava escrito antes da hidratação (valuesFromForm).
  */
 const NAMES = {
@@ -81,9 +83,6 @@ const NAMES = {
   privacy: 'privacidade',
   photos: 'fotografias',
 } as const
-
-/** Degradação sem JavaScript: o navegador abre o programa de e-mail com os campos em texto. */
-const NO_JS_ACTION = `mailto:${company.email}?subject=${encodeURIComponent(contact.emailDraft.subject)}`
 
 const SERVICE_OPTIONS: readonly string[] = [...services.map((s) => s.name), contact.fields.service.otherOption]
 
@@ -190,8 +189,9 @@ function focusField(id: string): void {
 // Formulário
 
 function LeadForm() {
-  // Sem JavaScript (e até à hidratação), o navegador valida os campos `required` antes de
-  // abrir o programa de e-mail; depois, a validação própria substitui a nativa.
+  // Até à hidratação, o navegador valida os campos `required` e o envio não faz nada
+  // (method="dialog" fora de um <dialog>: nenhum dado sai da página nem vai para o URL);
+  // depois, a validação própria substitui a nativa.
   const hydrated = useHydrated()
   const [values, setValues] = useState<LeadValues>(EMPTY)
   const [errors, setErrors] = useState<LeadErrors>({})
@@ -342,9 +342,7 @@ function LeadForm() {
       ref={formRef}
       data-lead-form=""
       noValidate={hydrated}
-      action={NO_JS_ACTION}
-      method="post"
-      encType="text/plain"
+      method="dialog"
       aria-labelledby={FORM_HEADING_ID}
       onSubmit={(event) => {
         event.preventDefault()
@@ -557,8 +555,16 @@ function LeadForm() {
         ))}
       </div>
 
+      {/* Sem JavaScript, ou se a ilha do formulário não carregar, o formulário não envia:
+          esta nota, escondida por omissão, toma o lugar do botão. Estilos no index.html
+          (<noscript> e html[data-lead-failed], marca posta por src/entry-client.tsx), sem o
+          atributo hidden: o Tailwind esconde-o com !important numa camada, que ganharia. */}
+      <p data-lead-nojs="" className="max-w-texto text-body text-ink">
+        <RichText value={contact.noJsNote} />
+      </p>
+
       <div>
-        <Button type="submit" size="lg" block aria-disabled={busy || undefined}>
+        <Button data-lead-submit="" type="submit" size="lg" block aria-disabled={busy || undefined}>
           {status.kind === 'sending' ? contact.states.sending : ui.labels.sendRequest}
         </Button>
 

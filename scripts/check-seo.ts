@@ -498,6 +498,22 @@ function verificarJsonLd(doc: HTMLElement, page: PageDef, r: Relatorio): void {
     json(area),
   )
 
+  if ('address' in empresa) {
+    const a = empresa.address
+    const parte = (v: unknown): boolean => typeof v === 'string' && v.trim() !== ''
+    r.verificar(
+      ehObjeto(a) &&
+        a['@type'] === 'PostalAddress' &&
+        parte(a.streetAddress) &&
+        typeof a.postalCode === 'string' &&
+        /^\d{4}-\d{3}$/.test(a.postalCode) &&
+        parte(a.addressLocality) &&
+        a.addressCountry === 'PT',
+      'JSON-LD address é PostalAddress (rua, código postal 0000-000, localidade, PT)',
+      json(a),
+    )
+  }
+
   for (const chave of ['image', 'logo']) {
     const url = urlDaImagem(empresa[chave])
     r.verificar(ehUrlAbsoluto(url), `JSON-LD ${chave} absoluto`, citar(url))

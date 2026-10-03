@@ -39,16 +39,23 @@ async function hydrateIslands(page: PageId): Promise<boolean> {
     elements.map(async (el) => {
       const id = el.dataset.island
       if (!isIslandId(id)) return
-      const { default: Component } = await islandLoaders[id]()
-      hydrateRoot(
-        el,
-        <StrictMode>
-          <PageContext value={page}>
-            <Component />
-          </PageContext>
-        </StrictMode>,
-        { identifierPrefix: islandPrefix(id), onRecoverableError },
-      )
+      try {
+        const { default: Component } = await islandLoaders[id]()
+        hydrateRoot(
+          el,
+          <StrictMode>
+            <PageContext value={page}>
+              <Component />
+            </PageContext>
+          </StrictMode>,
+          { identifierPrefix: islandPrefix(id), onRecoverableError },
+        )
+      } catch (error) {
+        // Sem a ilha do formulário, o botão de envio não faria nada: a nota com o e-mail
+        // toma o lugar dele (estilos de html[data-lead-failed] no index.html).
+        if (id === 'contact') document.documentElement.dataset.leadFailed = 'true'
+        throw error
+      }
     }),
   )
   const failed = results.filter((r) => r.status === 'rejected').length
