@@ -318,6 +318,8 @@ export interface ContactContent {
   noFilesNote: string
   /** Aviso RGPD junto ao botão (primeira camada; Parte 5.6), um parágrafo por bloco. */
   notice: readonly Rich[]
+  /** Nota no lugar do botão de envio quando o formulário não pode enviar (sem JavaScript, ou se a ilha não carregar). */
+  noJsNote: Rich
   errors: {
     summary: string // anúncio geral quando há erros
     name: string

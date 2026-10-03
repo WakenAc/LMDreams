@@ -12,6 +12,29 @@ async function hydratedForm(page: Page) {
   return form
 }
 
+test('com JavaScript: botão de envio visível, nota escondida e sem action', async ({ page }) => {
+  await page.goto('./#contactos')
+  const form = await hydratedForm(page)
+  await expect(form.locator('[data-lead-submit]')).toBeVisible()
+  const nota = form.locator('[data-lead-nojs]')
+  await expect(nota).toHaveCount(1)
+  await expect(nota).toBeHidden()
+  await expect(form).not.toHaveAttribute('action')
+})
+
+test('se a ilha do formulário não carregar: nota com o e-mail no lugar do botão', async ({ page }) => {
+  await page.route('**/assets/contact-*.js', (route) => route.abort())
+  await page.goto('./#contactos')
+  await page.waitForSelector('html[data-lead-failed]', { state: 'attached' })
+  const form = page.locator('form[data-lead-form]')
+  await expect(form.locator('[data-lead-submit]')).toBeHidden()
+  const nota = form.locator('[data-lead-nojs]')
+  await expect(nota).toBeVisible()
+  await expect(nota.locator('a[href^="mailto:mendes3pm@gmail.com?subject="]')).toHaveText('mendes3pm@gmail.com')
+  // As outras ilhas continuam a funcionar; a marca de hidratação completa não é posta.
+  await expect(page.locator('html[data-hydrated]')).toHaveCount(0)
+})
+
 test('validação: erros anunciados e foco no primeiro campo com erro', async ({ page }) => {
   await page.goto('./#contactos')
   const form = await hydratedForm(page)

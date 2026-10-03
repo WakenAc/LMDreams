@@ -24,6 +24,23 @@ function meta(attr: 'name' | 'property', key: string, content: string): string {
   return `<meta ${attr}="${key}" content="${esc(content)}">`
 }
 
+/**
+ * Morada pública como PostalAddress (o Google pede as partes para o resultado de empresa
+ * local). Sai da própria morada, no formato "rua, 0000-000 Localidade"; noutro formato fica
+ * em texto, como antes.
+ */
+export function postalAddress(morada: string): Record<string, string> | string {
+  const m = /^(.+),\s*(\d{4}-\d{3})\s+(.+)$/.exec(morada.trim())
+  if (!m?.[1] || !m[2] || !m[3]) return morada
+  return {
+    '@type': 'PostalAddress',
+    streetAddress: m[1].trim(),
+    postalCode: m[2],
+    addressLocality: m[3].trim(),
+    addressCountry: 'PT',
+  }
+}
+
 /** Dados estruturados da página principal (GeneralContractor). */
 export function buildJsonLd(): Record<string, unknown> {
   const confirmed = services.filter((s) => s.confirmado).map((s) => s.name)
@@ -48,7 +65,7 @@ export function buildJsonLd(): Record<string, unknown> {
   if (sameAs.length > 0) data.sameAs = sameAs
   if (legalName) data.legalName = legalName
   if (vatID) data.vatID = vatID
-  if (address) data.address = address
+  if (address) data.address = postalAddress(address)
 
   // Salvaguarda: nenhum placeholder pode chegar ao JSON-LD.
   const json = JSON.stringify(data)

@@ -14,7 +14,7 @@
 | Fase 7: Documentação | concluída | README, `CONTEUDO-A-SUBSTITUIR.md`, matriz fechada, este relatório e `CLAUDE.md`; comandos locais do README testados tal como estão escritos. |
 | Fase 8: Entrega | concluída | `npm run check`, `npm run build:pages` e `npm run lighthouse` a verde; branch enviado; [PR n.º 1](https://github.com/WakenAc/LMDreams/pull/1) aberta para `main` (não rascunho), com o `ci.yml` a verde; integrada pelo Andre a 26 de setembro. Imagens de 26 e 27 de setembro numa PR nova. Site retirado do ar a 27 de setembro, com autorização do Andre (secção "Entrega"). Publicado a 2 de outubro (PR n.º 3) e, desde 3 de outubro, em https://www.lmdreams.pt (secção "Publicação no domínio próprio"). |
 
-Última atualização: 3 de outubro de 2026 (publicação no domínio próprio).
+Última atualização: 3 de outubro de 2026 (publicação no domínio próprio, verificação em produção e correções).
 
 ## Respostas do Andre na Fase 0
 
@@ -145,6 +145,44 @@ Ramo `feat/dados-legais-e-projetos`, com as respostas do cliente ao questionári
 - **3 de outubro:** com o domínio ativo e os registos confirmados nos DNS públicos (Cloudflare e Google), o Claude Code, com autorização do Andre ("publica o site"), ligou o domínio ao GitHub Pages (`gh api -X PUT repos/WakenAc/LMDreams/pages -f cname=www.lmdreams.pt`). Como a versão publicada ainda tinha o endereço base `/LMDreams/`, o Andre voltou a publicar (*Actions → Deploy to GitHub Pages → Run workflow*, às 9h15 UTC). O GitHub emitiu o certificado para `www.lmdreams.pt` e `lmdreams.pt` (válido até 1 de janeiro de 2027, renovado sozinho) e o Claude Code forçou o HTTPS (`gh api -X PUT repos/WakenAc/LMDreams/pages -F https_enforced=true`). O Andre publicou de novo (9h18 UTC), para os endereços internos passarem a `https://`.
 - **Verificação final:** `https://www.lmdreams.pt/`, as páginas legais, os ficheiros CSS e JavaScript, as fotografias dos projetos e a imagem de partilha respondem 200, e a página inexistente responde 404. `http://`, `lmdreams.pt` e `https://wakenac.github.io/LMDreams/` redirecionam (301) para `https://www.lmdreams.pt/`. O canónico, o `og:url`, o `og:image`, os dados estruturados, o `sitemap.xml` e o `robots.txt` usam `https://www.lmdreams.pt`. No navegador, a página principal hidrata sem erros na consola, a 1440 e a 390 px.
 - **Disparar a publicação** (`gh workflow run` e `npm run deploy`) e o merge continuam proibidos ao Claude Code pelas regras de permissões do projeto. Foi sempre o Andre a fazê-lo.
+
+### Verificação em produção e correções (3 de outubro)
+
+Depois do merge da PR n.º 4, a verificação do site em produção juntou sete verificadores independentes e uma revisão final de lacunas. Os verificadores cobriram:
+
+- HTTP, redirecionamentos e ficheiros;
+- SEO e metadados;
+- navegador real a 1440, 768 e 390 px, com e sem JavaScript;
+- conformidade e conteúdo;
+- DNS, TLS e configuração do GitHub Pages;
+- a publicação no GitHub Actions;
+- a exatidão da documentação.
+
+Cada problema encontrado foi revisto por três céticos independentes, e só ficou se pelo menos dois o confirmassem.
+
+- **Resultado:** nenhum problema grave ou médio.
+  - Os 240 ficheiros usados pelas páginas respondem 200.
+  - Não há pedidos a terceiros, cookies nem armazenamento no navegador.
+  - Os servidores de nomes do deSEC concordam entre si.
+  - O certificado cobre `www.lmdreams.pt` e `lmdreams.pt`, e a verificação de saúde do Pages está limpa.
+  - Lighthouse em produção, página principal em telemóvel: desempenho 96, acessibilidade 100 e SEO 100.
+- **Redirecionamentos da raiz:** de manhã, dois redirecionamentos guardados na cache do GitHub (`http://lmdreams.pt/` e `https://wakenac.github.io/LMDreams/`) ainda passavam por `http://www.lmdreams.pt/`. Às 10h37 UTC já iam diretos para `https://`.
+- **Correções na PR n.º 5:**
+  - margem das âncoras aplicada duas vezes (`scroll-padding-top` e `scroll-margin-top` somam-se);
+  - numeração dos Pendentes;
+  - frases desatualizadas no README e no relatório;
+  - endereço do site no `CLAUDE.md`.
+- **Correções nesta alteração:**
+  - **Formulário sem `action="mailto:…"`:** em HTTPS, o Chrome trata esse destino como conteúdo misto, e as Boas práticas da página principal desciam para 78 a 79 em produção (100 no Lighthouse local, em `http://localhost`). O formulário passa a `method="dialog"`: até à hidratação, o envio não faz nada e nenhum dado vai para o URL. Sem JavaScript, ou se o JavaScript do formulário não carregar, o botão dá lugar a uma nota com o e-mail. Num servidor local com HTTPS, o Chromium deixou de mostrar o aviso de conteúdo misto (no site publicado ainda aparecia), e o Lighthouse deu 100 em Boas práticas, em telemóvel e em computador. O `check:links` passou a falhar com destinos de formulário fora de `https`.
+  - **Morada do JSON-LD como `PostalAddress`:** rua, código postal, localidade e país, tirados da morada pública já existente. O `check:seo` confirma o formato.
+  - **Centro de Arbitragem de Conflitos de Consumo de Lisboa:** o site do centro passa a ligação no rodapé e nos Termos, como o CNIACC e o Portal do Consumidor.
+- **Ficam por decidir:**
+  - três frases condicionais dos textos legais, que esperam a aprovação do Andre:
+    - "fotografias, se as anexar", quando o formulário não aceita ficheiros;
+    - "Serviço de formulários: nenhum", dentro da lista de prestadores;
+    - "fotografias da secção Projetos, quando existirem";
+  - a proteção do ramo `main` no GitHub, para obrigar a PR com o CI a verde. É uma definição do repositório.
+- **Sem ação:** o `npm audit` assinala 14 vulnerabilidades, todas em ferramentas de desenvolvimento (cadeia do Lighthouse) e nenhuma no site. O aviso do GitHub sobre a passagem do `ubuntu-latest` para o Ubuntu 26, a 19 de outubro, foi avaliado como de risco baixo.
 
 ### Rondas de verificação (Fase 6)
 
@@ -335,3 +373,4 @@ A PR abre como PR normal: não há gates vermelhos nem achados confirmados que d
 7. Passar a titularidade do domínio `lmdreams.pt` para a empresa, no registo.pt.
 8. Verificar o domínio na conta do GitHub (registo TXT no deSEC; README, secção 7) e submeter o sitemap (`https://www.lmdreams.pt/sitemap.xml`) no Google Search Console.
 9. Quando o Google Workspace estiver pronto, criar os registos MX no deSEC e pedir para acrescentar o `geral@lmdreams.pt` ao site (passa também a ser o contacto para dados pessoais).
+10. Decidir sobre as três frases condicionais dos textos legais (`src/content/legal/privacy.ts`, linhas 92 e 160, e `src/content/legal/terms.ts`, linha 103) e, se quiser, proteger o ramo `main` no GitHub (*Settings → Branches* ou *Rules*), para exigir uma PR com o CI a verde antes de cada merge.
