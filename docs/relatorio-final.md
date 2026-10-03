@@ -318,11 +318,11 @@ A PR abre como PR normal: não há gates vermelhos nem achados confirmados que d
 1. **Dados a confirmar na certidão permanente:** a conservatória do registo comercial (o rodapé indica a matrícula sem a nomear) e a pontuação exata da firma.
 2. **Ícone oficial do Livro de Reclamações** e **testemunhos reais** (a secção está escondida até haver o primeiro).
 3. **E-mail `geral@lmdreams.pt`:** o domínio já está ativo; o e-mail entra no site quando o Google Workspace funcionar, com os registos MX no deSEC (e passa a ser o contacto para dados pessoais).
-8. **Domínio:** titularidade do `lmdreams.pt` em nome do Andre (passar para a empresa); verificação do domínio na conta do GitHub (registo TXT) por fazer; DNSSEC desligado (opcional).
 4. **Folga do LCP em telemóvel:** 2270 ms para um limite de 2500 ms, depois das 11 imagens e dos projetos reais. Qualquer imagem nova perto do topo deve ser medida com `npm run lighthouse`.
 5. **Regra de commits pequenos (R-8), parcial:** os commits por fase até à ronda 1 ficam como estão, porque dividi-los reescreveria o histórico.
 6. **Favicons:** refeitos a 28 de setembro com o logótipo completo enviado pelo dono, a pedido do Andre (não há versão vetorial).
 7. **Folga do JavaScript inicial:** 1 428 B em gzip, depois dos projetos reais. Mais projetos ou mais fotografias por projeto aumentam o JavaScript da ilha: medir sempre com `npm run check:budget`. Se passar do limite, a solução é passar os dados dos projetos para um bloco JSON no HTML, fora do JavaScript.
+8. **Domínio:** titularidade do `lmdreams.pt` em nome do Andre (passar para a empresa); verificação do domínio na conta do GitHub (registo TXT) por fazer; DNSSEC desligado (opcional).
 
 ## Próximos passos para o Andre
 
@@ -330,7 +330,7 @@ A PR abre como PR normal: não há gates vermelhos nem achados confirmados que d
 2. Descarregar o ícone oficial do Livro de Reclamações (https://www.livroreclamacoes.pt/Inicio/Manuais, "Imagens dos Logótipos") e colocá-lo em `public/livro-reclamacoes.svg` (ou .png).
 3. Quando houver testemunhos reais com autorização escrita, acrescentá-los em `src/content/testimonials.ts` com `placeholder: false`: a secção volta a aparecer sozinha.
 4. Rever os ícones refeitos com o logótipo completo (separador do navegador e ícone no telemóvel).
-5. Quando houver fotografias de obras da LMDreams (com autorização dos clientes), substituir as ilustrativas e preencher os projetos (README, secção 9). Para gerar mais imagens com IA, a pesquisa de 27 de setembro recomenda a API direta da OpenAI com o mesmo modelo (sem limite diário) ou regularizar o plano da Higgsfield.
+5. Quando houver mais fotografias de obras da LMDreams (com autorização dos clientes), acrescentar projetos e substituir as imagens ilustrativas que restam (README, secção 9). Para gerar mais imagens com IA, a pesquisa de 27 de setembro recomenda a API direta da OpenAI com o mesmo modelo (sem limite diário) ou regularizar o plano da Higgsfield.
 6. Manter o GitHub Pages com a origem **"GitHub Actions"** (Settings → Pages; nunca "Deploy from a branch"), como explica o README na secção 6. Cada merge em `main` publica o site em https://www.lmdreams.pt; para republicar sem alterações, *Actions → Deploy to GitHub Pages → Run workflow*.
 7. Passar a titularidade do domínio `lmdreams.pt` para a empresa, no registo.pt.
 8. Verificar o domínio na conta do GitHub (registo TXT no deSEC; README, secção 7) e submeter o sitemap (`https://www.lmdreams.pt/sitemap.xml`) no Google Search Console.
