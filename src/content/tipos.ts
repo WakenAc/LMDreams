@@ -334,6 +334,8 @@ export interface ContactContent {
     fileTooBig: string
     /** {nome} = nome do ficheiro. */
     fileType: string
+    /** {nome} = nome do ficheiro que faria passar o total permitido. */
+    filesTotalTooBig: string
   }
   states: {
     sending: string // "A enviar…"

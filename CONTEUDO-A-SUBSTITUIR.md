@@ -34,7 +34,7 @@ Nenhum pendente bloqueia a publicação.
 - O que fornecer: Ícone oficial descarregado da plataforma do Livro de Reclamações, depois de registar a empresa
 - Bloqueia publicação: Não (existe a ligação em texto)
 - Ocorrências:
-  - `src/content/company.ts:76`, campo `complaintsBookIcon`: ícone oficial do Livro de Reclamações Eletrónico
+  - `src/content/company.ts:77`, campo `complaintsBookIcon`: ícone oficial do Livro de Reclamações Eletrónico
 
 ### `testemunhos` (15)
 
@@ -132,7 +132,7 @@ Só para informação: estas chaves não têm pendentes no código. É normal, p
 - `intervalos-orcamento`: Rever os intervalos propostos
   - Onde aparece: Formulário
   - Ficheiro e campo: src/content/contact.ts → budgetRanges
-- `endpoint-formulario`: Serviço de formulários escolhido (até lá, alternativa por e-mail)
+- `endpoint-formulario`: Formward escolhido a 4 de outubro de 2026: falta o endereço de envio do formulário (https://forms.formward.eu/f/…) e VITE_FORM_ACCEPTS_FILES=true (README, secção 8); até lá, alternativa por e-mail
   - Onde aparece: Formulário
   - Ficheiro e campo: Variáveis do repositório (Repository variables) VITE_FORM_ENDPOINT, VITE_FORM_ACCEPTS_FILES e, se o serviço exigir, VITE_FORM_ACCESS_KEY
 - `logotipo`: Só se o ficheiro fornecido for insuficiente (idealmente SVG)

@@ -5,6 +5,7 @@
 import type { BudgetRanges, ContactContent, Rich } from './tipos'
 import { company } from './company'
 import { ui } from './common'
+import { formServiceActive } from '../lib/form-config'
 
 const telefoneEscrito = `${company.phone.display} (${company.phoneCallNote})`
 const assuntoEmail = 'Pedido de orçamento pelo site'
@@ -17,7 +18,7 @@ const assuntoEmail = 'Pedido de orçamento pelo site'
 export const avisoBlocos: readonly Rich[] = [
   // Sem ponto duplo quando a firma já termina em "Lda.".
   `Responsável pelo tratamento: ${company.legal.name.replace(/\.$/, '')}. Usamos estes dados apenas para analisar o seu pedido de orçamento e responder-lhe, antes de qualquer contrato (RGPD, art. 6.º, n.º 1, al. b)).`,
-  `Conservamo-los durante ${company.legal.dataRetention} se não for celebrado contrato e só os partilhamos com prestadores técnicos (${company.legal.processors}).`,
+  `Conservamo-los durante ${company.legal.dataRetention} se não for celebrado contrato e só os partilhamos com prestadores técnicos (${formServiceActive ? company.legal.formServiceHosted.processors : company.legal.processors}).`,
   [
     `Pode exercer os seus direitos de acesso, retificação, apagamento, limitação, oposição e portabilidade através de ${company.legal.dataController} e apresentar reclamação à CNPD (`,
     { text: 'www.cnpd.pt', href: 'https://www.cnpd.pt' },
@@ -61,7 +62,7 @@ export const contact = {
     },
     photos: {
       label: 'Fotografias (opcional)',
-      help: 'Até 5 fotografias (JPG, PNG, WebP ou HEIC), com 10 MB no máximo cada uma.',
+      help: 'Até 5 fotografias (JPG, PNG ou WebP), com 10 MB no máximo cada uma e 25 MB no total.',
       remove: 'Remover',
       selected: 'Fotografias escolhidas',
     },
@@ -92,7 +93,8 @@ export const contact = {
     privacy: 'Confirme que tomou conhecimento da Política de privacidade.',
     tooManyFiles: 'Pode enviar até 5 fotografias.',
     fileTooBig: 'A fotografia “{nome}” tem mais de 10 MB.',
-    fileType: 'O ficheiro “{nome}” não está num formato aceite. Use JPG, PNG, WebP ou HEIC.',
+    fileType: 'O ficheiro “{nome}” não está num formato aceite. Use JPG, PNG ou WebP.',
+    filesTotalTooBig: 'A fotografia “{nome}” ficou de fora: no total, as fotografias não podem passar de 25 MB.',
   },
   states: {
     sending: 'A enviar…',

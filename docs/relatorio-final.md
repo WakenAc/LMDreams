@@ -184,6 +184,34 @@ Cada problema encontrado foi revisto por três céticos independentes, e só fic
   - a proteção do ramo `main` no GitHub, para obrigar a PR com o CI a verde. É uma definição do repositório.
 - **Sem ação:** o `npm audit` assinala 14 vulnerabilidades, todas em ferramentas de desenvolvimento (cadeia do Lighthouse) e nenhuma no site. O aviso do GitHub sobre a passagem do `ubuntu-latest` para o Ubuntu 26, a 19 de outubro, foi avaliado como de risco baixo.
 
+### Serviço de formulários: Formward (4 de outubro)
+
+- **Pedido do Andre:** um serviço de formulários de uma empresa europeia, com os dados na União Europeia. O Formspree ficou de fora por ser americano.
+- **Pesquisa:** 25 candidatos, com contraprova das fontes oficiais. Os 10 serviços para sites estáticos foram analisados a fundo; os construtores de formulários e as montagens próprias ficaram por analisar, por quase todos exigirem incorporar o formulário deles na página. Também se pesquisou o que exigiria um servidor próprio: sem licenças nem registo na CNPD, mas com contrato de subcontratação, registo das atividades de tratamento, segurança e manutenção a cargo da empresa.
+- **Escolha do Andre:** Formward (EGF Fastighetsservice AB, Suécia), plano Professional, por aceitar fotografias: 20 €/mês com pagamento anual (30 €/mês com pagamento mensal), mais IVA. Ressalvas registadas:
+  - empresa recente e pequena, sem acordo de nível de serviço;
+  - os avisos por e-mail passam pela Mailjet (França), alojada na Google Cloud na UE;
+  - a IA (Mistral AI) vem ligada por omissão e deve ser desligada;
+  - as fotografias só abrem na área reservada do Formward.
+- **Alterações no site:**
+  - `src/lib/form-config.ts` concentra a configuração;
+  - o envio passa a levar `_subject` e `_replyto`;
+  - as fotografias seguem os limites do Formward: sem HEIC e com 25 MB no total, e um ficheiro sem tipo segue com o tipo da extensão;
+  - a Política de privacidade e o aviso RGPD mudam sozinhos para os textos do Formward quando `VITE_FORM_ENDPOINT` está definida; até lá, o site continua no modo por e-mail, com os textos atuais.
+- **Testes:** `npm run build:servico` (endereço de envio fictício) e `npm run test:e2e:servico`, ambos no `npm run check`. Cobrem:
+  - o envio em JSON e em `multipart/form-data`;
+  - os erros 402, `ok: false` e falha de rede;
+  - o campo-armadilha;
+  - HEIC e o limite de 25 MB;
+  - os textos legais.
+- **Peso:** o JavaScript inicial fica nos 99,1 KiB de 100, tanto no modo por e-mail como com o serviço ligado (folga de 898 B; `npm run check:budget:servico`, também no `npm run check`). Qualquer acrescento ao formulário ou aos projetos tem de ser medido.
+- **Por fazer, pela empresa e pelo Andre (README, secção 8):**
+  - criar a conta e aceitar o contrato de subcontratação;
+  - configurar o formulário: origem, IA desligada, apagamento ao fim de 90 dias;
+  - criar as variáveis do repositório;
+  - acertar a data da Política de privacidade;
+  - publicar de novo e testar no site.
+
 ### Rondas de verificação (Fase 6)
 
 | Ronda | Achados | Confirmados (média ou superior) | Refutados | Baixos | Principais correções |

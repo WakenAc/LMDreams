@@ -2,6 +2,7 @@
 // os que faltam usam PH(chave, descrição) e aparecem em CONTEUDO-A-SUBSTITUIR.md.
 // Nunca inventar denominação, NIPC, moradas, alvarás ou entidades.
 
+import { formServiceActive } from '../lib/form-config'
 import { PH } from '../lib/placeholders'
 
 export type LegalForm = 'sociedade' | 'eni'
@@ -114,10 +115,29 @@ export const company = {
     dataController: 'mendes3pm@gmail.com',
     dataRetention: '12 meses',
     processors: 'a Google, que fornece o serviço de e-mail Gmail',
-    /** Serviço de formulários (Política de privacidade, destinatários). */
+    /** Serviço de formulários sem VITE_FORM_ENDPOINT (modo por e-mail; Política de privacidade). */
     formService:
       'nenhum; o formulário abre o programa de e-mail do visitante com o pedido preenchido, e o pedido segue pelo serviço de e-mail do próprio visitante',
-    policiesUpdatedAt: '29 de setembro de 2026',
+    /**
+     * Serviço de formulários com VITE_FORM_ENDPOINT definido: o Formward, escolhido a 4 de
+     * outubro de 2026 (plano Professional, com fotografias). Fontes: formward.eu/impressum,
+     * /dpa, /compliance/subprocessors e /docs/file-uploads. Se o serviço mudar, rever estes
+     * textos e o README (secção 8).
+     */
+    formServiceHosted: {
+      name: 'Formward',
+      /** Política de privacidade, destinatários (frase completa, sem ponto final). */
+      description:
+        'Formward, serviço da EGF Fastighetsservice AB (Suécia), que recebe os pedidos enviados pelo formulário, guarda-os em servidores na Suécia (Hostup AB) e nos envia um aviso por e-mail através da Mailjet (França)',
+      /** Prazo configurado no Formward (apagamento automático dos pedidos e das fotografias). */
+      retention: '90 dias',
+      /** Aviso RGPD junto ao botão: prestadores técnicos. */
+      processors:
+        'a Formward, na Suécia, que recebe o formulário, e a Google, que fornece o serviço de e-mail Gmail',
+    },
+    // Com o serviço de formulários ativo, a Política de privacidade muda (textos do Formward):
+    // a data passa a ser a da ligação do serviço (README, secção 8).
+    policiesUpdatedAt: formServiceActive ? '4 de outubro de 2026' : '29 de setembro de 2026',
     dpo: 'não foi designado',
     quoteValidity: '30 dias',
     // Só as garantias previstas na lei (resposta do cliente): sem garantia comercial.

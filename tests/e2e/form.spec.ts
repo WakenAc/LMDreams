@@ -105,3 +105,14 @@ test('modo por e-mail: abre o rascunho, oferece "Copiar pedido" e nunca diz "Rec
   const status = page.locator('#contactos [role="status"]')
   await expect(status.first()).toContainText(/programa de e-mail/)
 })
+
+test('modo por e-mail: a Política de privacidade e o aviso RGPD não falam de serviço de formulários', async ({ page }) => {
+  await page.goto('politica-de-privacidade/')
+  const main = page.locator('main')
+  await expect(main).toContainText('Serviço de formulários: nenhum')
+  await expect(main).not.toContainText('Formward')
+  await page.goto('./#contactos')
+  await expect(page.locator('[data-rgpd-notice]')).not.toContainText('Formward')
+  // Sem serviço, o formulário não tem campo de fotografias.
+  await expect(page.locator('#campo-fotografias')).toHaveCount(0)
+})
