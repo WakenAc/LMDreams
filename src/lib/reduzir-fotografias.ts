@@ -65,12 +65,21 @@ async function reduzirFotografia(ficheiro: File): Promise<File> {
 
 /**
  * Prepara as fotografias escolhidas antes de as validar com addLeadFiles: reduz as que estão
- * num formato aceite (uma de cada vez, para poupar memória no telemóvel). As outras seguem
- * como estão, para serem recusadas com a mensagem certa.
+ * num formato aceite (uma de cada vez, para poupar memória no telemóvel), no máximo
+ * `maximo` (as que ainda cabem no pedido). As outras seguem como estão, para serem recusadas
+ * com a mensagem certa sem atrasar a resposta.
  */
-export async function reduceLeadFiles(novos: readonly File[]): Promise<File[]> {
+export async function reduceLeadFiles(novos: readonly File[], maximo = Infinity): Promise<File[]> {
   const reduzidas: File[] = []
-  for (const ficheiro of novos) reduzidas.push(await reduzirFotografia(ficheiro))
+  let vagas = maximo
+  for (const ficheiro of novos) {
+    if (vagas > 0 && formatoReduzivel(ficheiro)) {
+      vagas -= 1
+      reduzidas.push(await reduzirFotografia(ficheiro))
+    } else {
+      reduzidas.push(ficheiro)
+    }
+  }
   return reduzidas
 }
 

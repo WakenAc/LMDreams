@@ -197,7 +197,7 @@ Cada problema encontrado foi revisto por três céticos independentes, e só fic
   - `src/lib/form-config.ts` concentra a configuração;
   - o envio passa a levar `_subject` e `_replyto`;
   - as fotografias seguem os limites do Formward: sem HEIC e com 25 MB no total, e um ficheiro sem tipo segue com o tipo da extensão;
-  - as fotografias com mais de 1 MB são reduzidas no navegador para JPEG com 2000 px no lado maior (`src/lib/reduzir-fotografias.ts`, carregado só quando há fotografias). Sem a redução, 4 fotografias de 5 MB falhavam o limite de 15 s numa rede de cerca de 10 Mbit/s; se o envio com fotografias falhar, a mensagem sugere retirá-las;
+  - as fotografias com mais de 1 MB são reduzidas no navegador para JPEG com 2000 px no lado maior (`src/lib/reduzir-fotografias.ts`, carregado só quando há fotografias). Sem a redução, 4 fotografias de 5 MB falhavam o limite de 15 s numa rede de cerca de 10 Mbit/s; se o envio com fotografias falhar, a mensagem sugere retirá-las. Uma segunda revisão do fluxo assíncrono levou a três acertos: o envio espera por toda a preparação e não segue se dela saírem recusas, o campo de fotografias fica desativado durante o envio, e o módulo da redução é pedido logo depois da hidratação (e de novo, se falhar);
   - com o serviço ligado, a Política de privacidade refere também o endereço IP pseudonimizado que o Formward regista (finalidade: limitar abusos; fundamento: interesse legítimo) e tem uma data própria (`legal.privacyUpdatedAt`); as páginas de cookies e de termos ficam com as suas datas;
   - a Política de privacidade e o aviso RGPD mudam sozinhos para os textos do Formward quando `VITE_FORM_ENDPOINT` está definida; até lá, o site continua no modo por e-mail, com os textos atuais.
 - **Testes:** `npm run build:servico` (endereço de envio fictício), `npm run check:servico` (ligações, SEO, proibições e peso desse build) e `npm run test:e2e:servico`, todos no `npm run check`. Os testes cobrem:
@@ -205,10 +205,10 @@ Cada problema encontrado foi revisto por três céticos independentes, e só fic
   - os erros 402, `ok: false` e falha de rede;
   - o campo-armadilha;
   - HEIC e o limite de 25 MB;
-  - a redução das fotografias e o ficheiro sem tipo;
+  - a redução das fotografias, o envio logo a seguir à escolha, as recusas que chegam depois do clique, o campo desativado durante o envio e o ficheiro sem tipo;
   - os cabeçalhos do envio, comparados com os que o Formward aceita no CORS (a verificação prévia é respondida pelo próprio Playwright, por isso testam-se os cabeçalhos);
   - os textos legais e as datas de cada página.
-- **Peso:** com o serviço ligado, o JavaScript inicial fica nos 99,4 KiB de 100 (folga de 626 B; `npm run check:servico`, também no `npm run check`). Qualquer acrescento ao formulário ou aos projetos tem de ser medido.
+- **Peso:** com o serviço ligado, o JavaScript inicial fica nos 99,5 KiB de 100 (folga de 469 B; `npm run check:servico`, também no `npm run check`). Qualquer acrescento ao formulário ou aos projetos tem de ser medido.
 - **Por fazer, pela empresa e pelo Andre (README, secção 8):**
   - criar a conta e aceitar o contrato de subcontratação;
   - configurar o formulário: origem, IA desligada, apagamento ao fim de 90 dias;

@@ -151,7 +151,10 @@ for (const [caso, resposta] of [
     const form = await formularioHidratado(page)
     await preencher(page)
     await form.locator('[data-lead-submit]').click()
-    await expect(form.locator('[role="alert"]').first()).toContainText('Não foi possível enviar o pedido')
+    const alerta = form.locator('[role="alert"]').first()
+    await expect(alerta).toContainText('Não foi possível enviar o pedido. Tente novamente')
+    // Sem fotografias, a mensagem não fala delas.
+    await expect(alerta).not.toContainText('fotografias')
     await expect(form.locator('a[href^="tel:"]')).toBeVisible()
     await expect(page.locator('#contactos')).not.toContainText('Recebemos o seu pedido')
     expect(pedidos).toHaveLength(1)
@@ -207,33 +210,8 @@ test('fotografia grande reduzida no navegador antes do envio (JPEG, 2000 px no l
   const form = await formularioHidratado(page)
   test.setTimeout(90_000)
   await preencher(page)
-  // PNG com ruído, 3000 × 2000 px, criado na própria página (passá-lo pelo Playwright era lento):
-  // mais de 10 MB, acima do limite por fotografia sem a redução.
-  const tamanhoOriginal = await page.locator('#campo-fotografias').evaluate(async (campo: HTMLInputElement) => {
-    const tela = document.createElement('canvas')
-    tela.width = 3000
-    tela.height = 2000
-    const contexto = tela.getContext('2d')!
-    const pixeis = contexto.createImageData(3000, 2000)
-    // Ruído pseudoaleatório (xorshift de 32 bits): o PNG quase não comprime.
-    let x = 2463534242
-    for (let i = 0; i < pixeis.data.length; i += 4) {
-      for (let c = 0; c < 3; c += 1) {
-        x ^= x << 13
-        x ^= x >>> 17
-        x ^= x << 5
-        pixeis.data[i + c] = x & 255
-      }
-      pixeis.data[i + 3] = 255
-    }
-    contexto.putImageData(pixeis, 0, 0)
-    const blob = await new Promise<Blob>((resolve) => tela.toBlob((b) => resolve(b!), 'image/png'))
-    const transferencia = new DataTransfer()
-    transferencia.items.add(new File([blob], 'obra.png', { type: 'image/png' }))
-    campo.files = transferencia.files
-    campo.dispatchEvent(new Event('change', { bubbles: true }))
-    return blob.size
-  })
+  // PNG com ruído criado na própria página (passá-lo pelo Playwright era lento).
+  const tamanhoOriginal = await escolherPngGrande(page)
   expect(tamanhoOriginal).toBeGreaterThan(10 * 1024 * 1024)
 
   await expect(form.getByRole('button', { name: 'Remover obra.jpg' })).toBeVisible()
@@ -257,6 +235,99 @@ test('fotografia grande reduzida no navegador antes do envio (JPEG, 2000 px no l
     return [bitmap.width, bitmap.height]
   }, jpeg.toString('base64'))
   expect(lados).toEqual([2000, 1333])
+})
+
+/** PNG com ruído (3000 × 2000 px, mais de 10 MB) criado na página e posto no campo. */
+async function escolherPngGrande(page: Page, nome = 'obra.png'): Promise<number> {
+  return page.locator('#campo-fotografias').evaluate(async (campo: HTMLInputElement, nomeFicheiro: string) => {
+    const tela = document.createElement('canvas')
+    tela.width = 3000
+    tela.height = 2000
+    const contexto = tela.getContext('2d')!
+    const pixeis = contexto.createImageData(3000, 2000)
+    let x = 2463534242
+    for (let i = 0; i < pixeis.data.length; i += 4) {
+      for (let c = 0; c < 3; c += 1) {
+        x ^= x << 13
+        x ^= x >>> 17
+        x ^= x << 5
+        pixeis.data[i + c] = x & 255
+      }
+      pixeis.data[i + 3] = 255
+    }
+    contexto.putImageData(pixeis, 0, 0)
+    const blob = await new Promise<Blob>((resolve) => tela.toBlob((b) => resolve(b!), 'image/png'))
+    const transferencia = new DataTransfer()
+    for (const atual of Array.from(campo.files ?? [])) transferencia.items.add(atual)
+    transferencia.items.add(new File([blob], nomeFicheiro, { type: 'image/png' }))
+    campo.files = transferencia.files
+    campo.dispatchEvent(new Event('change', { bubbles: true }))
+    return blob.size
+  }, nome)
+}
+
+test('envio logo a seguir à escolha: espera pela redução e leva a fotografia reduzida', async ({ page }) => {
+  test.setTimeout(90_000)
+  const pedidos = await intercetar(page)
+  const form = await formularioHidratado(page)
+  await preencher(page)
+  await escolherPngGrande(page)
+  // Sem esperar pela lista: a preparação ainda está a decorrer no clique.
+  await expect(form.locator('[data-photos-preparing]')).toBeVisible()
+  await form.locator('[data-lead-submit]').click()
+  await expect(page.locator('#contactos [role="status"]').first()).toContainText('Recebemos o seu pedido')
+  expect(pedidos).toHaveLength(1)
+  const corpo = pedidos[0]!.postDataBuffer()!.toString('latin1')
+  const inicio = corpo.indexOf('name="attachment"; filename="obra.jpg"')
+  expect(inicio).toBeGreaterThan(-1)
+  expect(corpo.slice(inicio, corpo.indexOf('\r\n\r\n', inicio))).toContain('Content-Type: image/jpeg')
+})
+
+test('recusas que chegam depois do clique: o envio não segue e a recusa fica à vista', async ({ page }) => {
+  test.setTimeout(90_000)
+  const pedidos = await intercetar(page)
+  const form = await formularioHidratado(page)
+  await preencher(page)
+  // Uma fotografia grande (ainda a ser reduzida no clique) e um HEIC, escolhidos de uma vez.
+  await page.locator('#campo-fotografias').evaluate((campo: HTMLInputElement) => {
+    const transferencia = new DataTransfer()
+    transferencia.items.add(new File([new Uint8Array(2048).fill(1)], 'quarto.heic', { type: 'image/heic' }))
+    campo.files = transferencia.files
+  })
+  await escolherPngGrande(page)
+  await form.locator('[data-lead-submit]').click()
+  await expect(form).toContainText('O ficheiro “quarto.heic” não está num formato aceite.')
+  await expect(page.locator('#campo-fotografias')).toBeFocused()
+  await expect(page.locator('#contactos')).not.toContainText('Recebemos o seu pedido')
+  expect(pedidos).toHaveLength(0)
+  // Visto o aviso, um segundo clique envia o pedido com a fotografia que entrou.
+  await form.locator('[data-lead-submit]').click()
+  await expect(page.locator('#contactos [role="status"]').first()).toContainText('Recebemos o seu pedido')
+  expect(pedidos).toHaveLength(1)
+})
+
+test('durante o envio, o campo de fotografias e os botões de remover ficam desativados', async ({ page }) => {
+  const responder: Array<() => void> = []
+  const resposta = new Promise<void>((resolve) => responder.push(resolve))
+  await page.route(`${ENDPOINT}**`, async (route) => {
+    await resposta
+    await route.fulfill({
+      status: 200,
+      headers: { ...CORS, 'content-type': 'application/json' },
+      body: JSON.stringify({ ok: true, id: 'teste', files: [] }),
+    })
+  })
+  const form = await formularioHidratado(page)
+  await preencher(page)
+  await page.locator('#campo-fotografias').setInputFiles([imagem('cozinha.jpg', 'image/jpeg')])
+  await expect(form.getByRole('button', { name: 'Remover cozinha.jpg' })).toBeEnabled()
+  await form.locator('[data-lead-submit]').click()
+  await expect(form.locator('[data-lead-submit]')).toContainText('A enviar')
+  await expect(page.locator('#campo-fotografias')).toBeDisabled()
+  await expect(form.getByRole('button', { name: 'Remover cozinha.jpg' })).toBeDisabled()
+  responder[0]!()
+  await expect(page.locator('#contactos [role="status"]').first()).toContainText('Recebemos o seu pedido')
+  await expect(page.locator('#campo-fotografias')).toBeEnabled()
 })
 
 test('fotografia sem tipo indicado pelo navegador: segue com o tipo da extensão', async ({ page }) => {

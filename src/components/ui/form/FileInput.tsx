@@ -20,6 +20,7 @@ interface FileInputProps
 const INPUT_CLASS =
   'block h-12 w-full cursor-pointer rounded-sm border border-muted bg-bg p-[5px] text-small text-muted ' +
   'transition-[border-color,box-shadow] duration-150 ease-planta hover:border-ink ' +
+  'disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:border-muted ' +
   'aria-[invalid=true]:border-error aria-[invalid=true]:shadow-[inset_0_0_0_1px_var(--color-error)] ' +
   'file:mr-3 file:h-9 file:cursor-pointer file:rounded-sm file:border-0 file:bg-transparent file:px-4 ' +
   'file:font-body file:text-[0.9375rem] file:font-semibold file:text-ink ' +
@@ -48,6 +49,7 @@ export function FileInput({
   listLabel,
   removeLabel,
   className,
+  disabled,
   ...rest
 }: FileInputProps) {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -89,6 +91,7 @@ export function FileInput({
         multiple
         className={INPUT_CLASS}
         onChange={aoEscolher}
+        disabled={disabled}
         {...rest}
       />
       {files.length > 0 ? (
@@ -107,6 +110,7 @@ export function FileInput({
                 <Button
                   variant="secondary"
                   className="shrink-0"
+                  disabled={disabled}
                   onClick={() => {
                     focoPendente.current = i
                     onRemove(i)
