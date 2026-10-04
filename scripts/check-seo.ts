@@ -386,6 +386,10 @@ function verificarCorpo(doc: HTMLElement, page: PageDef, r: Relatorio): void {
 type Json = null | boolean | number | string | Json[] | { [chave: string]: Json }
 type ObjetoJson = { [chave: string]: Json }
 
+function textoPreenchido(valor: unknown): boolean {
+  return typeof valor === 'string' && valor.trim() !== ''
+}
+
 function ehObjeto(valor: unknown): valor is ObjetoJson {
   return typeof valor === 'object' && valor !== null && !Array.isArray(valor)
 }
@@ -500,14 +504,13 @@ function verificarJsonLd(doc: HTMLElement, page: PageDef, r: Relatorio): void {
 
   if ('address' in empresa) {
     const a = empresa.address
-    const parte = (v: unknown): boolean => typeof v === 'string' && v.trim() !== ''
     r.verificar(
       ehObjeto(a) &&
         a['@type'] === 'PostalAddress' &&
-        parte(a.streetAddress) &&
+        textoPreenchido(a.streetAddress) &&
         typeof a.postalCode === 'string' &&
         /^\d{4}-\d{3}$/.test(a.postalCode) &&
-        parte(a.addressLocality) &&
+        textoPreenchido(a.addressLocality) &&
         a.addressCountry === 'PT',
       'JSON-LD address é PostalAddress (rua, código postal 0000-000, localidade, PT)',
       json(a),
