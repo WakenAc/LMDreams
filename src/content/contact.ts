@@ -7,6 +7,7 @@ import { company } from './company'
 import { ui } from './common'
 
 const telefoneEscrito = `${company.phone.display} (${company.phoneCallNote})`
+const assuntoEmail = 'Pedido de orçamento pelo site'
 
 /**
  * Aviso RGPD junto ao botão (primeira camada; RGPD, art. 13.º; fundamento: art. 6.º,
@@ -75,6 +76,11 @@ export const contact = {
     'Se tiver fotografias do espaço, pode enviá-las por WhatsApp ou e-mail depois do contacto.',
   // Primeira camada de informação (RGPD, art. 13.º). Texto em `avisoBlocos`.
   notice: avisoBlocos,
+  noJsNote: [
+    'Neste navegador, o formulário não consegue enviar o pedido (precisa de JavaScript). Escreva-nos para ',
+    { text: company.email, href: `mailto:${company.email}?subject=${encodeURIComponent(assuntoEmail)}` },
+    ', com a descrição da obra, ou use os outros contactos desta secção.',
+  ],
   errors: {
     summary: 'Há campos por preencher ou corrigir. Veja as indicações em cada campo.',
     name: 'Indique o seu nome.',
@@ -100,7 +106,7 @@ export const contact = {
     truncated: '(mensagem encurtada; indique o resto por telefone ou WhatsApp)',
   },
   emailDraft: {
-    subject: 'Pedido de orçamento pelo site',
+    subject: assuntoEmail,
     greeting: `${company.whatsapp.message} Seguem os dados do pedido.`,
     labels: {
       name: 'Nome',

@@ -41,6 +41,9 @@ for (const path of PAGES) {
     await expect(footer.locator('[data-legal-info]')).toContainText('Informação legal')
     await expect(page.locator('a[href="https://www.livroreclamacoes.pt/inicio"]').first()).toBeAttached()
     await expect(footer.locator('[data-ral]')).toContainText('CNIACC')
+    await expect(footer.locator('[data-ral] a[href="https://www.centroarbitragemlisboa.pt"]')).toContainText(
+      'www.centroarbitragemlisboa.pt',
+    )
     await expect(page.locator('a[href*="ec.europa.eu/consumers/odr"]')).toHaveCount(0)
     expect(await phoneOccurrencesWithoutNote(page)).toEqual([])
 

@@ -48,10 +48,19 @@ test('página principal sem JavaScript: todas as secções e o formulário', asy
   for (const id of SECTIONS) {
     await expect(page.locator(`#${id}`)).toBeVisible()
   }
-  await expect(page.locator('form[data-lead-form]')).toHaveCount(1)
-  // Sem JavaScript, o navegador valida os campos obrigatórios e a caixa da Política de
-  // privacidade antes de abrir o programa de e-mail.
-  await expect(page.locator('form[data-lead-form]')).toHaveJSProperty('noValidate', false)
+  const form = page.locator('form[data-lead-form]')
+  await expect(form).toHaveCount(1)
+  await expect(form).toHaveJSProperty('noValidate', false)
+  // Sem destino mailto: (conteúdo misto em HTTPS) e sem envio para o URL da página.
+  await expect(form).not.toHaveAttribute('action')
+  await expect(form).toHaveAttribute('method', 'dialog')
+  // O botão de envio, sem função sem JavaScript, dá lugar a uma nota com o e-mail.
+  const enviar = form.locator('[data-lead-submit]')
+  await expect(enviar).toHaveCount(1)
+  await expect(enviar).toBeHidden()
+  const nota = form.locator('[data-lead-nojs]')
+  await expect(nota).toBeVisible()
+  await expect(nota.locator('a[href^="mailto:mendes3pm@gmail.com?subject="]')).toHaveText('mendes3pm@gmail.com')
   // Nada fica escondido à espera de JavaScript.
   const hidden = await page.evaluate(() =>
     Array.from(document.querySelectorAll('main *'))

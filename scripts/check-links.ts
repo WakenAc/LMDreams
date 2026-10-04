@@ -341,7 +341,14 @@ function htmlRefs(doc: HTMLElement, from: string, fromUrl: string, checker: Link
     }
     for (const name of ['action', 'formaction']) {
       const value = attrs[name]
-      if (value !== undefined && value.trim() !== '') add(`${tag}[${name}]`, value, 'link', false)
+      if (value === undefined || value.trim() === '') continue
+      // Em HTTPS, um destino mailto: ou http: é conteúdo misto (Chrome; Lighthouse, Boas práticas),
+      // e o Lighthouse local, em http://localhost, não o apanha.
+      if (/^[a-z][a-z0-9+.-]*:/i.test(value.trim()) && !/^https:/i.test(value.trim())) {
+        checker.error(from, `${tag}[${name}]="${value}"`, 'destino de formulário fora de https (conteúdo misto)')
+        continue
+      }
+      add(`${tag}[${name}]`, value, 'link', false)
     }
     if (attrs.style) {
       for (const url of cssUrls(attrs.style)) if (!url.startsWith('#')) add(`${tag}[style]`, url, 'asset', false)
