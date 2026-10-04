@@ -155,7 +155,7 @@ Serve a pasta `dist/` como o GitHub Pages a serve (endereço base, barra final, 
 npm run check
 ```
 
-Todas as verificações, por esta ordem: tipos, lint, build do GitHub Pages, ligações, contraste, placeholders, SEO, proibições, peso da página principal, build na raiz e testes E2E. Demora alguns minutos e precisa do Chromium do Playwright. Corra-o antes de dar qualquer alteração por concluída.
+Todas as verificações, por esta ordem: tipos, lint, build do GitHub Pages, ligações, contraste, placeholders, SEO, proibições, comparador antes e depois, peso da página principal, build na raiz, testes E2E e, por fim, o build com o serviço de formulários ligado (`build:servico`), com as suas ligações, SEO, proibições e peso (`check:servico`) e os seus testes (`test:e2e:servico`). Demora alguns minutos e precisa do Chromium do Playwright. Corra-o antes de dar qualquer alteração por concluída.
 
 Restantes scripts do `package.json`:
 
@@ -168,7 +168,8 @@ Restantes scripts do `package.json`:
 | `npm run format` | Formata os ficheiros com o Prettier (altera-os; respeita o `.prettierignore`). |
 | `npm run test:e2e` | Testes Playwright e axe sobre a pasta `dist/` (arranca o servidor na porta 4173); corra antes o `build:pages`. |
 | `npm run build:servico` | Build de teste com o serviço de formulários ativo (endereço de envio fictício `https://formulario.exemplo.test/f/teste`, que nunca sai da máquina, e fotografias ligadas) em `.tmp/dist-servico/`. |
-| `npm run test:e2e:servico` | Testes do formulário com serviço (`tests/e2e-servico/`, porta 4175): o que segue para o serviço, respostas de erro, fotografias e Política de privacidade. Interceta os pedidos ao endereço fictício; corra antes o `build:servico`. Ambos entram no `npm run check`, com o `npm run check:budget:servico` (peso desse build, que é o que vai para produção com o serviço ligado). |
+| `npm run test:e2e:servico` | Testes do formulário com serviço (`tests/e2e-servico/`, porta 4175): o que segue para o serviço, respostas de erro, fotografias e Política de privacidade. Interceta os pedidos ao endereço fictício; corra antes o `build:servico`. Ambos entram no `npm run check`. |
+| `npm run check:servico` | Ligações, SEO, proibições e peso do build com serviço (`.tmp/dist-servico/`): é o que vai para produção com o Formward ligado, com os textos legais desse modo. Corra antes o `build:servico`; também entra no `npm run check`. |
 | `npm run lighthouse` | Lighthouse em telemóvel e computador na página principal e nas três páginas legais, sobre a pasta `dist/`; relatórios em `.lighthouseci/`. |
 | `npm run check:placeholders` | Conta os dados em falta e reescreve o `CONTEUDO-A-SUBSTITUIR.md`; com `-- --strict` falha se faltarem dados que bloqueiam a publicação. |
 | `npm run check:contrast` | Contraste das cores usadas em texto e componentes (regras WCAG). |
@@ -406,7 +407,7 @@ Enquanto não houver um serviço configurado, o formulário funciona por e-mail:
 
 ### Ligar o serviço de formulários (Formward)
 
-O serviço escolhido, a 4 de outubro de 2026, é o **Formward** (formward.eu), da EGF Fastighetsservice AB, uma sociedade sueca. Guarda os pedidos e as fotografias em servidores na Suécia (Hostup AB) e envia os avisos por e-mail através da Mailjet (França, alojada na Google Cloud na Alemanha e na Bélgica). As fotografias exigem o plano **Professional**: 20 €/mês com pagamento anual ou 30 €/mês com pagamento mensal, mais IVA (preços de outubro de 2026). Limites desse plano: 2 000 pedidos por mês, 5 fotografias de 10 MB no máximo cada uma e 25 MB por pedido, só JPEG, PNG, GIF ou WebP (o site aceita JPG, PNG e WebP), e 2 GB de armazenamento.
+O serviço escolhido, a 4 de outubro de 2026, é o **Formward** (formward.eu), da EGF Fastighetsservice AB, uma sociedade sueca. Guarda os pedidos e as fotografias em servidores na Suécia (Hostup AB) e envia os avisos por e-mail através da Mailjet (França, alojada na Google Cloud na Alemanha e na Bélgica). As fotografias exigem o plano **Professional**: 20 €/mês com pagamento anual ou 30 €/mês com pagamento mensal, mais IVA (preços de outubro de 2026). Limites desse plano: 2 000 pedidos por mês, 5 ficheiros de 10 MB no máximo cada um e 25 MB por pedido, e 2 GB de armazenamento para todos os ficheiros. O Formward aceita imagens e também outros tipos de ficheiro (por exemplo PDF), mas o site só deixa escolher fotografias JPG, PNG ou WebP (o HEIC do iPhone seria recusado pelo Formward). Antes do envio, o site reduz as fotografias grandes para JPEG com 2000 px no lado maior (`src/lib/reduzir-fotografias.ts`), o que as deixa com poucas centenas de KB.
 
 Enquanto `VITE_FORM_ENDPOINT` não estiver definida, o site continua no modo por e-mail, e a Política de privacidade descreve esse modo. Com a variável definida, o build troca sozinho os textos da Política de privacidade e do aviso RGPD pelos do Formward (`src/content/company.ts` → `legal.formServiceHosted`).
 
@@ -414,6 +415,8 @@ Enquanto `VITE_FORM_ENDPOINT` não estiver definida, o site continua no modo por
 2. **Formulário, no painel do Formward:**
    - nome: "Pedido de orçamento pelo site" (é o assunto do aviso por e-mail, "New submission to …", porque o assunto próprio pode ser só do plano Business);
    - origens permitidas: `https://www.lmdreams.pt` (nunca deixar a lista vazia: vazia, qualquer site pode enviar);
+   - **envio de ficheiros (file uploads) ligado** nas definições do formulário: sem isto, o Formward recusa todos os pedidos com fotografias (código 403) e o visitante vê a mensagem de erro que sugere enviar sem elas;
+   - opção de exigir consentimento no Formward **desligada**: o site já pede a confirmação da Política de privacidade e não envia o campo de consentimento do Formward, por isso, ligada, todos os pedidos seriam recusados (código 422);
    - destinatário do aviso: o e-mail da empresa, confirmado no Formward; conteúdo do aviso completo (com os campos do pedido; as fotografias seguem como ligação para a área reservada);
    - **funcionalidades de IA desligadas** neste formulário (vêm ligadas por omissão no Professional e enviam o conteúdo dos pedidos para a Mistral AI);
    - **apagamento automático ao fim de 90 dias** (o prazo escrito na Política de privacidade; se mudar, mude também `legal.formServiceHosted.retention`);
@@ -428,7 +431,7 @@ Enquanto `VITE_FORM_ENDPOINT` não estiver definida, o site continua no modo por
    | `VITE_FORM_ACCESS_KEY` | não criar (o Formward não usa chave) |
 
    Estas variáveis **são públicas**: ficam escritas no JavaScript do site, que qualquer visitante pode ler. Por isso configuram-se como *Variables* e **nunca como *Secrets*** (o `deploy.yml` só lê as *Variables*), e nunca se põe nelas uma palavra-passe ou uma chave privada.
-5. **Data da Política de privacidade:** em `src/content/company.ts`, `policiesUpdatedAt` usa uma data própria quando o serviço está ativo; acerte-a para o dia em que o Formward fica ligado (num ramo, com PR).
+5. **Data da Política de privacidade:** em `src/content/company.ts`, `legal.privacyUpdatedAt` usa uma data própria quando o serviço está ativo; acerte-a para o dia em que o Formward fica ligado (num ramo, com PR). As páginas de cookies e de termos têm as suas datas (`legal.cookiesUpdatedAt` e `legal.termsUpdatedAt`), que não mudam com o Formward.
 6. **Volte a publicar** (*Actions → Deploy to GitHub Pages → Run workflow*, ou o merge seguinte): as variáveis só entram no site no build.
 7. **Teste no site publicado:**
    - um pedido completo, com uma fotografia: confirme que o aviso chega com todos os campos, com "Responder a" no e-mail do visitante, e que a fotografia abre na área reservada;
@@ -458,8 +461,8 @@ Um `POST` para o `VITE_FORM_ENDPOINT` com estes campos (os valores seguem sem es
 O visitante tem de indicar pelo menos um telefone ou um e-mail. A caixa "Tomei conhecimento da Política de privacidade" é obrigatória, mas não é enviada, tal como o campo-armadilha anti-spam.
 
 - **Sem ficheiros:** corpo em JSON, com `Content-Type: application/json` e `Accept: application/json`.
-- **Com ficheiros** (só com `VITE_FORM_ACCEPTS_FILES=true` e pelo menos uma fotografia escolhida): `multipart/form-data`, com os mesmos campos e um `attachment` por fotografia, e `Accept: application/json`. Até 5 fotografias JPG, PNG ou WebP, com 10 MB no máximo cada uma e 25 MB no total (limites do Formward; sem HEIC, que o Formward recusa: com HEIC fora do `accept`, o iPhone envia as fotografias em JPEG). Uma fotografia sem tipo indicado pelo navegador segue com o tipo da extensão.
-- **Tempo limite:** 15 segundos. O pedido conta como enviado quando o serviço responde com sucesso (código 2xx) e o JSON da resposta não traz `success: false` nem `ok: false`. Só então o site mostra a mensagem de sucesso ("Obrigado. Recebemos o seu pedido e vamos entrar em contacto consigo."). Em caso de falha, erro de rede ou fim do tempo, mostra um erro com a alternativa por telefone ou WhatsApp.
+- **Com ficheiros** (só com `VITE_FORM_ACCEPTS_FILES=true` e pelo menos uma fotografia escolhida): `multipart/form-data`, com os mesmos campos e um `attachment` por fotografia, e `Accept: application/json`. Até 5 fotografias JPG, PNG ou WebP. Ao escolhê-las, o navegador reduz as que têm mais de 1 MB para JPEG com 2000 px no lado maior, sem metadados (por exemplo, a localização); o envio espera pela redução, se ainda estiver a decorrer. Depois da redução, valem os limites do Formward: 10 MB por fotografia e 25 MB no total. Sem HEIC, que o Formward recusa (com HEIC fora do `accept`, o iPhone envia as fotografias em JPEG). Uma fotografia sem tipo indicado pelo navegador segue com o tipo da extensão.
+- **Tempo limite:** 15 segundos. O pedido conta como enviado quando o serviço responde com sucesso (código 2xx) e o JSON da resposta não traz `success: false` nem `ok: false`. Só então o site mostra a mensagem de sucesso ("Obrigado. Recebemos o seu pedido e vamos entrar em contacto consigo."). Em caso de falha, erro de rede ou fim do tempo, mostra um erro com a alternativa por telefone ou WhatsApp; se o pedido levava fotografias, o erro sugere retirá-las e tentar de novo (e enviá-las depois por WhatsApp ou e-mail).
 - Se o campo-armadilha vier preenchido (robô), nada é enviado e o site mostra a mensagem de sucesso.
 
 ### Notas sobre o serviço
@@ -468,6 +471,7 @@ O visitante tem de indicar pelo menos um telefone ou um e-mail. A caixa "Tomei c
 - Os avisos chegam à caixa de e-mail da empresa (hoje no Gmail, da Google): essa parte continua a ser uma transferência para um prestador americano, já descrita na Política de privacidade.
 - O Formward é recente (disponível desde dezembro de 2025) e pequeno, sem acordo de nível de serviço. Se falhar, o formulário mostra o erro com o telefone e o WhatsApp; para voltar ao modo por e-mail basta apagar a variável `VITE_FORM_ENDPOINT` e publicar de novo.
 - Se a quota mensal se esgotar, o Formward recusa os pedidos (código 402) e o formulário mostra o erro com as alternativas.
+- **Armazenamento de 2 GB:** com as fotografias reduzidas (poucas centenas de KB cada) e o apagamento aos 90 dias, chega com folga para dezenas de pedidos por mês. Se se esgotar, o Formward recusa os pedidos com fotografias (código 413) e o formulário sugere enviá-los sem elas; nesse caso, apague pedidos antigos no painel ou encurte o prazo de apagamento (e o texto de `legal.formServiceHosted.retention`).
 
 ## 9. Imagens ilustrativas
 

@@ -95,7 +95,7 @@ Só para informação: estas chaves não têm pendentes no código. É normal, p
   - Ficheiro e campo: src/content/company.ts → legal.processors
 - `data-politicas`: Data da última revisão das políticas
   - Onde aparece: Páginas legais
-  - Ficheiro e campo: src/content/company.ts → legal.policiesUpdatedAt
+  - Ficheiro e campo: src/content/company.ts → legal.privacyUpdatedAt, legal.cookiesUpdatedAt e legal.termsUpdatedAt
 - `capital-realizado-proprio`: Capital realizado, se diferente do capital social; capital próprio, se for igual ou inferior a metade do capital social
   - Onde aparece: Informação legal (só Lda. e S.A.)
   - Ficheiro e campo: src/content/company.ts → legal.paidUpCapital, legal.equityNote

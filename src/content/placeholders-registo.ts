@@ -107,7 +107,7 @@ export const REGISTO_PLACEHOLDERS = [
   {
     chave: 'data-politicas',
     ondeAparece: 'Páginas legais',
-    ficheiroCampo: 'src/content/company.ts → legal.policiesUpdatedAt',
+    ficheiroCampo: 'src/content/company.ts → legal.privacyUpdatedAt, legal.cookiesUpdatedAt e legal.termsUpdatedAt',
     oQueFornecer: 'Data da última revisão das políticas',
     bloqueia: 'sim',
     bloqueiaTexto: 'Sim',

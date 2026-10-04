@@ -133,7 +133,8 @@ type Status =
   | { kind: 'invalid' }
   | { kind: 'sending' }
   | { kind: 'success' }
-  | { kind: 'error' }
+  /** `withPhotos`: o pedido levava fotografias (a mensagem sugere enviar sem elas). */
+  | { kind: 'error'; withPhotos: boolean }
   | { kind: 'mailto-before' }
   | { kind: 'mailto-after'; request: string }
 
@@ -197,6 +198,11 @@ function LeadForm() {
   const [errors, setErrors] = useState<LeadErrors>({})
   const [submitted, setSubmitted] = useState(false)
   const [files, setFiles] = useState<readonly File[]>([])
+  // Cópia síncrona das fotografias (a redução é assíncrona e o envio lê a lista no fim dela)
+  // e a redução em curso, para o envio esperar por ela.
+  const filesRef = useRef<readonly File[]>([])
+  const preparacaoRef = useRef<Promise<void>>(Promise.resolve())
+  const [preparing, setPreparing] = useState(0)
   const [fileErrors, setFileErrors] = useState<readonly string[]>([])
   const [status, setStatus] = useState<Status>({ kind: 'idle' })
   const [copy, setCopy] = useState<CopyState>('idle')
@@ -216,11 +222,7 @@ function LeadForm() {
     if (formAcceptsFiles) {
       const input = form.elements.namedItem(NAMES.photos)
       const chosen = input instanceof HTMLInputElement ? Array.from(input.files ?? []) : []
-      if (chosen.length > 0) {
-        const result = addLeadFiles([], chosen)
-        setFiles(result.files)
-        setFileErrors(result.errors)
-      }
+      if (chosen.length > 0) void addFiles(chosen)
     }
   }, [])
 
@@ -258,14 +260,37 @@ function LeadForm() {
     revalidate(field, values, 'blur')
   }
 
-  function addFiles(novos: File[]): void {
-    const result = addLeadFiles(files, novos)
-    setFiles(result.files)
-    setFileErrors(result.errors)
+  function applyFiles(next: readonly File[]): void {
+    filesRef.current = next
+    setFiles(next)
+  }
+
+  /** Reduz as fotografias escolhidas (src/lib/lead.ts) e junta-as às que já estavam. */
+  function addFiles(novos: File[]): Promise<void> {
+    setPreparing((n) => n + 1)
+    const preparacao = preparacaoRef.current.then(async () => {
+      try {
+        // Redução num módulo à parte, pedido só agora; se não carregar, seguem as originais.
+        let reduzidas: File[] = novos
+        try {
+          const { reduceLeadFiles } = await import('../lib/reduzir-fotografias')
+          reduzidas = await reduceLeadFiles(novos)
+        } catch {
+          // Sem redução: os limites de addLeadFiles continuam a valer.
+        }
+        const result = addLeadFiles(filesRef.current, reduzidas)
+        applyFiles(result.files)
+        setFileErrors(result.errors)
+      } finally {
+        setPreparing((n) => n - 1)
+      }
+    })
+    preparacaoRef.current = preparacao
+    return preparacao
   }
 
   function removeFile(index: number): void {
-    setFiles((prev) => prev.filter((_, i) => i !== index))
+    applyFiles(filesRef.current.filter((_, i) => i !== index))
     setFileErrors([])
   }
 
@@ -304,7 +329,10 @@ function LeadForm() {
       message: values.message,
       trap: values.trap,
     }
-    const result = await submitLead(dados, formAcceptsFiles ? files : [])
+    // Fotografias ainda a ser reduzidas: o envio espera por elas.
+    await preparacaoRef.current
+    const ficheiros = formAcceptsFiles ? filesRef.current : []
+    const result = await submitLead(dados, ficheiros)
     if (result.mode === 'email') {
       // O site não sabe se o e-mail foi enviado: nunca mostra a mensagem de sucesso.
       setStatus({ kind: 'mailto-after', request: result.request })
@@ -313,18 +341,18 @@ function LeadForm() {
     if (result.ok) {
       setStatus({ kind: 'success' })
       setValues(EMPTY)
-      setFiles([])
+      applyFiles([])
       setFileErrors([])
       setErrors({})
       setSubmitted(false)
     } else {
-      setStatus({ kind: 'error' })
+      setStatus({ kind: 'error', withPhotos: ficheiros.length > 0 })
     }
   }
 
   const hasErrors = Object.keys(errors).length > 0
   let alertMessage: string | null = null
-  if (status.kind === 'error') alertMessage = contact.states.error
+  if (status.kind === 'error') alertMessage = status.withPhotos ? contact.states.errorWithPhotos : contact.states.error
   else if (status.kind === 'invalid' && hasErrors) alertMessage = contact.errors.summary
 
   let statusMessage: string | null = null
@@ -508,15 +536,22 @@ function LeadForm() {
                 name={NAMES.photos}
                 accept={LEAD_FILE_ACCEPT}
                 files={files}
-                onFilesSelected={addFiles}
+                onFilesSelected={(novos) => {
+                  void addFiles(novos)
+                }}
                 onRemove={removeFile}
                 listLabel={contact.fields.photos.selected}
                 removeLabel={contact.fields.photos.remove}
               />
             )}
           </Field>
-          {/* Região viva: as fotografias recusadas são anunciadas logo depois da escolha. */}
+          {/* Região viva: a preparação e as fotografias recusadas são anunciadas logo depois da escolha. */}
           <div aria-live="polite">
+            {preparing > 0 ? (
+              <p data-photos-preparing="" className="mt-2 text-small text-muted">
+                {contact.fields.photos.preparing}
+              </p>
+            ) : null}
             <FieldError id={photosErrorId} messages={fileErrors} />
           </div>
         </div>

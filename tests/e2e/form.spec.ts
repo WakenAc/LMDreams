@@ -111,6 +111,8 @@ test('modo por e-mail: a Política de privacidade e o aviso RGPD não falam de s
   const main = page.locator('main')
   await expect(main).toContainText('Serviço de formulários: nenhum')
   await expect(main).not.toContainText('Formward')
+  await expect(main).not.toContainText('pseudonimizad')
+  await expect(main.locator('p').filter({ hasText: 'Última atualização:' }).first()).toContainText('29 de setembro de 2026')
   await page.goto('./#contactos')
   await expect(page.locator('[data-rgpd-notice]')).not.toContainText('Formward')
   // Sem serviço, o formulário não tem campo de fotografias.

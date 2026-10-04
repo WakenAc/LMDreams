@@ -121,8 +121,9 @@ export const company = {
     /**
      * Serviço de formulários com VITE_FORM_ENDPOINT definido: o Formward, escolhido a 4 de
      * outubro de 2026 (plano Professional, com fotografias). Fontes: formward.eu/impressum,
-     * /dpa, /compliance/subprocessors e /docs/file-uploads. Se o serviço mudar, rever estes
-     * textos e o README (secção 8).
+     * /dpa, /compliance/subprocessors, /privacy e /docs/file-uploads; alojamento da Mailjet na
+     * Google Cloud (Frankfurt e Saint-Ghislain): www.mailjet.com/security-privacy (consultadas a
+     * 4 de outubro de 2026). Se o serviço mudar, rever estes textos e o README (secção 8).
      */
     formServiceHosted: {
       name: 'Formward',
@@ -135,9 +136,11 @@ export const company = {
       processors:
         'a Formward, na Suécia, que recebe o formulário, e a Google, que fornece o serviço de e-mail Gmail',
     },
-    // Com o serviço de formulários ativo, a Política de privacidade muda (textos do Formward):
-    // a data passa a ser a da ligação do serviço (README, secção 8).
-    policiesUpdatedAt: formServiceActive ? '4 de outubro de 2026' : '29 de setembro de 2026',
+    // Data de cada página legal. A Política de privacidade muda com o serviço de formulários
+    // (textos do Formward): a data passa a ser a da ligação do serviço (README, secção 8).
+    privacyUpdatedAt: formServiceActive ? '4 de outubro de 2026' : '29 de setembro de 2026',
+    cookiesUpdatedAt: '29 de setembro de 2026',
+    termsUpdatedAt: '29 de setembro de 2026',
     dpo: 'não foi designado',
     quoteValidity: '30 dias',
     // Só as garantias previstas na lei (resposta do cliente): sem garantia comercial.

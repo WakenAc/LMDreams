@@ -7,21 +7,48 @@ import { expect, test, type Page, type Request } from '@playwright/test'
 
 const ENDPOINT = 'https://formulario.exemplo.test/f/teste'
 const ORIGEM = 'http://localhost:4175'
-const CORS = {
-  'access-control-allow-origin': ORIGEM,
-  'access-control-allow-methods': 'POST, OPTIONS',
-  'access-control-allow-headers': 'content-type',
-  vary: 'Origin',
+// Cabeçalho da resposta simulada: o Chromium confirma o CORS na resposta ao POST. A
+// verificação prévia (OPTIONS) é respondida pelo próprio Playwright quando há interceção,
+// por isso os cabeçalhos que o site envia são testados diretamente (cabecalhosDoSite).
+const CORS = { 'access-control-allow-origin': ORIGEM, vary: 'Origin' }
+
+// Cabeçalhos que o Formward aceita na verificação prévia (formward.eu/docs/ingest:
+// "Access-Control-Allow-Headers: content-type").
+const PERMITIDOS_PELO_SERVICO = ['content-type']
+
+// Cabeçalhos que o próprio navegador põe (não contam para o CORS).
+const DO_NAVEGADOR = new Set(['accept-encoding', 'accept-language', 'connection', 'content-length', 'cookie', 'host', 'origin', 'referer', 'user-agent'])
+
+/** Cabeçalhos do pedido postos pelo código do site (sem os do navegador). */
+function cabecalhosDoSite(pedido: Request): Record<string, string> {
+  return Object.fromEntries(
+    Object.entries(pedido.headers()).filter(([nome]) => !DO_NAVEGADOR.has(nome) && !nome.startsWith('sec-')),
+  )
+}
+
+/**
+ * Cabeçalhos que obrigam a verificação prévia do CORS (fora da lista "CORS-safelisted" da
+ * norma Fetch). Têm de estar todos em PERMITIDOS_PELO_SERVICO, senão o navegador recusa o envio.
+ */
+function exigemVerificacaoPrevia(cabecalhos: Record<string, string>): string[] {
+  return Object.entries(cabecalhos)
+    .filter(([nome, valor]) => {
+      if (nome === 'accept' || nome === 'accept-language' || nome === 'content-language') return false
+      if (nome === 'content-type') {
+        return !/^(application\/x-www-form-urlencoded|multipart\/form-data|text\/plain)(;|$)/i.test(valor)
+      }
+      return true
+    })
+    .map(([nome]) => nome)
 }
 
 type Resposta = { status: number; body: unknown } | 'falha-de-rede'
 
-/** Interceta o endereço de envio; devolve a lista dos pedidos POST recebidos. */
+/** Interceta o endereço de envio; devolve a lista dos pedidos recebidos. */
 async function intercetar(page: Page, resposta: Resposta = { status: 200, body: { ok: true, id: 'teste', files: [] } }) {
   const pedidos: Request[] = []
   await page.route(`${ENDPOINT}**`, async (route) => {
     const pedido = route.request()
-    if (pedido.method() === 'OPTIONS') return route.fulfill({ status: 204, headers: CORS })
     pedidos.push(pedido)
     if (resposta === 'falha-de-rede') return route.abort('failed')
     return route.fulfill({
@@ -75,7 +102,31 @@ test('envio em JSON: campos, assunto, "Responder a" e mensagem de sucesso', asyn
     message: 'Remodelação de uma casa de banho com cerca de 6 m².',
   })
   // Nem a caixa da Política de privacidade, nem o campo-armadilha, nem campos vazios.
-  expect(Object.keys(corpo).sort()).toEqual(['_replyto', '_subject', 'email', 'location', 'message', 'name', 'subject'])
+  expect(Object.keys(corpo).toSorted()).toEqual(['_replyto', '_subject', 'email', 'location', 'message', 'name', 'subject'])
+})
+
+test('cabeçalhos do envio: só os que o serviço aceita no CORS, sem cookies', async ({ page }) => {
+  const pedidos = await intercetar(page)
+  const form = await formularioHidratado(page)
+
+  // JSON: Accept e Content-Type; o application/json pede verificação prévia, que o serviço aceita.
+  await preencher(page)
+  await form.locator('[data-lead-submit]').click()
+  await expect(page.locator('#contactos [role="status"]').first()).toContainText('Recebemos o seu pedido')
+  const json = cabecalhosDoSite(pedidos[0]!)
+  expect(Object.keys(json).toSorted()).toEqual(['accept', 'content-type'])
+  for (const nome of exigemVerificacaoPrevia(json)) expect(PERMITIDOS_PELO_SERVICO).toContain(nome)
+  expect(pedidos[0]!.headers()).not.toHaveProperty('cookie')
+
+  // Com fotografias: multipart/form-data, sem verificação prévia.
+  await preencher(page)
+  await page.locator('#campo-fotografias').setInputFiles([imagem('cozinha.jpg', 'image/jpeg')])
+  await expect(form.getByRole('button', { name: 'Remover cozinha.jpg' })).toBeVisible()
+  await form.locator('[data-lead-submit]').click()
+  await expect.poll(() => pedidos.length).toBe(2)
+  const multipart = cabecalhosDoSite(pedidos[1]!)
+  expect(Object.keys(multipart).toSorted()).toEqual(['accept', 'content-type'])
+  expect(exigemVerificacaoPrevia(multipart)).toEqual([])
 })
 
 test('só com telefone: sem "Responder a"', async ({ page }) => {
@@ -106,6 +157,18 @@ for (const [caso, resposta] of [
     expect(pedidos).toHaveLength(1)
   })
 }
+
+test('erro do serviço com fotografias: a mensagem sugere enviar sem elas', async ({ page }) => {
+  await intercetar(page, { status: 413, body: { ok: false, error: 'payload too large' } })
+  const form = await formularioHidratado(page)
+  await preencher(page)
+  await page.locator('#campo-fotografias').setInputFiles([imagem('cozinha.jpg', 'image/jpeg')])
+  await expect(form.getByRole('button', { name: 'Remover cozinha.jpg' })).toBeVisible()
+  await form.locator('[data-lead-submit]').click()
+  const alerta = form.locator('[role="alert"]').first()
+  await expect(alerta).toContainText('Não foi possível enviar o pedido com as fotografias. Retire as fotografias e tente novamente')
+  await expect(alerta).toContainText('(chamada para a rede móvel nacional)')
+})
 
 test('campo-armadilha preenchido: nada é enviado', async ({ page }) => {
   const pedidos = await intercetar(page)
@@ -139,6 +202,83 @@ test('fotografias: multipart com um campo attachment por fotografia', async ({ p
   expect(corpo).not.toContain('name="privacidade"')
 })
 
+test('fotografia grande reduzida no navegador antes do envio (JPEG, 2000 px no lado maior)', async ({ page }) => {
+  const pedidos = await intercetar(page)
+  const form = await formularioHidratado(page)
+  test.setTimeout(90_000)
+  await preencher(page)
+  // PNG com ruído, 3000 × 2000 px, criado na própria página (passá-lo pelo Playwright era lento):
+  // mais de 10 MB, acima do limite por fotografia sem a redução.
+  const tamanhoOriginal = await page.locator('#campo-fotografias').evaluate(async (campo: HTMLInputElement) => {
+    const tela = document.createElement('canvas')
+    tela.width = 3000
+    tela.height = 2000
+    const contexto = tela.getContext('2d')!
+    const pixeis = contexto.createImageData(3000, 2000)
+    // Ruído pseudoaleatório (xorshift de 32 bits): o PNG quase não comprime.
+    let x = 2463534242
+    for (let i = 0; i < pixeis.data.length; i += 4) {
+      for (let c = 0; c < 3; c += 1) {
+        x ^= x << 13
+        x ^= x >>> 17
+        x ^= x << 5
+        pixeis.data[i + c] = x & 255
+      }
+      pixeis.data[i + 3] = 255
+    }
+    contexto.putImageData(pixeis, 0, 0)
+    const blob = await new Promise<Blob>((resolve) => tela.toBlob((b) => resolve(b!), 'image/png'))
+    const transferencia = new DataTransfer()
+    transferencia.items.add(new File([blob], 'obra.png', { type: 'image/png' }))
+    campo.files = transferencia.files
+    campo.dispatchEvent(new Event('change', { bubbles: true }))
+    return blob.size
+  })
+  expect(tamanhoOriginal).toBeGreaterThan(10 * 1024 * 1024)
+
+  await expect(form.getByRole('button', { name: 'Remover obra.jpg' })).toBeVisible()
+  await expect(form.locator('[data-photos-preparing]')).toHaveCount(0)
+  await form.locator('[data-lead-submit]').click()
+  await expect(page.locator('#contactos [role="status"]').first()).toContainText('Recebemos o seu pedido')
+
+  // A parte "attachment" do multipart: JPEG, mais pequena e com 2000 px no lado maior.
+  const corpo = pedidos[0]!.postDataBuffer()!
+  const cabecalho = 'name="attachment"; filename="obra.jpg"'
+  const inicio = corpo.indexOf(cabecalho)
+  expect(inicio).toBeGreaterThan(-1)
+  const dados = corpo.indexOf('\r\n\r\n', inicio) + 4
+  const fronteira = corpo.indexOf('\r\n--', dados)
+  expect(corpo.subarray(inicio, dados).toString('latin1')).toContain('Content-Type: image/jpeg')
+  const jpeg = corpo.subarray(dados, fronteira)
+  expect(jpeg.length).toBeLessThan(tamanhoOriginal)
+  const lados = await page.evaluate(async (base64) => {
+    const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0))
+    const bitmap = await createImageBitmap(new Blob([bytes], { type: 'image/jpeg' }))
+    return [bitmap.width, bitmap.height]
+  }, jpeg.toString('base64'))
+  expect(lados).toEqual([2000, 1333])
+})
+
+test('fotografia sem tipo indicado pelo navegador: segue com o tipo da extensão', async ({ page }) => {
+  const pedidos = await intercetar(page)
+  const form = await formularioHidratado(page)
+  await preencher(page)
+  // Ficheiro sem tipo (como alguns navegadores entregam certas fotografias): só o DataTransfer o cria.
+  await page.locator('#campo-fotografias').evaluate((campo: HTMLInputElement) => {
+    const transferencia = new DataTransfer()
+    transferencia.items.add(new File([new Uint8Array(2048).fill(1)], 'semtipo.jpg', { type: '' }))
+    campo.files = transferencia.files
+    campo.dispatchEvent(new Event('change', { bubbles: true }))
+  })
+  await expect(form.getByRole('button', { name: 'Remover semtipo.jpg' })).toBeVisible()
+  await form.locator('[data-lead-submit]').click()
+  await expect(page.locator('#contactos [role="status"]').first()).toContainText('Recebemos o seu pedido')
+  const corpo = pedidos[0]!.postDataBuffer()!.toString('latin1')
+  const inicio = corpo.indexOf('name="attachment"; filename="semtipo.jpg"')
+  expect(inicio).toBeGreaterThan(-1)
+  expect(corpo.slice(inicio, corpo.indexOf('\r\n\r\n', inicio))).toContain('Content-Type: image/jpeg')
+})
+
 test('fotografias HEIC recusadas no navegador (o serviço recusaria o pedido inteiro)', async ({ page }) => {
   const form = await formularioHidratado(page)
   await page.locator('#campo-fotografias').setInputFiles([imagem('quarto.heic', 'image/heic')])
@@ -163,10 +303,18 @@ test('Política de privacidade e aviso RGPD descrevem o serviço de formulários
   const main = page.locator('main')
   await expect(main).toContainText('Formward, serviço da EGF Fastighetsservice AB (Suécia)')
   await expect(main).toContainText('o pedido e as fotografias seguem do seu navegador diretamente para o Formward')
-  await expect(main).toContainText('No Formward, os pedidos e as fotografias são apagados automaticamente ao fim de 90 dias.')
   await expect(main).toContainText('Fotografias do espaço, se as anexar')
   await expect(main).not.toContainText('quando o formulário aceita ficheiros')
   await expect(main).not.toContainText('Serviço de formulários: nenhum')
+  await expect(main).toContainText('regista também o endereço IP de onde o pedido foi enviado, em forma pseudonimizada')
+  await expect(main).toContainText('com o endereço IP pseudonimizado que o Formward regista. Fundamento: interesse legítimo')
+  await expect(main).toContainText('os pedidos, as fotografias e os endereços IP pseudonimizados são apagados automaticamente ao fim de 90 dias')
+  // Uma data por página: só a Política de privacidade muda com o serviço.
+  await expect(main.locator('p').filter({ hasText: 'Última atualização:' }).first()).toContainText('4 de outubro de 2026')
+  for (const pagina of ['politica-de-cookies/', 'termos-e-condicoes/']) {
+    await page.goto(pagina)
+    await expect(page.locator('main p').filter({ hasText: 'Última atualização:' }).first()).toContainText('29 de setembro de 2026')
+  }
 
   await page.goto('./#contactos')
   await expect(page.locator('[data-rgpd-notice]')).toContainText('a Formward, na Suécia, que recebe o formulário')

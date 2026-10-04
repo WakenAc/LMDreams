@@ -62,9 +62,10 @@ export const contact = {
     },
     photos: {
       label: 'Fotografias (opcional)',
-      help: 'Até 5 fotografias (JPG, PNG ou WebP), com 10 MB no máximo cada uma e 25 MB no total.',
+      help: 'Até 5 fotografias, em JPG, PNG ou WebP. As fotografias grandes são reduzidas antes do envio.',
       remove: 'Remover',
       selected: 'Fotografias escolhidas',
+      preparing: 'A preparar as fotografias…',
     },
     privacy: {
       before: 'Tomei conhecimento da ',
@@ -100,6 +101,7 @@ export const contact = {
     sending: 'A enviar…',
     success: 'Obrigado. Recebemos o seu pedido e vamos entrar em contacto consigo.',
     error: `Não foi possível enviar o pedido. Tente novamente ou contacte-nos pelo ${telefoneEscrito} ou por WhatsApp.`,
+    errorWithPhotos: `Não foi possível enviar o pedido com as fotografias. Retire as fotografias e tente novamente (pode enviá-las depois por WhatsApp ou e-mail), ou contacte-nos pelo ${telefoneEscrito} ou por WhatsApp.`,
     mailtoBefore:
       'Vamos abrir o seu programa de e-mail com o pedido preenchido. Só tem de o enviar.',
     mailtoAfter: `Tentámos abrir o seu programa de e-mail com o pedido preenchido. O pedido só nos chega depois de o enviar. Se o programa não abriu, use “${ui.labels.copyRequest}” e envie o texto para ${company.email}, ou ligue para o ${telefoneEscrito}.`,

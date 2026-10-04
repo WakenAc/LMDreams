@@ -27,6 +27,7 @@ export const termsPage = {
   intro:
     'Estes termos regulam a utilização deste site e os pedidos de orçamento feitos através dele.',
   updatedLabel: 'Última atualização:',
+  updatedAt: legal.termsUpdatedAt,
   tocHeading: 'Índice',
   backToIndex: 'Voltar ao índice',
   sections: [
@@ -188,7 +189,7 @@ export const termsPage = {
         },
         {
           type: 'p',
-          text: `Esta versão foi atualizada em ${legal.policiesUpdatedAt}.`,
+          text: `Esta versão foi atualizada em ${legal.termsUpdatedAt}.`,
         },
       ],
     },

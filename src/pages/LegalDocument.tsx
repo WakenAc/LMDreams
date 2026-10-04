@@ -1,5 +1,4 @@
 import { ArrowUp } from 'lucide-react'
-import { company } from '../content/company'
 import type { LegalBlock, LegalPageContent, LegalSection } from '../content/tipos'
 import { SiteLayout } from '../components/layout/SiteLayout'
 import { Container } from '../components/ui/Container'
@@ -112,7 +111,7 @@ export function LegalDocument({ content }: { content: LegalPageContent }) {
                 <p className="mt-5 text-small text-muted">
                   <span className="mr-1 font-mono text-eyebrow font-medium uppercase">{content.updatedLabel}</span>{' '}
                   <span>
-                    <PlainText text={company.legal.policiesUpdatedAt} />
+                    <PlainText text={content.updatedAt} />
                   </span>
                 </p>
                 {content.intro ? (

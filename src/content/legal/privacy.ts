@@ -15,7 +15,9 @@ const servico = legal.formServiceHosted
 const envioServico = formAcceptsFiles
   ? 'o pedido e as fotografias seguem do seu navegador diretamente para o ' + servico.name + '; o site não os guarda'
   : 'o pedido segue do seu navegador diretamente para o ' + servico.name + '; o site não o guarda'
-const guardadosNoServico = formAcceptsFiles ? 'os pedidos e as fotografias' : 'os pedidos'
+const guardadosNoServico = formAcceptsFiles
+  ? 'os pedidos, as fotografias e os endereços IP pseudonimizados'
+  : 'os pedidos e os endereços IP pseudonimizados'
 
 const ligacaoEmail = { text: company.email, href: `mailto:${company.email}` }
 const ligacaoTelefone = { text: company.phone.display, href: company.phone.href }
@@ -33,6 +35,7 @@ export const privacyPage = {
   intro:
     'Esta política explica como tratamos os dados pessoais de quem nos contacta através deste site, em especial nos pedidos de orçamento, nos termos do Regulamento (UE) 2016/679 (Regulamento Geral sobre a Proteção de Dados, RGPD) e da Lei n.º 58/2019, de 8 de agosto.',
   updatedLabel: 'Última atualização:',
+  updatedAt: legal.privacyUpdatedAt,
   tocHeading: 'Índice',
   backToIndex: 'Voltar ao índice',
   sections: [
@@ -103,6 +106,14 @@ export const privacyPage = {
                 : ['Fotografias do espaço, se as anexar (quando o formulário aceita ficheiros)']),
           ],
         },
+        ...(formServiceActive
+          ? [
+              {
+                type: 'p' as const,
+                text: `Quando envia o formulário, o ${servico.name} regista também o endereço IP de onde o pedido foi enviado, em forma pseudonimizada (codificado, sem o guardar em claro), para limitar abusos e mensagens não solicitadas (spam).`,
+              },
+            ]
+          : []),
         {
           type: 'p',
           text: 'Quando nos contacta por telefone, WhatsApp ou e-mail, tratamos os dados transmitidos nesse contacto, como o número de telefone, o endereço de e-mail e o conteúdo da mensagem.',
@@ -131,6 +142,11 @@ export const privacyPage = {
             'Analisar o pedido de orçamento, responder-lhe e, se for o caso, marcar uma visita e preparar o orçamento. Fundamento: diligências pré-contratuais a pedido do titular dos dados (RGPD, art. 6.º, n.º 1, al. b)).',
             'Responder a pedidos feitos em nome de uma empresa, de um condomínio ou de outra entidade, com os dados de contacto do respetivo representante ou colaborador. Fundamento: interesse legítimo em responder à entidade que fez o pedido (RGPD, art. 6.º, n.º 1, al. f)).',
             'Se o pedido der origem a um contrato, executar esse contrato (al. b)) e cumprir as obrigações legais que dele resultam, por exemplo de faturação (al. c)).',
+            ...(formServiceActive
+              ? [
+                  `Proteger o formulário contra abusos e mensagens não solicitadas (spam), com o endereço IP pseudonimizado que o ${servico.name} regista. Fundamento: interesse legítimo em manter o formulário seguro e disponível (RGPD, art. 6.º, n.º 1, al. f)).`,
+                ]
+              : []),
           ],
         },
         {
@@ -331,7 +347,7 @@ export const privacyPage = {
         },
         {
           type: 'p',
-          text: `Esta versão foi atualizada em ${legal.policiesUpdatedAt}.`,
+          text: `Esta versão foi atualizada em ${legal.privacyUpdatedAt}.`,
         },
       ],
     },
