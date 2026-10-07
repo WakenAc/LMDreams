@@ -1,13 +1,12 @@
 // Pedido de orçamento (Parte 3.8): validação, rascunho do e-mail e envio.
 //
-// Serviço de formulários: só está ativo se VITE_FORM_ENDPOINT (sem espaços) começar por
-// "https://". No CI, uma Repository variable inexistente chega como texto vazio.
-// VITE_FORM_ACCEPTS_FILES só vale se for exatamente 'true'. VITE_FORM_ACCESS_KEY (pública,
-// para serviços como o Web3Forms) segue como campo `access_key` quando existir.
+// Serviço de formulários (configuração em src/lib/form-config.ts): em produção, o Formward
+// (formward.eu), escolhido a 4 de outubro de 2026.
 //
-// Campos enviados ao serviço (JSON ou multipart/form-data): access_key (opcional), subject,
-// name, phone, email, location, service, budget, message e, com ficheiros, um ou mais
-// `attachment`. Os campos opcionais vazios não seguem.
+// Campos enviados ao serviço (JSON ou multipart/form-data): access_key (opcional), _subject e
+// subject (assunto do aviso por e-mail; cada serviço lê um deles), _replyto (o e-mail do
+// visitante, para o aviso ter "Responder a"), name, phone, email, location, service, budget,
+// message e, com ficheiros, um ou mais `attachment`. Os campos opcionais vazios não seguem.
 //
 // Sem serviço ativo (modo por e-mail): o site não envia nem guarda nada. Abre o programa de
 // e-mail do visitante com o pedido preenchido e nunca afirma que o pedido foi recebido.
@@ -17,25 +16,22 @@
 
 import { company } from '../content/company'
 import { contact } from '../content/contact'
+import { FORM_ACCESS_KEY, FORM_ENDPOINT, formAcceptsFiles, formServiceActive } from './form-config'
+
+export { formAcceptsFiles, formServiceActive }
 
 // ---------------------------------------------------------------------------
-// Configuração (variáveis públicas, substituídas pelo Vite no build do cliente e do SSR)
+// Fotografias: os limites do Formward (plano Professional): 5 ficheiros, 10 MiB cada e
+// 25 MiB por pedido; JPEG, PNG, GIF e WebP (sem HEIC: recusa o pedido inteiro com 415).
+// Sem HEIC no `accept`, o iPhone envia as fotografias convertidas em JPEG.
 
-const ENDPOINT: string = import.meta.env.VITE_FORM_ENDPOINT?.trim() ?? ''
-const ACCESS_KEY: string = import.meta.env.VITE_FORM_ACCESS_KEY?.trim() ?? ''
-
-/** Verdadeiro quando há serviço de formulários (endpoint https://). */
-export const formServiceActive: boolean = ENDPOINT.startsWith('https://')
-
-/** O serviço aceita ficheiros: só com serviço ativo e VITE_FORM_ACCEPTS_FILES === 'true'. */
-export const formAcceptsFiles: boolean =
-  formServiceActive && import.meta.env.VITE_FORM_ACCEPTS_FILES === 'true'
-
-export const LEAD_FILE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic'] as const
+export const LEAD_FILE_TYPES = ['image/jpeg', 'image/png', 'image/webp'] as const
 /** Valor do atributo `accept` do campo de fotografias. */
 export const LEAD_FILE_ACCEPT = LEAD_FILE_TYPES.join(',')
 export const LEAD_MAX_FILES = 5
 export const LEAD_MAX_FILE_BYTES = 10 * 1024 * 1024
+/** Soma das fotografias de um pedido. */
+export const LEAD_MAX_TOTAL_BYTES = 25 * 1024 * 1024
 
 /** Limite de tempo do envio ao serviço de formulários. */
 const TIMEOUT_MS = 15_000
@@ -44,8 +40,18 @@ const MAILTO_MAX_LENGTH = 1_800
 /** Tempo em que a mensagem "Vamos abrir o seu programa de e-mail…" fica à vista antes de abrir. */
 const MAILTO_DELAY_MS = 800
 
-// Extensões aceites quando o navegador não indica o tipo (acontece com HEIC).
-const EXTENSOES = /\.(jpe?g|png|webp|heic)$/i
+// Tipo pela extensão, quando o navegador não o indica.
+const TIPO_POR_EXTENSAO: Readonly<Record<string, (typeof LEAD_FILE_TYPES)[number]>> = {
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+  png: 'image/png',
+  webp: 'image/webp',
+}
+
+function tipoPelaExtensao(nome: string): string | undefined {
+  const extensao = /\.([a-z0-9]+)$/i.exec(nome)?.[1]?.toLowerCase()
+  return extensao ? TIPO_POR_EXTENSAO[extensao] : undefined
+}
 
 // ---------------------------------------------------------------------------
 // Tipos
@@ -111,8 +117,8 @@ function comNome(modelo: string, nome: string): string {
 
 function tipoAceite(ficheiro: File): boolean {
   if ((LEAD_FILE_TYPES as readonly string[]).includes(ficheiro.type)) return true
-  // Alguns navegadores não indicam o tipo das fotografias HEIC.
-  return (ficheiro.type === '' || ficheiro.type === 'image/heif') && EXTENSOES.test(ficheiro.name)
+  // Alguns navegadores não indicam o tipo: vale a extensão.
+  return ficheiro.type === '' && tipoPelaExtensao(ficheiro.name) !== undefined
 }
 
 function mesmoFicheiro(a: File, b: File): boolean {
@@ -121,7 +127,8 @@ function mesmoFicheiro(a: File, b: File): boolean {
 
 /**
  * Junta as fotografias escolhidas às que já estavam, validando no cliente: formato, 10 MB por
- * fotografia e 5 no máximo. As recusadas não entram e cada recusa tem a sua mensagem.
+ * fotografia, 5 no máximo e 25 MB no total. As recusadas não entram e cada recusa tem a sua
+ * mensagem.
  */
 export function addLeadFiles(
   atuais: readonly File[],
@@ -139,6 +146,8 @@ export function addLeadFiles(
       // Repetido: fica só uma vez.
     } else if (files.length >= LEAD_MAX_FILES) {
       excesso = true
+    } else if (files.reduce((soma, f) => soma + f.size, 0) + ficheiro.size > LEAD_MAX_TOTAL_BYTES) {
+      errors.push(comNome(contact.errors.filesTotalTooBig, ficheiro.name))
     } else {
       files.push(ficheiro)
     }
@@ -215,8 +224,11 @@ function esperar(ms: number): Promise<void> {
 
 function camposDoServico(d: LeadData): Record<string, string> {
   const campos: Record<string, string> = {}
-  if (ACCESS_KEY) campos.access_key = ACCESS_KEY
+  if (FORM_ACCESS_KEY) campos.access_key = FORM_ACCESS_KEY
+  campos['_subject'] = contact.emailDraft.subject
   campos.subject = contact.emailDraft.subject
+  // "Responder a" no aviso por e-mail: o e-mail do visitante, se o indicou.
+  if (d.email.trim()) campos['_replyto'] = d.email.trim()
   const juntar = (chave: string, valor: string): void => {
     const limpo = valor.trim()
     if (limpo) campos[chave] = limpo
@@ -247,7 +259,12 @@ async function enviarAoServico(d: LeadData, ficheiros: readonly File[]): Promise
     if (formAcceptsFiles && ficheiros.length > 0) {
       const dados = new FormData()
       for (const [chave, valor] of Object.entries(campos)) dados.append(chave, valor)
-      for (const ficheiro of ficheiros) dados.append('attachment', ficheiro, ficheiro.name)
+      for (const ficheiro of ficheiros) {
+        // Sem tipo, o ficheiro seguiria como application/octet-stream, que o serviço recusa.
+        const tipo = ficheiro.type || tipoPelaExtensao(ficheiro.name)
+        const parte = ficheiro.type || !tipo ? ficheiro : new File([ficheiro], ficheiro.name, { type: tipo })
+        dados.append('attachment', parte, ficheiro.name)
+      }
       // Sem Content-Type: o navegador define o multipart/form-data com o separador.
       pedido = { method: 'POST', body: dados, headers: { Accept: 'application/json' } }
     } else {
@@ -257,7 +274,7 @@ async function enviarAoServico(d: LeadData, ficheiros: readonly File[]): Promise
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       }
     }
-    const resposta = await fetch(ENDPOINT, {
+    const resposta = await fetch(FORM_ENDPOINT, {
       ...pedido,
       signal: controlador.signal,
       credentials: 'omit',

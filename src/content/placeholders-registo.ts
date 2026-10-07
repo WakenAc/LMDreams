@@ -107,7 +107,7 @@ export const REGISTO_PLACEHOLDERS = [
   {
     chave: 'data-politicas',
     ondeAparece: 'Páginas legais',
-    ficheiroCampo: 'src/content/company.ts → legal.policiesUpdatedAt',
+    ficheiroCampo: 'src/content/company.ts → legal.privacyUpdatedAt, legal.cookiesUpdatedAt e legal.termsUpdatedAt',
     oQueFornecer: 'Data da última revisão das políticas',
     bloqueia: 'sim',
     bloqueiaTexto: 'Sim',
@@ -235,7 +235,8 @@ export const REGISTO_PLACEHOLDERS = [
     ondeAparece: 'Formulário',
     ficheiroCampo:
       'Variáveis do repositório (Repository variables) VITE_FORM_ENDPOINT, VITE_FORM_ACCEPTS_FILES e, se o serviço exigir, VITE_FORM_ACCESS_KEY',
-    oQueFornecer: 'Serviço de formulários escolhido (até lá, alternativa por e-mail)',
+    oQueFornecer:
+      'Formward escolhido a 4 de outubro de 2026: falta o endereço de envio do formulário (https://forms.formward.eu/f/…) e VITE_FORM_ACCEPTS_FILES=true (README, secção 8); até lá, alternativa por e-mail',
     bloqueia: 'nao',
     bloqueiaTexto: 'Não',
   },

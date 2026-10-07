@@ -1,5 +1,5 @@
 import { BookOpen, Building2, Clock, Copy, Mail, MapPin, MessageCircle, Phone, Share2, type LucideIcon } from 'lucide-react'
-import { useLayoutEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { flushSync } from 'react-dom'
 import { company } from '../content/company'
 import { ui } from '../content/common'
@@ -24,6 +24,7 @@ import { Textarea } from '../components/ui/form/Textarea'
 import { LABEL_CLASS, cx, fieldIds, joinIds } from '../components/ui/form/styles'
 import {
   LEAD_FILE_ACCEPT,
+  LEAD_MAX_FILES,
   addLeadFiles,
   formAcceptsFiles,
   formServiceActive,
@@ -35,6 +36,8 @@ import {
   type LeadValues,
 } from '../lib/lead'
 import { useHydrated } from '../lib/hydrated'
+// Só o tipo: o módulo é carregado à parte, com import() (fora do JavaScript inicial).
+import type * as ModuloReducao from '../lib/reduzir-fotografias'
 import { pageHref, withBase } from '../lib/links'
 import { FIRST_FIELD_ID } from '../lib/quote-links'
 import { whatsappHref } from '../lib/whatsapp'
@@ -45,6 +48,18 @@ import { whatsappHref } from '../lib/whatsapp'
 // de envio dá lugar a uma nota com o e-mail, e os dados de contacto ficam sempre em texto
 // ao lado: o visitante nunca fica sem saída. O formulário não tem action="mailto:…": em HTTPS, o Chrome trata esse destino
 // como conteúdo misto (Lighthouse, Boas práticas).
+
+// Módulo da redução das fotografias (src/lib/reduzir-fotografias.ts), fora do JavaScript
+// inicial. Pedido logo depois da hidratação (com fotografias ligadas); se o pedido falhar,
+// volta a ser tentado na escolha seguinte.
+let moduloReducao: Promise<typeof ModuloReducao> | null = null
+function carregarModuloReducao(): Promise<typeof ModuloReducao> {
+  moduloReducao ??= import('../lib/reduzir-fotografias').catch((erro: unknown) => {
+    moduloReducao = null
+    throw erro
+  })
+  return moduloReducao
+}
 
 const FORM_HEADING_ID = 'contactos-formulario-titulo'
 const DETAILS_HEADING_ID = 'contactos-dados-titulo'
@@ -133,7 +148,8 @@ type Status =
   | { kind: 'invalid' }
   | { kind: 'sending' }
   | { kind: 'success' }
-  | { kind: 'error' }
+  /** `withPhotos`: o pedido levava fotografias (a mensagem sugere enviar sem elas). */
+  | { kind: 'error'; withPhotos: boolean }
   | { kind: 'mailto-before' }
   | { kind: 'mailto-after'; request: string }
 
@@ -197,6 +213,15 @@ function LeadForm() {
   const [errors, setErrors] = useState<LeadErrors>({})
   const [submitted, setSubmitted] = useState(false)
   const [files, setFiles] = useState<readonly File[]>([])
+  // Cópia síncrona das fotografias (a redução é assíncrona e o envio lê a lista no fim dela)
+  // e a redução em curso, para o envio esperar por ela.
+  const filesRef = useRef<readonly File[]>([])
+  const preparacaoRef = useRef<Promise<void>>(Promise.resolve())
+  const [preparing, setPreparing] = useState(0)
+  // Recusas da última preparação (o envio não segue se houver recusas que o visitante ainda
+  // não viu, por terem chegado depois do clique).
+  const recusasRef = useRef<readonly string[]>([])
+  const aPrepararRef = useRef(0)
   const [fileErrors, setFileErrors] = useState<readonly string[]>([])
   const [status, setStatus] = useState<Status>({ kind: 'idle' })
   const [copy, setCopy] = useState<CopyState>('idle')
@@ -208,6 +233,11 @@ function LeadForm() {
   // o estado vazio e apagava o que o visitante escreveu. Este efeito corre no commit da
   // hidratação, antes desse render, e passa para o estado o que está no DOM, incluindo o
   // campo-armadilha (continua a apanhar robôs) e as fotografias já escolhidas.
+  // Com fotografias ligadas, o módulo da redução é pedido já, para estar pronto na escolha.
+  useEffect(() => {
+    if (formAcceptsFiles) carregarModuloReducao().catch(() => undefined)
+  }, [])
+
   useLayoutEffect(() => {
     const form = formRef.current
     if (!form) return
@@ -216,11 +246,7 @@ function LeadForm() {
     if (formAcceptsFiles) {
       const input = form.elements.namedItem(NAMES.photos)
       const chosen = input instanceof HTMLInputElement ? Array.from(input.files ?? []) : []
-      if (chosen.length > 0) {
-        const result = addLeadFiles([], chosen)
-        setFiles(result.files)
-        setFileErrors(result.errors)
-      }
+      if (chosen.length > 0) void addFiles(chosen)
     }
   }, [])
 
@@ -258,14 +284,49 @@ function LeadForm() {
     revalidate(field, values, 'blur')
   }
 
-  function addFiles(novos: File[]): void {
-    const result = addLeadFiles(files, novos)
-    setFiles(result.files)
-    setFileErrors(result.errors)
+  function applyFiles(next: readonly File[]): void {
+    filesRef.current = next
+    setFiles(next)
+  }
+
+  /** Reduz as fotografias escolhidas (src/lib/reduzir-fotografias.ts) e junta-as às que já estavam. */
+  function addFiles(novos: File[]): Promise<void> {
+    aPrepararRef.current += 1
+    setPreparing((n) => n + 1)
+    const preparacao = preparacaoRef.current.then(async () => {
+      try {
+        // Se o módulo da redução não carregar, seguem as originais (com os limites de addLeadFiles).
+        let reduzidas: File[] = novos
+        try {
+          const { reduceLeadFiles } = await carregarModuloReducao()
+          reduzidas = await reduceLeadFiles(novos, LEAD_MAX_FILES - filesRef.current.length)
+        } catch {
+          // Sem redução.
+        }
+        const result = addLeadFiles(filesRef.current, reduzidas)
+        applyFiles(result.files)
+        setFileErrors(result.errors)
+        recusasRef.current = result.errors
+      } finally {
+        aPrepararRef.current -= 1
+        setPreparing((n) => n - 1)
+      }
+    })
+    preparacaoRef.current = preparacao
+    return preparacao
+  }
+
+  /** Espera por todas as preparações, incluindo as que comecem enquanto espera. */
+  async function esperarPreparacao(): Promise<void> {
+    let atual: Promise<void>
+    do {
+      atual = preparacaoRef.current
+      await atual
+    } while (atual !== preparacaoRef.current)
   }
 
   function removeFile(index: number): void {
-    setFiles((prev) => prev.filter((_, i) => i !== index))
+    applyFiles(filesRef.current.filter((_, i) => i !== index))
     setFileErrors([])
   }
 
@@ -304,7 +365,18 @@ function LeadForm() {
       message: values.message,
       trap: values.trap,
     }
-    const result = await submitLead(dados, formAcceptsFiles ? files : [])
+    // Fotografias ainda a ser reduzidas: o envio espera por elas. Se dessa preparação saírem
+    // recusas (formato, tamanho, número), o envio não segue: o visitante vê-as primeiro.
+    const haviaPreparacao = aPrepararRef.current > 0
+    await esperarPreparacao()
+    if (haviaPreparacao && recusasRef.current.length > 0) {
+      // O campo volta a ficar ativo antes de receber o foco.
+      flushSync(() => setStatus({ kind: 'idle' }))
+      document.getElementById(IDS.photos)?.focus()
+      return
+    }
+    const ficheiros = formAcceptsFiles ? filesRef.current : []
+    const result = await submitLead(dados, ficheiros)
     if (result.mode === 'email') {
       // O site não sabe se o e-mail foi enviado: nunca mostra a mensagem de sucesso.
       setStatus({ kind: 'mailto-after', request: result.request })
@@ -313,18 +385,18 @@ function LeadForm() {
     if (result.ok) {
       setStatus({ kind: 'success' })
       setValues(EMPTY)
-      setFiles([])
+      applyFiles([])
       setFileErrors([])
       setErrors({})
       setSubmitted(false)
     } else {
-      setStatus({ kind: 'error' })
+      setStatus({ kind: 'error', withPhotos: ficheiros.length > 0 })
     }
   }
 
   const hasErrors = Object.keys(errors).length > 0
   let alertMessage: string | null = null
-  if (status.kind === 'error') alertMessage = contact.states.error
+  if (status.kind === 'error') alertMessage = status.withPhotos ? contact.states.errorWithPhotos : contact.states.error
   else if (status.kind === 'invalid' && hasErrors) alertMessage = contact.errors.summary
 
   let statusMessage: string | null = null
@@ -508,15 +580,23 @@ function LeadForm() {
                 name={NAMES.photos}
                 accept={LEAD_FILE_ACCEPT}
                 files={files}
-                onFilesSelected={addFiles}
+                onFilesSelected={(novos) => {
+                  void addFiles(novos)
+                }}
+                disabled={busy}
                 onRemove={removeFile}
                 listLabel={contact.fields.photos.selected}
                 removeLabel={contact.fields.photos.remove}
               />
             )}
           </Field>
-          {/* Região viva: as fotografias recusadas são anunciadas logo depois da escolha. */}
+          {/* Região viva: a preparação e as fotografias recusadas são anunciadas logo depois da escolha. */}
           <div aria-live="polite">
+            {preparing > 0 ? (
+              <p data-photos-preparing="" className="mt-2 text-small text-muted">
+                {contact.fields.photos.preparing}
+              </p>
+            ) : null}
             <FieldError id={photosErrorId} messages={fileErrors} />
           </div>
         </div>

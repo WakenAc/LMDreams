@@ -11,6 +11,7 @@ export const cookiesPage = {
   title: footer.policyLinks.cookies,
   intro: 'Resumo: este site não usa cookies nem guarda informação no seu dispositivo.',
   updatedLabel: 'Última atualização:',
+  updatedAt: company.legal.cookiesUpdatedAt,
   tocHeading: 'Índice',
   backToIndex: 'Voltar ao índice',
   sections: [
@@ -100,7 +101,7 @@ export const cookiesPage = {
       blocks: [
         {
           type: 'p',
-          text: `Esta política foi atualizada em ${company.legal.policiesUpdatedAt}.`,
+          text: `Esta política foi atualizada em ${company.legal.cookiesUpdatedAt}.`,
         },
       ],
     },

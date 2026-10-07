@@ -7,8 +7,17 @@ import { company } from '../company'
 import { ui } from '../common'
 import { contact } from '../contact'
 import { footer } from '../footer'
+import { formAcceptsFiles, formServiceActive } from '../../lib/form-config'
 
 const { legal } = company
+const servico = legal.formServiceHosted
+// Com serviço de formulários: o que segue para o serviço (com as fotografias, se as aceitar).
+const envioServico = formAcceptsFiles
+  ? 'o pedido e as fotografias seguem do seu navegador diretamente para o ' + servico.name + '; o site não os guarda'
+  : 'o pedido segue do seu navegador diretamente para o ' + servico.name + '; o site não o guarda'
+const guardadosNoServico = formAcceptsFiles
+  ? 'os pedidos, as fotografias e os endereços IP pseudonimizados'
+  : 'os pedidos e os endereços IP pseudonimizados'
 
 const ligacaoEmail = { text: company.email, href: `mailto:${company.email}` }
 const ligacaoTelefone = { text: company.phone.display, href: company.phone.href }
@@ -26,6 +35,7 @@ export const privacyPage = {
   intro:
     'Esta política explica como tratamos os dados pessoais de quem nos contacta através deste site, em especial nos pedidos de orçamento, nos termos do Regulamento (UE) 2016/679 (Regulamento Geral sobre a Proteção de Dados, RGPD) e da Lei n.º 58/2019, de 8 de agosto.',
   updatedLabel: 'Última atualização:',
+  updatedAt: legal.privacyUpdatedAt,
   tocHeading: 'Índice',
   backToIndex: 'Voltar ao índice',
   sections: [
@@ -89,9 +99,21 @@ export const privacyPage = {
             'Localização da obra (concelho ou localidade)',
             'Tipo de serviço e orçamento previsto, se os indicar',
             'Mensagem com a descrição da obra',
-            'Fotografias do espaço, se as anexar (quando o formulário aceita ficheiros)',
+            ...(formServiceActive && formAcceptsFiles
+              ? ['Fotografias do espaço, se as anexar']
+              : formServiceActive
+                ? []
+                : ['Fotografias do espaço, se as anexar (quando o formulário aceita ficheiros)']),
           ],
         },
+        ...(formServiceActive
+          ? [
+              {
+                type: 'p' as const,
+                text: `Quando envia o formulário, o ${servico.name} regista também o endereço IP de onde o pedido foi enviado, em forma pseudonimizada (codificado, sem o guardar em claro), para limitar abusos e mensagens não solicitadas (spam).`,
+              },
+            ]
+          : []),
         {
           type: 'p',
           text: 'Quando nos contacta por telefone, WhatsApp ou e-mail, tratamos os dados transmitidos nesse contacto, como o número de telefone, o endereço de e-mail e o conteúdo da mensagem.',
@@ -120,6 +142,11 @@ export const privacyPage = {
             'Analisar o pedido de orçamento, responder-lhe e, se for o caso, marcar uma visita e preparar o orçamento. Fundamento: diligências pré-contratuais a pedido do titular dos dados (RGPD, art. 6.º, n.º 1, al. b)).',
             'Responder a pedidos feitos em nome de uma empresa, de um condomínio ou de outra entidade, com os dados de contacto do respetivo representante ou colaborador. Fundamento: interesse legítimo em responder à entidade que fez o pedido (RGPD, art. 6.º, n.º 1, al. f)).',
             'Se o pedido der origem a um contrato, executar esse contrato (al. b)) e cumprir as obrigações legais que dele resultam, por exemplo de faturação (al. c)).',
+            ...(formServiceActive
+              ? [
+                  `Proteger o formulário contra abusos e mensagens não solicitadas (spam), com o endereço IP pseudonimizado que o ${servico.name} regista. Fundamento: interesse legítimo em manter o formulário seguro e disponível (RGPD, art. 6.º, n.º 1, al. f)).`,
+                ]
+              : []),
           ],
         },
         {
@@ -157,7 +184,7 @@ export const privacyPage = {
         {
           type: 'ul',
           items: [
-            `Serviço de formulários: ${legal.formService}.`,
+            formServiceActive ? `Serviço de formulários: ${servico.description}.` : `Serviço de formulários: ${legal.formService}.`,
             [
               'E-mail: os pedidos chegam à caixa ',
               ligacaoEmail,
@@ -168,7 +195,9 @@ export const privacyPage = {
         },
         {
           type: 'p',
-          text: 'Quando o formulário abre o seu programa de e-mail, o site não envia nem guarda os dados: o pedido segue pelo seu próprio serviço de e-mail até à nossa caixa no Gmail.',
+          text: formServiceActive
+            ? `Quando envia o formulário, ${envioServico}. O ${servico.name} envia-nos um aviso por e-mail com o pedido, que chega à nossa caixa no Gmail.${formAcceptsFiles ? ` As fotografias não seguem no e-mail: só ficam acessíveis na área reservada do ${servico.name}.` : ''}`
+            : 'Quando o formulário abre o seu programa de e-mail, o site não envia nem guarda os dados: o pedido segue pelo seu próprio serviço de e-mail até à nossa caixa no Gmail.',
         },
         {
           type: 'p',
@@ -188,10 +217,15 @@ export const privacyPage = {
           type: 'p',
           text: 'Essas transferências assentam nas garantias previstas no RGPD: a decisão de adequação da Comissão Europeia relativa ao Quadro de Privacidade de Dados UE-EUA (EU-U.S. Data Privacy Framework), a que a GitHub declara ter aderido, ou cláusulas contratuais-tipo aprovadas pela Comissão.',
         },
-        {
-          type: 'p',
-          text: 'Se o serviço de formulários tratar dados fora do Espaço Económico Europeu, aplicam-se as mesmas regras.',
-        },
+        formServiceActive
+          ? {
+              type: 'p',
+              text: `O ${servico.name} trata os pedidos na União Europeia: guarda-os na Suécia e envia os avisos por e-mail através da Mailjet (França), que aloja os dados em centros de dados da Google Cloud na Alemanha e na Bélgica.`,
+            }
+          : {
+              type: 'p',
+              text: 'Se o serviço de formulários tratar dados fora do Espaço Económico Europeu, aplicam-se as mesmas regras.',
+            },
       ],
     },
     {
@@ -202,6 +236,14 @@ export const privacyPage = {
           type: 'p',
           text: `Se o pedido não der origem a contrato, conservamos os dados durante ${legal.dataRetention} e apagamo-los em seguida.`,
         },
+        ...(formServiceActive
+          ? [
+              {
+                type: 'p' as const,
+                text: `No ${servico.name}, ${guardadosNoServico} são apagados automaticamente ao fim de ${servico.retention}.`,
+              },
+            ]
+          : []),
         {
           type: 'p',
           text: 'Se houver contrato, os dados são conservados durante a execução da obra e, depois, pelos prazos que a lei impõe, por exemplo para efeitos fiscais ou de garantia.',
@@ -305,7 +347,7 @@ export const privacyPage = {
         },
         {
           type: 'p',
-          text: `Esta versão foi atualizada em ${legal.policiesUpdatedAt}.`,
+          text: `Esta versão foi atualizada em ${legal.privacyUpdatedAt}.`,
         },
       ],
     },

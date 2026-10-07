@@ -310,7 +310,7 @@ export interface ContactContent {
     service: { label: string; emptyOption: string; otherOption: string }
     message: { label: string; help: string }
     budget: { label: string; help: string; emptyOption: string }
-    photos: { label: string; help: string; remove: string; selected: string }
+    photos: { label: string; help: string; remove: string; selected: string; preparing: string }
     /** "Tomei conhecimento da [Política de privacidade]." */
     privacy: { before: string; link: string; after: string; required: string }
   }
@@ -334,11 +334,15 @@ export interface ContactContent {
     fileTooBig: string
     /** {nome} = nome do ficheiro. */
     fileType: string
+    /** {nome} = nome do ficheiro que faria passar o total permitido. */
+    filesTotalTooBig: string
   }
   states: {
     sending: string // "A enviar…"
     success: string // só com serviço de formulários ativo
     error: string
+    /** Erro quando o pedido levava fotografias: sugere enviar sem elas. */
+    errorWithPhotos: string
     mailtoBefore: string
     mailtoAfter: string
     copied: string
@@ -436,6 +440,8 @@ export interface LegalPageContent {
   title: string
   intro?: Rich
   updatedLabel: string // "Última atualização:"
+  /** Data da última atualização desta página (company.legal.*UpdatedAt). */
+  updatedAt: string
   tocHeading: string // "Índice"
   backToIndex: string // "Voltar ao índice"
   sections: readonly LegalSection[]

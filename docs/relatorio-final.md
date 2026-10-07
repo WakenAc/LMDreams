@@ -184,6 +184,38 @@ Cada problema encontrado foi revisto por três céticos independentes, e só fic
   - a proteção do ramo `main` no GitHub, para obrigar a PR com o CI a verde. É uma definição do repositório.
 - **Sem ação:** o `npm audit` assinala 14 vulnerabilidades, todas em ferramentas de desenvolvimento (cadeia do Lighthouse) e nenhuma no site. O aviso do GitHub sobre a passagem do `ubuntu-latest` para o Ubuntu 26, a 19 de outubro, foi avaliado como de risco baixo.
 
+### Serviço de formulários: Formward (4 de outubro)
+
+- **Pedido do Andre:** um serviço de formulários de uma empresa europeia, com os dados na União Europeia. O Formspree ficou de fora por ser americano.
+- **Pesquisa:** 25 candidatos, com contraprova das fontes oficiais. Os 10 serviços para sites estáticos foram analisados a fundo; os construtores de formulários e as montagens próprias ficaram por analisar, por quase todos exigirem incorporar o formulário deles na página. Também se pesquisou o que exigiria um servidor próprio: sem licenças nem registo na CNPD, mas com contrato de subcontratação, registo das atividades de tratamento, segurança e manutenção a cargo da empresa.
+- **Escolha do Andre:** Formward (EGF Fastighetsservice AB, Suécia), plano Professional, por aceitar fotografias: 20 €/mês com pagamento anual (30 €/mês com pagamento mensal), mais IVA. Ressalvas registadas:
+  - empresa recente e pequena, sem acordo de nível de serviço;
+  - os avisos por e-mail passam pela Mailjet (França), alojada na Google Cloud na UE;
+  - a IA (Mistral AI) vem ligada por omissão e deve ser desligada;
+  - as fotografias só abrem na área reservada do Formward.
+- **Alterações no site:**
+  - `src/lib/form-config.ts` concentra a configuração;
+  - o envio passa a levar `_subject` e `_replyto`;
+  - as fotografias seguem os limites do Formward: sem HEIC e com 25 MB no total, e um ficheiro sem tipo segue com o tipo da extensão;
+  - as fotografias com mais de 1 MB são reduzidas no navegador para JPEG com 2000 px no lado maior (`src/lib/reduzir-fotografias.ts`, carregado só quando há fotografias). Sem a redução, 4 fotografias de 5 MB falhavam o limite de 15 s numa rede de cerca de 10 Mbit/s; se o envio com fotografias falhar, a mensagem sugere retirá-las. Uma segunda revisão do fluxo assíncrono levou a três acertos: o envio espera por toda a preparação e não segue se dela saírem recusas, o campo de fotografias fica desativado durante o envio, e o módulo da redução é pedido logo depois da hidratação (e de novo, se falhar);
+  - com o serviço ligado, a Política de privacidade refere também o endereço IP pseudonimizado que o Formward regista (finalidade: limitar abusos; fundamento: interesse legítimo) e tem uma data própria (`legal.privacyUpdatedAt`); as páginas de cookies e de termos ficam com as suas datas;
+  - a Política de privacidade e o aviso RGPD mudam sozinhos para os textos do Formward quando `VITE_FORM_ENDPOINT` está definida; até lá, o site continua no modo por e-mail, com os textos atuais.
+- **Testes:** `npm run build:servico` (endereço de envio fictício), `npm run check:servico` (ligações, SEO, proibições e peso desse build) e `npm run test:e2e:servico`, todos no `npm run check`. Os testes cobrem:
+  - o envio em JSON e em `multipart/form-data`;
+  - os erros 402, `ok: false` e falha de rede;
+  - o campo-armadilha;
+  - HEIC e o limite de 25 MB;
+  - a redução das fotografias, o envio logo a seguir à escolha, as recusas que chegam depois do clique, o campo desativado durante o envio e o ficheiro sem tipo;
+  - os cabeçalhos do envio, comparados com os que o Formward aceita no CORS (a verificação prévia é respondida pelo próprio Playwright, por isso testam-se os cabeçalhos);
+  - os textos legais e as datas de cada página.
+- **Peso:** com o serviço ligado, o JavaScript inicial fica nos 99,5 KiB de 100 (folga de 469 B; `npm run check:servico`, também no `npm run check`). Qualquer acrescento ao formulário ou aos projetos tem de ser medido.
+- **Por fazer, pela empresa e pelo Andre (README, secção 8):**
+  - criar a conta e aceitar o contrato de subcontratação;
+  - configurar o formulário: origem, IA desligada, apagamento ao fim de 90 dias;
+  - criar as variáveis do repositório;
+  - acertar a data da Política de privacidade;
+  - publicar de novo e testar no site.
+
 ### Rondas de verificação (Fase 6)
 
 | Ronda | Achados | Confirmados (média ou superior) | Refutados | Baixos | Principais correções |

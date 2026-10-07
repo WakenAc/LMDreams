@@ -5,6 +5,7 @@
 import type { BudgetRanges, ContactContent, Rich } from './tipos'
 import { company } from './company'
 import { ui } from './common'
+import { formServiceActive } from '../lib/form-config'
 
 const telefoneEscrito = `${company.phone.display} (${company.phoneCallNote})`
 const assuntoEmail = 'Pedido de orçamento pelo site'
@@ -17,7 +18,7 @@ const assuntoEmail = 'Pedido de orçamento pelo site'
 export const avisoBlocos: readonly Rich[] = [
   // Sem ponto duplo quando a firma já termina em "Lda.".
   `Responsável pelo tratamento: ${company.legal.name.replace(/\.$/, '')}. Usamos estes dados apenas para analisar o seu pedido de orçamento e responder-lhe, antes de qualquer contrato (RGPD, art. 6.º, n.º 1, al. b)).`,
-  `Conservamo-los durante ${company.legal.dataRetention} se não for celebrado contrato e só os partilhamos com prestadores técnicos (${company.legal.processors}).`,
+  `Conservamo-los durante ${company.legal.dataRetention} se não for celebrado contrato e só os partilhamos com prestadores técnicos (${formServiceActive ? company.legal.formServiceHosted.processors : company.legal.processors}).`,
   [
     `Pode exercer os seus direitos de acesso, retificação, apagamento, limitação, oposição e portabilidade através de ${company.legal.dataController} e apresentar reclamação à CNPD (`,
     { text: 'www.cnpd.pt', href: 'https://www.cnpd.pt' },
@@ -61,9 +62,10 @@ export const contact = {
     },
     photos: {
       label: 'Fotografias (opcional)',
-      help: 'Até 5 fotografias (JPG, PNG, WebP ou HEIC), com 10 MB no máximo cada uma.',
+      help: 'Até 5 fotografias, em JPG, PNG ou WebP. As fotografias grandes são reduzidas antes do envio.',
       remove: 'Remover',
       selected: 'Fotografias escolhidas',
+      preparing: 'A preparar as fotografias…',
     },
     privacy: {
       before: 'Tomei conhecimento da ',
@@ -92,12 +94,14 @@ export const contact = {
     privacy: 'Confirme que tomou conhecimento da Política de privacidade.',
     tooManyFiles: 'Pode enviar até 5 fotografias.',
     fileTooBig: 'A fotografia “{nome}” tem mais de 10 MB.',
-    fileType: 'O ficheiro “{nome}” não está num formato aceite. Use JPG, PNG, WebP ou HEIC.',
+    fileType: 'O ficheiro “{nome}” não está num formato aceite. Use JPG, PNG ou WebP.',
+    filesTotalTooBig: 'A fotografia “{nome}” ficou de fora: no total, as fotografias não podem passar de 25 MB.',
   },
   states: {
     sending: 'A enviar…',
     success: 'Obrigado. Recebemos o seu pedido e vamos entrar em contacto consigo.',
     error: `Não foi possível enviar o pedido. Tente novamente ou contacte-nos pelo ${telefoneEscrito} ou por WhatsApp.`,
+    errorWithPhotos: `Não foi possível enviar o pedido com as fotografias. Retire as fotografias e tente novamente (pode enviá-las depois por WhatsApp ou e-mail), ou contacte-nos pelo ${telefoneEscrito} ou por WhatsApp.`,
     mailtoBefore:
       'Vamos abrir o seu programa de e-mail com o pedido preenchido. Só tem de o enviar.',
     mailtoAfter: `Tentámos abrir o seu programa de e-mail com o pedido preenchido. O pedido só nos chega depois de o enviar. Se o programa não abriu, use “${ui.labels.copyRequest}” e envie o texto para ${company.email}, ou ligue para o ${telefoneEscrito}.`,
