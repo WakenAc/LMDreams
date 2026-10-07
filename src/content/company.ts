@@ -138,7 +138,7 @@ export const company = {
     },
     // Data de cada página legal. A Política de privacidade muda com o serviço de formulários
     // (textos do Formward): a data passa a ser a da ligação do serviço (README, secção 8).
-    privacyUpdatedAt: formServiceActive ? '4 de outubro de 2026' : '29 de setembro de 2026',
+    privacyUpdatedAt: formServiceActive ? '8 de outubro de 2026' : '29 de setembro de 2026',
     cookiesUpdatedAt: '29 de setembro de 2026',
     termsUpdatedAt: '29 de setembro de 2026',
     dpo: 'não foi designado',
