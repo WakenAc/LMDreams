@@ -209,12 +209,10 @@ Cada problema encontrado foi revisto por três céticos independentes, e só fic
   - os cabeçalhos do envio, comparados com os que o Formward aceita no CORS (a verificação prévia é respondida pelo próprio Playwright, por isso testam-se os cabeçalhos);
   - os textos legais e as datas de cada página.
 - **Peso:** com o serviço ligado, o JavaScript inicial fica nos 99,5 KiB de 100 (folga de 469 B; `npm run check:servico`, também no `npm run check`). Qualquer acrescento ao formulário ou aos projetos tem de ser medido.
-- **Por fazer, pela empresa e pelo Andre (README, secção 8):**
-  - criar a conta e aceitar o contrato de subcontratação;
-  - configurar o formulário: origem, IA desligada, apagamento ao fim de 90 dias;
-  - criar as variáveis do repositório;
-  - acertar a data da Política de privacidade;
-  - publicar de novo e testar no site.
+- **Ligação:**
+  - 7 de outubro: o Andre criou a conta e o formulário no Formward, e a PR n.º 7 foi integrada (sem as variáveis, o site continuou no modo por e-mail). As origens permitidas ficaram só com `https://www.lmdreams.pt`: uma verificação prévia do CORS com outra origem deixou de receber autorização.
+  - 8 de outubro de 2026: confirmado o e-mail da empresa como destinatário dos avisos, criadas as variáveis `VITE_FORM_ENDPOINT` e `VITE_FORM_ACCEPTS_FILES` e integrada a PR que acerta a data da Política de privacidade (o merge publica o site já com o Formward).
+  - A testar no site publicado: um pedido completo com fotografia, um pedido só com telefone, o "Responder a" no aviso por e-mail e a Política de privacidade com os textos do Formward.
 
 ### Rondas de verificação (Fase 6)
 

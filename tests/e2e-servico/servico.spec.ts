@@ -381,7 +381,7 @@ test('Política de privacidade e aviso RGPD descrevem o serviço de formulários
   await expect(main).toContainText('com o endereço IP pseudonimizado que o Formward regista. Fundamento: interesse legítimo')
   await expect(main).toContainText('os pedidos, as fotografias e os endereços IP pseudonimizados são apagados automaticamente ao fim de 90 dias')
   // Uma data por página: só a Política de privacidade muda com o serviço.
-  await expect(main.locator('p').filter({ hasText: 'Última atualização:' }).first()).toContainText('4 de outubro de 2026')
+  await expect(main.locator('p').filter({ hasText: 'Última atualização:' }).first()).toContainText('8 de outubro de 2026')
   for (const pagina of ['politica-de-cookies/', 'termos-e-condicoes/']) {
     await page.goto(pagina)
     await expect(page.locator('main p').filter({ hasText: 'Última atualização:' }).first()).toContainText('29 de setembro de 2026')

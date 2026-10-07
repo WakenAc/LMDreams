@@ -132,7 +132,7 @@ Só para informação: estas chaves não têm pendentes no código. É normal, p
 - `intervalos-orcamento`: Rever os intervalos propostos
   - Onde aparece: Formulário
   - Ficheiro e campo: src/content/contact.ts → budgetRanges
-- `endpoint-formulario`: Formward escolhido a 4 de outubro de 2026: falta o endereço de envio do formulário (https://forms.formward.eu/f/…) e VITE_FORM_ACCEPTS_FILES=true (README, secção 8); até lá, alternativa por e-mail
+- `endpoint-formulario`: Formward ligado a 8 de outubro de 2026: VITE_FORM_ENDPOINT com o endereço de envio do formulário e VITE_FORM_ACCEPTS_FILES=true (README, secção 8); sem a primeira, o formulário volta ao modo por e-mail
   - Onde aparece: Formulário
   - Ficheiro e campo: Variáveis do repositório (Repository variables) VITE_FORM_ENDPOINT, VITE_FORM_ACCEPTS_FILES e, se o serviço exigir, VITE_FORM_ACCESS_KEY
 - `logotipo`: Só se o ficheiro fornecido for insuficiente (idealmente SVG)
