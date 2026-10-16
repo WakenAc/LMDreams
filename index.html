@@ -29,7 +29,7 @@
   <link rel="icon" href="assets/icons/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=14">
+  <link rel="stylesheet" href="assets/css/style.css?v=15">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -547,6 +547,22 @@
       </ul>
     </section>
 
+    <!-- ============================================================ AVALIAÇÕES
+         Preenchida por main.js a partir de assets/js/avaliacoes.js (atualização manual).
+         Fica escondida enquanto não houver avaliações e link para o perfil no Google. -->
+    <section class="section reviews" id="avaliacoes" aria-labelledby="avaliacoes-t" hidden>
+      <div class="wrap">
+        <div class="sec-head sec-head--row">
+          <div>
+            <h2 class="h-sec" id="avaliacoes-t"><span class="d-sans">Quem já fez obra</span> <span class="d-serif">connosco.</span></h2>
+            <p class="sec-head__text reviews__note"></p>
+          </div>
+          <a class="btn btn--ghost reviews__link" href="#avaliacoes" target="_blank" rel="noopener">Ver todas no Google<span class="sr-only"> (abre numa nova janela)</span></a>
+        </div>
+        <ul class="reviews__list"></ul>
+      </div>
+    </section>
+
     <!-- ============================================================ CONTACTOS -->
     <section class="section contact" id="contactos" aria-labelledby="contactos-t">
       <div class="contact__bg" data-img="fase-11-exterior" aria-hidden="true"><img alt="" loading="lazy" decoding="async"><div class="ph"></div></div>
@@ -662,6 +678,7 @@
   <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
   <script src="assets/vendor/lenis.min.js" defer></script>
   <script src="assets/js/projetos.js?v=1" defer></script>
-  <script src="assets/js/main.js?v=9" defer></script>
+  <script src="assets/js/avaliacoes.js?v=1" defer></script>
+  <script src="assets/js/main.js?v=10" defer></script>
 </body>
 </html>

@@ -139,7 +139,11 @@ for (const file of files.filter((f) => f.endsWith('.css'))) checkCss(fs.readFile
 // scripts do site (as bibliotecas em assets/vendor têm URLs nos comentários de licença)
 for (const file of files.filter((f) => f.endsWith('.js') && !rel(f).startsWith('assets/vendor/'))) {
   const js = fs.readFileSync(file, 'utf8')
-  for (const m of js.matchAll(/["'`](https?:\/\/[^"'`\s]+)["'`]/g)) problems.push(`URL externa em ${rel(file)}: ${m[1]}`)
+  for (const m of js.matchAll(/["'`](https?:\/\/[^"'`\s]+)["'`]/g)) {
+    // o link do perfil no Google (avaliações) é uma ligação, não um recurso carregado
+    if (/^https:\/\/((www\.)?google\.[a-z.]+\/maps|maps\.app\.goo\.gl|g\.page)\//.test(m[1])) continue
+    problems.push(`URL externa em ${rel(file)}: ${m[1]}`)
+  }
 }
 
 // manifesto e sitemap

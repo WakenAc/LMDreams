@@ -762,6 +762,26 @@ html.has-dialog { overflow: hidden; }
   .proj__intro { grid-template-columns: 1fr; }
 }
 
+/* ---------------------------------------------------- avaliações */
+.reviews__list {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: clamp(16px, 2vw, 28px);
+}
+.review {
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 24px 24px 22px; border: 1px solid var(--linha-forte); border-radius: 14px;
+  background: var(--grafite);
+}
+.review__stars { color: var(--marca); letter-spacing: 0.12em; font-size: var(--t-17); line-height: 1; }
+.review__text { margin: 0; flex: 1; }
+.review__text p {
+  font-family: var(--f-serif); font-style: italic; font-weight: 300;
+  font-size: clamp(1.1rem, 0.95rem + 0.4vw, 1.3rem); line-height: 1.4;
+}
+.review__who { font-size: var(--t-14); color: var(--pedra); }
+.reviews__note { font-size: var(--t-15); }
+.reviews__link { align-self: end; }
+
 /* ---------------------------------------------------- contactos */
 .contact { overflow: hidden; isolation: isolate; }
 .contact__bg { position: absolute; inset: 0; z-index: -1; background: var(--grafite); }

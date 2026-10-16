@@ -66,6 +66,5 @@ O site anterior (Vite/React, com o formulário Formward) é o commit `bc63c39` (
 ## Por decidir com o cliente
 
 - **Formulário de pedido de orçamento.** O site novo não tem formulário, mas a Política de privacidade (§03 a §07, §12 e §13) e os Termos (§03) ainda o descrevem. Há duas saídas: atualizar o texto, mudando a data "Última atualização", ou voltar a pôr o formulário.
-- **Legenda das imagens de IA.** As imagens geradas por IA já não têm a legenda junto a cada uma; só fica a frase geral no rodapé. Os Termos (§05) ainda dizem que "estão identificadas com a legenda «Imagem ilustrativa gerada por IA»". Ou se muda essa frase (atualizando a data), ou voltam as legendas.
-- **Avaliações Google.**
+- **Avaliações Google.** A secção já existe, mas só aparece quando `assets/js/avaliacoes.js` tiver o link do perfil e pelo menos uma avaliação. As instruções estão no início desse ficheiro.
 - **Textos do site anterior que não passaram para o novo:** a secção "Transparência em todas as fases da obra" e a frase final da chamada para contacto. Ver `docs/site-v1/`.

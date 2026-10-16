@@ -338,6 +338,53 @@
   }
 
   /* -------------------------------------------------------------------
+     4c. Avaliações Google (assets/js/avaliacoes.js, atualizado à mão)
+     ------------------------------------------------------------------- */
+  (function avaliacoes() {
+    const sec = document.getElementById('avaliacoes');
+    const dados = window.LM_AVALIACOES;
+    if (!sec || !dados || !/^https:\/\//.test(dados.perfil || '')) return;
+    const min = dados.minimo || 4;
+    const lista = (dados.avaliacoes || []).filter((a) => a && a.texto && a.nome && +a.estrelas >= min);
+    if (!lista.length) return;
+
+    const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+    const quando = (iso) => {
+      const [y, m, d] = String(iso || '').split('-').map(Number);
+      if (!y || !m) return '';
+      return d ? `${d} de ${MESES[m - 1]} de ${y}` : `${MESES[m - 1]} de ${y}`;
+    };
+
+    const ul = sec.querySelector('.reviews__list');
+    lista.forEach((a) => {
+      const n = Math.max(0, Math.min(5, Math.round(+a.estrelas)));
+      const li = el('li', 'review');
+      const stars = el('p', 'review__stars', { role: 'img', 'aria-label': `${n} em 5 estrelas` });
+      stars.textContent = '★★★★★'.slice(0, n) + '☆☆☆☆☆'.slice(0, 5 - n);
+      const q = el('blockquote', 'review__text');
+      const qp = el('p');
+      qp.textContent = a.texto;
+      q.appendChild(qp);
+      const who = el('p', 'review__who');
+      who.textContent = a.nome;
+      if (a.data) {
+        const t = el('time', null, { datetime: a.data });
+        t.textContent = quando(a.data);
+        who.append(' · ', t);
+      }
+      li.append(stars, q, who);
+      ul.appendChild(li);
+    });
+
+    const link = sec.querySelector('.reviews__link');
+    link.href = dados.perfil;
+    const nota = sec.querySelector('.reviews__note');
+    // Transparência (diretiva Omnibus): é uma seleção, como é feita, e onde ver todas
+    nota.textContent = `Seleção das avaliações com ${min} ou mais estrelas publicadas no perfil da LMDreams no Google, copiadas à mão${dados.atualizado ? ` (última atualização: ${quando(dados.atualizado)})` : ''}. Não verificamos se cada autor foi cliente. Pode ler todas, incluindo as menos positivas, no Google.`;
+    sec.hidden = false;
+  }());
+
+  /* -------------------------------------------------------------------
      5. A obra
      ------------------------------------------------------------------- */
   const journey = document.querySelector('.journey');
