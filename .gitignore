@@ -1,19 +1,15 @@
-node_modules/
+# Gerado por scripts/publicar.cjs
 dist/
-dist-ssr/
-.tmp/
-.revisao/
-.lighthouseci/
-assets-src/ilustrativas/_rejeitadas/
-# Fotografias originais do cliente (podem ter casas de clientes, pessoas e localização GPS):
-# ficam só no computador; as escolhidas entram no site tratadas e com autorização.
+
+# Materiais de trabalho que NUNCA podem ir para este repositório (é público):
+# PNG originais do Higgsfield e fotografias do WhatsApp por tratar, com o catálogo de privacidade.
+rss/
 fotos-originais/
+
+node_modules/
 .claude/settings.local.json
 *.local
 *.log
-test-results/
-playwright-report/
-blob-report/
 .vscode/*
 !.vscode/extensions.json
 .idea
