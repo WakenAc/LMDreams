@@ -1,6 +1,6 @@
 # Fotografias dos projetos
 
-Registo das fotografias reais publicadas na secção Projetos (`src/content/projects.ts`, ficheiros em `public/projetos/`). Complementa o `assets-src/ilustrativas/manifest.json`, que regista as imagens geradas por IA; nenhuma imagem de IA é usada nos projetos.
+Registo das fotografias reais publicadas na secção Projetos (`assets/js/projetos.js`, ficheiros em `assets/img/projetos/`). As imagens ilustrativas geradas por IA (fases da obra, especialistas) estão descritas em `docs/prompts-higgsfield.md`; nenhuma imagem de IA é usada nos projetos.
 
 - **Origem:** fotografias tiradas pelo dono da empresa e enviadas pelo WhatsApp (sem metadados). Os originais e o índice F001 a F269 ficam no computador do Andre, em `fotos-originais/` (fora do Git).
 - **Autorização:** os donos de obra das cinco obras autorizaram a publicação (resposta do cliente a 29 de setembro de 2026). A localidade e o ano são os indicados pelo cliente.
@@ -12,7 +12,7 @@ Registo das fotografias reais publicadas na secção Projetos (`src/content/proj
 ## Recuperação e remodelação de prédio de três frações
 
 - Obra: Prédio de três frações (obra B). Localidade: Feijó. Ano: 2019. Categoria: remodelacoes.
-- Pasta: `public/projetos/remodelacao-predio/`. Capa: `01-depois.webp`.
+- Pasta: `assets/img/projetos/remodelacao-predio/`. Capa: `01-depois.webp`.
 
 | Ficheiro | Fase | Origem | Dimensões |
 |---|---|---|---|
@@ -38,7 +38,7 @@ Notas da verificação final:
 ## Cozinha em tom de carvalho e branco num prédio
 
 - Obra: Prédio de três frações (obra B). Localidade: Feijó. Ano: 2019. Categoria: cozinhas.
-- Pasta: `public/projetos/cozinha-predio/`. Capa: `02-depois.webp`.
+- Pasta: `assets/img/projetos/cozinha-predio/`. Capa: `02-depois.webp`.
 
 | Ficheiro | Fase | Origem | Dimensões |
 |---|---|---|---|
@@ -60,7 +60,7 @@ Tratamentos:
 ## Casa de banho numa habitação de dois pisos recuperada
 
 - Obra: Casa de dois pisos (obra D). Localidade: Casal de Cambra. Ano: 2026. Categoria: casas-de-banho.
-- Pasta: `public/projetos/casa-de-banho-casa/`. Capa: `01-depois.webp`.
+- Pasta: `assets/img/projetos/casa-de-banho-casa/`. Capa: `01-depois.webp`.
 
 | Ficheiro | Fase | Origem | Dimensões |
 |---|---|---|---|
@@ -81,7 +81,7 @@ Tratamentos:
 ## Livraria-café: remodelação de espaço comercial
 
 - Obra: Livraria-café (obra E). Localidade: Lisboa. Ano: 2017. Categoria: interiores.
-- Pasta: `public/projetos/livraria-cafe/`. Capa: `02-depois.webp`.
+- Pasta: `assets/img/projetos/livraria-cafe/`. Capa: `02-depois.webp`.
 
 | Ficheiro | Fase | Origem | Dimensões |
 |---|---|---|---|
@@ -106,7 +106,7 @@ Notas da verificação final:
 ## Arranjos exteriores com piscina e jardim
 
 - Obra: Moradia no pinhal (obra C). Localidade: Fernão Ferro. Ano: 2021. Categoria: exteriores.
-- Pasta: `public/projetos/exteriores-moradia/`. Capa: `01-depois.webp`.
+- Pasta: `assets/img/projetos/exteriores-moradia/`. Capa: `01-depois.webp`.
 
 | Ficheiro | Fase | Origem | Dimensões |
 |---|---|---|---|
@@ -132,7 +132,7 @@ Notas da verificação final:
 ## Pátio com pérgola de madeira e churrasqueira
 
 - Obra: Pátio com pérgola (obra A). Localidade: Seixal. Ano: 2016. Categoria: exteriores.
-- Pasta: `public/projetos/patio-pergola/`. Capa: `01-depois.webp`.
+- Pasta: `assets/img/projetos/patio-pergola/`. Capa: `01-depois.webp`.
 
 | Ficheiro | Fase | Origem | Dimensões |
 |---|---|---|---|
@@ -150,7 +150,7 @@ Tratamentos:
 ## Ampliação de moradia para dois pisos
 
 - Obra: Moradia no pinhal (obra C). Localidade: Fernão Ferro. Ano: 2021. Categoria: construcao.
-- Pasta: `public/projetos/ampliacao-moradia/`. Capa: `03-depois.webp`.
+- Pasta: `assets/img/projetos/ampliacao-moradia/`. Capa: `03-depois.webp`.
 
 | Ficheiro | Fase | Origem | Dimensões |
 |---|---|---|---|
@@ -172,7 +172,7 @@ Tratamentos:
 ## Recuperação de uma casa de dois pisos
 
 - Obra: Casa de dois pisos (obra D). Localidade: Casal de Cambra. Ano: 2026. Categoria: recuperacao.
-- Pasta: `public/projetos/recuperacao-casa/`. Capa: `02-depois.webp`.
+- Pasta: `assets/img/projetos/recuperacao-casa/`. Capa: `02-depois.webp`.
 
 | Ficheiro | Fase | Origem | Dimensões |
 |---|---|---|---|

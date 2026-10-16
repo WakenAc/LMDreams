@@ -1,15 +1,663 @@
 <!doctype html>
 <html lang="pt-PT">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="format-detection" content="telephone=no" />
-    <!--app-head-->
-    <style>html:not([data-hydrated]) :is([data-filter-group],[data-project-open]){visibility:hidden}[data-lead-nojs]{display:none}html[data-lead-failed] [data-lead-submit]{display:none}html[data-lead-failed] [data-lead-nojs]{display:block}</style>
-    <noscript><style>[data-filter-group],[data-project-open],[data-lead-submit]{display:none}[data-lead-nojs]{display:block}</style></noscript>
-  </head>
-  <body>
-    <div id="root"><!--app-html--></div>
-    <script type="module" src="/src/entry-client.tsx"></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>LMDreams | Construção civil e remodelações, da licença à chave na mão</title>
+  <meta name="description" content="Construção civil e remodelações em Portugal continental. Da licença à entrega da chave, cada fase da obra nas mãos de profissionais com mais de 30 anos de experiência.">
+  <meta name="theme-color" content="#12171c">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://www.lmdreams.pt/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_PT">
+  <meta property="og:site_name" content="LMDreams">
+  <meta property="og:title" content="LMDreams | Construção civil e remodelações, da licença à chave na mão">
+  <meta property="og:description" content="Construção civil e remodelações em Portugal continental. Da licença à entrega da chave, cada fase da obra nas mãos de profissionais com mais de 30 anos de experiência.">
+  <meta property="og:url" content="https://www.lmdreams.pt/">
+  <meta property="og:image" content="https://www.lmdreams.pt/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Moradia contemporânea ao anoitecer, com o símbolo e o nome LMDreams e a frase “O seu sonho, a nossa obra.” Imagem ilustrativa gerada por IA.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LMDreams | Construção civil e remodelações, da licença à chave na mão">
+  <meta name="twitter:description" content="Construção civil e remodelações em Portugal continental. Da licença à entrega da chave, cada fase da obra nas mãos de profissionais com mais de 30 anos de experiência.">
+  <meta name="twitter:image" content="https://www.lmdreams.pt/og-image.jpg">
+  <link rel="manifest" href="site.webmanifest">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"GeneralContractor","name":"LMDreams","url":"https://www.lmdreams.pt/","logo":"https://www.lmdreams.pt/assets/icons/logo-lmdreams.png","image":"https://www.lmdreams.pt/og-image.jpg","description":"Empresa de construção civil e remodelações em Portugal continental, organizada por especialidades. Profissionais de construção com mais de 30 anos de experiência.","telephone":"+351919233372","email":"mendes3pm@gmail.com","areaServed":{"@type":"AdministrativeArea","name":"Portugal continental"},"knowsAbout":["Licenciamento e projeto","Construção civil","Remodelação de cozinhas","Remodelação de casas de banho","Aplicação de pavimentos e revestimentos","Recuperação de imóveis","Trabalhos exteriores","Remodelações completas","Canalização","Eletricidade","Pintura","Carpintaria","Tetos falsos e divisórias","Isolamentos","Impermeabilizações","Reparações e manutenção","Preparação e coordenação de obra"],"sameAs":["https://www.instagram.com/lmdreams_construcoes","https://www.facebook.com/LmDreamnsConstrucoes"],"legalName":"LMDreams, Unipessoal Lda.","vatID":"516383370","address":{"@type":"PostalAddress","streetAddress":"Praceta Armando José Fernandes, n.º 12A, r/c esquerdo","postalCode":"2845-611","addressLocality":"Amora","addressCountry":"PT"}}</script>
+  <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
+  <link rel="icon" href="assets/icons/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@1,6..72,200..500&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css?v=12">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <!-- Símbolo do logótipo LMDreams (telhado com chaminé e janela), redesenhado em vetor -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="marca" viewBox="-6 -8 720 392">
+      <g fill="none" stroke="currentColor" stroke-miterlimit="10">
+        <polyline points="10,368 350,10 492,156 492,98 568,98 568,234 698,368" stroke-width="18"/>
+        <polyline points="68,362 350,74 632,362" stroke-width="9"/>
+      </g>
+      <g fill="currentColor">
+        <rect x="283" y="235" width="66" height="62"/><rect x="358" y="235" width="64" height="62"/>
+        <rect x="283" y="306" width="66" height="64"/><rect x="358" y="306" width="64" height="64"/>
+      </g>
+    </symbol>
+  </svg>
+
+  <a class="skip" href="#conteudo">Saltar para o conteúdo</a>
+
+  <!-- Ecrã de carregamento: só aparece com JavaScript ativo -->
+  <div class="loader" aria-hidden="true">
+    <svg class="loader__mark" viewBox="0 0 720 392"><use href="#marca"/></svg>
+    <span class="loader__brand">LMDreams</span>
+    <span class="loader__line"><i></i></span>
+  </div>
+
+  <header class="hdr">
+    <a class="brand" href="#inicio" aria-label="LMDreams, voltar ao início">
+      <svg class="brand__mark" viewBox="0 0 720 392" aria-hidden="true"><use href="#marca"/></svg>
+      <span>LMDreams</span>
+    </a>
+
+    <div class="explore">
+      <button class="explore__tab" type="button" aria-expanded="false" aria-controls="explore-panel">
+        <span>Percorrer a obra</span>
+        <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <nav class="explore__panel" id="explore-panel" aria-label="Fases da obra e secções" data-lenis-prevent hidden>
+        <div class="explore__col">
+          <p class="explore__group">O projeto</p>
+          <ol class="explore__list">
+            <li><a href="#fase-01"><span class="n">01</span> Burocracia e licenciamento</a></li>
+            <li><a href="#fase-02"><span class="n">02</span> Planeamento e projeto</a></li>
+          </ol>
+          <p class="explore__group">A construção</p>
+          <ol class="explore__list" start="3">
+            <li><a href="#fase-03"><span class="n">03</span> Preparação do terreno</a></li>
+            <li><a href="#fase-04"><span class="n">04</span> Estrutura e construção</a></li>
+            <li><a href="#fase-05"><span class="n">05</span> Instalações e envolvente</a></li>
+          </ol>
+        </div>
+        <div class="explore__col">
+          <p class="explore__group">Os acabamentos</p>
+          <ol class="explore__list" start="6">
+            <li><a href="#fase-06"><span class="n">06</span> Cozinha</a></li>
+            <li><a href="#fase-07"><span class="n">07</span> Casa de banho</a></li>
+            <li><a href="#fase-08"><span class="n">08</span> Sala de estar</a></li>
+            <li><a href="#fase-09"><span class="n">09</span> Quarto</a></li>
+            <li><a href="#fase-10"><span class="n">10</span> Escadas</a></li>
+          </ol>
+          <p class="explore__group">A entrega</p>
+          <ol class="explore__list" start="11">
+            <li><a href="#fase-11"><span class="n">11</span> Exteriores e jardim</a></li>
+            <li><a href="#fase-12"><span class="n">12</span> Entrega em chave na mão</a></li>
+          </ol>
+        </div>
+        <div class="explore__col explore__col--pages">
+          <p class="explore__group">A empresa</p>
+          <ul class="explore__list">
+            <li><a href="#sobre">Sobre nós</a></li>
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#metodo">Método de trabalho</a></li>
+            <li><a href="#projetos">Projetos</a></li>
+            <li><a href="#contactos">Contactos</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="hdr__actions">
+      <a class="btn btn--ghost btn--call" href="tel:+351919233372">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h3.5l1.8 4.6-2.3 1.5a11 11 0 0 0 6.9 6.9l1.5-2.3L21 15.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <span>Ligar</span>
+      </a>
+      <a class="btn btn--brass" href="#contactos">Pedir orçamento</a>
+    </div>
+  </header>
+
+  <main id="conteudo">
+
+    <!-- ============================================================
+         A OBRA: 13 quadros (capa + 12 fases) num palco fixo.
+         data-trans  = transição de ENTRADA no quadro
+                       push | match | build | aperture | slide | aperture-out
+         data-img    = nome do ficheiro em assets/img/ (sem extensão; originais em rss/imgs/)
+         data-win    = janela usada nas transições "aperture"
+                       (centro X %, centro Y %, largura %, altura %, medidos na imagem original)
+         ============================================================ -->
+    <section class="journey" id="obra" aria-label="As doze fases de uma obra">
+      <div class="stage">
+        <nav class="cota" aria-label="Ir para uma fase da obra">
+          <span class="cota__end cota__end--start">Licença</span>
+          <div class="cota__line">
+            <span class="cota__fill"></span>
+            <ol class="cota__ticks"></ol>
+          </div>
+          <span class="cota__end cota__end--end">Chave na mão</span>
+        </nav>
+
+        <section class="phase phase--cover" id="inicio" data-act="" data-name="Capa">
+          <div class="phase__media" data-img="fase-00-capa">
+            <img alt="Desenho de arquitetura de uma moradia contemporânea, em traço branco sobre papel azul-escuro" decoding="async">
+            <div class="ph" aria-hidden="true"></div>
+          </div>
+          <div class="phase__copy">
+            <p class="kicker reveal">Construção civil e remodelações em Portugal continental</p>
+            <h1 class="display reveal intro">
+              <span class="d-sans"><span class="line">O seu sonho,</span></span>
+              <span class="d-serif"><span class="line">a nossa obra.</span></span>
+            </h1>
+            <p class="phase__text reveal">Da licença à entrega da chave, cada fase fica nas mãos de quem realmente sabe. Profissionais com mais de 30 anos de experiência, cada um na sua especialidade, coordenados por nós.</p>
+          </div>
+          <div class="cover__aside reveal" aria-hidden="true">
+            <p class="cover__quote">Doze fases,<br>uma só obra.</p>
+            <p class="cover__note">Desça para percorrer a obra, do primeiro traço à chave na mão.</p>
+          </div>
+        </section>
+
+        <section class="phase" id="fase-01" data-trans="push" data-act="O projeto" data-name="Burocracia e licenciamento" aria-labelledby="t-01">
+          <div class="phase__media" data-img="fase-01-licenciamento">
+            <img alt="Secretária com planta topográfica, processo de licenciamento e carimbos de aprovação" decoding="async">
+            <div class="ph" aria-hidden="true"></div>
+          </div>
+          <div class="phase__copy">
+            <h2 class="display reveal" id="t-01"><span class="d-sans">Antes de construir,</span> <span class="d-serif">abrir o caminho.</span></h2>
+            <p class="phase__text reveal">Análise de viabilidade, licenças e aprovações. Tratamos de todo o processo junto da câmara municipal e dizemos-lhe sempre em que ponto está, para que a obra comece com tudo em ordem.</p>
+            <p class="phase__specs reveal"><span>Especialidades</span> Arquitetura, engenharia e licenciamento</p>
+          </div>
+        </section>
+
+        <section class="phase" id="fase-02" data-trans="push" data-act="O projeto" data-name="Planeamento e projeto" aria-labelledby="t-02">
+          <div class="phase__media" data-img="fase-02-projeto">
+            <img alt="Maquete branca de uma moradia sobre uma mesa de arquitetura, rodeada de esboços" decoding="async">
+            <div class="ph" aria-hidden="true"></div>
+          </div>
+          <div class="phase__copy">
+            <h2 class="display reveal" id="t-02"><span class="d-sans">Cada traço</span> <span class="d-serif">tem uma razão.</span></h2>
+            <p class="phase__text reveal">Conceito, arquitetura e especialidades. Fazemos o projeto consigo e coordenamos as especialidades, para que, antes da primeira pedra, já se saiba a ordem dos trabalhos e quem entra em cada fase.</p>
+            <p class="phase__specs reveal"><span>Especialidades</span> Arquitetura, estruturas, águas e esgotos, eletricidade e climatização</p>
+          </div>
+        </section>
+
+        <section class="phase" id="fase-03" data-trans="match" data-act="A construção" data-name="Preparação do terreno" aria-labelledby="t-03">
+          <div class="phase__media" data-img="fase-03-terreno">
+            <img alt="Terreno limpo com estacas de demarcação, valas de fundação e uma escavadora" decoding="async">
+            <div class="ph" aria-hidden="true"></div>
+          </div>
+          <div class="phase__copy">
+            <h2 class="display reveal" id="t-03"><span class="d-sans">Tudo assenta</span> <span class="d-serif">nesta fase.</span></h2>
+            <p class="phase__text reveal">Limpeza, demarcações e infraestrutura inicial. Preparamos bem as bases, porque é delas que depende o resto da obra.</p>
+            <p class="phase__specs reveal"><span>Especialidades</span> Topografia, movimentação de terras e infraestruturas</p>
+          </div>
+        </section>
+
+        <section class="phase" id="fase-04" data-trans="build" data-act="A construção" data-name="Estrutura e construção" aria-labelledby="t-04">
+          <div class="phase__media" data-img="fase-04-estrutura">
+            <img alt="Estrutura de betão armado da moradia, com lajes, pilares e andaimes" decoding="async">
+            <div class="ph" aria-hidden="true"></div>
+          </div>
+          <div class="phase__copy">
+            <h2 class="display reveal" id="t-04"><span class="d-sans">A casa</span> <span class="d-serif">ganha forma.</span></h2>
+            <p class="phase__text reveal">Fundações, estrutura, paredes e cobertura. Cada etapa é verificada antes de se avançar para a seguinte.</p>
+            <p class="phase__specs reveal"><span>Especialidades</span> Betão armado, alvenarias e coberturas</p>
+          </div>
+        </section>
+
+        <section class="phase" id="fase-05" data-trans="build" data-win="48.9 58.6 19.4 18.6" data-act="A construção" data-name="Instalações e envolvente" aria-labelledby="t-05">
+          <div class="phase__media" data-img="fase-05-envolvente">
+            <img alt="Moradia com a fachada em acabamento, caixilharias montadas e andaime lateral" decoding="async">
+            <div class="ph" aria-hidden="true"></div>
+          </div>
+          <div class="phase__copy">
+            <h2 class="display reveal" id="t-05"><span class="d-sans">O que não se vê</span> <span class="d-serif">é o que mais dura.</span></h2>
+            <p class="phase__text reveal">Água, eletricidade, isolamento, caixilharias e fachadas. As redes são feitas por canalizadores e eletricistas de profissão, antes de se fechar a primeira parede.</p>
+            <p class="phase__specs reveal"><span>Especialidades</span> Canalização, eletricidade, isolamentos, caixilharia e fachadas</p>
+          </div>
+        </section>
+
+        <section class="phase" id="fase-06" data-trans="aperture" data-act="Os acabamentos" data-name="Cozinha" aria-labelledby="t-06">
+          <div class="phase__media" data-img="fase-06-cozinha">
+            <img alt="Cozinha com ilha em pedra, móveis em carvalho e candeeiros suspensos" decoding="async">
+            <div class="ph" aria-hidden="true"></div>
+          </div>
+          <div class="phase__copy">
+            <h2 class="display reveal" id="t-06"><span class="d-sans">A cozinha,</span> <span class="d-serif">pensada ao centímetro.</span></h2>
+            <p class="phase__text reveal">Materiais, equipamentos e detalhes funcionais. Pontos de água, tomadas e extração de fumos ficam definidos antes de os móveis chegarem.</p>
+            <p class="phase__specs reveal"><span>Especialidades</span> Carpintaria, canalização, eletricidade e revestimentos</p>
+          </div>
+        </section>
+
+        <section class="phase" id="fase-07" data-trans="slide" data-act="Os acabamentos" data-name="Casa de banho" aria-labelledby="t-07">
+          <div class="phase__media" data-img="fase-07-casa-de-banho">
+            <img alt="Casa de banho com revestimento em pedra, duche em vidro e banheira junto à janela" decoding="async">
+            <div class="ph" aria-hidden="true"></div>
+          </div>
+          <div class="phase__copy">
+            <h2 class="display reveal" id="t-07"><span class="d-sans">Rigor</span> <span class="d-serif">em cada junta.</span></h2>
+            <p class="phase__text reveal">Revestimentos, loiças sanitárias e iluminação. Primeiro a impermeabilização, depois os revestimentos e só no fim as loiças: é esta ordem que evita infiltrações.</p>
+            <p class="phase__specs reveal"><span>Especialidades</span> Impermeabilização, canalização, revestimentos e iluminação</p>
+          </div>
+        </section>
+
+        <section class="phase" id="fase-08" data-trans="slide" data-act="Os acabamentos" data-name="Sala de estar" aria-labelledby="t-08">
+          <div class="phase__media" data-img="fase-08-sala">
+            <img alt="Sala de estar com pavimento em madeira, teto com iluminação indireta e janelas para o jardim" decoding="async">
+            <div class="ph" aria-hidden="true"></div>
+          </div>
+          <div class="phase__copy">
+            <h2 class="display reveal" id="t-08"><span class="d-sans">Espaço</span> <span class="d-serif">para viver.</span></h2>
+            <p class="phase__text reveal">Pavimentos, paredes, tetos e ambiente. Luz, pavimento e cor das paredes escolhidos em conjunto, para a sala funcionar como um todo.</p>
+            <p class="phase__specs reveal"><span>Especialidades</span> Pavimentos, tetos falsos, pintura e iluminação</p>
+          </div>
+        </section>
+
+        <section class="phase" id="fase-09" data-trans="slide" data-act="Os acabamentos" data-name="Quarto" aria-labelledby="t-09">
+          <div class="phase__media" data-img="fase-09-quarto">
+            <img alt="Quarto com cabeceira em carvalho, roupeiro embutido e luz quente de cabeceira" decoding="async">
+            <div class="ph" aria-hidden="true"></div>
+          </div>
+          <div class="phase__copy">
+            <h2 class="display reveal" id="t-09"><span class="d-sans">O lugar</span> <span class="d-serif">do descanso.</span></h2>
+            <p class="phase__text reveal">Conforto, arrumação e iluminação. Roupeiros ajustados ao espaço, isolamento acústico e luz pensada para cada hora do dia.</p>
+            <p class="phase__specs reveal"><span>Especialidades</span> Carpintaria, isolamento acústico, pintura e eletricidade</p>
+          </div>
+        </section>
+
+        <section class="phase" id="fase-10" data-trans="slide" data-act="Os acabamentos" data-name="Escadas" aria-labelledby="t-10">
+          <div class="phase__media" data-img="fase-10-escadas">
+            <img alt="Escada suspensa em carvalho com guarda em vidro e luz embutida nos degraus" decoding="async">
+            <div class="ph" aria-hidden="true"></div>
+          </div>
+          <div class="phase__copy">
+            <h2 class="display reveal" id="t-10"><span class="d-sans">O detalhe</span> <span class="d-serif">que une os pisos.</span></h2>
+            <p class="phase__text reveal">Design, segurança e acabamentos. Degraus, guardas e corrimãos em madeira, pedra ou metal, à medida do espaço.</p>
+            <p class="phase__specs reveal"><span>Especialidades</span> Carpintaria, serralharia e cantaria</p>
+          </div>
+        </section>
+
+        <section class="phase" id="fase-11" data-trans="aperture-out" data-win="48.8 58.6 19.4 18.2" data-act="A entrega" data-name="Exteriores e jardim" aria-labelledby="t-11">
+          <div class="phase__media" data-img="fase-11-exterior">
+            <img alt="A moradia concluída ao anoitecer, com o jardim, os caminhos e a iluminação exterior acesos" decoding="async">
+            <div class="ph" aria-hidden="true"></div>
+          </div>
+          <div class="phase__copy">
+            <h2 class="display reveal" id="t-11"><span class="d-sans">A casa</span> <span class="d-serif">encontra o jardim.</span></h2>
+            <p class="phase__text reveal">Pavimentos, iluminação e paisagismo. Muros, terraços e caminhos acabados com o mesmo cuidado do interior.</p>
+            <p class="phase__specs reveal"><span>Especialidades</span> Pavimentos exteriores, paisagismo e iluminação exterior</p>
+          </div>
+        </section>
+
+        <section class="phase" id="fase-12" data-trans="push" data-focus="58 50" data-act="A entrega" data-name="Entrega em chave na mão" aria-labelledby="t-12">
+          <div class="phase__media" data-img="fase-12-entrega">
+            <img alt="Mãos a entregar a chave da casa, com a porta da moradia iluminada ao fundo" decoding="async">
+            <div class="ph" aria-hidden="true"></div>
+          </div>
+          <div class="phase__copy">
+            <h2 class="display reveal" id="t-12"><span class="d-sans">O sonho</span> <span class="d-serif">já é casa.</span></h2>
+            <p class="phase__text reveal">Casa concluída, pronta a habitar. Percorremos a casa consigo, divisão a divisão, e só entregamos a chave quando estiver tudo como combinado.</p>
+            <p class="phase__specs reveal"><span>Especialidades</span> Coordenação de obra e verificação final</p>
+            <div class="phase__cta reveal">
+              <a class="btn btn--brass" href="#contactos">Pedir orçamento</a>
+              <a class="btn btn--ghost" href="#servicos">Conhecer os serviços</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Interface do palco (só no modo cinematográfico) -->
+        <span class="laser" aria-hidden="true"></span>
+
+        <div class="rail" aria-hidden="true">
+          <p class="rail__count"><span class="rail__num">01</span><span class="rail__total">de 12</span></p>
+          <span class="rail__track"><i></i></span>
+          <p class="rail__act">O projeto</p>
+        </div>
+
+        <aside class="legend" aria-hidden="true">
+          <dl>
+            <div><dt>Obra</dt><dd>Moradia unifamiliar</dd></div>
+            <div><dt>Fase</dt><dd class="legend__name">Burocracia e licenciamento</dd></div>
+            <div><dt>Especialidades</dt><dd class="legend__specs">Arquitetura, engenharia e licenciamento</dd></div>
+            <div><dt>Folha</dt><dd class="legend__sheet"><span class="legend__num">01</span> de 12</dd></div>
+          </dl>
+          <p class="legend__note">Imagem ilustrativa gerada por IA</p>
+        </aside>
+
+
+        <p class="scroll-cue" aria-hidden="true"><span></span>Desça para começar</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ SOBRE -->
+    <section class="section about" id="sobre" aria-labelledby="sobre-t">
+      <div class="wrap">
+        <div class="about__head">
+          <h2 class="h-sec" id="sobre-t"><span class="d-sans">Não acreditamos no faz-tudo.</span> <span class="d-serif">Acreditamos em especialistas.</span></h2>
+          <div class="about__intro">
+            <p>A LMDreams é uma empresa de obras que reúne profissionais de construção com mais de 30 anos de experiência. Com eles, fazemos desde pequenas reparações a obras completas.</p>
+            <p>Um trabalho bem feito começa pela pessoa certa e nota-se no acabamento e na durabilidade. Acompanhamos de perto quem nos confia a obra, seja uma família ou um arquiteto, e dizemos com clareza o que foi feito e o que falta.</p>
+          </div>
+        </div>
+
+        <ul class="trades">
+          <li class="trade">
+            <figure class="trade__media" data-img="especialista-eletricista"><img alt="Mãos de um eletricista a ligar um quadro elétrico" loading="lazy" decoding="async"><div class="ph" aria-hidden="true"></div></figure>
+            <p class="trade__line">A eletricidade, com o eletricista.</p>
+          </li>
+          <li class="trade">
+            <figure class="trade__media" data-img="especialista-canalizador"><img alt="Mãos de um canalizador a apertar um coletor de água" loading="lazy" decoding="async"><div class="ph" aria-hidden="true"></div></figure>
+            <p class="trade__line">A canalização, com o canalizador.</p>
+          </li>
+          <li class="trade">
+            <figure class="trade__media" data-img="especialista-carpinteiro"><img alt="Mãos de um carpinteiro a afinar uma porta de roupeiro em carvalho" loading="lazy" decoding="async"><div class="ph" aria-hidden="true"></div></figure>
+            <p class="trade__line">Os roupeiros, com o carpinteiro.</p>
+          </li>
+          <li class="trade">
+            <figure class="trade__media" data-img="especialista-pintor"><img alt="Rolo de pintura a aplicar tinta numa parede, junto a um recorte perfeito" loading="lazy" decoding="async"><div class="ph" aria-hidden="true"></div></figure>
+            <p class="trade__line">A pintura, com o pintor.</p>
+          </li>
+        </ul>
+        <p class="trades__note">Cada especialidade é executada por um profissional com experiência nessa área. Nós coordenamos o conjunto.</p>
+
+        <div class="about__grid">
+          <dl class="tblock about__facts">
+            <div><dt>Experiência</dt><dd>Mais de 30 anos</dd></div>
+            <div><dt>Alvará</dt><dd>N.º 101097-PAR, obras particulares, classe 2, emitido pelo IMPIC, I.P.</dd></div>
+            <div><dt>Área de atuação</dt><dd>Portugal continental</dd></div>
+            <div><dt>Resposta</dt><dd>No prazo máximo de 8 dias úteis</dd></div>
+          </dl>
+
+          <ul class="principles">
+            <li><h3>Profissionais especializados</h3><p>Cada trabalho fica com quem o faz no dia a dia: a pintura com o pintor, os roupeiros com o carpinteiro.</p></li>
+            <li><h3>Comunicação transparente</h3><p>Falamos claro sobre o que vai ser feito e o que custa. Se alguma coisa mudar, fica a saber antes de avançarmos.</p></li>
+            <li><h3>Planeamento rigoroso</h3><p>Definimos a sequência dos trabalhos antes de começar, para que cada especialidade entre na altura certa.</p></li>
+            <li><h3>Qualidade de execução</h3><p>Preparamos bem as bases e verificamos cada fase antes de passar à seguinte.</p></li>
+            <li><h3>Acompanhamento durante toda a obra</h3><p>Da primeira visita à entrega, explicamos quem faz o quê e em que ponto está a obra.</p></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ SERVIÇOS -->
+    <section class="section services" id="servicos" aria-labelledby="servicos-t">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 class="h-sec" id="servicos-t"><span class="d-sans">Do pequeno arranjo</span> <span class="d-serif">à obra completa.</span></h2>
+          <p class="sec-head__text">Fazemos a remodelação de casas e obras em condomínios, escritórios e espaços comerciais, e recuperamos imóveis para quem os quer habitar, arrendar ou vender.</p>
+        </div>
+
+        <div class="services__main">
+          <div class="services__preview" aria-hidden="true">
+            <figure class="services__frame">
+              <div class="services__img is-on" data-img="fase-04-estrutura"><img alt="" loading="lazy" decoding="async"><div class="ph"></div></div>
+              <div class="services__img" data-img="fase-06-cozinha"><img alt="" loading="lazy" decoding="async"><div class="ph"></div></div>
+              <div class="services__img" data-img="fase-07-casa-de-banho"><img alt="" loading="lazy" decoding="async"><div class="ph"></div></div>
+              <div class="services__img" data-img="fase-08-sala"><img alt="" loading="lazy" decoding="async"><div class="ph"></div></div>
+              <div class="services__img" data-img="servico-recuperacao"><img alt="" loading="lazy" decoding="async"><div class="ph"></div></div>
+              <div class="services__img" data-img="fase-11-exterior"><img alt="" loading="lazy" decoding="async"><div class="ph"></div></div>
+            </figure>
+          </div>
+          <ul class="services__list">
+            <li class="svc is-on" data-svc="0"><h3>Construção civil</h3><p>Construção e ampliação de edifícios, com cada fase entregue à equipa da especialidade.</p></li>
+            <li class="svc" data-svc="1"><h3>Remodelação de cozinhas</h3><p>Canalização, eletricidade, revestimentos e montagem, cada trabalho feito por quem o domina.</p></li>
+            <li class="svc" data-svc="2"><h3>Remodelação de casas de banho</h3><p>Loiças sanitárias, canalização, impermeabilização e revestimentos, numa sequência de trabalhos planeada.</p></li>
+            <li class="svc" data-svc="3"><h3>Pavimentos e revestimentos</h3><p>Cerâmica, pedra, madeira e vinílico, aplicados sobre bases bem preparadas e niveladas.</p></li>
+            <li class="svc" data-svc="4"><h3>Recuperação de imóveis</h3><p>Reabilitação de edifícios antigos, preservando o que tem valor e corrigindo o que já não serve.</p></li>
+            <li class="svc" data-svc="5"><h3>Trabalhos exteriores</h3><p>Muros, pavimentos exteriores, terraços e arranjos de logradouros.</p></li>
+          </ul>
+        </div>
+
+        <div class="services__more">
+          <h3 class="services__more-t">Também fazemos</h3>
+          <dl class="more">
+            <div><dt>Licenciamento e projeto</dt><dd>Análise de viabilidade, projeto de arquitetura e especialidades, e todo o processo de licenciamento junto da câmara municipal.</dd></div>
+            <div><dt>Remodelações completas</dt><dd>Remodelação integral de casas e espaços comerciais, com todas as especialidades coordenadas por nós.</dd></div>
+            <div><dt>Preparação e coordenação de obra</dt><dd>Planeamento, sequência dos trabalhos e coordenação das várias especialidades ao longo da obra.</dd></div>
+            <div><dt>Canalização</dt><dd>Redes de águas e esgotos, substituição de tubagens e reparação de fugas por canalizadores experientes.</dd></div>
+            <div><dt>Eletricidade</dt><dd>Instalações elétricas novas e remodelação de quadros e circuitos, executadas por eletricistas.</dd></div>
+            <div><dt>Pintura</dt><dd>Pintura de interiores e exteriores, com as superfícies bem preparadas antes da primeira demão.</dd></div>
+            <div><dt>Carpintaria</dt><dd>Portas, roupeiros, rodapés e outros trabalhos em madeira, ajustados ao espaço.</dd></div>
+            <div><dt>Tetos falsos e divisórias</dt><dd>Tetos falsos e paredes em gesso cartonado, com isolamento e iluminação integrados quando fizer sentido.</dd></div>
+            <div><dt>Isolamentos</dt><dd>Isolamento térmico e acústico de paredes, coberturas e pavimentos, incluindo capoto (isolamento pelo exterior).</dd></div>
+            <div><dt>Impermeabilizações</dt><dd>Coberturas, terraços, varandas e zonas húmidas, para tratar as infiltrações na origem.</dd></div>
+            <div><dt>Reparações e manutenção</dt><dd>Reparações pontuais e manutenção de habitações, condomínios e espaços comerciais.</dd></div>
+          </dl>
+          <p class="services__ask">Cada obra é diferente. Diga-nos de que precisa e confirmamos se é um trabalho que fazemos. <a class="link" href="#contactos">Pedir orçamento</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ MÉTODO -->
+    <section class="section method" id="metodo" aria-labelledby="metodo-t">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 class="h-sec" id="metodo-t"><span class="d-sans">Uma obra corre melhor</span> <span class="d-serif">quando todos sabem o que vem a seguir.</span></h2>
+          <p class="sec-head__text">Estas são as oito etapas que seguimos consigo, do primeiro contacto à entrega.</p>
+        </div>
+
+        <ol class="steps">
+          <li><span class="steps__n">01</span><h3>Primeiro contacto</h3><p>Pelo meio de contacto que preferir, ouvimos o que tem em mente e perguntamos onde fica a obra.</p></li>
+          <li><span class="steps__n">02</span><h3>Visita ou análise do projeto</h3><p>Visitamos o local ou analisamos o projeto e as fotografias que nos enviar.</p></li>
+          <li><span class="steps__n">03</span><h3>Identificação das necessidades</h3><p>Percebemos o que é preciso fazer e que especialidades vão entrar na obra.</p></li>
+          <li><span class="steps__n">04</span><h3>Orçamento claro</h3><p>Entregamos um orçamento escrito que diz o que está incluído e o que não está.</p></li>
+          <li><span class="steps__n">05</span><h3>Planeamento dos trabalhos</h3><p>Organizamos a ordem dos trabalhos e acertamos consigo o calendário da obra.</p></li>
+          <li><span class="steps__n">06</span><h3>Execução por especialistas</h3><p>Eletricistas, canalizadores, carpinteiros e pintores entram cada um na sua fase, coordenados por nós.</p></li>
+          <li><span class="steps__n">07</span><h3>Acompanhamento e comunicação</h3><p>Mantemo-lo a par do andamento da obra e, se o combinado tiver de mudar, falamos consigo antes de avançar.</p></li>
+          <li><span class="steps__n">08</span><h3>Verificação final e entrega</h3><p>Verificamos os trabalhos consigo, corrigimos o que for preciso e só depois entregamos a obra.</p></li>
+        </ol>
+
+        <div class="clarity">
+          <div class="clarity__lead">
+            <h3 class="clarity__t">O que vai saber em todas as fases</h3>
+            <ul class="clarity__list">
+              <li>O que vai ser executado</li>
+              <li>Quem é responsável por cada especialidade</li>
+              <li>Quais são as principais etapas</li>
+              <li>Como está a decorrer o trabalho</li>
+              <li>Que alterações podem afetar o orçamento ou os prazos</li>
+            </ul>
+          </div>
+          <p class="clarity__text">Numa obra podem surgir imprevistos, como uma canalização antiga em mau estado ou uma parede que esconde humidade. Quando acontecem, explicamos o que se passa, as opções e o impacto no orçamento e no prazo, e só avançamos depois de decidir consigo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ PROJETOS -->
+    <section class="section projects" id="projetos" aria-labelledby="projetos-t">
+      <div class="wrap">
+        <div class="sec-head sec-head--row">
+          <div>
+            <h2 class="h-sec" id="projetos-t"><span class="d-sans">Obras que já</span> <span class="d-serif">entregámos.</span></h2>
+            <p class="sec-head__text">Fotografias de obras realizadas pela LMDreams, publicadas com autorização dos clientes.</p>
+          </div>
+          <div class="strip-ctrl">
+            <button class="strip-btn" type="button" data-dir="-1" aria-label="Projetos anteriores"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+            <button class="strip-btn" type="button" data-dir="1" aria-label="Projetos seguintes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <ul class="strip" tabindex="0" aria-label="Lista de projetos">
+        <li class="card">
+          <figure class="card__media"><img src="assets/img/projetos/remodelacao-predio/01-depois.webp" width="671" height="503" alt="Entrada do prédio depois da remodelação, com pórtico cinzento e revestimento escuro junto à porta." loading="lazy" decoding="async"></figure>
+          <p class="card__cat">Remodelações</p>
+          <h3 class="card__t">Recuperação e remodelação de prédio de três frações</h3>
+          <p class="card__d">Todas as frações remodeladas, com fachadas, cozinhas e terraço.</p>
+          <dl class="card__meta"><div><dt>Local</dt><dd>Feijó</dd></div><div><dt>Ano</dt><dd>2019</dd></div></dl>
+          <button class="card__open" type="button" data-projeto="projeto-remodelacoes" aria-haspopup="dialog">Ver antes e depois<span class="sr-only">: Recuperação e remodelação de prédio de três frações</span></button>
+        </li>
+        <li class="card">
+          <figure class="card__media"><img src="assets/img/projetos/cozinha-predio/02-depois.webp" width="1200" height="553" alt="Cozinha remodelada com colunas em tom de carvalho, azulejo metro e península branca, depois da obra." loading="lazy" decoding="async"></figure>
+          <p class="card__cat">Cozinhas</p>
+          <h3 class="card__t">Cozinha em tom de carvalho e branco</h3>
+          <p class="card__d">Móveis em carvalho e branco, azulejo metro, bancada branca e península.</p>
+          <dl class="card__meta"><div><dt>Local</dt><dd>Feijó</dd></div><div><dt>Ano</dt><dd>2019</dd></div></dl>
+          <button class="card__open" type="button" data-projeto="projeto-cozinhas" aria-haspopup="dialog">Ver antes e depois<span class="sr-only">: Cozinha em tom de carvalho e branco num prédio</span></button>
+        </li>
+        <li class="card">
+          <figure class="card__media"><img src="assets/img/projetos/casa-de-banho-casa/01-depois.webp" width="1200" height="900" alt="Duche com resguardo de correr e paredes em cerâmica cinza-bege, depois da obra." loading="lazy" decoding="async"></figure>
+          <p class="card__cat">Casas de banho</p>
+          <h3 class="card__t">Casa de banho numa casa de dois pisos</h3>
+          <p class="card__d">Duche com resguardo de correr, cerâmica de grande formato e espelho iluminado.</p>
+          <dl class="card__meta"><div><dt>Local</dt><dd>Casal de Cambra</dd></div><div><dt>Ano</dt><dd>2026</dd></div></dl>
+          <button class="card__open" type="button" data-projeto="projeto-casas-de-banho" aria-haspopup="dialog">Ver fotografias<span class="sr-only">: Casa de banho numa habitação de dois pisos recuperada</span></button>
+        </li>
+        <li class="card">
+          <figure class="card__media"><img src="assets/img/projetos/livraria-cafe/02-depois.webp" width="720" height="540" alt="Estantes escuras com livros e soalho de pinho na livraria, depois da obra." loading="lazy" decoding="async"></figure>
+          <p class="card__cat">Interiores</p>
+          <h3 class="card__t">Livraria-café: remodelação de espaço comercial</h3>
+          <p class="card__d">Loja transformada em livraria e café, com soalho de pinho e tetos falsos.</p>
+          <dl class="card__meta"><div><dt>Local</dt><dd>Lisboa</dd></div><div><dt>Ano</dt><dd>2017</dd></div></dl>
+          <button class="card__open" type="button" data-projeto="projeto-interiores" aria-haspopup="dialog">Ver antes e depois<span class="sr-only">: Livraria-café: remodelação de espaço comercial</span></button>
+        </li>
+        <li class="card">
+          <figure class="card__media"><img src="assets/img/projetos/exteriores-moradia/01-depois.webp" width="960" height="720" alt="Piscina com deck e jardim com relvado de uma moradia, depois da obra." loading="lazy" decoding="async"></figure>
+          <p class="card__cat">Exteriores</p>
+          <h3 class="card__t">Arranjos exteriores com piscina e jardim</h3>
+          <p class="card__d">Piscina com deck, relvado, caminhos em lajeta e canteiros de gravilha branca.</p>
+          <dl class="card__meta"><div><dt>Local</dt><dd>Fernão Ferro</dd></div><div><dt>Ano</dt><dd>2021</dd></div></dl>
+          <button class="card__open" type="button" data-projeto="projeto-exteriores" aria-haspopup="dialog">Ver fotografias<span class="sr-only">: Arranjos exteriores com piscina e jardim</span></button>
+        </li>
+        <li class="card">
+          <figure class="card__media"><img src="assets/img/projetos/patio-pergola/01-depois.webp" width="960" height="596" alt="Pérgola de madeira sobre a zona da churrasqueira no pátio, depois da obra." loading="lazy" decoding="async"></figure>
+          <p class="card__cat">Exteriores</p>
+          <h3 class="card__t">Pátio com pérgola de madeira e churrasqueira</h3>
+          <p class="card__d">Pavimento cerâmico imitação madeira, canteiros com oliveira e zona coberta.</p>
+          <dl class="card__meta"><div><dt>Local</dt><dd>Seixal</dd></div><div><dt>Ano</dt><dd>2016</dd></div></dl>
+          <button class="card__open" type="button" data-projeto="projeto-exteriores-patio" aria-haspopup="dialog">Ver fotografias<span class="sr-only">: Pátio com pérgola de madeira e churrasqueira</span></button>
+        </li>
+        <li class="card">
+          <figure class="card__media"><img src="assets/img/projetos/ampliacao-moradia/03-depois.webp" width="938" height="704" alt="Moradia ampliada para dois pisos, com piscina e jardim, depois da obra." loading="lazy" decoding="async"></figure>
+          <p class="card__cat">Construção</p>
+          <h3 class="card__t">Ampliação de moradia para dois pisos</h3>
+          <p class="card__d">Paredes alteadas, segundo piso e cobertura nova numa moradia que tinha um piso e sótão.</p>
+          <dl class="card__meta"><div><dt>Local</dt><dd>Fernão Ferro</dd></div><div><dt>Ano</dt><dd>2021</dd></div></dl>
+          <button class="card__open" type="button" data-projeto="projeto-construcao" aria-haspopup="dialog">Ver antes e depois<span class="sr-only">: Ampliação de moradia para dois pisos</span></button>
+        </li>
+        <li class="card">
+          <figure class="card__media"><img src="assets/img/projetos/recuperacao-casa/02-depois.webp" width="1200" height="900" alt="Depois da obra: fachada de dois pisos pintada de branco, com molduras cor de mostarda." loading="lazy" decoding="async"></figure>
+          <p class="card__cat">Recuperação de imóveis</p>
+          <h3 class="card__t">Recuperação de uma casa de dois pisos</h3>
+          <p class="card__d">Fachada reparada e pintada, caixilharia nova, escada em pedra e roupeiro embutido.</p>
+          <dl class="card__meta"><div><dt>Local</dt><dd>Casal de Cambra</dd></div><div><dt>Ano</dt><dd>2026</dd></div></dl>
+          <button class="card__open" type="button" data-projeto="projeto-recuperacao" aria-haspopup="dialog">Ver antes e depois<span class="sr-only">: Recuperação de uma casa de dois pisos</span></button>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ============================================================ CONTACTOS -->
+    <section class="section contact" id="contactos" aria-labelledby="contactos-t">
+      <div class="contact__bg" data-img="fase-11-exterior" aria-hidden="true"><img alt="" loading="lazy" decoding="async"><div class="ph"></div></div>
+      <div class="wrap contact__inner">
+        <div class="contact__lead">
+          <h2 class="h-sec" id="contactos-t"><span class="d-sans">Tem uma obra em mente?</span> <span class="d-serif">Vamos falar.</span></h2>
+          <p class="contact__text">Descreva a obra por telefone, WhatsApp ou e-mail. Quanto mais nos disser sobre o trabalho, mais útil será a primeira conversa. Respondemos no prazo máximo de 8 dias úteis.</p>
+          <div class="contact__actions">
+            <a class="btn btn--brass btn--lg" href="tel:+351919233372">Ligar para +351 919 233 372</a>
+            <a class="btn btn--ghost btn--lg" href="https://wa.me/351919233372?text=Ol%C3%A1%2C%20gostaria%20de%20pedir%20um%20or%C3%A7amento%20para%20uma%20obra." target="_blank" rel="noopener">Falar por WhatsApp<span class="sr-only"> (abre numa nova janela)</span></a>
+            <a class="btn btn--ghost btn--lg" href="mailto:mendes3pm@gmail.com?subject=Pedido%20de%20or%C3%A7amento%20pelo%20site">Enviar e-mail</a>
+          </div>
+          <p class="contact__small">Chamada para a rede móvel nacional. Se tiver fotografias do espaço, pode enviá-las por WhatsApp ou e-mail.</p>
+        </div>
+
+        <dl class="tblock contact__data">
+          <div><dt>Telefone</dt><dd><a href="tel:+351919233372">+351 919 233 372</a> <small class="note">(chamada para a rede móvel nacional)</small></dd></div>
+          <div><dt>E-mail</dt><dd><a href="mailto:mendes3pm@gmail.com">mendes3pm@gmail.com</a></dd></div>
+          <div><dt>Horário</dt><dd>8h00 às 19h00</dd></div>
+          <div><dt>Área de atuação</dt><dd>Portugal continental</dd></div>
+          <div><dt>Morada</dt><dd>Praceta Armando José Fernandes, n.º 12A, r/c esquerdo, 2845-611 Amora</dd></div>
+        </dl>
+
+        <!-- POR DEFINIR: formulário de pedido de orçamento -->
+        <!-- POR DEFINIR: avaliações Google -->
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================ RODAPÉ -->
+  <footer class="ftr">
+    <div class="wrap">
+      <div class="ftr__top">
+        <div class="ftr__brand">
+          <a class="brand" href="#inicio" aria-label="LMDreams, voltar ao início">
+            <svg class="brand__mark" viewBox="0 0 720 392" aria-hidden="true"><use href="#marca"/></svg>
+            <span>LMDreams</span>
+          </a>
+          <p class="ftr__tag">O seu sonho, a nossa obra.</p>
+        </div>
+        <nav class="ftr__col" aria-label="Ligações rápidas">
+          <h2>Navegar</h2>
+          <ul>
+            <li><a href="#obra">A obra, fase a fase</a></li>
+            <li><a href="#sobre">Sobre nós</a></li>
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#metodo">Método de trabalho</a></li>
+            <li><a href="#projetos">Projetos</a></li>
+            <li><a href="#contactos">Contactos</a></li>
+          </ul>
+        </nav>
+        <div class="ftr__col">
+          <h2>Contactos</h2>
+          <ul>
+            <li><a href="tel:+351919233372">+351 919 233 372</a> <small class="note">(chamada para a rede móvel nacional)</small></li>
+            <li><a href="https://wa.me/351919233372" target="_blank" rel="noopener">WhatsApp<span class="sr-only"> (abre numa nova janela)</span></a></li>
+            <li><a href="mailto:mendes3pm@gmail.com">mendes3pm@gmail.com</a></li>
+            <li><a href="https://www.instagram.com/lmdreams_construcoes" target="_blank" rel="noopener">Instagram<span class="sr-only"> (abre numa nova janela)</span></a></li>
+            <li><a href="https://www.facebook.com/LmDreamnsConstrucoes" target="_blank" rel="noopener">Facebook<span class="sr-only"> (abre numa nova janela)</span></a></li>
+          </ul>
+        </div>
+        <nav class="ftr__col" aria-label="Políticas e termos">
+          <h2>Políticas</h2>
+          <ul>
+            <li><a href="/politica-de-privacidade/">Política de privacidade</a></li>
+            <li><a href="/politica-de-cookies/">Política de cookies</a></li>
+            <li><a href="/termos-e-condicoes/">Termos e condições</a></li>
+            <li><a href="https://www.livroreclamacoes.pt/inicio" target="_blank" rel="noopener">Livro de Reclamações Eletrónico<span class="sr-only"> (abre numa nova janela)</span></a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- POR DEFINIR: bloco de informação legal completo (a fornecer pelo cliente) -->
+      <div class="ftr__legal">
+        <p>LMDreams, Unipessoal Lda. Alvará de empreiteiro n.º 101097-PAR (obras particulares, classe 2), emitido pelo IMPIC, I.P.</p>
+        <p>As imagens das fases da obra são ilustrativas e foram geradas por IA. As fotografias de projetos são de obras realizadas pela LMDreams.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Detalhe de um projeto: comparador antes/depois e galeria (preenchido por main.js) -->
+  <dialog class="proj" id="projeto-dialogo" aria-labelledby="proj-t" data-lenis-prevent>
+    <div class="proj__inner">
+      <div class="proj__head">
+        <div>
+          <p class="proj__cat"></p>
+          <h2 class="proj__t" id="proj-t"></h2>
+        </div>
+        <button class="proj__close" type="button" aria-label="Fechar" autofocus>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </button>
+      </div>
+      <div class="proj__intro">
+        <p class="proj__desc"></p>
+        <dl class="tblock proj__meta"></dl>
+      </div>
+      <div class="proj__body"></div>
+    </div>
+  </dialog>
+
+  <a class="wa-float" href="https://wa.me/351919233372?text=Ol%C3%A1%2C%20gostaria%20de%20pedir%20um%20or%C3%A7amento%20para%20uma%20obra." target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.6 8.2c.2-.5.5-.5.8-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.2 0 .5-.1.6l-.5.6c-.1.2-.1.4 0 .5a6 6 0 0 0 2.8 2.5c.2.1.4 0 .5-.1l.6-.7c.2-.2.4-.2.6-.1l1.7.8c.2.1.4.3.4.5 0 .6-.2 1.3-.8 1.7-.6.4-1.5.5-2.6.1a9.6 9.6 0 0 1-5.2-5.2c-.4-1.1-.2-2.1.1-2.8Z" fill="currentColor"/></svg>
+    <span>Falar por WhatsApp</span><span class="sr-only"> (abre numa nova janela)</span>
+  </a>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="assets/js/projetos.js?v=1" defer></script>
+  <script src="assets/js/main.js?v=8" defer></script>
+</body>
 </html>
