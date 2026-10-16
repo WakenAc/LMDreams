@@ -24,14 +24,27 @@
      1. Imagens: procura o ficheiro com a extensão que existir.
         Se não existir, mostra um marcador com o nome a gerar.
      ------------------------------------------------------------------- */
+  // Variantes mais leves (geradas para as fases): o palco usa "cover" em 16:9, por isso a largura
+  // útil depende também da altura do ecrã. As fases 05 e 11 ficam sempre na versão grande
+  // (a câmara aproxima-se ~6x da janela).
+  const need = Math.max(innerWidth, (innerHeight * 16) / 9) * Math.min(window.devicePixelRatio || 1, 2);
+  function candidates(base, small) {
+    if (!/^fase-\d\d-/.test(base)) return [base];
+    if (small) return [`${base}-1280`, base];
+    if (/^fase-(05|11)-/.test(base)) return [base];
+    return need <= 1920 ? [`${base}-1920`, base] : [base];
+  }
+
   const probes = new Map();
-  function probe(base) {
-    if (!probes.has(base)) {
-      probes.set(base, new Promise((resolve) => {
+  function probe(base, small) {
+    const key = `${base}|${small ? 's' : ''}`;
+    if (!probes.has(key)) {
+      const tries = candidates(base, small).flatMap((b) => EXTS.map((e) => `${IMG_DIR}${b}.${e}`));
+      probes.set(key, new Promise((resolve) => {
         let k = 0;
         const next = () => {
-          if (k >= EXTS.length) { resolve(null); return; }
-          const src = `${IMG_DIR}${base}.${EXTS[k++]}`;
+          if (k >= tries.length) { resolve(null); return; }
+          const src = tries[k++];
           const im = new Image();
           im.onload = () => resolve({ src, w: im.naturalWidth, h: im.naturalHeight });
           im.onerror = next;
@@ -40,7 +53,7 @@
         next();
       }));
     }
-    return probes.get(base);
+    return probes.get(key);
   }
 
   function fillPlaceholder(el, base) {
@@ -66,11 +79,13 @@
   }
 
   function loadInto(el) {
-    if (el.dataset.state) return probe(el.dataset.img);
+    // fora da obra (serviços, contactos) a imagem aparece pequena: chega a variante de 1280 px
+    const small = !el.closest('.journey');
+    if (el.dataset.state) return probe(el.dataset.img, small);
     el.dataset.state = 'loading';
     const base = el.dataset.img;
     const img = el.querySelector('img');
-    return probe(base).then((r) => {
+    return probe(base, small).then((r) => {
       el.dataset.state = 'done';
       if (r) {
         img.src = r.src;
@@ -335,14 +350,31 @@
   shortVp.addEventListener('change', () => location.reload());
   const cinematic = !reduceMotion && !shortVp.matches && !!(window.gsap && window.ScrollTrigger) && phases.length > 1;
 
-  // Carrega as imagens da obra: capa primeiro, depois as restantes
+  // Carrega as imagens da obra aos poucos: a capa e as duas fases seguintes à entrada,
+  // as outras à medida que o scroll se aproxima (e, com boa ligação, em segundo plano).
   const loaderLine = document.querySelector('.loader__line');
   let loadedCount = 0;
   const firstLoads = media.slice(0, 3).map((m) => loadInto(m).then(() => {
     loadedCount += 1;
     if (loaderLine) loaderLine.style.setProperty('--p', loadedCount / 3);
   }));
-  const restLoads = Promise.all(firstLoads).then(() => Promise.all(media.slice(3).map(loadInto)));
+  let onMediaLoaded = () => {};
+  function ensureLoaded(i) {
+    const near = media.slice(Math.max(0, i - 1), i + 4).filter((m) => !m.dataset.state);
+    if (near.length) Promise.all(near.map(loadInto)).then(() => onMediaLoaded());
+  }
+  function trickle() {
+    const c = navigator.connection;
+    if (c && (c.saveData || /(^|-)2g|3g/.test(c.effectiveType || ''))) return;
+    const next = media.find((m) => !m.dataset.state);
+    if (!next) return;
+    loadInto(next).then(() => { onMediaLoaded(); setTimeout(trickle, 400); });
+  }
+  Promise.all(firstLoads).then(() => {
+    ensureLoaded(0);
+    window.addEventListener('load', () => setTimeout(trickle, 2500), { once: true });
+    if (document.readyState === 'complete') setTimeout(trickle, 2500);
+  });
 
   function reveal() {
     if (doc.classList.contains('is-loaded')) return;
@@ -353,7 +385,15 @@
   let lenis = null;
 
   if (!cinematic) {
-    media.forEach(loadInto);
+    // modo empilhado: cada fase carrega quando se aproxima do ecrã
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+        if (e.isIntersecting) { loadInto(e.target); io.unobserve(e.target); }
+      }), { rootMargin: '100% 0px' });
+      media.slice(3).forEach((m) => io.observe(m));
+    } else {
+      media.forEach(loadInto);
+    }
     Promise.race([Promise.all(firstLoads), wait(1200)]).then(reveal);
     return;
   }
@@ -622,6 +662,7 @@
     if (i === current) return;
     const first = current === -1;
     current = i;
+    ensureLoaded(i);
     const p = phases[i];
     phases.forEach((ph, k) => ph.classList.toggle('is-active', k === i));
     stage.classList.toggle('is-cover', i === 0);
@@ -671,7 +712,7 @@
   ScrollTrigger.addEventListener('refresh', () => { reapplyApertures(); update(); });
 
   // Quando as dimensões reais das imagens chegam, a geometria das janelas muda
-  restLoads.then(() => requestAnimationFrame(reapplyApertures));
+  onMediaLoaded = () => requestAnimationFrame(reapplyApertures);
 
   /* ---------- 5.5 navegação ---------------------------------------- */
   function scrollToY(y, immediate) {
@@ -685,6 +726,7 @@
   function scrollToPhase(i, immediate) {
     // meio do quadro parado: o texto já entrou por completo e ainda não começou a sair
     const time = i === 0 ? 0 : T(i) + H / 2;
+    ensureLoaded(i); // a fase de destino começa a carregar já
     scrollToY(st.start + (time / TOTAL) * (st.end - st.start), immediate);
   }
   // "#obra" leva à primeira fase, não à capa

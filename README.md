@@ -41,3 +41,31 @@ Um push para `main` corre o workflow `Deploy to GitHub Pages`. Esse workflow:
 Nunca publiques a raiz do projeto. Os materiais de trabalho (`rss/`, com os PNG originais e as fotografias do WhatsApp por tratar) ficam só no computador e estão no `.gitignore`.
 
 Sempre que acrescentares uma página ou um ficheiro na raiz, junta-o à lista `SITE` em `scripts/publicar.cjs`.
+
+A verificação (`scripts/verificar.cjs`) bloqueia a publicação se:
+
+- houver ligações, imagens ou âncoras partidas;
+- algum recurso vier de servidores de terceiros (a Política de cookies garante que não há nenhum: os tipos de letra e as bibliotecas estão em `assets/fonts` e `assets/vendor`);
+- faltar a informação legal no rodapé de alguma página;
+- houver uma imagem com mais de 1,5 MB;
+- aparecer algum ficheiro de `rss/`.
+
+## Imagens
+
+1. Os PNG do Higgsfield ficam em `rss/imgs/`, fora do Git.
+2. Para os converter, corre `node scripts/otimizar-imagens.cjs rss/imgs assets/img`. O script precisa do `sharp` (`npm i --no-save sharp`).
+3. Cada fase ganha versões de 1920 e de 1280 px. O site escolhe a mais leve que chega para o ecrã e carrega as fases à medida do scroll.
+
+## Voltar ao site anterior
+
+O site anterior (Vite/React, com o formulário Formward) é o commit `bc63c39` (merge da PR #7). Para o repor:
+
+1. Confirma que as variáveis do repositório `VITE_FORM_ENDPOINT` e `VITE_FORM_ACCEPTS_FILES` têm os valores certos: o build antigo usa-as.
+2. Faz `git revert -m 1 <commit do merge da v2>` em `main`, ou cria um ramo a partir de `bc63c39` e faz o merge.
+
+## Por decidir com o cliente
+
+- **Formulário de pedido de orçamento.** O site novo não tem formulário, mas a Política de privacidade (§03 a §07, §12 e §13) e os Termos (§03) ainda o descrevem. Há duas saídas: atualizar o texto, mudando a data "Última atualização", ou voltar a pôr o formulário.
+- **Legenda das imagens de IA.** As imagens geradas por IA já não têm a legenda junto a cada uma; só fica a frase geral no rodapé. Os Termos (§05) ainda dizem que "estão identificadas com a legenda «Imagem ilustrativa gerada por IA»". Ou se muda essa frase (atualizando a data), ou voltam as legendas.
+- **Avaliações Google.**
+- **Textos do site anterior que não passaram para o novo:** a secção "Transparência em todas as fases da obra" e a frase final da chamada para contacto. Ver `docs/site-v1/`.

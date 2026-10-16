@@ -28,10 +28,8 @@
   <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
   <link rel="icon" href="assets/icons/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@1,6..72,200..500&display=swap">
-  <link rel="stylesheet" href="assets/css/style.css?v=12">
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css?v=14">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -324,7 +322,6 @@
             <div><dt>Especialidades</dt><dd class="legend__specs">Arquitetura, engenharia e licenciamento</dd></div>
             <div><dt>Folha</dt><dd class="legend__sheet"><span class="legend__num">01</span> de 12</dd></div>
           </dl>
-          <p class="legend__note">Imagem ilustrativa gerada por IA</p>
         </aside>
 
 
@@ -399,6 +396,7 @@
               <div class="services__img" data-img="fase-08-sala"><img alt="" loading="lazy" decoding="async"><div class="ph"></div></div>
               <div class="services__img" data-img="servico-recuperacao"><img alt="" loading="lazy" decoding="async"><div class="ph"></div></div>
               <div class="services__img" data-img="fase-11-exterior"><img alt="" loading="lazy" decoding="async"><div class="ph"></div></div>
+              
             </figure>
           </div>
           <ul class="services__list">
@@ -572,8 +570,6 @@
           <div><dt>Morada</dt><dd>Praceta Armando José Fernandes, n.º 12A, r/c esquerdo, 2845-611 Amora</dd></div>
         </dl>
 
-        <!-- POR DEFINIR: formulário de pedido de orçamento -->
-        <!-- POR DEFINIR: avaliações Google -->
       </div>
     </section>
   </main>
@@ -621,11 +617,19 @@
         </nav>
       </div>
 
-      <!-- POR DEFINIR: bloco de informação legal completo (a fornecer pelo cliente) -->
-      <div class="ftr__legal">
-        <p>LMDreams, Unipessoal Lda. Alvará de empreiteiro n.º 101097-PAR (obras particulares, classe 2), emitido pelo IMPIC, I.P.</p>
-        <p>As imagens das fases da obra são ilustrativas e foram geradas por IA. As fotografias de projetos são de obras realizadas pela LMDreams.</p>
-      </div>
+      <section class="ftr__legal" aria-labelledby="informacao-legal-titulo">
+        <h2 id="informacao-legal-titulo">Informação legal</h2>
+        <p>LMDreams, Unipessoal Lda., sociedade unipessoal por quotas · marca LMDreams</p>
+        <dl class="ftr__ids">
+          <div><dt>Sede</dt><dd>Rua António Silva, Lote 2037 B, 2975-257 Quinta do Conde</dd></div>
+          <div><dt>NIPC e matrícula</dt><dd>516383370 (número de matrícula na Conservatória do Registo Comercial)</dd></div>
+          <div><dt>Capital social</dt><dd>5000 €</dd></div>
+        </dl>
+        <p>Alvará de empreiteiro n.º 101097-PAR (obras particulares, classe 2), emitido pelo IMPIC, I.P.</p>
+        <p>mendes3pm@gmail.com · +351 919 233 372 (chamada para a rede móvel nacional)</p>
+        <p>Em caso de litígio de consumo, o consumidor pode recorrer ao centro de arbitragem de conflitos de consumo com competência na zona em causa (na Área Metropolitana de Lisboa, o Centro de Arbitragem de Conflitos de Consumo de Lisboa, <a href="https://www.centroarbitragemlisboa.pt" target="_blank" rel="noopener">www.centroarbitragemlisboa.pt<span class="sr-only"> (abre numa nova janela)</span></a>). Se nenhum centro regional for competente, pode recorrer ao CNIACC, Centro Nacional de Informação e Arbitragem de Conflitos de Consumo (<a href="https://www.cniacc.pt" target="_blank" rel="noopener">www.cniacc.pt<span class="sr-only"> (abre numa nova janela)</span></a>). Mais informações no Portal do Consumidor (<a href="https://www.consumidor.gov.pt" target="_blank" rel="noopener">www.consumidor.gov.pt<span class="sr-only"> (abre numa nova janela)</span></a>).</p>
+        <p>Algumas imagens deste site são ilustrativas, geradas por IA, e não representam obras realizadas pela LMDreams. As fotografias de projetos são de obras realizadas pela LMDreams.</p>
+      </section>
     </div>
   </footer>
 
@@ -654,10 +658,10 @@
     <span>Falar por WhatsApp</span><span class="sr-only"> (abre numa nova janela)</span>
   </a>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="assets/vendor/gsap.min.js" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="assets/vendor/lenis.min.js" defer></script>
   <script src="assets/js/projetos.js?v=1" defer></script>
-  <script src="assets/js/main.js?v=8" defer></script>
+  <script src="assets/js/main.js?v=9" defer></script>
 </body>
 </html>

@@ -2,7 +2,8 @@
 // Uso: node scripts/otimizar-imagens.cjs rss/imgs assets/img
 // Precisa do sharp: usa o do projeto LMDreams anterior (caminho abaixo) ou instala com "npm i sharp".
 // Fases 05 e 11 ficam a 3840 px (a câmara aproxima-se até ~6x da janela); outras imagens deitadas
-// a 2560 px; verticais (4:5) a 1200 px. Só converte as novas ou alteradas (--todas refaz tudo).
+// a 2560 px; verticais (4:5) a 1200 px; cada fase ganha também -1920 e -1280.
+// Só converte as novas ou alteradas (--todas refaz tudo).
 const sharp = (() => {
   try { return require('sharp') } catch {
     return require('C:/Users/andre/Desktop/Claude_playground/websites/LMDreams/LMDreams/node_modules/sharp')
@@ -27,6 +28,14 @@ const widthFor = (n, m) => (/^fase-(05|11)-/.test(n) ? 3840 : m.width > m.height
       .toFile(dest)
     total += info.size
     console.log(name.padEnd(28), `${info.width}x${info.height}`.padEnd(10), (info.size / 1024).toFixed(0) + ' KB')
+    // fases: variantes mais leves para ecrãs até 1920 px e para as caixas pequenas (serviços, contactos)
+    if (/^fase-\d\d-/.test(name)) {
+      for (const w of [1920, 1280]) {
+        const v = await sharp(path.join(src, f)).resize({ width: w }).webp({ quality: 78, effort: 5, smartSubsample: true })
+          .toFile(path.join(out, `${name}-${w}.webp`))
+        total += v.size
+      }
+    }
   }
   console.log('TOTAL', (total / 1024 / 1024).toFixed(2) + ' MB')
 })()
