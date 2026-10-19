@@ -14,10 +14,20 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0  # histórico completo: o sitemap usa a data do último commit de cada página
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           package-manager-cache: false
+      - name: Confirmar que as páginas das obras estão atualizadas
+        run: |
+          node scripts/gerar-obras.cjs
+          if [ -n "$(git status --porcelain -- obras)" ]; then
+            git status --porcelain -- obras
+            echo "::error::obras/ desatualizado: corra node scripts/gerar-obras.cjs e faça commit"
+            exit 1
+          fi
       - name: Preparar dist/
         run: node scripts/publicar.cjs
       - name: Verificar ligações, recursos de terceiros e originais

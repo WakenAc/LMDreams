@@ -130,7 +130,8 @@ for (const file of files.filter((f) => f.endsWith('.html'))) {
   }
   // JSON-LD
   for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
-    for (const u of m[1].match(/https:\/\/www\.lmdreams\.pt\/[^"]*/g) || []) checkOwnAbsolute(u, `${where} JSON-LD`)
+    // os "@id" com # (por exemplo /#empresa) são identificadores, não âncoras
+    for (const u of m[1].match(/https:\/\/www\.lmdreams\.pt\/[^"#]*(?=")/g) || []) checkOwnAbsolute(u, `${where} JSON-LD`)
   }
 }
 
