@@ -21,12 +21,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0  # histórico completo: o sitemap usa a data do último commit de cada página
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           package-manager-cache: false
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6
+      - name: Confirmar que as páginas das obras estão atualizadas
+        run: |
+          node scripts/gerar-obras.cjs
+          if [ -n "$(git status --porcelain -- obras)" ]; then
+            git status --porcelain -- obras
+            echo "::error::obras/ desatualizado: corra node scripts/gerar-obras.cjs e faça commit"
+            exit 1
+          fi
       - name: Preparar dist/ (só os ficheiros do site)
         run: node scripts/publicar.cjs
       - name: Bloquear a publicação se houver ligações partidas, recursos de terceiros ou originais

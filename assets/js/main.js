@@ -27,12 +27,14 @@
   // Variantes mais leves (geradas para as fases): o palco usa "cover" em 16:9, por isso a largura
   // útil depende também da altura do ecrã. As fases 05 e 11 ficam sempre na versão grande
   // (a câmara aproxima-se ~6x da janela).
-  const need = Math.max(innerWidth, (innerHeight * 16) / 9) * Math.min(window.devicePixelRatio || 1, 2);
+  // Telemóveis: a versão de 1920 px chega (o recorte "cover" mostra só o centro da imagem).
+  const phone = Math.min(innerWidth, innerHeight) < 600;
+  const need = Math.max(innerWidth, (innerHeight * 16) / 9) * Math.min(window.devicePixelRatio || 1, 1.5);
   function candidates(base, small) {
     if (!/^fase-\d\d-/.test(base)) return [base];
     if (small) return [`${base}-1280`, base];
     if (/^fase-(05|11)-/.test(base)) return [base];
-    return need <= 1920 ? [`${base}-1920`, base] : [base];
+    return phone || need <= 1920 ? [`${base}-1920`, base] : [base];
   }
 
   const probes = new Map();
@@ -78,7 +80,30 @@
     add('ph__file', `${IMG_DIR}${base}.jpg`);
   }
 
+  const loads = new WeakMap();
   function loadInto(el) {
+    if (loads.has(el)) return loads.get(el);
+    // imagem já posta no HTML (a capa, para o browser a descarregar logo): só falta saber o tamanho
+    const pre = el.querySelector('img');
+    if (pre && pre.getAttribute('src')) {
+      el.dataset.state = 'done';
+      const ready = pre.complete ? Promise.resolve() : new Promise((r) => {
+        pre.addEventListener('load', r, { once: true });
+        pre.addEventListener('error', r, { once: true });
+      });
+      const pr = ready.then(() => {
+        el.dataset.w = pre.naturalWidth;
+        el.dataset.h = pre.naturalHeight;
+        return { src: pre.currentSrc, w: pre.naturalWidth, h: pre.naturalHeight };
+      });
+      loads.set(el, pr);
+      return pr;
+    }
+    const pr = loadIntoProbe(el);
+    loads.set(el, pr);
+    return pr;
+  }
+  function loadIntoProbe(el) {
     // fora da obra (serviços, contactos) a imagem aparece pequena: chega a variante de 1280 px
     const small = !el.closest('.journey');
     if (el.dataset.state) return probe(el.dataset.img, small);
@@ -271,7 +296,8 @@
     dialog.querySelector('.proj__desc').textContent = p.descricao;
     const meta = dialog.querySelector('.proj__meta');
     meta.replaceChildren();
-    [['Tipo de intervenção', p.tipoDeIntervencao], ['Localidade', p.localidade]].forEach(([k, v]) => {
+    const lugar = p.concelho && p.concelho !== p.localidade ? `${p.localidade}, ${p.concelho}` : p.localidade;
+    [['Tipo de intervenção', p.tipoDeIntervencao], ['Localidade', lugar], ['Ano', p.ano]].filter(([, v]) => v).forEach(([k, v]) => {
       const row = el('div');
       const dt = el('dt');
       dt.textContent = k;
@@ -305,6 +331,13 @@
       });
       body.appendChild(grid);
     }
+    if (p.slug) {
+      const more = el('p', 'proj__page');
+      const a = el('a', 'link', { href: `obras/${p.slug}/` });
+      a.textContent = 'Abrir a página desta obra';
+      more.appendChild(a);
+      body.appendChild(more);
+    }
     dialog.querySelector('.proj__inner').scrollTop = 0;
     if (lenis) lenis.stop();
     doc.classList.add('has-dialog');
@@ -322,8 +355,13 @@
     aoFecharProjeto();
   }
   if (dialog) {
+    // Os cartões ligam à página de cada obra; com JavaScript, um clique simples abre a janela
     document.querySelectorAll('.card__open').forEach((b) => {
-      b.addEventListener('click', () => abrirProjeto(b.dataset.projeto));
+      b.addEventListener('click', (e) => {
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
+        abrirProjeto(b.dataset.projeto);
+      });
     });
     dialog.querySelector('.proj__close').addEventListener('click', fecharProjeto);
     // clicar fora do painel fecha (só se o clique também começou fora, e não no 2.º clique de um duplo clique)
@@ -400,17 +438,16 @@
   // Carrega as imagens da obra aos poucos: a capa e as duas fases seguintes à entrada,
   // as outras à medida que o scroll se aproxima (e, com boa ligação, em segundo plano).
   const loaderLine = document.querySelector('.loader__line');
-  let loadedCount = 0;
-  const firstLoads = media.slice(0, 3).map((m) => loadInto(m).then(() => {
-    loadedCount += 1;
-    if (loaderLine) loaderLine.style.setProperty('--p', loadedCount / 3);
-  }));
+  const firstLoads = media.slice(0, 3).map(loadInto);
+  // o site abre quando a capa chega: a barra do ecrã de carregamento enche-se nesse momento
+  if (loaderLine) firstLoads[0].then(() => loaderLine.style.setProperty('--p', 1));
   let onMediaLoaded = () => {};
   function ensureLoaded(i) {
     const near = media.slice(Math.max(0, i - 1), i + 4).filter((m) => !m.dataset.state);
     if (near.length) Promise.all(near.map(loadInto)).then(() => onMediaLoaded());
   }
   function trickle() {
+    if (phone) return; // nos telemóveis, só à medida do scroll
     const c = navigator.connection;
     if (c && (c.saveData || /(^|-)2g|3g/.test(c.effectiveType || ''))) return;
     const next = media.find((m) => !m.dataset.state);
@@ -441,7 +478,7 @@
     } else {
       media.forEach(loadInto);
     }
-    Promise.race([Promise.all(firstLoads), wait(1200)]).then(reveal);
+    Promise.race([firstLoads[0], wait(1200)]).then(reveal);
     return;
   }
 
@@ -817,7 +854,8 @@
 
   /* ---------- 5.6 arranque ----------------------------------------- */
   update();
-  Promise.race([Promise.all(firstLoads), wait(2600)]).then(() => {
+  // o site abre assim que a capa chega; as fases seguintes continuam a carregar
+  Promise.race([firstLoads[0], wait(2600)]).then(() => {
     ScrollTrigger.refresh();
     reveal(); // liga o Lenis antes de saltar para a âncora (parado, ignora scrollTo)
     const hash = decodeURIComponent(location.hash.slice(1));

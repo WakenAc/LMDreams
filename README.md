@@ -16,7 +16,9 @@ Site estático, sem build: HTML, CSS e JavaScript. O GSAP, o ScrollTrigger e o L
 | `assets/js/main.js` | Linha do tempo do scroll, menus, janela dos projetos |
 | `assets/js/projetos.js` | Dados dos projetos reais (fotografias autorizadas e tratadas) |
 | `assets/img/` | Imagens WebP: fases da obra (ilustrativas, geradas por IA) e `projetos/` (fotografias reais) |
-| `scripts/publicar.cjs` | Copia só os ficheiros do site para `dist/` |
+| `obras/` | Uma página por obra e a lista `/obras/`, geradas a partir de `assets/js/projetos.js` |
+| `scripts/gerar-obras.cjs` | Gera `obras/` (correr sempre que `projetos.js`, o rodapé ou o CSS mudarem; o CI confirma) |
+| `scripts/publicar.cjs` | Copia só os ficheiros do site para `dist/` e gera o `sitemap.xml` |
 | `scripts/verificar.cjs` | Bloqueia a publicação se houver ligações partidas, recursos de terceiros ou originais em `dist/` |
 | `scripts/otimizar-imagens.cjs` | Converte os PNG do Higgsfield para WebP |
 | `docs/` | Registo das fotografias dos projetos, prompts das imagens e relatórios do site anterior (`docs/site-v1/`) |
@@ -24,6 +26,7 @@ Site estático, sem build: HTML, CSS e JavaScript. O GSAP, o ScrollTrigger e o L
 ## Pré-visualizar
 
 ```bash
+node scripts/gerar-obras.cjs
 node scripts/publicar.cjs
 python -m http.server 5501 --bind 127.0.0.1 --directory dist
 ```
