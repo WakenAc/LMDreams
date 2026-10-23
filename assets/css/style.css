@@ -1138,3 +1138,24 @@ html.lenis, html.lenis body { height: auto; }
 @media (max-width: 760px) {
   .form, .form__grupo { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* ---------------------------------------------------- recrutamento (página inicial) */
+.hiring { border-top: 1px solid var(--linha); border-bottom: 1px solid var(--linha); background: var(--grafite); }
+.hiring__inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 80px); align-items: end; }
+.hiring__kicker { margin-bottom: 18px; font-size: var(--t-14); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--latao); }
+.hiring__body { display: grid; gap: 16px; }
+.hiring__body > p { max-width: 36em; color: rgba(236, 230, 220, 0.86); }
+.hiring__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+.hiring__small { font-size: var(--t-14); color: var(--pedra); }
+@media (max-width: 1100px) {
+  .hiring__inner { grid-template-columns: 1fr; }
+}
+/* Botão "Estamos a recrutar" no cabeçalho: só onde há espaço (no telemóvel, está no menu e na secção). */
+.btn--recrutar[aria-current="page"] { border-color: var(--latao); }
+@media (max-width: 1100px) {
+  .hdr .btn--recrutar { display: none; }
+}
+/* Destaque no topo do menu "Percorrer a obra" (no telemóvel, é o primeiro sítio onde se vê). */
+.explore__rec { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 12px 16px; border: 1px solid var(--latao); border-radius: 12px; text-decoration: none; font-size: var(--t-15); font-weight: 500; color: var(--cal); }
+.explore__rec:hover { background: rgba(201, 154, 85, 0.12); }
+.explore__rec-cta { color: var(--latao-claro); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
