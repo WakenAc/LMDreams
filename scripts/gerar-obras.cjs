@@ -141,6 +141,7 @@ ${pares ? `      <h2>Antes e depois</h2>\n${pares}\n` : ''}${resto ? `      <h2>
         <h2 id="cta-t">Tem uma obra parecida em mente?</h2>
         <p>Descreva a obra por telefone, WhatsApp ou e-mail. O orçamento é gratuito e respondemos no prazo máximo de 8 dias úteis.</p>
         <p class="legal__actions"><a class="btn btn--brass" href="${prefix}#contactos">Pedir orçamento</a> <a class="btn btn--ghost" href="../">Ver outras obras</a></p>
+        <p>Gostava de trabalhar em obras como esta? <a href="${prefix}trabalhe-connosco/">Veja as vagas e candidate-se</a>.</p>
       </section>
       <nav class="obra__outras" aria-labelledby="outras-t">
         <h2 id="outras-t">Outras obras</h2>
@@ -190,6 +191,7 @@ const lista = `    <article class="legal obras wrap" aria-labelledby="documento-
       <h1 id="documento-titulo">Obras realizadas pela LMDreams</h1>
       <p class="obra__lead">Seixal, Almada, Lisboa e Sintra.</p>
       <p>Fotografias de obras realizadas pela LMDreams, publicadas com autorização dos clientes. Em cada obra encontra o que foi feito e, quando existem, as fotografias de antes e depois.</p>
+      <p>Estamos a contratar profissionais da construção civil (m/f) para obras como estas: <a href="../trabalhe-connosco/">veja as vagas e candidate-se</a>.</p>
       <ul class="obras__grid">
 ${cards}
       </ul>

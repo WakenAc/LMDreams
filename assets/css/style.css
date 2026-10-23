@@ -1150,12 +1150,22 @@ html.lenis, html.lenis body { height: auto; }
 @media (max-width: 1100px) {
   .hiring__inner { grid-template-columns: 1fr; }
 }
-/* Botão "Estamos a recrutar" no cabeçalho: só onde há espaço (no telemóvel, está no menu e na secção). */
+/* Botão do cabeçalho: "Estamos a recrutar" nos ecrãs largos e "Vagas" nos mais pequenos. */
 .btn--recrutar[aria-current="page"] { border-color: var(--latao); }
+.btn--recrutar .rec-curto { display: none; }
 @media (max-width: 1100px) {
-  .hdr .btn--recrutar { display: none; }
+  .btn--recrutar .rec-longo { display: none; }
+  .btn--recrutar .rec-curto { display: inline; }
+}
+@media (max-width: 760px) {
+  .hdr .btn--recrutar { padding: 0 14px; font-size: var(--t-14); }
 }
 /* Destaque no topo do menu "Percorrer a obra" (no telemóvel, é o primeiro sítio onde se vê). */
 .explore__rec { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 12px 16px; border: 1px solid var(--latao); border-radius: 12px; text-decoration: none; font-size: var(--t-15); font-weight: 500; color: var(--cal); }
 .explore__rec:hover { background: rgba(201, 154, 85, 0.12); }
 .explore__rec-cta { color: var(--latao-claro); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+@media (max-width: 380px) {
+  .explore__tab { padding: 14px 12px 10px; gap: 6px; white-space: nowrap; }
+  .hdr .btn--recrutar { padding: 0 10px; }
+  .hdr { gap: 6px; }
+}
