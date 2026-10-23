@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="format-detection" content="telephone=no">
   <title>Emprego na construção civil no Seixal e Margem Sul | LMDreams</title>
-  <meta name="description" content="Vagas para pedreiros/as, pintores/as, carpinteiros/as e outras especialidades (m/f) em obras no Seixal, Almada, Sesimbra, Lisboa e Sintra. Candidate-se online ou ligue 919 233 372.">
+  <meta name="description" content="Estamos a contratar pedreiros/as, serventes e pintores/as (m/f) para obras em Lisboa e na Margem Sul (Seixal, Almada e Sesimbra). Início imediato. Candidate-se online ou ligue 919 233 372.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://www.lmdreams.pt/trabalhe-connosco/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_PT">
   <meta property="og:site_name" content="LMDreams">
   <meta property="og:title" content="Emprego na construção civil no Seixal e Margem Sul">
-  <meta property="og:description" content="Vagas para pedreiros/as, pintores/as, carpinteiros/as e outras especialidades (m/f) em obras no Seixal, Almada, Sesimbra, Lisboa e Sintra.">
+  <meta property="og:description" content="Estamos a contratar pedreiros/as, serventes e pintores/as (m/f) para obras em Lisboa e na Margem Sul (Seixal, Almada e Sesimbra). Início imediato.">
   <meta property="og:url" content="https://www.lmdreams.pt/trabalhe-connosco/">
   <meta property="og:image" content="https://www.lmdreams.pt/og-image.jpg">
   <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
   <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../site.webmanifest">
   <link rel="preload" href="../assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../assets/css/style.css?v=23">
+  <link rel="stylesheet" href="../assets/css/style.css?v=24">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body class="page-legal page-trabalhe">
@@ -61,16 +61,28 @@
   <main id="conteudo" tabindex="-1">
     <article class="legal wrap" aria-labelledby="documento-titulo">
       <h1 id="documento-titulo">Trabalhe connosco: vagas na construção civil no Seixal, Almada e Lisboa</h1>
-      <p>Temos obras em curso e marcadas para os próximos meses e estamos a contratar profissionais da construção civil (m/f) para reforçar as nossas equipas: pedreiros/as, pintores/as, carpinteiros/as, ladrilhadores/as, canalizadores/as, eletricistas e outras especialidades.</p>
+      <!-- vagas:intro:inicio -->
+      <p>Temos obras em curso e marcadas para os próximos meses e estamos a contratar pedreiros/as, serventes e pintores/as (m/f) para reforçar as nossas equipas, com início imediato.</p>
+      <!-- vagas:intro:fim -->
       <p>Trabalhamos sobretudo no Seixal, em Almada, Sesimbra, Lisboa e Sintra, a partir do nosso escritório em Amora. A LMDreams tem alvará de empreiteiro n.º 101097-PAR e trabalha com profissionais especializados em cada fase da obra.</p>
+      <!-- vagas:lista:inicio -->
+      <h2>Vagas abertas</h2>
+      <p>Obras em Lisboa e na Margem Sul (península de Setúbal), sobretudo no Seixal, em Almada e em Sesimbra. Início imediato.</p>
+      <ul class="vagas">
+        <li><a href="pedreiro/">Pedreiro/a</a> <span>Alvenarias e rebocos. Com experiência como oficial.</span></li>
+        <li><a href="servente/">Servente de construção civil (m/f)</a> <span>Apoio às equipas na obra. Com ou sem experiência.</span></li>
+        <li><a href="pintor/">Pintor/a de construção civil</a> <span>Preparação de superfícies e pinturas interiores e exteriores. Com experiência.</span></li>
+      </ul>
+      <p>Também recebemos candidaturas de outras especialidades da construção civil, com o mesmo formulário.</p>
+      <!-- vagas:lista:fim -->
       <h2>Como se candidatar</h2>
       <ul>
-        <li>Preencha o formulário abaixo: leva menos de dois minutos.</li>
+        <li>Preencha o formulário abaixo: leva menos de dois minutos. O mesmo formulário serve para todas as vagas.</li>
         <li>Também pode ligar para o <a href="tel:+351919233372">+351 919 233 372</a> (chamada para a rede móvel nacional).</li>
         <li>Analisamos cada candidatura e entramos em contacto consigo pelo telefone que indicar.</li>
       </ul>
 
-      <form class="form" data-formulario="candidatura" method="dialog" aria-labelledby="cand-t">
+      <form class="form" id="candidatura" data-formulario="candidatura" method="dialog" aria-labelledby="cand-t">
         <h2 class="form__titulo" id="cand-t">Candidatura</h2>
 
         <div class="form__campo">
@@ -88,15 +100,15 @@
           <label for="cand-profissao">Profissão <span class="form__obrig">(obrigatório)</span></label>
           <select id="cand-profissao" name="profissao" required aria-describedby="cand-profissao-erro">
             <option value="">Escolha uma opção</option>
-            <option>Pedreiro/a</option>
-            <option>Pintor/a</option>
+            <option data-vaga="pedreiro">Pedreiro/a</option>
+            <option data-vaga="pintor">Pintor/a</option>
             <option>Carpinteiro/a</option>
             <option>Ladrilhador/a</option>
             <option>Canalizador/a</option>
             <option>Eletricista</option>
             <option>Estucador/a ou pladurista</option>
             <option>Serralheiro/a</option>
-            <option>Servente</option>
+            <option data-vaga="servente">Servente</option>
             <option>Outra</option>
           </select>
           <p class="form__erro" id="cand-profissao-erro" data-erro="profissao" hidden></p>
@@ -224,6 +236,6 @@
       </section>
     </div>
   </footer>
-  <script src="../assets/js/formularios.js?v=2" defer></script>
+  <script src="../assets/js/formularios.js?v=3" defer></script>
 </body>
 </html>

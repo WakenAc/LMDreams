@@ -5,7 +5,9 @@
 //  4. páginas sem a informação legal obrigatória no rodapé, ou com marcas "POR DEFINIR";
 //  5. imagens demasiado pesadas;
 //  6. formulários sem o endereço do Apps Script, sem o aviso RGPD ou com listas diferentes das do
-//     script (docs/formularios/apps-script/Codigo.gs).
+//     script (docs/formularios/apps-script/Codigo.gs);
+//  7. ofertas de emprego (JobPosting) com mais de uma vaga na página, sem os campos que o Google
+//     exige, com o título diferente do H1 ou sem ligação para o formulário de candidatura.
 // Uso: node scripts/verificar.cjs   (corre depois de node scripts/publicar.cjs)
 const fs = require('fs')
 const path = require('path')
@@ -105,6 +107,8 @@ for (const file of files.filter((f) => f.endsWith('.html'))) {
   // 4. informação legal e marcas de trabalho
   LEGAL.filter((t) => !html.includes(t)).forEach((t) => problems.push(`falta no rodapé de ${where}: "${t}"`))
   if (/POR DEFINIR/i.test(html)) problems.push(`marca "POR DEFINIR" em ${where}`)
+  // texto gerado com um campo em falta (por exemplo, uma vaga sem marca)
+  if (/\bundefined\b/.test(html.replace(/<script\b[\s\S]*?<\/script>/gi, ''))) problems.push(`texto "undefined" em ${where}`)
 
   for (const tag of html.matchAll(/<(a|link|script|img|use|source|iframe|video|audio|object|embed|meta)\b([^>]*)>/gi)) {
     const name = tag[1].toLowerCase()
@@ -194,6 +198,41 @@ for (const file of files.filter((f) => f.endsWith('.html'))) {
     }
   }
 }
+
+// 7. ofertas de emprego (páginas geradas por scripts/gerar-vagas.cjs). Uma vaga já terminada não
+//    bloqueia a publicação (com validThrough no passado, o Google trata-a como fechada), mas fica o aviso.
+const avisos = []
+const trabalhe = path.join(dist, 'trabalhe-connosco', 'index.html')
+const vagasDoFormulario = new Set(exists(trabalhe)
+  ? [...fs.readFileSync(trabalhe, 'utf8').matchAll(/<option data-vaga="([^"]+)">/g)].map((m) => m[1]) : [])
+for (const file of files.filter((f) => f.endsWith('.html'))) {
+  const html = fs.readFileSync(file, 'utf8')
+  const where = rel(file)
+  const ofertas = []
+  for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    let dados
+    try { dados = JSON.parse(m[1]) } catch { problems.push(`${where}: JSON-LD inválido`); continue }
+    ofertas.push(...[dados, ...(dados['@graph'] || [])].filter((n) => n && n['@type'] === 'JobPosting'))
+  }
+  if (!ofertas.length) continue
+  if (ofertas.length > 1) problems.push(`${where}: ${ofertas.length} JobPosting na mesma página (o Google só aceita uma vaga por página)`)
+  // o texto do H1, sem etiquetas nem entidades, para comparar com o título do JobPosting
+  const h1 = ((html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/) || [])[1] || '').replace(/<[^>]+>/g, '')
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim()
+  for (const o of ofertas) {
+    for (const k of ['title', 'description', 'datePosted', 'validThrough']) if (!o[k]) problems.push(`${where}: JobPosting sem ${k}`)
+    if (!o.hiringOrganization || !o.hiringOrganization.name) problems.push(`${where}: JobPosting sem hiringOrganization.name`)
+    const locais = [].concat(o.jobLocation || [])
+    if (!locais.length || locais.some((l) => !l.address || !l.address.addressCountry)) problems.push(`${where}: JobPosting sem jobLocation com addressCountry`)
+    if (o.validThrough && Number.isNaN(Date.parse(o.validThrough))) problems.push(`${where}: validThrough inválido (${o.validThrough})`)
+    else if (o.validThrough && Date.parse(o.validThrough) < Date.now()) avisos.push(`${where}: a vaga terminou a ${o.validThrough}; tire-a de scripts/gerar-vagas.cjs`)
+    if (o.title && o.title !== h1) problems.push(`${where}: o título do JobPosting ("${o.title}") é diferente do H1 ("${h1}")`)
+  }
+  const ligacoes = [...html.matchAll(/href="[^"]*\?vaga=([^"#&]+)#candidatura"/g)].map((m) => m[1])
+  if (!ligacoes.length) problems.push(`${where}: a vaga não tem ligação para o formulário de candidatura (?vaga=…#candidatura)`)
+  ligacoes.filter((v) => !vagasDoFormulario.has(v)).forEach((v) => problems.push(`${where}: ?vaga=${v} não corresponde a nenhuma opção data-vaga do formulário`))
+}
+avisos.forEach((a) => console.warn(`aviso: ${a}`))
 
 if (problems.length) {
   console.error(`verificar: ${problems.length} problema(s)`)

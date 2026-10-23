@@ -1,6 +1,7 @@
 /* =====================================================================
    Formulários do site: pedido de orçamento (index.html, #contactos) e
-   candidatura (trabalhe-connosco/). Validam no navegador e enviam para
+   candidatura (trabalhe-connosco/#candidatura, o mesmo para todas as
+   vagas). Validam no navegador e enviam para
    uma aplicação Web do Google Apps Script, que grava cada pedido numa
    folha de cálculo (docs/formularios/apps-script/).
 
@@ -132,7 +133,18 @@
     }
   }
 
+  // As páginas das vagas ligam para o formulário de candidatura com ?vaga=<slug>: a profissão
+  // dessa vaga (a opção com data-vaga igual) fica já escolhida. O resto do formulário não muda.
+  function escolherVaga(form) {
+    const vaga = new URLSearchParams(location.search).get('vaga');
+    if (!vaga) return;
+    for (const opcao of form.querySelectorAll('option[data-vaga]')) {
+      if (opcao.dataset.vaga === vaga) opcao.selected = true;
+    }
+  }
+
   function iniciar(form) {
+    escolherVaga(form);
     if (!ENDPOINT) {
       // Sem endereço: o botão fica escondido e aparece a nota com o telefone e o e-mail.
       form.dataset.indisponivel = '';
