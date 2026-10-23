@@ -41,7 +41,7 @@ As perguntas ao cliente e as respostas estão em `perguntas-ao-cliente.md`, que 
 
 ## O que as páginas não dizem
 
-Por decisão do cliente (23 de outubro de 2026), as páginas não indicam o tipo de contrato, o horário nem as ferramentas. A empresa trata destas condições diretamente com cada candidato. Regra para as próximas vagas: o que possa levantar dúvidas legais fica de fora das páginas e dos anúncios. A documentação do Google pede uma descrição completa, que inclua o horário; o horário fica de fora por esta decisão.
+Por decisão do cliente (23 de outubro de 2026), as páginas não indicam o tipo de contrato, o trabalho aos sábados nem as ferramentas. A empresa trata destas condições diretamente com cada candidato. Regra para as próximas vagas: o que possa levantar dúvidas legais fica de fora das páginas e dos anúncios. O horário normal (de segunda a sexta-feira, das 8h às 17h, com 1 hora de almoço: 40 horas por semana) está nas páginas.
 
 As funções de cada vaga foram confirmadas pelo cliente.
 
@@ -53,7 +53,7 @@ As funções de cada vaga foram confirmadas pelo cliente.
 | **Net-Empregos** (Construção Civil) | Gratuito; destaques pagos | É a fonte mais frequente na caixa "Empregos". Os anúncios expiram ao fim de cerca de 30 dias. |
 | Indeed Portugal | Gratuito; patrocínio opcional | Também aparece na caixa "Empregos". |
 | OLX Emprego | Pago (pacotes de 28 dias) | Também aparece na caixa "Empregos". |
-| IEFP | Sem custo indicado | Só para contratos de trabalho. **O apoio +Emprego fecha mais cedo: às 18h00 de 26 de outubro de 2026**, por se ter esgotado o orçamento (aviso no iefponline, visto a 23 de outubro). A oferta tem de estar registada no iefponline antes da candidatura, e nenhum contrato pode ser assinado antes do registo. |
+| IEFP | Sem custo indicado | Só aceita ofertas de contrato de trabalho. Precisa das credenciais da Segurança Social Direta. |
 | Recomendações dos trabalhadores, placards nas obras e carrinhas | Impressão | |
 
 **Em todos os anúncios:**
