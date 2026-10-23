@@ -2,6 +2,7 @@
 //   trabalhe-connosco/<slug>/index.html   uma página por vaga, com os dados estruturados JobPosting
 //   trabalhe-connosco/index.html          a descrição (meta e og), o primeiro parágrafo e a lista das vagas
 //   index.html                            as frases sobre as vagas (Estamos a recrutar, pergunta e Contactos)
+//   docs/recrutamento/anuncios.md         os textos dos anúncios (Net-Empregos, Indeed e IEFP)
 // Nas páginas escritas à mão, só muda o que está entre <!-- vagas:<nome>:inicio --> e <!-- vagas:<nome>:fim -->.
 // Todas as vagas usam o mesmo formulário de candidatura (trabalhe-connosco/#candidatura). A ligação
 // ?vaga=<slug> deixa a profissão já escolhida (assets/js/formularios.js, opção com data-vaga).
@@ -24,6 +25,8 @@ const COMUM = {
   validaAte: '2026-12-31T23:59:59+00:00',
   local: 'Lisboa e Margem Sul (península de Setúbal), sobretudo Seixal, Almada e Sesimbra',
   frase: 'Obras em Lisboa e na Margem Sul (península de Setúbal), sobretudo no Seixal, em Almada e em Sesimbra.',
+  zona: 'Lisboa e na Margem Sul (Seixal, Almada e Sesimbra)',
+  // local, frase e zona descrevem a mesma área, com três redações
   // os mesmos sítios do texto, para o Google (jobLocation): onde ficam as obras
   locais: [['Lisboa', 'Lisboa'], ['Seixal', 'Setúbal'], ['Almada', 'Setúbal'], ['Sesimbra', 'Setúbal']],
   encontro: 'Na obra ou no ponto de recolha da carrinha da empresa',
@@ -53,6 +56,7 @@ const COMUM = {
 //              (Código do Trabalho, art. 30.º; parecer CITE 10/91)
 //   plural     como aparece nas frases ("vagas para pedreiros/as, ...")
 //   publicada  o dia em que a vaga foi para o site (AAAA-MM-DD). Nunca muda depois.
+//   iefp       a profissão como aparece na lista do iefponline
 const VAGAS = [
   {
     slug: 'pedreiro',
@@ -64,6 +68,7 @@ const VAGAS = [
     resumo: 'Alvenarias e rebocos. Com experiência como oficial.',
     trabalho: 'Trabalho de pedreiro/a em obras de construção, remodelação e recuperação de casas: alvenarias e rebocos.',
     pedimos: ['Experiência como pedreiro/a (oficial).'],
+    iefp: 'PEDREIRO',
   },
   {
     slug: 'servente',
@@ -76,6 +81,7 @@ const VAGAS = [
     trabalho: 'Servente de obras e ajudante de pedreiro: apoio às equipas na obra, preparar e transportar materiais, fazer argamassas e manter a obra limpa e arrumada.',
     pedimos: ['Com ou sem experiência: basta vontade de aprender.'],
     semExperiencia: true,
+    iefp: 'TRABALHADOR NÃO QUALIFICADO DA CONSTRUÇÃO DE EDIFÍCIOS',
   },
   {
     slug: 'pintor',
@@ -87,11 +93,14 @@ const VAGAS = [
     resumo: 'Preparação de superfícies e pinturas interiores e exteriores. Com experiência.',
     trabalho: 'Trabalho de pintura em obras de construção e remodelação: preparação de superfícies, barramentos, lixagem e pinturas interiores e exteriores (não é pintura automóvel nem industrial).',
     pedimos: ['Experiência como pintor/a de construção civil.'],
+    iefp: 'PINTOR DE CONSTRUÇÕES',
   },
 ]
 const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']
 const dataPorExtenso = (iso) => { const [a, m, d] = iso.slice(0, 10).split('-').map(Number); return `${d} de ${MESES[m - 1]} de ${a}` }
 // "a, b e c"
+// primeira letra em minúscula (depois de dois pontos)
+const minuscula = (t) => t[0].toLowerCase() + t.slice(1)
 const juntar = (itens) => (itens.length < 2 ? itens.join('') : `${itens.slice(0, -1).join(', ')} e ${itens[itens.length - 1]}`)
 
 // ---------- validação
@@ -100,7 +109,7 @@ let trabalhe = fs.readFileSync(ficheiro('trabalhe-connosco/index.html'), 'utf8')
 let inicial = fs.readFileSync(ficheiro('index.html'), 'utf8')
 const slugs = new Set()
 for (const v of VAGAS) {
-  for (const k of ['slug', 'profissao', 'titulo', 'plural', 'publicada', 'resumo', 'trabalho']) {
+  for (const k of ['slug', 'profissao', 'titulo', 'plural', 'publicada', 'resumo', 'trabalho', 'iefp']) {
     if (!v[k] || typeof v[k] !== 'string') throw new Error(`Vaga ${v.slug}: falta o campo ${k}`)
   }
   v.marca = v.marca ?? ''
@@ -236,7 +245,7 @@ for (const v of VAGAS) {
     `<ul>\n${lista(COMUM.oferecemos, '  ')}\n</ul>`,
     '<h2>Condições</h2>',
     // a seguir aos dois pontos, minúscula (menos o local, que começa por um nome próprio, e a data)
-    `<ul>\n${lista(condicoes.map(([k, t]) => `${k}: ${k === 'Local' ? t : t[0].toLowerCase() + t.slice(1)}.`), '  ')}\n</ul>`,
+    `<ul>\n${lista(condicoes.map(([k, t]) => `${k}: ${k === 'Local' ? t : minuscula(t)}.`), '  ')}\n</ul>`,
     '<h2>Como se candidatar</h2>',
     `<p>${comoCandidatar(TELEFONE, 'WhatsApp')}</p>`,
   ].join('\n')
@@ -332,7 +341,7 @@ ${outrasNav}
 // ---------- frases sobre as vagas nas páginas escritas à mão
 const plurais = juntar(VAGAS.map((v) => esc(v.plural)))
 const comLigacoes = juntar(VAGAS.map((v) => `<a class="link" href="trabalhe-connosco/${v.slug}/">${esc(v.plural)}</a>${v.semExperiencia ? ' (com ou sem experiência)' : ''}`))
-const zona = 'Lisboa e na Margem Sul (Seixal, Almada e Sesimbra)'
+const zona = COMUM.zona
 const descricaoTrabalhe = VAGAS.length
   ? `Estamos a contratar ${juntar(VAGAS.map((v) => v.plural))} (m/f) para obras em ${zona}. Início imediato.`
   : `Candidaturas para trabalhar na construção civil, em obras em ${zona}.`
@@ -363,4 +372,66 @@ inicial = preencher(inicial, 'contactos', VAGAS.length
 
 fs.writeFileSync(ficheiro('trabalhe-connosco/index.html'), trabalhe)
 fs.writeFileSync(ficheiro('index.html'), inicial)
-console.log(`vagas: ${VAGAS.length} páginas + frases em trabalhe-connosco/index.html e index.html`)
+
+// ---------- anúncios para os portais (docs/recrutamento/anuncios.md), com os mesmos textos das páginas
+// Texto simples: os portais não aceitam HTML. Marcas de lista "•", como nos anúncios da zona.
+const ponto = (itens) => itens.map((t) => `• ${t}`).join('\n')
+const condicoesTexto = [
+  `Local: ${minuscula(COMUM.frase)}`,
+  `Ponto de encontro: ${minuscula(COMUM.encontro)}.`,
+  `Horário: ${minuscula(COMUM.horario)}.`,
+  `Início: ${minuscula(COMUM.inicio)}.`,
+  `Remuneração: ${minuscula(COMUM.remuneracao)}.`,
+  `Vaga aberta até ${dataPorExtenso(COMUM.validaAte)}.`,
+]
+const apresentacao = (v) => `A LMDreams, Unipessoal Lda., é uma empresa de construção civil com escritório em Amora (Seixal) e alvará de empreiteiro n.º 101097-PAR. Estamos a contratar para obras em ${zona}, com início imediato. Vaga: ${v.titulo}${v.marca}.`
+const corpo = (v, candidatar) => [
+  apresentacao(v),
+  '',
+  'O trabalho',
+  `• ${v.trabalho}`,
+  '',
+  'O que pedimos',
+  ponto([...v.pedimos, ...COMUM.pedimos]),
+  '',
+  'O que oferecemos',
+  ponto(COMUM.oferecemos),
+  '',
+  'Condições',
+  ponto(condicoesTexto),
+  '',
+  candidatar,
+].join('\n')
+const bloco = (texto) => `\`\`\`text\n${texto}\n\`\`\``
+const telefone = `${TELEFONE.replace('+351 ', '')} (chamada para a rede móvel nacional)`
+let anuncios = fs.readFileSync(ficheiro('docs/recrutamento/anuncios.md'), 'utf8')
+const porVaga = (fn) => (VAGAS.length ? VAGAS.map(fn).join('\n\n') : 'De momento não há vagas abertas.')
+
+anuncios = preencher(anuncios, 'net-empregos', porVaga((v) => `### ${v.titulo}${v.marca}
+
+- **Título:** ${v.titulo}${v.marca}: ${juntar(COMUM.locais.map(([localidade]) => localidade))}
+- **Categoria:** Construção Civil · **Zona:** Setúbal · **Tipo:** Tempo Inteiro
+- **Descrição:**
+
+${bloco(corpo(v, `Como se candidatar\nLigue ou envie mensagem por WhatsApp para o ${telefone}, ${COMUM.atendimento}. Também pode preencher a candidatura no nosso site: www.lmdreams.pt/trabalhe-connosco/`))}`), 'docs/recrutamento/anuncios.md')
+
+anuncios = preencher(anuncios, 'indeed', porVaga((v) => `### ${v.titulo}${v.marca}
+
+- **Título:** ${v.titulo}${v.marca}
+- **Qualificações:** ${v.semExperiencia ? 'sem experiência obrigatória' : `${v.pedimos[0].replace(/\.$/, '')} (obrigatória)`}; português, nível básico.
+- **Perguntas de pré-seleção (sugestão):** ${v.semExperiencia ? '' : 'experiência no ofício (obrigatória); '}português no dia a dia (nível básico); disponibilidade para trabalhar em obras em ${zona.replace(/ \(.*$/, '')}.
+- **Descrição:**
+
+${bloco(corpo(v, `Como se candidatar\nCandidate-se aqui, na Indeed. Se tiver dúvidas sobre a vaga, ligue ou envie mensagem por WhatsApp para o ${telefone}, ${COMUM.atendimento}.`))}`), 'docs/recrutamento/anuncios.md')
+
+anuncios = preencher(anuncios, 'iefp', porVaga((v) => `### ${v.titulo}${v.marca}
+
+- **Profissão:** ${v.iefp}
+- **N.º de vagas:** 1 (pode aumentar-se depois na Área de Gestão)
+- **Experiência anterior:** ${v.semExperiencia ? 'Não' : 'Sim'} · **Idiomas:** português, nível básico
+- **Descrição do perfil:**
+
+${bloco(['O trabalho', `• ${v.trabalho}`, '', 'O que pedimos', ponto([...v.pedimos, ...COMUM.pedimos]), '', 'O que oferecemos', ponto(COMUM.oferecemos), '', `Obras em ${zona}. Ponto de encontro: ${minuscula(COMUM.encontro)}. Início imediato.`].join('\n'))}`), 'docs/recrutamento/anuncios.md')
+
+fs.writeFileSync(ficheiro('docs/recrutamento/anuncios.md'), anuncios)
+console.log(`vagas: ${VAGAS.length} páginas + frases em trabalhe-connosco/index.html e index.html + anúncios`)

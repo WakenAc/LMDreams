@@ -33,8 +33,8 @@ jobs:
         run: |
           node scripts/gerar-obras.cjs
           node scripts/gerar-vagas.cjs
-          if [ -n "$(git status --porcelain -- obras trabalhe-connosco index.html)" ]; then
-            git status --porcelain -- obras trabalhe-connosco index.html
+          if [ -n "$(git status --porcelain -- obras trabalhe-connosco index.html docs/recrutamento/anuncios.md)" ]; then
+            git status --porcelain -- obras trabalhe-connosco index.html docs/recrutamento/anuncios.md
             echo "::error::páginas geradas desatualizadas: corra node scripts/gerar-obras.cjs e node scripts/gerar-vagas.cjs e faça commit"
             exit 1
           fi
