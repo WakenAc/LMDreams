@@ -24,7 +24,7 @@
     enviar: 'A enviar…',
     sucesso: {
       orcamento: 'Obrigado. Recebemos o seu pedido e respondemos no prazo máximo de 8 dias úteis.',
-      candidatura: 'Obrigado. Recebemos a sua candidatura. Entramos em contacto consigo quando houver uma oportunidade adequada ao seu perfil.',
+      candidatura: 'Obrigado. Recebemos a sua candidatura. Vamos analisá-la e entrar em contacto consigo pelo telefone que indicou.',
     },
     erro: `Não foi possível enviar. Tente novamente ou contacte-nos pelo ${TELEFONE_ESCRITO} ou por e-mail para ${EMAIL}.`,
     indisponivel: `De momento não é possível enviar pelo formulário. Contacte-nos pelo ${TELEFONE_ESCRITO} ou por e-mail para ${EMAIL}.`,
