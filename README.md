@@ -61,10 +61,9 @@ A verificação (`scripts/verificar.cjs`) bloqueia a publicação se:
 
 ## Voltar ao site anterior
 
-O site anterior (Vite/React, com o formulário Formward) é o commit `bc63c39` (merge da PR #7). Para o repor:
+O site anterior (Vite/React, com formulário de pedido de orçamento) é o commit `bc63c39` (merge da PR #7). Para o repor, faz `git revert -m 1 <commit do merge da v2>` em `main`, ou cria um ramo a partir de `bc63c39` e faz o merge.
 
-1. Confirma que as variáveis do repositório `VITE_FORM_ENDPOINT` e `VITE_FORM_ACCEPTS_FILES` têm os valores certos: o build antigo usa-as.
-2. Faz `git revert -m 1 <commit do merge da v2>` em `main`, ou cria um ramo a partir de `bc63c39` e faz o merge.
+O formulário desse site abre o programa de e-mail do visitante. O código também sabia enviar para um serviço de formulários (variáveis do repositório `VITE_FORM_ENDPOINT` e `VITE_FORM_ACCEPTS_FILES`), preparado para o Formward. O Formward foi posto de parte a 22 de outubro de 2026 e as variáveis foram apagadas: reposto, o site anterior fica no modo por e-mail.
 
 ## Por decidir com o cliente
 
