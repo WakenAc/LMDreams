@@ -1070,3 +1070,71 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: hidden; }
+
+/* =====================================================================
+   FORMULÁRIOS (pedido de orçamento em #contactos e candidatura em
+   trabalhe-connosco/). Envio por assets/js/formularios.js.
+   ===================================================================== */
+.form {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 20px;
+  padding: clamp(20px, 3vw, 32px);
+  border: 1px solid var(--linha-forte); border-radius: 14px;
+  background: rgba(18, 23, 28, 0.78); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+}
+/* O campo com foco nunca fica tapado pelo cabeçalho fixo (WCAG 2.2, 2.4.11). */
+.form :is(input, select, textarea, button) { scroll-margin-top: 120px; scroll-margin-bottom: 24px; }
+.form__titulo { grid-column: 1 / -1; font-size: var(--t-21); font-weight: 500; letter-spacing: -0.01em; }
+.form__campo, .form__grupo { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.form__campo--largo, .form__grupo, .form__privacidade, .form__aviso, .form__acoes, .form__nojs { grid-column: 1 / -1; }
+.form__grupo { margin: 0; padding: 0; border: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 20px; }
+.form__grupo legend { padding: 0; margin-bottom: 6px; font-size: var(--t-14); color: var(--cal); }
+.form__grupo > .form__erro { grid-column: 1 / -1; }
+.form label { font-size: var(--t-14); color: var(--cal); }
+.form__obrig { color: var(--pedra); }
+.form__ajuda { font-size: var(--t-12); color: rgba(236, 230, 220, 0.78); }
+.form input:not([type="checkbox"]), .form select, .form textarea {
+  width: 100%; min-height: 48px; padding: 10px 14px;
+  border: 1px solid var(--linha-forte); border-radius: 10px;
+  background: rgba(18, 23, 28, 0.72); color: var(--cal);
+  font: inherit; font-size: var(--t-15);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.form textarea { min-height: 132px; resize: vertical; line-height: 1.5; }
+.form select { appearance: none; padding-right: 40px; background-image: linear-gradient(45deg, transparent 50%, var(--pedra) 50%), linear-gradient(135deg, var(--pedra) 50%, transparent 50%); background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%; background-size: 5px 5px; background-repeat: no-repeat; }
+.form select option { background: var(--grafite); color: var(--cal); }
+.form input:hover, .form select:hover, .form textarea:hover { border-color: rgba(236, 230, 220, 0.5); }
+.form input:not([type="checkbox"]):focus-visible, .form select:focus-visible, .form textarea:focus-visible { outline: none; border-color: var(--latao); box-shadow: 0 0 0 3px rgba(201, 154, 85, 0.35); }
+.form input:not([type="checkbox"])[aria-invalid="true"], .form select[aria-invalid="true"], .form textarea[aria-invalid="true"] { border-color: #f0a08f; }
+.form__privacidade input:focus-visible { outline: 2px solid var(--latao); outline-offset: 2px; }
+.form__erro { font-size: var(--t-14); color: #f0a08f; }
+.form__privacidade { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; align-items: start; }
+.form__privacidade input { width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--latao); }
+.form__privacidade .form__erro { grid-column: 2; }
+.form a { color: var(--latao-claro); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.form a:hover { color: var(--cal); }
+.form__aviso { display: grid; gap: 6px; font-size: var(--t-12); color: rgba(236, 230, 220, 0.78); max-width: 60em; }
+.form__acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.form__acoes .btn[aria-disabled="true"] { opacity: 0.6; cursor: progress; }
+.form__estado { font-size: var(--t-15); }
+.form__estado:not(:empty) { padding: 12px 14px; border: 1px solid var(--linha-forte); border-radius: 10px; flex-basis: 100%; }
+.form__estado[data-tipo="sucesso"] { border-color: var(--latao); color: var(--latao-claro); }
+.form__estado[data-tipo="erro"] { border-color: #f0a08f; color: #f6c3b8; }
+/* Campo-armadilha contra robôs: fora do ecrã e fora da navegação por teclado. */
+.form__armadilha { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+/* O botão só aparece quando o formularios.js ativa o formulário (data-ativo). Sem JavaScript, se o
+   script não carregar ou sem endereço de envio, aparece a nota com os contactos. */
+.form__nojs { font-size: var(--t-15); color: var(--cal); }
+.form:not([data-ativo]) .form__enviar { display: none; }
+.form[data-ativo] .form__nojs { display: none; }
+.contact__inner--form { align-items: start; }
+.legal .form { margin-top: 28px; }
+/* Dentro das páginas legais, o formulário mantém os seus espaços e tamanhos (sem as margens do texto corrido). */
+.legal .form p, .legal .form h2 { margin-top: 0; }
+.legal .form h2 { font-size: var(--t-21); font-weight: 500; }
+.legal .form .form__ajuda, .legal .form .form__aviso, .legal .form .form__aviso p { color: rgba(236, 230, 220, 0.78); }
+.legal .form .form__erro { color: #f0a08f; }
+/* Na página Trabalhe connosco, o parágrafo depois do título é texto normal (nas políticas é a data). */
+.page-trabalhe .legal h1 + p { margin-top: 24px; font-size: var(--t-17); color: rgba(236, 230, 220, 0.86); }
+@media (max-width: 760px) {
+  .form, .form__grupo { grid-template-columns: minmax(0, 1fr); }
+}

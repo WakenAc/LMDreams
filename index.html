@@ -29,7 +29,7 @@
   <link rel="icon" href="assets/icons/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=17">
+  <link rel="stylesheet" href="assets/css/style.css?v=19">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -628,16 +628,103 @@
     <!-- ============================================================ CONTACTOS -->
     <section class="section contact" id="contactos" aria-labelledby="contactos-t">
       <div class="contact__bg" data-img="fase-11-exterior" aria-hidden="true"><img alt="" loading="lazy" decoding="async"><div class="ph"></div></div>
-      <div class="wrap contact__inner">
+      <div class="wrap contact__inner contact__inner--form">
         <div class="contact__lead">
           <h2 class="h-sec" id="contactos-t"><span class="sr-only">Contactos e pedido de orçamento. </span><span class="d-sans">Tem uma obra em mente?</span> <span class="d-serif">Vamos falar.</span></h2>
-          <p class="contact__text">Descreva a obra por telefone, WhatsApp ou e-mail. Quanto mais nos disser sobre o trabalho, mais útil será a primeira conversa. O orçamento é gratuito e respondemos no prazo máximo de 8 dias úteis.</p>
+          <p class="contact__text">Preencha o pedido de orçamento ou fale connosco por telefone, WhatsApp ou e-mail. Quanto mais nos disser sobre o trabalho, mais útil será a primeira conversa. O orçamento é gratuito e respondemos no prazo máximo de 8 dias úteis.</p>
+          <form class="form" data-formulario="orcamento" method="dialog" aria-labelledby="orc-t">
+            <h3 class="form__titulo" id="orc-t">Pedido de orçamento</h3>
+
+            <div class="form__campo">
+              <label for="orc-nome">Nome <span class="form__obrig">(obrigatório)</span></label>
+              <input id="orc-nome" name="nome" type="text" autocomplete="name" maxlength="80" required aria-describedby="orc-nome-erro">
+              <p class="form__erro" id="orc-nome-erro" data-erro="nome" hidden></p>
+            </div>
+            <div class="form__campo">
+              <label for="orc-localidade">Localidade da obra <span class="form__obrig">(obrigatório)</span></label>
+              <input id="orc-localidade" name="localidade" type="text" autocomplete="address-level2" maxlength="80" required aria-describedby="orc-localidade-ajuda orc-localidade-erro">
+              <p class="form__ajuda" id="orc-localidade-ajuda">Concelho ou localidade, por exemplo Seixal.</p>
+              <p class="form__erro" id="orc-localidade-erro" data-erro="localidade" hidden></p>
+            </div>
+
+            <fieldset class="form__grupo" aria-describedby="orc-contacto-erro">
+              <legend>Contacto <span class="form__obrig">(indique pelo menos um)</span></legend>
+              <div class="form__campo">
+                <label for="orc-telefone">Telefone</label>
+                <input id="orc-telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" data-grupo="contacto" aria-describedby="orc-telefone-erro">
+                <p class="form__erro" id="orc-telefone-erro" data-erro="telefone" hidden></p>
+              </div>
+              <div class="form__campo">
+                <label for="orc-email">E-mail</label>
+                <input id="orc-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" maxlength="254" data-grupo="contacto" aria-describedby="orc-email-erro">
+                <p class="form__erro" id="orc-email-erro" data-erro="email" hidden></p>
+              </div>
+              <p class="form__erro" id="orc-contacto-erro" data-erro="contacto" hidden></p>
+            </fieldset>
+
+            <div class="form__campo">
+              <label for="orc-servico">Tipo de serviço <span class="form__obrig">(obrigatório)</span></label>
+              <select id="orc-servico" name="servico" required aria-describedby="orc-servico-erro">
+                <option value="">Escolha uma opção</option>
+                <option>Construção civil</option>
+                <option>Remodelação de cozinhas</option>
+                <option>Remodelação de casas de banho</option>
+                <option>Pavimentos e revestimentos</option>
+                <option>Recuperação de imóveis</option>
+                <option>Trabalhos exteriores</option>
+                <option>Outro</option>
+              </select>
+              <p class="form__erro" id="orc-servico-erro" data-erro="servico" hidden></p>
+            </div>
+            <div class="form__campo">
+              <label for="orc-inicio">Quando pretende começar a obra? <span class="form__obrig">(obrigatório)</span></label>
+              <select id="orc-inicio" name="inicio" required aria-describedby="orc-inicio-erro">
+                <option value="">Escolha uma opção</option>
+                <option>O mais cedo possível</option>
+                <option>Dentro de 1 a 3 meses</option>
+                <option>Dentro de 3 a 6 meses</option>
+                <option>Daqui a mais de 6 meses</option>
+                <option>Ainda não sei</option>
+              </select>
+              <p class="form__erro" id="orc-inicio-erro" data-erro="inicio" hidden></p>
+            </div>
+
+            <div class="form__campo form__campo--largo">
+              <label for="orc-descricao">Descrição da obra <span class="form__obrig">(obrigatório)</span></label>
+              <textarea id="orc-descricao" name="descricao" rows="5" minlength="10" maxlength="2000" required data-lenis-prevent aria-describedby="orc-descricao-ajuda orc-descricao-erro"></textarea>
+              <p class="form__ajuda" id="orc-descricao-ajuda">O que pretende fazer, a área aproximada e o estado atual do espaço. Se tiver fotografias, pode enviá-las depois por WhatsApp ou e-mail.</p>
+              <p class="form__erro" id="orc-descricao-erro" data-erro="descricao" hidden></p>
+            </div>
+
+            <div class="form__armadilha" aria-hidden="true">
+              <label for="orc-k7x">Não preencher este campo</label>
+              <input id="orc-k7x" name="campo_k7x" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="form__privacidade">
+              <input id="orc-privacidade" name="privacidade" type="checkbox" value="sim" required aria-describedby="orc-privacidade-erro">
+              <label for="orc-privacidade">Tomei conhecimento da <a href="politica-de-privacidade/">Política de privacidade</a>. <span class="form__obrig">(obrigatório)</span></label>
+              <p class="form__erro" id="orc-privacidade-erro" data-erro="privacidade" hidden></p>
+            </div>
+
+            <div class="form__aviso" data-rgpd="">
+              <p>Responsável pelo tratamento: LMDreams, Unipessoal Lda. Usamos estes dados apenas para analisar o seu pedido de orçamento e responder-lhe, antes de qualquer contrato (RGPD, art. 6.º, n.º 1, al. b)), e conservamo-los durante 12 meses se não for celebrado contrato.</p>
+              <p>O pedido é gravado numa folha de cálculo da Google, mantida por nossa conta pelo prestador técnico do site, e verificado automaticamente contra spam. Pode exercer os seus direitos através de mendes3pm@gmail.com. Saiba mais na <a href="politica-de-privacidade/">Política de privacidade</a>.</p>
+            </div>
+
+            <div class="form__acoes">
+              <button class="btn btn--brass btn--lg form__enviar" type="submit">Enviar pedido</button>
+              <p class="form__nojs">O formulário não está disponível neste navegador. Ligue para o <a href="tel:+351919233372">+351 919 233 372</a> (chamada para a rede móvel nacional) ou escreva para <a href="mailto:mendes3pm@gmail.com">mendes3pm@gmail.com</a>.</p>
+              <p class="form__estado" data-estado="" role="status" aria-live="polite"></p>
+            </div>
+          </form>
           <div class="contact__actions">
             <a class="btn btn--brass btn--lg" href="tel:+351919233372">Ligar para +351 919 233 372</a>
             <a class="btn btn--ghost btn--lg" href="https://wa.me/351919233372?text=Ol%C3%A1%2C%20gostaria%20de%20pedir%20um%20or%C3%A7amento%20para%20uma%20obra." target="_blank" rel="noopener">Falar por WhatsApp<span class="sr-only"> (abre numa nova janela)</span></a>
             <a class="btn btn--ghost btn--lg" href="mailto:mendes3pm@gmail.com?subject=Pedido%20de%20or%C3%A7amento%20pelo%20site">Enviar e-mail</a>
           </div>
           <p class="contact__small">Chamada para a rede móvel nacional. Se tiver fotografias do espaço, pode enviá-las por WhatsApp ou e-mail.</p>
+          <p class="contact__small">Procuramos profissionais da construção civil (m/f), como pedreiros/as, pintores/as e carpinteiros/as: <a class="link" href="trabalhe-connosco/">candidate-se aqui</a>.</p>
         </div>
 
         <dl class="tblock contact__data">
@@ -674,6 +761,7 @@
             <li><a href="obras/">Obras realizadas</a></li>
             <li><a href="#perguntas">Perguntas frequentes</a></li>
             <li><a href="#contactos">Contactos</a></li>
+            <li><a href="trabalhe-connosco/">Trabalhe connosco</a></li>
           </ul>
         </nav>
         <div class="ftr__col">
@@ -745,5 +833,6 @@
   <script src="assets/js/projetos.js?v=3" defer></script>
   <script src="assets/js/avaliacoes.js?v=1" defer></script>
   <script src="assets/js/main.js?v=12" defer></script>
+  <script src="assets/js/formularios.js?v=1" defer></script>
 </body>
 </html>

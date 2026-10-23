@@ -22,6 +22,7 @@ const SITE = [
   'politica-de-privacidade',
   'politica-de-cookies',
   'termos-e-condicoes',
+  'trabalhe-connosco',
 ]
 
 fs.rmSync(dist, { recursive: true, force: true })
@@ -48,7 +49,7 @@ const walkHtml = (dir) => fs.readdirSync(path.join(dist, dir), { withFileTypes: 
   else if (e.name === 'index.html') pages.push(rel)
 })
 pages.push('index.html')
-for (const d of ['obras', 'politica-de-privacidade', 'politica-de-cookies', 'termos-e-condicoes']) walkHtml(d)
+for (const d of ['obras', 'politica-de-privacidade', 'politica-de-cookies', 'termos-e-condicoes', 'trabalhe-connosco']) walkHtml(d)
 const urls = pages.map((f) => {
   const loc = SITE_URL + f.replace(/index\.html$/, '')
   return `  <url><loc>${loc}</loc><lastmod>${lastmod(f)}</lastmod></url>`
