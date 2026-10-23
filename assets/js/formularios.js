@@ -15,7 +15,7 @@
   // Endereço da aplicação Web do Apps Script. É público por natureza (está no código do site);
   // a proteção contra abusos está no próprio script. O scripts/verificar.cjs bloqueia a
   // publicação enquanto estiver vazio.
-  const ENDPOINT = '';
+  const ENDPOINT = 'https://script.google.com/macros/s/AKfycbzksuGzD1kQ3-57alP6mLUZ7TkAj6tmsz3c3Mcijf2NsEPLMQlSCDR1ohlTyXOU5Prt/exec';
   const LIMITE_MS = 15000;
 
   const TELEFONE_ESCRITO = '+351 919 233 372 (chamada para a rede móvel nacional)';

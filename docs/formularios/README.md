@@ -16,6 +16,12 @@ Dois formulários gravam diretamente numa folha de cálculo do Google Sheets, se
 
 Instalação e manutenção do script: [`apps-script/GUIA.md`](apps-script/GUIA.md).
 
+### Testes
+
+- `node docs/formularios/testar-formularios.mjs` (depois de `node scripts/publicar.cjs`): os dois formulários com o Apps Script simulado. Nunca contacta o script verdadeiro.
+- `node docs/formularios/verificar-script.mjs`: verifica o script publicado (o `ENDPOINT`) sem gravar nada. Confirma a resposta e o CORS, e que o script recusa envios incompletos, campos desconhecidos e opções fora das listas, e ignora o campo-armadilha.
+- `node docs/formularios/verificar-script.mjs --gravar`: também envia, pelo próprio site, um pedido de orçamento e uma candidatura de teste, um envio suspeito e um repetido. Ficam 3 linhas marcadas "TESTE … (apagar)" e chegam 2 avisos por e-mail: apagar as linhas depois. Feito a 23 de outubro de 2026 com o script final: 11 de 11 verificações certas.
+
 ### Regras técnicas confirmadas no teste de 23 de outubro de 2026
 
 O kit do teste está em [`teste-apps-script/`](teste-apps-script/).

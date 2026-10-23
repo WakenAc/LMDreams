@@ -66,7 +66,7 @@ O pedido de orçamento (secção Contactos) e a candidatura (`trabalhe-connosco/
 - As listas de opções (tipo de serviço, início, profissão, experiência, disponibilidade) existem no HTML e em `LISTAS`, no `Codigo.gs`. O `scripts/verificar.cjs` compara-as.
 - A página `trabalhe-connosco/` tem cópias do cabeçalho e do rodapé, como as páginas legais: uma mudança no rodapé tem de ser feita também nela.
 
-Testes, com o Apps Script simulado (nada é enviado ao Google; precisam do Playwright e do axe em `node_modules`):
+Testes com o Apps Script simulado, em que nada é enviado ao Google (precisam do Playwright e do axe em `node_modules`). Para verificar o script publicado, ver `docs/formularios/README.md`, secção "Testes".
 
 ```bash
 node scripts/publicar.cjs

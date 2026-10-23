@@ -46,12 +46,16 @@ async function abrir(caminho, resposta = { status: 200, body: { ok: true } }, { 
   const pedidos = []
   const erros = []
   page.on('pageerror', (e) => erros.push(e.message))
-  if (comEndpoint) {
-    await page.route('**/assets/js/formularios.js*', async (route) => {
-      const original = fs.readFileSync(path.join(DIST, 'assets/js/formularios.js'), 'utf8')
-      await route.fulfill({ contentType: 'text/javascript', body: original.replace("const ENDPOINT = '';", `const ENDPOINT = '${ENDPOINT_TESTE}';`) })
-    })
-  }
+  // O formularios.js é sempre servido com o endereço de teste (ou vazio): nunca se envia nada para o
+  // script verdadeiro, mesmo depois de o ENDPOINT real estar no ficheiro.
+  await page.route('**/assets/js/formularios.js*', async (route) => {
+    const original = fs.readFileSync(path.join(DIST, 'assets/js/formularios.js'), 'utf8')
+    const corpo = original.replace(/const ENDPOINT = '[^']*';/, `const ENDPOINT = '${comEndpoint ? ENDPOINT_TESTE : ''}';`)
+    if (corpo === original && !original.includes("const ENDPOINT = '" + (comEndpoint ? ENDPOINT_TESTE : '') + "';")) throw new Error('não consegui trocar o ENDPOINT')
+    await route.fulfill({ contentType: 'text/javascript', body: corpo })
+  })
+  // Rede de segurança: qualquer pedido ao Apps Script verdadeiro é bloqueado.
+  await page.route(/script.google.com/, (route) => (route.request().url().startsWith(ENDPOINT_TESTE) ? route.fallback() : route.abort('blockedbyclient')))
   await page.route(`${ENDPOINT_TESTE}*`, async (route) => {
     pedidos.push(route.request())
     if (resposta === 'falha') return route.abort('failed')
