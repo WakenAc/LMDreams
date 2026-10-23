@@ -5,6 +5,8 @@ dist/
 # PNG originais do Higgsfield e fotografias do WhatsApp por tratar, com o catálogo de privacidade.
 rss/
 fotos-originais/
+# Respostas do cliente sobre as vagas (condições internas que não são para publicar).
+docs/recrutamento/perguntas-ao-cliente.md
 
 node_modules/
 .claude/settings.local.json

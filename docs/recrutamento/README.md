@@ -30,7 +30,7 @@ Para cada vaga confirmada, uma página `trabalhe-connosco/<profissão>/`. Tem de
 
 A página `trabalhe-connosco/` passa a listar as vagas, sem dados `JobPosting`, e mantém o formulário para candidaturas espontâneas.
 
-As perguntas a fazer estão em [`perguntas-ao-cliente.md`](perguntas-ao-cliente.md).
+As perguntas ao cliente e as respostas estão em `perguntas-ao-cliente.md`, que fica só no computador de quem mantém o site: está no `.gitignore`, porque as respostas têm condições internas que não são para publicar.
 
 ## Fora do site (o mais rápido: dias, não semanas)
 
