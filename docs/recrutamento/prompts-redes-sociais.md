@@ -116,7 +116,7 @@ Imagem 1: `personagem-mestre.png`. Imagem 2: `camisola-frente.png`. Imagem 3: `c
 Edit Image 1. Keep everything in Image 1 exactly the same: the same character, face, sunglasses, beard, skin, build, pose, expression, drawing style, colours, lighting, framing and background. Change only his T-shirt: it becomes the company T-shirt shown in Image 2, a plain black short-sleeved crew-neck T-shirt with one small logo printed on his left chest, which is on the right side of the image as we look at him, at the size and position shown in Image 2: about the width of his palm, just below the collarbone. The logo is the one in Image 3: a yellow house-roof outline with a chimney on the right, a small yellow square divided into four with the letters L, M, D and C, and two lines of red lettering below it, "LMDreams" and "Construções Lda". Copy the logo's shapes, colours and letters exactly, drawn flat and clean in the same cartoon style and following the fabric. Nothing else on the T-shirt: no other print, no phone number on the front, nothing on the sleeves. No other text, letters, numbers or logos anywhere in the image.
 ```
 
-## 2B. `personagem-corpo-inteiro-camisola` (1:2 ou o formato mais estreito que houver): a camisola no corpo inteiro
+## 2B. `personagem-corpo-inteiro-camisola` (9:16): a camisola no corpo inteiro
 
 Imagem 1: `personagem-corpo-inteiro.png`. Imagem 2: `camisola-frente.png`. Imagem 3: `camisola-logotipo.png`.
 
@@ -124,7 +124,7 @@ Imagem 1: `personagem-corpo-inteiro.png`. Imagem 2: `camisola-frente.png`. Image
 Edit Image 1. Keep everything in Image 1 exactly the same: the same character, face, sunglasses, beard, skin, build, three-quarter pose, trousers, boots, wrist wraps, drawing style, colours, framing and plain background. Change only his T-shirt: it becomes the company T-shirt shown in Image 2, a plain black short-sleeved crew-neck T-shirt with one small logo printed on his left chest, at the size and position shown in Image 2: about the width of his palm, just below the collarbone, turning slightly with the chest in this three-quarter view. The logo is the one in Image 3: a yellow house-roof outline with a chimney on the right, a small yellow square divided into four with the letters L, M, D and C, and two lines of red lettering below it, "LMDreams" and "Construções Lda". Copy the logo's shapes, colours and letters exactly, drawn flat and clean in the same cartoon style. Nothing else on the T-shirt: no other print, no phone number on the front, nothing on the sleeves. No other text, letters, numbers or logos anywhere in the image.
 ```
 
-## 2C. `personagem-costas-camisola` (1:2 ou o formato mais estreito que houver; opcional): as costas da camisola
+## 2C. `personagem-costas-camisola` (9:16; opcional): as costas da camisola
 
 Imagem 1: `personagem-costas.png`. Imagem 2: `camisola-costas.png`. Imagem 3: `camisola-logotipo.png`.
 
