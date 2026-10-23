@@ -7,6 +7,8 @@ rss/
 fotos-originais/
 # Respostas do cliente sobre as vagas (condições internas que não são para publicar).
 docs/recrutamento/perguntas-ao-cliente.md
+# Chaves de contas de serviço (por exemplo, a da API de indexação do Google)
+*service-account*.json
 
 node_modules/
 .claude/settings.local.json

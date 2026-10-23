@@ -873,6 +873,8 @@ html.has-dialog { overflow: hidden; }
   border-bottom: 1px solid var(--linha);
 }
 .page-legal main:focus { outline: none; }
+/* Uma ligação ou um botão com foco nunca fica debaixo do cabeçalho fixo (WCAG 2.2, 2.4.11). */
+.page-legal main :focus { scroll-margin-top: 120px; }
 .legal {
   max-width: 56rem;
   padding-top: calc(120px + 3vw);
@@ -1127,7 +1129,8 @@ html.lenis, html.lenis body { height: auto; }
 .form:not([data-ativo]) .form__enviar { display: none; }
 .form[data-ativo] .form__nojs { display: none; }
 .contact__inner--form { align-items: start; }
-.legal .form { margin-top: 28px; }
+/* scroll-margin: o botão das vagas leva a #candidatura, que não pode ficar debaixo do cabeçalho fixo */
+.legal .form { margin-top: 28px; scroll-margin-top: 110px; }
 /* Dentro das páginas legais, o formulário mantém os seus espaços e tamanhos (sem as margens do texto corrido). */
 .legal .form p, .legal .form h2 { margin-top: 0; }
 .legal .form h2 { font-size: var(--t-21); font-weight: 500; }
@@ -1138,6 +1141,16 @@ html.lenis, html.lenis body { height: auto; }
 @media (max-width: 760px) {
   .form, .form__grupo { grid-template-columns: minmax(0, 1fr); }
 }
+/* Lista das vagas abertas na página Trabalhe connosco (gerada por scripts/gerar-vagas.cjs) */
+.legal .vagas { list-style: none; padding: 0; display: grid; gap: 12px; max-width: 42em; }
+.legal .vagas li { position: relative; margin: 0; padding: 16px 20px; border: 1px solid var(--linha-forte); border-radius: 12px; background: var(--grafite); }
+/* o cartão inteiro abre a vaga; o nome acessível da ligação continua a ser só o título */
+.legal .vagas a::after { content: ""; position: absolute; inset: 0; border-radius: 12px; }
+.legal .vagas li:hover { border-color: var(--latao); }
+.legal .vagas li:has(a:focus-visible) { outline: 2px solid var(--latao); outline-offset: 2px; }
+.legal .vagas a { font-size: var(--t-17); font-weight: 600; color: var(--cal); text-decoration: none; }
+.legal .vagas a:hover { color: var(--latao-claro); }
+.legal .vagas span { display: block; margin-top: 4px; font-size: var(--t-14); color: var(--pedra); }
 
 /* ---------------------------------------------------- recrutamento (página inicial) */
 .hiring { border-top: 1px solid var(--linha); border-bottom: 1px solid var(--linha); background: var(--grafite); }

@@ -169,6 +169,41 @@ for (const [caso, resposta] of [['ok:false do script', { status: 200, body: { ok
   await fechar()
 }
 
+// 4b. Páginas das vagas: o botão leva ao formulário único com a profissão já escolhida
+for (const [slug, profissao] of [['pedreiro', 'Pedreiro/a'], ['servente', 'Servente'], ['pintor', 'Pintor/a']]) {
+  const { page, pedidos, erros, fechar } = await abrir(`trabalhe-connosco/${slug}/`, undefined, { largura: 390 })
+  const largura = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
+  registar(`Vaga ${slug}: sem deslocamento horizontal a 390 px`, largura <= 0, `${largura} px`)
+  const axe = await new AxeBuilder({ page }).include('main').withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze()
+  const graves = axe.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical')
+  registar(`Vaga ${slug}: axe sem violações graves`, graves.length === 0, graves.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`).join(' | '))
+  await page.getByRole('link', { name: 'Candidatar-me a esta vaga' }).click()
+  await page.waitForURL(`**/trabalhe-connosco/?vaga=${slug}#candidatura`)
+  registar(`Vaga ${slug}: o formulário abre com "${profissao}" escolhido`, (await page.inputValue('#cand-profissao')) === profissao)
+  const [topo, cabecalho] = await page.evaluate(() => [document.querySelector('#cand-t').getBoundingClientRect().top, document.querySelector('.hdr').getBoundingClientRect().bottom])
+  registar(`Vaga ${slug}: o título do formulário fica visível abaixo do cabeçalho`, topo >= cabecalho, `título a ${Math.round(topo)} px, cabeçalho até ${Math.round(cabecalho)} px`)
+  if (slug === 'servente') {
+    await page.fill('#cand-nome', 'Rui Teste')
+    await page.fill('#cand-telefone', '912 345 678')
+    await page.fill('#cand-zona', 'Barreiro')
+    await page.selectOption('#cand-experiencia', 'Menos de 1 ano')
+    await page.selectOption('#cand-disponibilidade', 'Imediata')
+    await page.check('#cand-privacidade')
+    await page.waitForTimeout(4200)
+    await page.locator('form[data-formulario="candidatura"] .form__enviar').click()
+    await page.waitForFunction(() => /Recebemos a sua candidatura/.test(document.querySelector('form[data-formulario="candidatura"] [data-estado]').textContent))
+    const corpo = Object.fromEntries(new URLSearchParams(pedidos[0].postData()))
+    registar('Vaga servente: a candidatura segue com a profissão da vaga', corpo.profissao === 'Servente', JSON.stringify(corpo))
+  }
+  registar(`Vaga ${slug}: sem erros de JavaScript`, erros.length === 0, erros.join(' | '))
+  await fechar()
+}
+{
+  const { page, fechar } = await abrir('trabalhe-connosco/?vaga=inexistente#candidatura')
+  registar('Vaga desconhecida no endereço: a profissão fica por escolher', (await page.inputValue('#cand-profissao')) === '')
+  await fechar()
+}
+
 // 5. Sem endereço (o formularios.js real, com ENDPOINT vazio) e sem JavaScript
 for (const [caso, opcoes] of [['sem endereço', { comEndpoint: false }], ['sem JavaScript', { comEndpoint: false, js: false }]]) {
   for (const caminho of ['#contactos', 'trabalhe-connosco/']) {

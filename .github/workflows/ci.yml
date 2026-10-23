@@ -20,12 +20,13 @@ jobs:
         with:
           node-version-file: .nvmrc
           package-manager-cache: false
-      - name: Confirmar que as páginas das obras estão atualizadas
+      - name: Confirmar que as páginas geradas (obras e vagas) estão atualizadas
         run: |
           node scripts/gerar-obras.cjs
-          if [ -n "$(git status --porcelain -- obras)" ]; then
-            git status --porcelain -- obras
-            echo "::error::obras/ desatualizado: corra node scripts/gerar-obras.cjs e faça commit"
+          node scripts/gerar-vagas.cjs
+          if [ -n "$(git status --porcelain -- obras trabalhe-connosco index.html)" ]; then
+            git status --porcelain -- obras trabalhe-connosco index.html
+            echo "::error::páginas geradas desatualizadas: corra node scripts/gerar-obras.cjs e node scripts/gerar-vagas.cjs e faça commit"
             exit 1
           fi
       - name: Preparar dist/
