@@ -29,7 +29,7 @@
   <link rel="icon" href="assets/icons/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=19">
+  <link rel="stylesheet" href="assets/css/style.css?v=21">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -68,6 +68,7 @@
         <svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1.5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
       </button>
       <nav class="explore__panel" id="explore-panel" aria-label="Fases da obra e secções" data-lenis-prevent hidden>
+        <a class="explore__rec" href="trabalhe-connosco/"><span>Estamos a recrutar</span> <span class="explore__rec-cta">Candidatar-me</span></a>
         <div class="explore__col">
           <p class="explore__group">O projeto</p>
           <ol class="explore__list">
@@ -106,12 +107,14 @@
             <li><a href="obras/">Obras realizadas</a></li>
             <li><a href="#perguntas">Perguntas frequentes</a></li>
             <li><a href="#contactos">Contactos</a></li>
+            <li><a href="trabalhe-connosco/">Trabalhe connosco</a></li>
           </ul>
         </div>
       </nav>
     </div>
 
     <div class="hdr__actions">
+      <a class="btn btn--ghost btn--recrutar" href="trabalhe-connosco/">Estamos a recrutar</a>
       <a class="btn btn--ghost btn--call" href="tel:+351919233372">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h3.5l1.8 4.6-2.3 1.5a11 11 0 0 0 6.9 6.9l1.5-2.3L21 15.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
         <span>Ligar</span>
@@ -384,6 +387,25 @@
       </div>
     </section>
 
+    <!-- ============================================================ RECRUTAMENTO -->
+    <section class="section hiring" id="recrutamento" aria-labelledby="recrutamento-t">
+      <div class="wrap hiring__inner">
+        <div class="hiring__head">
+          <p class="hiring__kicker">Estamos a recrutar</p>
+          <h2 class="h-sec" id="recrutamento-t"><span class="d-sans">Procuramos especialistas</span> <span class="d-serif">para as nossas obras.</span></h2>
+        </div>
+        <div class="hiring__body">
+          <p>Temos obras em curso e marcadas para os próximos meses, e procuramos profissionais da construção civil (m/f): pedreiros/as, pintores/as, carpinteiros/as, ladrilhadores/as, canalizadores/as, eletricistas e outras especialidades.</p>
+          <p>Trabalhamos sobretudo no Seixal, em Almada, Sesimbra, Lisboa e Sintra, a partir do nosso escritório em Amora.</p>
+          <div class="hiring__actions">
+            <a class="btn btn--brass btn--lg" href="trabalhe-connosco/">Candidatar-me</a>
+            <a class="btn btn--ghost btn--lg" href="tel:+351919233372">Ligar para +351 919 233 372</a>
+          </div>
+          <p class="hiring__small">Chamada para a rede móvel nacional.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- ============================================================ SERVIÇOS -->
     <section class="section services" id="servicos" aria-labelledby="servicos-t">
       <div class="wrap">
@@ -577,6 +599,10 @@
           <p class="sec-head__text">O que costumam perguntar-nos antes de uma obra.</p>
         </div>
         <div class="faq__list">
+          <details class="faq__item">
+            <summary><h3>Estão a contratar?</h3></summary>
+            <p>Sim. Procuramos profissionais da construção civil (m/f), como pedreiros/as, pintores/as, carpinteiros/as, ladrilhadores/as, canalizadores/as e eletricistas. Pode candidatar-se na página <a class="link" href="trabalhe-connosco/">Trabalhe connosco</a> ou ligar para o +351 919 233 372 (chamada para a rede móvel nacional).</p>
+          </details>
           <details class="faq__item">
             <summary><h3>Em que zonas trabalham?</h3></summary>
             <p>Temos escritório em Amora, no concelho do Seixal, e trabalhamos sobretudo no Seixal, em Almada, Sesimbra, Lisboa e Sintra. Obras noutras zonas de Portugal continental, sob consulta.</p>
