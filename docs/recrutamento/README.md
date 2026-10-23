@@ -41,7 +41,7 @@ As perguntas ao cliente e as respostas estão em `perguntas-ao-cliente.md`, que 
 
 ## O que as páginas não dizem
 
-Por decisão do cliente (23 de outubro de 2026), as páginas não indicam o tipo de contrato, o trabalho aos sábados nem as ferramentas. A empresa trata destas condições diretamente com cada candidato. Regra para as próximas vagas: o que possa levantar dúvidas legais fica de fora das páginas e dos anúncios. O horário normal (de segunda a sexta-feira, das 8h às 17h, com 1 hora de almoço: 40 horas por semana) está nas páginas.
+Por decisão do cliente (23 de outubro de 2026), as páginas não indicam o tipo de contrato, o trabalho aos sábados nem as ferramentas. A empresa trata destas condições diretamente com cada candidato. Regra para as próximas vagas: o que possa levantar dúvidas legais fica de fora das páginas e dos anúncios. O horário normal está nas páginas: das 8h às 17h, com a hora de almoço subentendida.
 
 As funções de cada vaga foram confirmadas pelo cliente.
 

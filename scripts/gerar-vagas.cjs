@@ -27,8 +27,8 @@ const COMUM = {
   // os mesmos sítios do texto, para o Google (jobLocation): onde ficam as obras
   locais: [['Lisboa', 'Lisboa'], ['Seixal', 'Setúbal'], ['Almada', 'Setúbal'], ['Sesimbra', 'Setúbal']],
   encontro: 'Na obra ou no ponto de recolha da carrinha da empresa',
-  // 8 horas por dia, 40 por semana (Código do Trabalho, art. 203.º)
-  horario: 'De segunda a sexta-feira, das 8h às 17h, com 1 hora de almoço',
+  // com a hora de almoço subentendida: 8 horas por dia (Código do Trabalho, art. 203.º)
+  horario: 'Das 8h às 17h',
   inicio: 'Imediato',
   remuneracao: 'De acordo com a lei e com a experiência, a combinar com a empresa',
   oferecemos: [
