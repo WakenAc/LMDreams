@@ -39,9 +39,11 @@ As vagas atuais estão abertas até 31 de dezembro de 2026. Se continuarem abert
 
 As perguntas ao cliente e as respostas estão em `perguntas-ao-cliente.md`, que fica só no computador de quem mantém o site: está no `.gitignore`, porque as respostas têm condições internas que não são para publicar.
 
-## Pontos por confirmar
+## O que as páginas não dizem
 
-Há condições que só entram nas páginas depois de confirmadas. A lista está no ficheiro local `rss/recrutamento/pontos-a-confirmar.md`, fora do Git.
+Por decisão do cliente (23 de outubro de 2026), as páginas não indicam o tipo de contrato, o horário nem as ferramentas. A empresa trata destas condições diretamente com cada candidato. Regra para as próximas vagas: o que possa levantar dúvidas legais fica de fora das páginas e dos anúncios. A documentação do Google pede uma descrição completa, que inclua o horário; o horário fica de fora por esta decisão.
+
+As funções de cada vaga foram confirmadas pelo cliente.
 
 ## Fora do site (o mais rápido: dias, não semanas)
 
@@ -63,8 +65,6 @@ Há condições que só entram nas páginas depois de confirmadas. A lista está
 
 - O Código do Trabalho (art. 32.º) obriga a guardar os registos dos processos de recrutamento durante 5 anos, enquanto a Política de privacidade indica 12 meses para as candidaturas. Guardar também cada versão publicada das páginas das vagas (o histórico do Git serve).
 - A frase "destina-se a maiores de 18 anos" no formulário de candidatura (o contrato coletivo define o servente como maior de 18 anos).
-- Os pontos por confirmar (ficheiro local `rss/recrutamento/pontos-a-confirmar.md`).
-- Se a viagem na carrinha, a partir do ponto de recolha, conta como tempo de trabalho.
 - Se o requisito de português básico é proporcionado (para perceber as instruções de segurança na obra).
 
 ## Como medir

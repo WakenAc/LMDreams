@@ -16,8 +16,9 @@ const root = path.resolve(__dirname, '..')
 const SITE = 'https://www.lmdreams.pt/'
 const BASE = `${SITE}trabalhe-connosco/`
 
-// ---------- condições comuns, dadas pelo cliente a 23 de outubro de 2026 (o que ainda não entra nas
-// páginas está em docs/recrutamento/README.md, "Pontos por confirmar")
+// ---------- condições comuns, confirmadas pelo cliente a 23 de outubro de 2026. Por decisão do cliente,
+// as páginas não indicam o tipo de contrato, o horário nem as ferramentas: a empresa trata disso
+// diretamente com cada candidato (docs/recrutamento/README.md, "O que as páginas não dizem").
 const COMUM = {
   // fim do dia 31 de dezembro em Lisboa (inverno: UTC+0)
   validaAte: '2026-12-31T23:59:59+00:00',
@@ -26,16 +27,13 @@ const COMUM = {
   // os mesmos sítios do texto, para o Google (jobLocation): onde ficam as obras
   locais: [['Lisboa', 'Lisboa'], ['Seixal', 'Setúbal'], ['Almada', 'Setúbal'], ['Sesimbra', 'Setúbal']],
   encontro: 'Na obra ou no ponto de recolha da carrinha da empresa',
-  horario: 'Das 8h às 17h',
   inicio: 'Imediato',
-  contrato: 'Contrato de trabalho a tempo completo',
   remuneracao: 'De acordo com a lei e com a experiência, a combinar com a empresa',
   oferecemos: [
     'Transporte na carrinha da empresa, a partir do ponto de recolha.',
     'Equipamento de proteção: luvas, capacete e botas.',
     'Seguro de acidentes de trabalho.',
     'Alojamento nas obras a mais de 100 km.',
-    'Horas extra e sábados pagos.',
     'Subsídio de alimentação.',
     'Pagamento semanal ou mensal, a combinar.',
   ],
@@ -216,9 +214,7 @@ for (const v of VAGAS) {
   const condicoes = [
     ['Local', COMUM.local],
     ['Ponto de encontro', COMUM.encontro],
-    ['Horário', COMUM.horario],
     ['Início', COMUM.inicio],
-    ['Tipo de contrato', COMUM.contrato],
     ['Remuneração', COMUM.remuneracao],
     ['Vaga aberta até', dataPorExtenso(COMUM.validaAte)],
   ]
@@ -289,7 +285,7 @@ ${outrasNav}
     description: descricao,
     datePosted: v.publicada,
     validThrough: COMUM.validaAte,
-    employmentType: 'FULL_TIME',
+    // sem employmentType nem workHours: as páginas não indicam o tipo de contrato nem o horário
     hiringOrganization: {
       '@type': 'Organization',
       name: 'LMDreams',
@@ -305,7 +301,6 @@ ${outrasNav}
     directApply: true,
     identifier: { '@type': 'PropertyValue', name: 'LMDreams', value: `lmdreams-${v.publicada.slice(0, 4)}-${v.slug}` },
     industry: 'Construção civil',
-    workHours: COMUM.horario,
     jobBenefits: COMUM.oferecemos.join(' '),
     // o cliente não deu um mínimo de meses para os oficiais: só o servente leva o valor do Google para "sem requisitos"
     ...(v.semExperiencia ? { experienceRequirements: 'no requirements' } : {}),
