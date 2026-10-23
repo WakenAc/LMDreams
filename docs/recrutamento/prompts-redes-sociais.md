@@ -76,7 +76,7 @@ Cada publicação leva "Imagem ilustrativa gerada por IA" de forma discreta:
    - **imagem 2:** `personagem-corpo-inteiro-camisola.png`, que manda no corpo e na roupa.
 5. **Série de dúvidas sobre obras** (prompt 6), mais tarde, com as mesmas duas referências. Quando os olhos se veem (óculos tirados ou descidos), junta também a **imagem 3:** `personagem-olhos.png`.
 
-A partir do passo 2, **não voltes a usar a fotografia nem o cartoon antigo**. A partir do passo 4, usa só as versões com a camisola. A fotografia puxa para o realismo e o cartoon antigo é outra pessoa. Também não uses a ficha inteira como referência: os modelos tendem a copiar a grelha e a desenhar várias figuras.
+A partir do passo 2, **não voltes a usar a fotografia nem o cartoon antigo**: a fotografia puxa para o realismo e o cartoon antigo é outra pessoa. A partir do passo 4, usa só as versões com a camisola. Também não uses a ficha inteira como referência: os modelos tendem a copiar a grelha e a desenhar várias figuras.
 
 Compara sempre cada resultado com as referências, e não com a imagem anterior. Assim os pequenos desvios não se acumulam.
 
