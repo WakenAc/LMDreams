@@ -3,7 +3,9 @@
 //  2. recursos carregados de servidores de terceiros (a Política de cookies garante que não há nenhum);
 //  3. ficheiros de rss/ ou das fotografias originais;
 //  4. páginas sem a informação legal obrigatória no rodapé, ou com marcas "POR DEFINIR";
-//  5. imagens demasiado pesadas.
+//  5. imagens demasiado pesadas;
+//  6. formulários sem o endereço do Apps Script, sem o aviso RGPD ou com listas diferentes das do
+//     script (docs/formularios/apps-script/Codigo.gs).
 // Uso: node scripts/verificar.cjs   (corre depois de node scripts/publicar.cjs)
 const fs = require('fs')
 const path = require('path')
@@ -26,7 +28,11 @@ const LEGAL = [
   'geradas por IA',
 ]
 
-const dist = path.resolve(__dirname, '..', 'dist')
+const root = path.resolve(__dirname, '..')
+const dist = path.join(root, 'dist')
+// Único destino externo permitido no JavaScript do site: a aplicação Web do Google Apps Script que
+// recebe os formulários (um envio feito quando a pessoa carrega em "Enviar", não um recurso carregado).
+const APPS_SCRIPT = /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]{20,}\/exec$/
 if (!fs.existsSync(dist)) { console.error('Falta dist/: corre primeiro node scripts/publicar.cjs'); process.exit(1) }
 
 const files = []
@@ -143,6 +149,8 @@ for (const file of files.filter((f) => f.endsWith('.js') && !rel(f).startsWith('
   for (const m of js.matchAll(/["'`](https?:\/\/[^"'`\s]+)["'`]/g)) {
     // o link do perfil no Google (avaliações) é uma ligação, não um recurso carregado
     if (/^https:\/\/((www\.)?google\.[a-z.]+\/maps|maps\.app\.goo\.gl|g\.page)\//.test(m[1])) continue
+    // o endereço de envio dos formulários (só em formularios.js)
+    if (rel(file) === 'assets/js/formularios.js' && APPS_SCRIPT.test(m[1])) continue
     problems.push(`URL externa em ${rel(file)}: ${m[1]}`)
   }
 }
@@ -152,6 +160,40 @@ const manifest = path.join(dist, 'site.webmanifest')
 if (exists(manifest)) JSON.parse(fs.readFileSync(manifest, 'utf8')).icons.forEach((i) => checkLocal(i.src, manifest, 'site.webmanifest'))
 const sitemap = path.join(dist, 'sitemap.xml')
 if (exists(sitemap)) for (const m of fs.readFileSync(sitemap, 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)) checkOwnAbsolute(m[1], 'sitemap.xml')
+
+// 6. formulários
+const formularios = path.join(dist, 'assets', 'js', 'formularios.js')
+if (exists(formularios)) {
+  const js = fs.readFileSync(formularios, 'utf8')
+  const endpoint = (js.match(/const ENDPOINT = '([^']*)'/) || [])[1]
+  if (!endpoint) problems.push('formularios.js: falta o endereço da aplicação Web do Apps Script (const ENDPOINT)')
+  else if (!APPS_SCRIPT.test(endpoint)) problems.push(`formularios.js: endereço inesperado em ENDPOINT: ${endpoint}`)
+}
+const codigoGs = path.join(root, 'docs', 'formularios', 'apps-script', 'Codigo.gs')
+const listas = (() => {
+  const m = exists(codigoGs) && fs.readFileSync(codigoGs, 'utf8').match(/const LISTAS = (\{[\s\S]*?\n\})/)
+  if (!m) { problems.push('docs/formularios/apps-script/Codigo.gs: não encontrei LISTAS'); return {} }
+  return JSON.parse(m[1])
+})()
+for (const file of files.filter((f) => f.endsWith('.html'))) {
+  const html = fs.readFileSync(file, 'utf8')
+  for (const m of html.matchAll(/<form\b[^>]*data-formulario="([^"]+)"[^>]*>([\s\S]*?)<\/form>/g)) {
+    const where = `${rel(file)} (formulário ${m[1]})`
+    const corpo = m[2]
+    if (!/data-rgpd/.test(corpo)) problems.push(`${where}: falta o aviso RGPD junto ao botão`)
+    if (!/politica-de-privacidade\//.test(corpo)) problems.push(`${where}: falta a ligação à Política de privacidade`)
+    if (!/name="campo_k7x"/.test(corpo)) problems.push(`${where}: falta o campo-armadilha`)
+    if (/<form\b[^>]*\saction=/.test(m[0])) problems.push(`${where}: o formulário não pode ter action (o envio é feito por formularios.js)`)
+    for (const sel of corpo.matchAll(/<select\b[^>]*name="([^"]+)"[^>]*>([\s\S]*?)<\/select>/g)) {
+      const opcoes = [...sel[2].matchAll(/<option\b([^>]*)>([^<]*)<\/option>/g)]
+        .filter((o) => !/value=""/.test(o[1]))
+        .map((o) => (o[1].match(/value="([^"]*)"/) || [])[1] ?? o[2].trim())
+      const esperado = listas[sel[1]]
+      if (!esperado) problems.push(`${where}: a lista "${sel[1]}" não existe em LISTAS do Codigo.gs`)
+      else if (JSON.stringify(opcoes) !== JSON.stringify(esperado)) problems.push(`${where}: as opções de "${sel[1]}" são diferentes das de LISTAS no Codigo.gs`)
+    }
+  }
+}
 
 if (problems.length) {
   console.error(`verificar: ${problems.length} problema(s)`)
