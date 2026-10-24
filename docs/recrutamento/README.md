@@ -27,25 +27,28 @@ Pesquisa de 23 de outubro de 2026, com contraprova das fontes oficiais. A empres
 
 ## Abrir, mudar ou fechar uma vaga
 
-As páginas das vagas são geradas por `scripts/gerar-vagas.cjs`, a partir da lista `VAGAS` e das condições comuns `COMUM` no início do script. O script também escreve as frases que falam das vagas na página inicial (secção Estamos a recrutar, pergunta Estão a contratar? e Contactos) e em `trabalhe-connosco/` (descrição, primeiro parágrafo e lista), entre os comentários `<!-- vagas:<nome>:inicio -->` e `<!-- vagas:<nome>:fim -->`. Não edites esse texto à mão.
+As páginas das vagas são geradas por `scripts/gerar-vagas.cjs`, a partir da lista `VAGAS` e das condições comuns `COMUM` no início do script. O script também escreve as frases que falam das vagas na página inicial (secção Estamos a recrutar, pergunta Estão a contratar? e Contactos), em `trabalhe-connosco/` (descrição, primeiro parágrafo e lista) e os textos dos anúncios em [`anuncios.md`](anuncios.md), entre os comentários `<!-- vagas:<nome>:inicio -->` e `<!-- vagas:<nome>:fim -->`. Não edites esse texto à mão.
 
 1. Edita a lista: acrescenta, muda ou **tira a vaga logo que for preenchida**. A profissão tem de existir no formulário com `data-vaga` (por exemplo `<option data-vaga="pedreiro">Pedreiro/a</option>`). Uma vaga nova (ou reaberta) leva em `publicada` a data do dia em que vai para o site; nunca mudes essa data depois.
 2. Corre `node scripts/gerar-vagas.cjs`. O script apaga as páginas das vagas que saíram da lista (passam a dar 404, que é uma das formas que o Google aceita) e atualiza a lista em `trabalhe-connosco/`.
-3. Corre `node scripts/publicar.cjs` e `node scripts/verificar.cjs`. A verificação confirma que cada página tem uma só vaga, com os campos obrigatórios, o título igual ao H1 e a ligação para o formulário. Avisa, sem bloquear, quando uma vaga já passou da data de fim.
-4. Faz commit e abre a PR. O CI confirma que as páginas geradas estão atualizadas.
-5. Depois de publicar, testa cada página no [teste de resultados enriquecidos](https://search.google.com/test/rich-results) do Google: tem de aparecer "Oferta de emprego" sem erros, e os locais têm de ser reconhecidos.
+3. Se a vaga já estiver anunciada nos portais, fecha-a lá no mesmo dia, à mão: o script só muda o site e o `anuncios.md`, de onde o texto da vaga desaparece. Na Indeed, fecha a oferta; no Net-Empregos, retira o anúncio na área de empresa e não o voltes a publicar; no IEFP, cancela a oferta na Área de Gestão (o IEFP pede um motivo).
+4. Corre `node scripts/publicar.cjs` e `node scripts/verificar.cjs`. A verificação confirma que cada página tem uma só vaga, com os campos obrigatórios, o título igual ao H1 e a ligação para o formulário. Avisa, sem bloquear, quando uma vaga já passou da data de fim.
+5. Faz commit e abre a PR. O CI confirma que as páginas geradas estão atualizadas.
+6. Depois de publicar, testa cada página no [teste de resultados enriquecidos](https://search.google.com/test/rich-results) do Google: tem de aparecer "Oferta de emprego" sem erros, e os locais têm de ser reconhecidos.
 
-As vagas atuais estão abertas até 31 de dezembro de 2026. Se continuarem abertas, muda `validaAte` antes dessa data.
+As vagas atuais estão abertas até 31 de dezembro de 2026. Se continuarem abertas, muda `validaAte` antes dessa data e corre `node scripts/gerar-vagas.cjs` (os textos de `anuncios.md` mudam sozinhos). Depois, edita os anúncios já publicados e a validade da oferta no IEFP, para a data ficar igual em todo o lado.
 
 As perguntas ao cliente e as respostas estão em `perguntas-ao-cliente.md`, que fica só no computador de quem mantém o site: está no `.gitignore`, porque as respostas têm condições internas que não são para publicar.
 
 ## O que as páginas não dizem
 
-Por decisão do cliente (23 de outubro de 2026), as páginas não indicam o tipo de contrato, o trabalho aos sábados nem as ferramentas. A empresa trata destas condições diretamente com cada candidato. Regra para as próximas vagas: o que possa levantar dúvidas legais fica de fora das páginas e dos anúncios. O horário normal (de segunda a sexta-feira, das 8h às 17h, com 1 hora de almoço: 40 horas por semana) está nas páginas.
+Por decisão do cliente (23 de outubro de 2026), as páginas não indicam o tipo de contrato, o trabalho aos sábados nem as ferramentas. A empresa trata destas condições diretamente com cada candidato. Regra para as próximas vagas: o que possa levantar dúvidas legais fica de fora das páginas e dos anúncios. O horário normal está nas páginas: das 8h às 17h, com a hora de almoço subentendida.
 
 As funções de cada vaga foram confirmadas pelo cliente.
 
 ## Fora do site (o mais rápido: dias, não semanas)
+
+Os anúncios para o Net-Empregos e a Indeed estão prontos em [`anuncios.md`](anuncios.md), gerados pelo mesmo script das páginas, e ainda não estão publicados. Os do IEFP também lá estão, mas só se usam se o cliente decidir o tipo de contrato e a remuneração, que o formulário do IEFP obriga a indicar.
 
 | Canal | Custo | Notas |
 |---|---|---|
