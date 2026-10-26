@@ -62,43 +62,6 @@ Como se candidatar
 Ligue ou envie mensagem por WhatsApp para o 919 233 372 (chamada para a rede móvel nacional), de segunda a sexta-feira, das 9h às 18h. Também pode preencher a candidatura no nosso site: www.lmdreams.pt/trabalhe-connosco/
 ```
 
-### Servente de construção civil (m/f)
-
-- **Título:** Servente de construção civil (m/f): Lisboa, Seixal, Almada e Sesimbra
-- **Categoria:** Construção Civil · **Zona:** Setúbal · **Tipo:** Tempo Inteiro
-- **Descrição:**
-
-```text
-A LMDreams, Unipessoal Lda., é uma empresa de construção civil com escritório em Amora (Seixal) e alvará de empreiteiro n.º 101097-PAR. Estamos a contratar para obras em Lisboa e na Margem Sul (Seixal, Almada e Sesimbra), com início imediato. Vaga: Servente de construção civil (m/f).
-
-O trabalho
-• Servente de obras e ajudante de pedreiro: apoio às equipas na obra, preparar e transportar materiais, fazer argamassas e manter a obra limpa e arrumada.
-
-O que pedimos
-• Com ou sem experiência: basta vontade de aprender.
-• Comunicar em português no dia a dia da obra (nível básico).
-• Carta de condução: não é obrigatória.
-
-O que oferecemos
-• Transporte na carrinha da empresa, a partir do ponto de recolha.
-• Equipamento de proteção: luvas, capacete e botas.
-• Seguro de acidentes de trabalho.
-• Alojamento nas obras a mais de 100 km.
-• Subsídio de alimentação.
-• Pagamento semanal ou mensal, a combinar.
-
-Condições
-• Local: obras em Lisboa e na Margem Sul (península de Setúbal), sobretudo no Seixal, em Almada e em Sesimbra.
-• Ponto de encontro: na obra ou no ponto de recolha da carrinha da empresa.
-• Horário: das 8h às 17h.
-• Início: imediato.
-• Remuneração: de acordo com a lei e com a experiência, a combinar com a empresa.
-• Vaga aberta até 31 de dezembro de 2026.
-
-Como se candidatar
-Ligue ou envie mensagem por WhatsApp para o 919 233 372 (chamada para a rede móvel nacional), de segunda a sexta-feira, das 9h às 18h. Também pode preencher a candidatura no nosso site: www.lmdreams.pt/trabalhe-connosco/
-```
-
 ### Pintor/a de construção civil
 
 - **Título:** Pintor/a de construção civil: Lisboa, Seixal, Almada e Sesimbra
@@ -170,44 +133,6 @@ O trabalho
 
 O que pedimos
 • Experiência como pedreiro/a (oficial).
-• Comunicar em português no dia a dia da obra (nível básico).
-• Carta de condução: não é obrigatória.
-
-O que oferecemos
-• Transporte na carrinha da empresa, a partir do ponto de recolha.
-• Equipamento de proteção: luvas, capacete e botas.
-• Seguro de acidentes de trabalho.
-• Alojamento nas obras a mais de 100 km.
-• Subsídio de alimentação.
-• Pagamento semanal ou mensal, a combinar.
-
-Condições
-• Local: obras em Lisboa e na Margem Sul (península de Setúbal), sobretudo no Seixal, em Almada e em Sesimbra.
-• Ponto de encontro: na obra ou no ponto de recolha da carrinha da empresa.
-• Horário: das 8h às 17h.
-• Início: imediato.
-• Remuneração: de acordo com a lei e com a experiência, a combinar com a empresa.
-• Vaga aberta até 31 de dezembro de 2026.
-
-Como se candidatar
-Candidate-se aqui, na Indeed. Se tiver dúvidas sobre a vaga, ligue ou envie mensagem por WhatsApp para o 919 233 372 (chamada para a rede móvel nacional), de segunda a sexta-feira, das 9h às 18h.
-```
-
-### Servente de construção civil (m/f)
-
-- **Título:** Servente de construção civil (m/f)
-- **Qualificações:** sem experiência obrigatória; português, nível básico.
-- **Perguntas de pré-seleção (sugestão):** português no dia a dia (nível básico); disponibilidade para trabalhar em obras em Lisboa e na Margem Sul.
-- **Descrição:**
-
-```text
-A LMDreams, Unipessoal Lda., é uma empresa de construção civil com escritório em Amora (Seixal) e alvará de empreiteiro n.º 101097-PAR. Estamos a contratar para obras em Lisboa e na Margem Sul (Seixal, Almada e Sesimbra), com início imediato. Vaga: Servente de construção civil (m/f).
-
-O trabalho
-• Servente de obras e ajudante de pedreiro: apoio às equipas na obra, preparar e transportar materiais, fazer argamassas e manter a obra limpa e arrumada.
-
-O que pedimos
-• Com ou sem experiência: basta vontade de aprender.
 • Comunicar em português no dia a dia da obra (nível básico).
 • Carta de condução: não é obrigatória.
 
@@ -308,33 +233,6 @@ O trabalho
 
 O que pedimos
 • Experiência como pedreiro/a (oficial).
-• Comunicar em português no dia a dia da obra (nível básico).
-• Carta de condução: não é obrigatória.
-
-O que oferecemos
-• Transporte na carrinha da empresa, a partir do ponto de recolha.
-• Equipamento de proteção: luvas, capacete e botas.
-• Seguro de acidentes de trabalho.
-• Alojamento nas obras a mais de 100 km.
-• Subsídio de alimentação.
-• Pagamento semanal ou mensal, a combinar.
-
-Obras em Lisboa e na Margem Sul (Seixal, Almada e Sesimbra). Ponto de encontro: na obra ou no ponto de recolha da carrinha da empresa. Início imediato.
-```
-
-### Servente de construção civil (m/f)
-
-- **Profissão:** TRABALHADOR NÃO QUALIFICADO DA CONSTRUÇÃO DE EDIFÍCIOS
-- **N.º de vagas:** 1 (pode aumentar-se depois na Área de Gestão)
-- **Experiência anterior:** Não · **Idiomas:** português, nível básico
-- **Descrição do perfil:**
-
-```text
-O trabalho
-• Servente de obras e ajudante de pedreiro: apoio às equipas na obra, preparar e transportar materiais, fazer argamassas e manter a obra limpa e arrumada.
-
-O que pedimos
-• Com ou sem experiência: basta vontade de aprender.
 • Comunicar em português no dia a dia da obra (nível básico).
 • Carta de condução: não é obrigatória.
 
