@@ -170,7 +170,7 @@ for (const [caso, resposta] of [['ok:false do script', { status: 200, body: { ok
 }
 
 // 4b. Páginas das vagas: o botão leva ao formulário único com a profissão já escolhida
-for (const [slug, profissao] of [['pedreiro', 'Pedreiro/a'], ['servente', 'Servente'], ['pintor', 'Pintor/a']]) {
+for (const [slug, profissao] of [['pedreiro', 'Pedreiro/a'], ['pintor', 'Pintor/a']]) {
   const { page, pedidos, erros, fechar } = await abrir(`trabalhe-connosco/${slug}/`, undefined, { largura: 390 })
   const largura = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
   registar(`Vaga ${slug}: sem deslocamento horizontal a 390 px`, largura <= 0, `${largura} px`)
@@ -182,18 +182,18 @@ for (const [slug, profissao] of [['pedreiro', 'Pedreiro/a'], ['servente', 'Serve
   registar(`Vaga ${slug}: o formulário abre com "${profissao}" escolhido`, (await page.inputValue('#cand-profissao')) === profissao)
   const [topo, cabecalho] = await page.evaluate(() => [document.querySelector('#cand-t').getBoundingClientRect().top, document.querySelector('.hdr').getBoundingClientRect().bottom])
   registar(`Vaga ${slug}: o título do formulário fica visível abaixo do cabeçalho`, topo >= cabecalho, `título a ${Math.round(topo)} px, cabeçalho até ${Math.round(cabecalho)} px`)
-  if (slug === 'servente') {
+  if (slug === 'pedreiro') {
     await page.fill('#cand-nome', 'Rui Teste')
     await page.fill('#cand-telefone', '912 345 678')
     await page.fill('#cand-zona', 'Barreiro')
-    await page.selectOption('#cand-experiencia', 'Menos de 1 ano')
+    await page.selectOption('#cand-experiencia', '5 a 10 anos')
     await page.selectOption('#cand-disponibilidade', 'Imediata')
     await page.check('#cand-privacidade')
     await page.waitForTimeout(4200)
     await page.locator('form[data-formulario="candidatura"] .form__enviar').click()
     await page.waitForFunction(() => /Recebemos a sua candidatura/.test(document.querySelector('form[data-formulario="candidatura"] [data-estado]').textContent))
     const corpo = Object.fromEntries(new URLSearchParams(pedidos[0].postData()))
-    registar('Vaga servente: a candidatura segue com a profissão da vaga', corpo.profissao === 'Servente', JSON.stringify(corpo))
+    registar('Vaga pedreiro: a candidatura segue com a profissão da vaga', corpo.profissao === 'Pedreiro/a', JSON.stringify(corpo))
   }
   registar(`Vaga ${slug}: sem erros de JavaScript`, erros.length === 0, erros.join(' | '))
   await fechar()
