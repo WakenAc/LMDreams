@@ -20,8 +20,8 @@ Pesquisa de 23 de outubro de 2026, com contraprova das fontes oficiais. A empres
 
 ## O que já está no site
 
-- **Página `trabalhe-connosco/`**: título "Emprego na construção civil no Seixal e Margem Sul", título principal com as localidades, lista das vagas abertas e o formulário de candidatura, o mesmo para todas as vagas e para candidaturas espontâneas. Não tem dados `JobPosting`, porque lista várias vagas.
-- **Uma página por vaga**, com dados `JobPosting`: `trabalhe-connosco/pedreiro/`, `servente/` e `pintor/`. O botão "Candidatar-me a esta vaga" abre o formulário com a profissão já escolhida (`?vaga=pedreiro#candidatura`).
+- **Página `trabalhe-connosco/`**: título "Emprego na construção civil no Seixal e Margem Sul", título principal com as localidades, lista das vagas abertas e o formulário de candidatura, o mesmo para todas as vagas e para candidaturas espontâneas. Não tem dados `JobPosting`, porque é uma página de lista.
+- **Uma página por vaga aberta**, com dados `JobPosting`, em `trabalhe-connosco/<vaga>/`. A 27 de outubro de 2026, só `pedreiro/`: as vagas de servente (26 de outubro) e de pintor/a (27 de outubro) foram preenchidas e retiradas. O botão "Candidatar-me a esta vaga" abre o formulário com a profissão já escolhida (`?vaga=pedreiro#candidatura`).
 - **Ligações para as vagas:** cabeçalho ("Estamos a recrutar" nos ecrãs largos e "Vagas" no telemóvel), menu, secção "Estamos a recrutar" na página inicial (com uma ligação para cada vaga), perguntas frequentes, Contactos, rodapé e páginas das obras.
 - **Search Console:** a página `trabalhe-connosco/` já está indexada (verificado a 23 de outubro).
 

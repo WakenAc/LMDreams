@@ -170,7 +170,7 @@ for (const [caso, resposta] of [['ok:false do script', { status: 200, body: { ok
 }
 
 // 4b. Páginas das vagas: o botão leva ao formulário único com a profissão já escolhida
-for (const [slug, profissao] of [['pedreiro', 'Pedreiro/a'], ['pintor', 'Pintor/a']]) {
+for (const [slug, profissao] of [['pedreiro', 'Pedreiro/a']]) {
   const { page, pedidos, erros, fechar } = await abrir(`trabalhe-connosco/${slug}/`, undefined, { largura: 390 })
   const largura = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
   registar(`Vaga ${slug}: sem deslocamento horizontal a 390 px`, largura <= 0, `${largura} px`)
