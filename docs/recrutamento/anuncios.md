@@ -61,43 +61,6 @@ Condições
 Como se candidatar
 Ligue ou envie mensagem por WhatsApp para o 919 233 372 (chamada para a rede móvel nacional), de segunda a sexta-feira, das 9h às 18h. Também pode preencher a candidatura no nosso site: www.lmdreams.pt/trabalhe-connosco/
 ```
-
-### Pintor/a de construção civil
-
-- **Título:** Pintor/a de construção civil: Lisboa, Seixal, Almada e Sesimbra
-- **Categoria:** Construção Civil · **Zona:** Setúbal · **Tipo:** Tempo Inteiro
-- **Descrição:**
-
-```text
-A LMDreams, Unipessoal Lda., é uma empresa de construção civil com escritório em Amora (Seixal) e alvará de empreiteiro n.º 101097-PAR. Estamos a contratar para obras em Lisboa e na Margem Sul (Seixal, Almada e Sesimbra), com início imediato. Vaga: Pintor/a de construção civil.
-
-O trabalho
-• Trabalho de pintura em obras de construção e remodelação: preparação de superfícies, barramentos, lixagem e pinturas interiores e exteriores (não é pintura automóvel nem industrial).
-
-O que pedimos
-• Experiência como pintor/a de construção civil.
-• Comunicar em português no dia a dia da obra (nível básico).
-• Carta de condução: não é obrigatória.
-
-O que oferecemos
-• Transporte na carrinha da empresa, a partir do ponto de recolha.
-• Equipamento de proteção: luvas, capacete e botas.
-• Seguro de acidentes de trabalho.
-• Alojamento nas obras a mais de 100 km.
-• Subsídio de alimentação.
-• Pagamento semanal ou mensal, a combinar.
-
-Condições
-• Local: obras em Lisboa e na Margem Sul (península de Setúbal), sobretudo no Seixal, em Almada e em Sesimbra.
-• Ponto de encontro: na obra ou no ponto de recolha da carrinha da empresa.
-• Horário: das 8h às 17h.
-• Início: imediato.
-• Remuneração: de acordo com a lei e com a experiência, a combinar com a empresa.
-• Vaga aberta até 31 de dezembro de 2026.
-
-Como se candidatar
-Ligue ou envie mensagem por WhatsApp para o 919 233 372 (chamada para a rede móvel nacional), de segunda a sexta-feira, das 9h às 18h. Também pode preencher a candidatura no nosso site: www.lmdreams.pt/trabalhe-connosco/
-```
 <!-- vagas:net-empregos:fim -->
 
 ## Indeed
@@ -133,44 +96,6 @@ O trabalho
 
 O que pedimos
 • Experiência como pedreiro/a (oficial).
-• Comunicar em português no dia a dia da obra (nível básico).
-• Carta de condução: não é obrigatória.
-
-O que oferecemos
-• Transporte na carrinha da empresa, a partir do ponto de recolha.
-• Equipamento de proteção: luvas, capacete e botas.
-• Seguro de acidentes de trabalho.
-• Alojamento nas obras a mais de 100 km.
-• Subsídio de alimentação.
-• Pagamento semanal ou mensal, a combinar.
-
-Condições
-• Local: obras em Lisboa e na Margem Sul (península de Setúbal), sobretudo no Seixal, em Almada e em Sesimbra.
-• Ponto de encontro: na obra ou no ponto de recolha da carrinha da empresa.
-• Horário: das 8h às 17h.
-• Início: imediato.
-• Remuneração: de acordo com a lei e com a experiência, a combinar com a empresa.
-• Vaga aberta até 31 de dezembro de 2026.
-
-Como se candidatar
-Candidate-se aqui, na Indeed. Se tiver dúvidas sobre a vaga, ligue ou envie mensagem por WhatsApp para o 919 233 372 (chamada para a rede móvel nacional), de segunda a sexta-feira, das 9h às 18h.
-```
-
-### Pintor/a de construção civil
-
-- **Título:** Pintor/a de construção civil
-- **Qualificações:** Experiência como pintor/a de construção civil (obrigatória); português, nível básico.
-- **Perguntas de pré-seleção (sugestão):** experiência no ofício (obrigatória); português no dia a dia (nível básico); disponibilidade para trabalhar em obras em Lisboa e na Margem Sul.
-- **Descrição:**
-
-```text
-A LMDreams, Unipessoal Lda., é uma empresa de construção civil com escritório em Amora (Seixal) e alvará de empreiteiro n.º 101097-PAR. Estamos a contratar para obras em Lisboa e na Margem Sul (Seixal, Almada e Sesimbra), com início imediato. Vaga: Pintor/a de construção civil.
-
-O trabalho
-• Trabalho de pintura em obras de construção e remodelação: preparação de superfícies, barramentos, lixagem e pinturas interiores e exteriores (não é pintura automóvel nem industrial).
-
-O que pedimos
-• Experiência como pintor/a de construção civil.
 • Comunicar em português no dia a dia da obra (nível básico).
 • Carta de condução: não é obrigatória.
 
@@ -233,33 +158,6 @@ O trabalho
 
 O que pedimos
 • Experiência como pedreiro/a (oficial).
-• Comunicar em português no dia a dia da obra (nível básico).
-• Carta de condução: não é obrigatória.
-
-O que oferecemos
-• Transporte na carrinha da empresa, a partir do ponto de recolha.
-• Equipamento de proteção: luvas, capacete e botas.
-• Seguro de acidentes de trabalho.
-• Alojamento nas obras a mais de 100 km.
-• Subsídio de alimentação.
-• Pagamento semanal ou mensal, a combinar.
-
-Obras em Lisboa e na Margem Sul (Seixal, Almada e Sesimbra). Ponto de encontro: na obra ou no ponto de recolha da carrinha da empresa. Início imediato.
-```
-
-### Pintor/a de construção civil
-
-- **Profissão:** PINTOR DE CONSTRUÇÕES
-- **N.º de vagas:** 1 (pode aumentar-se depois na Área de Gestão)
-- **Experiência anterior:** Sim · **Idiomas:** português, nível básico
-- **Descrição do perfil:**
-
-```text
-O trabalho
-• Trabalho de pintura em obras de construção e remodelação: preparação de superfícies, barramentos, lixagem e pinturas interiores e exteriores (não é pintura automóvel nem industrial).
-
-O que pedimos
-• Experiência como pintor/a de construção civil.
 • Comunicar em português no dia a dia da obra (nível básico).
 • Carta de condução: não é obrigatória.
 

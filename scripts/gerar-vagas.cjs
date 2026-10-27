@@ -70,18 +70,6 @@ const VAGAS = [
     pedimos: ['Experiência como pedreiro/a (oficial).'],
     iefp: 'PEDREIRO',
   },
-  {
-    slug: 'pintor',
-    profissao: 'Pintor/a',
-    titulo: 'Pintor/a de construção civil',
-    marca: '',
-    plural: 'pintores/as',
-    publicada: '2026-10-23',
-    resumo: 'Preparação de superfícies e pinturas interiores e exteriores. Com experiência.',
-    trabalho: 'Trabalho de pintura em obras de construção e remodelação: preparação de superfícies, barramentos, lixagem e pinturas interiores e exteriores (não é pintura automóvel nem industrial).',
-    pedimos: ['Experiência como pintor/a de construção civil.'],
-    iefp: 'PINTOR DE CONSTRUÇÕES',
-  },
 ]
 const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']
 const dataPorExtenso = (iso) => { const [a, m, d] = iso.slice(0, 10).split('-').map(Number); return `${d} de ${MESES[m - 1]} de ${a}` }
