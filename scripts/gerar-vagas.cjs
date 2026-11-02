@@ -43,10 +43,13 @@ const COMUM = {
     'Pagamento semanal ou mensal, a combinar.',
   ],
   pedimos: [
+    'Residir já em Portugal.',
     'Comunicar em português no dia a dia da obra (nível básico).',
     'Carta de condução: não é obrigatória.',
   ],
   atendimento: 'de segunda a sexta-feira, das 9h às 18h',
+  // pedido do cliente (2 de novembro de 2026): vai em todas as menções às vagas. Fala de residência, nunca de nacionalidade.
+  residencia: 'Só aceitamos candidaturas de pessoas que já residam em Portugal.',
 }
 
 // ---------- vagas abertas
@@ -205,7 +208,7 @@ for (const v of VAGAS) {
     ['Remuneração', COMUM.remuneracao],
     ['Vaga aberta até', dataPorExtenso(COMUM.validaAte)],
   ]
-  const lead = `${COMUM.frase} Início imediato.`
+  const lead = `${COMUM.frase} Início imediato. ${COMUM.residencia}`
   // a mesma frase na página (com ligações) e na descrição do JobPosting (sem ligações)
   const comoCandidatar = (telefone, whatsapp) => `Preencha o formulário de candidatura: leva menos de dois minutos e a profissão ${esc(v.profissao)} já vem escolhida. Também pode ligar para o ${telefone} (chamada para a rede móvel nacional) ou enviar mensagem por ${whatsapp}, ${esc(COMUM.atendimento)}.`
 
@@ -299,7 +302,7 @@ ${outrasNav}
   fs.mkdirSync(dir, { recursive: true })
   fs.writeFileSync(path.join(dir, 'index.html'), page({
     title: `${nome} em Lisboa e Margem Sul | LMDreams`,
-    description: `${nome} para obras em Lisboa e na Margem Sul. Início imediato e transporte da empresa. Candidate-se online ou ligue 919 233 372.`,
+    description: `${nome} para obras em Lisboa e na Margem Sul. Início imediato e transporte da empresa. Só para quem já reside em Portugal.`,
     canonical,
     prefix,
     main,
@@ -317,15 +320,17 @@ ${outrasNav}
 const plurais = juntar(VAGAS.map((v) => esc(v.plural)))
 const comLigacoes = juntar(VAGAS.map((v) => `<a class="link" href="trabalhe-connosco/${v.slug}/">${esc(v.plural)}</a>${v.semExperiencia ? ' (com ou sem experiência)' : ''}`))
 const zona = COMUM.zona
+// sem os concelhos entre parênteses, para as descrições curtas
+const zonaCurta = zona.replace(/ \(.*$/, '')
 const descricaoTrabalhe = VAGAS.length
-  ? `Estamos a contratar ${juntar(VAGAS.map((v) => v.plural))} (m/f) para obras em ${zona}. Início imediato.`
-  : `Candidaturas para trabalhar na construção civil, em obras em ${zona}.`
+  ? `Estamos a contratar ${juntar(VAGAS.map((v) => v.plural))} (m/f) para obras em ${zonaCurta}. Início imediato. Só para quem já reside em Portugal.`
+  : `Candidaturas para trabalhar na construção civil, em obras em ${zonaCurta}. Só para quem já reside em Portugal.`
 
-trabalhe = meta(trabalhe, 'name="description"', `${descricaoTrabalhe} Candidate-se online ou ligue 919 233 372.`, 'trabalhe-connosco/index.html')
+trabalhe = meta(trabalhe, 'name="description"', descricaoTrabalhe, 'trabalhe-connosco/index.html')
 trabalhe = meta(trabalhe, 'property="og:description"', descricaoTrabalhe, 'trabalhe-connosco/index.html')
 trabalhe = preencher(trabalhe, 'intro', VAGAS.length
-  ? `<p>Temos obras em curso e marcadas para os próximos meses e estamos a contratar ${plurais} (m/f) para reforçar as nossas equipas, com início imediato.</p>`
-  : '<p>Temos obras em curso e marcadas para os próximos meses. De momento não temos vagas abertas, mas recebemos candidaturas de todas as especialidades da construção civil (m/f).</p>', 'trabalhe-connosco/index.html')
+  ? `<p>Temos obras em curso e marcadas para os próximos meses e estamos a contratar ${plurais} (m/f) para reforçar as nossas equipas, com início imediato. ${esc(COMUM.residencia)}</p>`
+  : '<p>Temos obras em curso e marcadas para os próximos meses. De momento não temos vagas abertas, mas recebemos candidaturas de todas as especialidades da construção civil (m/f). ' + esc(COMUM.residencia) + '</p>', 'trabalhe-connosco/index.html')
 trabalhe = preencher(trabalhe, 'lista', VAGAS.length
   ? `<h2>Vagas abertas</h2>
 <p>${esc(COMUM.frase)} Início imediato.</p>
@@ -336,14 +341,14 @@ ${VAGAS.map((v) => `  <li><a href="${v.slug}/">${esc(v.titulo + v.marca)}</a> <s
   : '<p>Pode deixar a sua candidatura com o formulário abaixo: guardamo-la para as próximas vagas.</p>', 'trabalhe-connosco/index.html')
 
 inicial = preencher(inicial, 'recrutamento', VAGAS.length
-  ? `<p>Temos obras em curso e marcadas para os próximos meses, e vagas para ${comLigacoes} (m/f), com início imediato. Também recebemos candidaturas de outras especialidades da construção civil.</p>`
-  : '<p>Temos obras em curso e marcadas para os próximos meses, e recebemos candidaturas de profissionais de todas as especialidades da construção civil (m/f).</p>', 'index.html')
+  ? `<p>Temos obras em curso e marcadas para os próximos meses, e vagas para ${comLigacoes} (m/f), com início imediato. Também recebemos candidaturas de outras especialidades da construção civil. ${esc(COMUM.residencia)}</p>`
+  : '<p>Temos obras em curso e marcadas para os próximos meses, e recebemos candidaturas de profissionais de todas as especialidades da construção civil (m/f). ' + esc(COMUM.residencia) + '</p>', 'index.html')
 inicial = preencher(inicial, 'faq', `${VAGAS.length
-  ? `<p>Sim. Temos vagas para ${comLigacoes} (m/f), com início imediato, e recebemos candidaturas de outras especialidades da construção civil.`
-  : '<p>De momento não temos vagas abertas, mas recebemos candidaturas de todas as especialidades da construção civil (m/f).'} Pode candidatar-se na página <a class="link" href="trabalhe-connosco/">Trabalhe connosco</a> ou ligar para o ${TELEFONE} (chamada para a rede móvel nacional).</p>`, 'index.html')
+  ? `<p>Sim. Temos vagas para ${comLigacoes} (m/f), com início imediato, e recebemos candidaturas de outras especialidades da construção civil. ${esc(COMUM.residencia)}`
+  : '<p>De momento não temos vagas abertas, mas recebemos candidaturas de todas as especialidades da construção civil (m/f). ' + esc(COMUM.residencia)} Pode candidatar-se na página <a class="link" href="trabalhe-connosco/">Trabalhe connosco</a> ou ligar para o ${TELEFONE} (chamada para a rede móvel nacional).</p>`, 'index.html')
 inicial = preencher(inicial, 'contactos', VAGAS.length
-  ? `<p class="contact__small">Temos vagas para ${plurais} (m/f): <a class="link" href="trabalhe-connosco/">candidate-se aqui</a>.</p>`
-  : '<p class="contact__small">Recebemos candidaturas de profissionais da construção civil (m/f): <a class="link" href="trabalhe-connosco/">candidate-se aqui</a>.</p>', 'index.html')
+  ? `<p class="contact__small">Temos vagas para ${plurais} (m/f): <a class="link" href="trabalhe-connosco/">candidate-se aqui</a>. ${esc(COMUM.residencia)}</p>`
+  : '<p class="contact__small">Recebemos candidaturas de profissionais da construção civil (m/f): <a class="link" href="trabalhe-connosco/">candidate-se aqui</a>. ' + esc(COMUM.residencia) + '</p>', 'index.html')
 
 fs.writeFileSync(ficheiro('trabalhe-connosco/index.html'), trabalhe)
 fs.writeFileSync(ficheiro('index.html'), inicial)
@@ -359,7 +364,7 @@ const condicoesTexto = [
   `Remuneração: ${minuscula(COMUM.remuneracao)}.`,
   `Vaga aberta até ${dataPorExtenso(COMUM.validaAte)}.`,
 ]
-const apresentacao = (v) => `A LMDreams, Unipessoal Lda., é uma empresa de construção civil com escritório em Amora (Seixal) e alvará de empreiteiro n.º 101097-PAR. Estamos a contratar para obras em ${zona}, com início imediato. Vaga: ${v.titulo}${v.marca}.`
+const apresentacao = (v) => `A LMDreams, Unipessoal Lda., é uma empresa de construção civil com escritório em Amora (Seixal) e alvará de empreiteiro n.º 101097-PAR. Estamos a contratar para obras em ${zona}, com início imediato. ${COMUM.residencia} Vaga: ${v.titulo}${v.marca}.`
 const corpo = (v, candidatar) => [
   apresentacao(v),
   '',
@@ -394,7 +399,7 @@ anuncios = preencher(anuncios, 'indeed', porVaga((v) => `### ${v.titulo}${v.marc
 
 - **Título:** ${v.titulo}${v.marca}
 - **Qualificações:** ${v.semExperiencia ? 'sem experiência obrigatória' : `${v.pedimos[0].replace(/\.$/, '')} (obrigatória)`}; português, nível básico.
-- **Perguntas de pré-seleção (sugestão):** ${v.semExperiencia ? '' : 'experiência no ofício (obrigatória); '}português no dia a dia (nível básico); disponibilidade para trabalhar em obras em ${zona.replace(/ \(.*$/, '')}.
+- **Perguntas de pré-seleção (sugestão):** ${v.semExperiencia ? '' : 'experiência no ofício (obrigatória); '}pergunta própria "Já reside em Portugal?" (sim ou não, obrigatória, só aceita "Sim"; não uses a pergunta-modelo de autorização de trabalho nem a de localização, que aceita quem se vai mudar); português no dia a dia (nível básico); disponibilidade para trabalhar em obras em ${zonaCurta}.
 - **Descrição:**
 
 ${bloco(corpo(v, `Como se candidatar\nCandidate-se aqui, na Indeed. Se tiver dúvidas sobre a vaga, ligue ou envie mensagem por WhatsApp para o ${telefone}, ${COMUM.atendimento}.`))}`), 'docs/recrutamento/anuncios.md')
@@ -406,7 +411,7 @@ anuncios = preencher(anuncios, 'iefp', porVaga((v) => `### ${v.titulo}${v.marca}
 - **Experiência anterior:** ${v.semExperiencia ? 'Não' : 'Sim'} · **Idiomas:** português, nível básico
 - **Descrição do perfil:**
 
-${bloco(['O trabalho', `• ${v.trabalho}`, '', 'O que pedimos', ponto([...v.pedimos, ...COMUM.pedimos]), '', 'O que oferecemos', ponto(COMUM.oferecemos), '', `Obras em ${zona}. Ponto de encontro: ${minuscula(COMUM.encontro)}. Início imediato.`].join('\n'))}`), 'docs/recrutamento/anuncios.md')
+${bloco(['O trabalho', `• ${v.trabalho}`, '', 'O que pedimos', ponto([...v.pedimos, ...COMUM.pedimos]), '', 'O que oferecemos', ponto(COMUM.oferecemos), '', `Obras em ${zona}. Ponto de encontro: ${minuscula(COMUM.encontro)}. Início imediato. ${COMUM.residencia}`].join('\n'))}`), 'docs/recrutamento/anuncios.md')
 
 fs.writeFileSync(ficheiro('docs/recrutamento/anuncios.md'), anuncios)
 console.log(`vagas: ${VAGAS.length} páginas + frases em trabalhe-connosco/index.html e index.html + anúncios`)

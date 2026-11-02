@@ -46,6 +46,8 @@ Por decisão do cliente (23 de outubro de 2026), as páginas não indicam o tipo
 
 As funções de cada vaga foram confirmadas pelo cliente.
 
+Também por pedido do cliente (2 de novembro de 2026), todas as menções às vagas dizem "Só aceitamos candidaturas de pessoas que já residam em Portugal": na página inicial, na Trabalhe connosco, nas páginas das vagas e das obras e nos anúncios. A frase está em `COMUM.residencia` (`scripts/gerar-vagas.cjs`), em `scripts/gerar-obras.cjs` e, escrita à mão (fora dos comentários `vagas:`), na lista "Como se candidatar" de `trabalhe-connosco/index.html`. A versão curta das descrições para o Google, "Só para quem já reside em Portugal.", está escrita à parte em `scripts/gerar-vagas.cjs`. Se a frase mudar, muda em todos estes sítios: nem o CI nem o `verificar.cjs` dão pela falta. Os botões "Estamos a recrutar" e "Vagas" do cabeçalho e do menu não a levam, porque só ligam para `trabalhe-connosco/`, que a diz logo no primeiro parágrafo. Fala de residência, nunca de nacionalidade (Código do Trabalho, art. 24.º).
+
 ## Fora do site (o mais rápido: dias, não semanas)
 
 Os anúncios para o Net-Empregos e a Indeed estão prontos em [`anuncios.md`](anuncios.md), gerados pelo mesmo script das páginas, e ainda não estão publicados. Os do IEFP também lá estão, mas só se usam se o cliente decidir o tipo de contrato e a remuneração, que o formulário do IEFP obriga a indicar.
@@ -62,6 +64,7 @@ Os anúncios para o Net-Empregos e a Indeed estão prontos em [`anuncios.md`](an
 **Em todos os anúncios:**
 - profissão no masculino e no feminino ("Pedreiro/a"), ou "(m/f)" quando o nome não muda com o género ("Servente (m/f)") (Código do Trabalho, art. 30.º; parecer CITE 10/91);
 - sem limites de idade ou de nacionalidade, e sem "jovem";
+- só para quem já reside em Portugal: a frase "Só aceitamos candidaturas de pessoas que já residam em Portugal." (residência, nunca nacionalidade);
 - remuneração só se for real.
 
 ## A confirmar com um jurista ou contabilista
