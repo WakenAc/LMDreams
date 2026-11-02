@@ -24,6 +24,7 @@ Pesquisa de 23 de outubro de 2026 (Higgsfield, Meta e Comissão Europeia).
 - **Cores neutras nas imagens.** Fora o logótipo da camisola, as cores da marca entram só no texto composto por cima. Se o cliente mudar a paleta para as cores do logótipo, as imagens continuam a servir.
 - **Segurança em obra.** Nas cenas de obra, a personagem usa capacete e botas de segurança. Só pode ter o capacete na mão fora da zona de trabalho. Os óculos escuros não são equipamento de proteção: não lhes chamar "óculos de proteção".
 - **Não dizer que a agenda está cheia**, para não afastar clientes.
+- **Só residentes em Portugal.** Nas publicações de recrutamento, a frase "Só aceitamos candidaturas de pessoas que já residam em Portugal." vai no texto composto por cima da imagem e no texto da publicação.
 - **A personagem é inspirada numa pessoa real**, por isso é preciso guardar a autorização dessa pessoa por escrito antes de publicar.
 
 ## Nota de IA
@@ -220,8 +221,9 @@ Guarda as imagens escolhidas em `rss/imgs/redes-sociais/` com os nomes indicados
 - as publicações finais em 1080 × 1440, 1080 × 1350 e 1080 × 1920, com:
   - o título;
   - as profissões (m/f);
+  - a frase "Só aceitamos candidaturas de pessoas que já residam em Portugal.";
   - o logótipo;
   - o endereço `lmdreams.pt/trabalhe-connosco`;
   - a nota de IA discreta;
-- o texto da publicação para o Facebook e o Instagram, com o texto alternativo;
+- o texto da publicação para o Facebook e o Instagram, com a mesma frase e o texto alternativo;
 - o registo de proveniência (modelo, prompt, referências e data).

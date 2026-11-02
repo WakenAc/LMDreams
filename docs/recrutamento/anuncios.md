@@ -8,6 +8,7 @@ Regras de todos os anúncios (as mesmas das páginas):
 - sem tipo de contrato, sem salário em números, sem sábados e sem ferramentas;
 - "Pedreiro/a" e "Pintor/a" já servem homens e mulheres; "Servente" leva "(m/f)";
 - sem idade, nacionalidade nem "jovem";
+- só para quem já reside em Portugal: a frase "Só aceitamos candidaturas de pessoas que já residam em Portugal." vai em todos os textos (residência, nunca nacionalidade);
 - o portal não fecha sozinho: logo que uma vaga for preenchida, ou na data de "Vaga aberta até" do texto, fecha o anúncio à mão em cada portal onde estiver.
 
 Pesquisa de 23 de outubro de 2026, só em páginas públicas: os formulários dos três portais só se veem depois de criar conta, por isso alguns campos foram deduzidos dos anúncios publicados. Confirma-os quando abrires as contas.
@@ -32,13 +33,14 @@ Pesquisa de 23 de outubro de 2026, só em páginas públicas: os formulários do
 - **Descrição:**
 
 ```text
-A LMDreams, Unipessoal Lda., é uma empresa de construção civil com escritório em Amora (Seixal) e alvará de empreiteiro n.º 101097-PAR. Estamos a contratar para obras em Lisboa e na Margem Sul (Seixal, Almada e Sesimbra), com início imediato. Vaga: Pedreiro/a.
+A LMDreams, Unipessoal Lda., é uma empresa de construção civil com escritório em Amora (Seixal) e alvará de empreiteiro n.º 101097-PAR. Estamos a contratar para obras em Lisboa e na Margem Sul (Seixal, Almada e Sesimbra), com início imediato. Só aceitamos candidaturas de pessoas que já residam em Portugal. Vaga: Pedreiro/a.
 
 O trabalho
 • Trabalho de pedreiro/a em obras de construção, remodelação e recuperação de casas: alvenarias e rebocos.
 
 O que pedimos
 • Experiência como pedreiro/a (oficial).
+• Residir já em Portugal.
 • Comunicar em português no dia a dia da obra (nível básico).
 • Carta de condução: não é obrigatória.
 
@@ -85,17 +87,18 @@ Ligue ou envie mensagem por WhatsApp para o 919 233 372 (chamada para a rede mó
 
 - **Título:** Pedreiro/a
 - **Qualificações:** Experiência como pedreiro/a (oficial) (obrigatória); português, nível básico.
-- **Perguntas de pré-seleção (sugestão):** experiência no ofício (obrigatória); português no dia a dia (nível básico); disponibilidade para trabalhar em obras em Lisboa e na Margem Sul.
+- **Perguntas de pré-seleção (sugestão):** experiência no ofício (obrigatória); pergunta própria "Já reside em Portugal?" (sim ou não, obrigatória, só aceita "Sim"; não uses a pergunta-modelo de autorização de trabalho nem a de localização, que aceita quem se vai mudar); português no dia a dia (nível básico); disponibilidade para trabalhar em obras em Lisboa e na Margem Sul.
 - **Descrição:**
 
 ```text
-A LMDreams, Unipessoal Lda., é uma empresa de construção civil com escritório em Amora (Seixal) e alvará de empreiteiro n.º 101097-PAR. Estamos a contratar para obras em Lisboa e na Margem Sul (Seixal, Almada e Sesimbra), com início imediato. Vaga: Pedreiro/a.
+A LMDreams, Unipessoal Lda., é uma empresa de construção civil com escritório em Amora (Seixal) e alvará de empreiteiro n.º 101097-PAR. Estamos a contratar para obras em Lisboa e na Margem Sul (Seixal, Almada e Sesimbra), com início imediato. Só aceitamos candidaturas de pessoas que já residam em Portugal. Vaga: Pedreiro/a.
 
 O trabalho
 • Trabalho de pedreiro/a em obras de construção, remodelação e recuperação de casas: alvenarias e rebocos.
 
 O que pedimos
 • Experiência como pedreiro/a (oficial).
+• Residir já em Portugal.
 • Comunicar em português no dia a dia da obra (nível básico).
 • Carta de condução: não é obrigatória.
 
@@ -158,6 +161,7 @@ O trabalho
 
 O que pedimos
 • Experiência como pedreiro/a (oficial).
+• Residir já em Portugal.
 • Comunicar em português no dia a dia da obra (nível básico).
 • Carta de condução: não é obrigatória.
 
@@ -169,6 +173,6 @@ O que oferecemos
 • Subsídio de alimentação.
 • Pagamento semanal ou mensal, a combinar.
 
-Obras em Lisboa e na Margem Sul (Seixal, Almada e Sesimbra). Ponto de encontro: na obra ou no ponto de recolha da carrinha da empresa. Início imediato.
+Obras em Lisboa e na Margem Sul (Seixal, Almada e Sesimbra). Ponto de encontro: na obra ou no ponto de recolha da carrinha da empresa. Início imediato. Só aceitamos candidaturas de pessoas que já residam em Portugal.
 ```
 <!-- vagas:iefp:fim -->
